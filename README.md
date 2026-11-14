@@ -16,7 +16,9 @@ It answers three questions for each place:
 
 ## Run it
 
-The app is a static site with no build step.
+The app is live at https://sinking-ground.pages.dev.
+
+It is a static site with no build step. To run it locally:
 
 ```bash
 python3 -m http.server 8000 --directory web
@@ -36,8 +38,9 @@ A view can be shared by its address, for example
 `&earlier=2015` or `&earlier=none` to change how sinking from before NISAR is
 counted (see below).
 
-Every push to `main` is published by Cloudflare Pages, which is connected to
-this repository. Before publishing it runs `node scripts/check-site.mjs`, and a
+Every push to `main` is published by the Cloudflare Pages project
+`sinking-ground`, which is connected to this repository. Other branches are not
+published. Before publishing it runs `node scripts/check-site.mjs`, and a
 failed check stops the publish. `.github/workflows/check.yml` runs the same
 check on pull requests, together with `python3 web/action/check.py`. To host it
 somewhere else, publish the `web` folder on any static host (GitHub Pages,
