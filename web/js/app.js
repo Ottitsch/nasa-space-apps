@@ -517,24 +517,31 @@ function globalRange() {
 }
 
 // ------------------------------------------------- slow spin of the globe
+// Driven by its own frame timer (not by the map's move events), and stopped
+// for good by the first camera action from the person or from the app.
 
-let spinning = false;
-function spin() {
-  if (!spinning || state.meta || map.getZoom() > 3.2) return;
-  const c = map.getCenter();
-  map.easeTo({ center: [c.lng + 14, c.lat], duration: 5000, easing: t => t, essential: false });
-}
+let spinning = false, spinFrame = 0;
 function startSpin() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (spinning || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   spinning = true;
-  spin();
+  let last = performance.now();
+  const tick = now => {
+    if (!spinning) return;
+    const dt = Math.min(100, now - last);
+    last = now;
+    if (!state.meta && map.getZoom() <= 3.2) {
+      const c = map.getCenter();
+      map.jumpTo({ center: [c.lng + dt * 0.0028, c.lat] });   // about 3 degrees a second
+    }
+    spinFrame = requestAnimationFrame(tick);
+  };
+  spinFrame = requestAnimationFrame(tick);
 }
 function stopSpin() {
-  if (!spinning) return;
   spinning = false;
-  map.stop();
+  cancelAnimationFrame(spinFrame);
 }
-map.on('moveend', () => { if (spinning) spin(); });
+for (const ev of ['dragstart', 'zoomstart', 'rotatestart', 'pitchstart']) map.on(ev, stopSpin);
 for (const ev of ['mousedown', 'touchstart', 'wheel', 'keydown']) {
   map.getCanvasContainer().addEventListener(ev, stopSpin, { passive: true });
 }

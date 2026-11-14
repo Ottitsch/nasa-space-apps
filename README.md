@@ -66,6 +66,41 @@ The limits are the classic ones from foundation engineering (Skempton and
 MacDonald 1956, Bjerrum 1963). They are screening levels for neighbourhoods,
 not a verdict on any single building.
 
+## What the data shows so far
+
+Built on 2026-11-14 from 64 places. Sinking is detected over at least
+1 km² in 15 of them:
+
+| Place | Fastest zone | Area sinking | Record | Smallest detectable rate |
+| --- | --- | --- | --- | --- |
+| Mexico City, Mexico | 26 cm per year | 383 km² | 11 months | 2.1 cm per year |
+| Tehran Plain, Iran | 23 cm per year | 56 km² | 4 months (early) | 6.1 cm per year |
+| Quetta, Pakistan | 18 cm per year | 49 km² | 4 months (early) | 6.1 cm per year |
+| Mashhad, Iran | 18 cm per year | 108 km² | 4 months (early) | 6.1 cm per year |
+| Toluca, Mexico | 16 cm per year | 9 km² | 11 months | 2.8 cm per year |
+| Rafsanjan Plain, Iran | 16 cm per year | 22 km² | 4 months (early) | 6.1 cm per year |
+| Central Valley (Corcoran), United States | 14 cm per year | 3 km² | 11 months | 5.9 cm per year |
+| Abidjan, Côte d'Ivoire | 13 cm per year | 4 km² | 4 months (early) | 9.7 cm per year |
+| Istanbul, Türkiye | 11 cm per year | 6 km² | 4 months (early) | 7.1 cm per year |
+| Bandung, Indonesia | 11 cm per year | 16 km² | 4 months (early) | 6.1 cm per year |
+| Delhi, India | 10 cm per year | 3 km² | 11 months | 2.3 cm per year |
+| Shanghai, China | 8 cm per year | 2 km² | 4 months (early) | 6.8 cm per year |
+| Celaya, Mexico | 8 cm per year | 5 km² | 11 months | 2.4 cm per year |
+| Isfahan, Iran | 8 cm per year | 1 km² | 4 months (early) | 6.1 cm per year |
+| Ahmedabad, India | 4 cm per year | 5 km² | 11 months | 2.2 cm per year |
+
+"Early" means only about four months of radar passes. Those rates were
+measured over a single season, so the yearly figure may change as the record
+grows.
+
+No sinking above the detection limit (yet) in the other 49 places, among
+them Jakarta, Houston, New Orleans, New York and Venice, all known to sink more
+slowly than a few months of data can reveal. Five places in `places.json`
+(Willcox Basin, Larissa, Konya Basin, Kathmandu, Yangon) are skipped for now
+because too little built up ground gave a stable radar signal.
+
+![The globe in 2035 if current rates continue](docs/globe-2035.png)
+
 ## How the data is made
 
 The `pipeline` folder turns raw NISAR products into the small files the map
@@ -104,11 +139,14 @@ loads. For each place in `pipeline/places.json` it does this:
 
 Checks made while building it:
 
-* Mexico City comes out at about 30 cm per year in the fastest zones over a
-  full year of passes, in line with the map NASA and JPL published in 2026 and
-  with earlier studies.
-* The two independent viewing directions over Mexico City agree to about
-  1 cm per year.
+* Mexico City comes out at 26 cm per year averaged over its fastest zone
+  (29 at the peak) across a full year of passes, in line with the map NASA
+  and JPL published in 2026 and with earlier studies.
+* The two independent viewing directions over Mexico City agree to within
+  about 1.5 cm per year, pixel by pixel.
+* Places the literature reports as fast sinking come out fast here too
+  (Tehran, Mashhad, Rafsanjan, Quetta, Delhi, Celaya, Bandung), and places
+  known to sink slowly come out as not detected.
 * Before the land cover and seasonal rules were added, forest around
   São Paulo, marsh around New Orleans and rice fields around Semarang all
   showed up as fast "sinking" while the built up land beside them read zero.
