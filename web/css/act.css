@@ -157,7 +157,10 @@ textarea { width: 100%; margin-top: 8px; line-height: 1.5; resize: vertical; fon
 
 @media screen and (max-width: 880px) {
   .grid2, .cols, .hood-grid { grid-template-columns: minmax(0, 1fr); }
-  .steps span { display: none; }
+  .steps span, .back span[data-t] { display: none; }
+  .bar { gap: 8px; padding: 8px 10px; }
+  .lang select { max-width: 130px; }
+  .steps a { padding: 6px 6px; }
   .sheet { padding: 18px 16px 14px; border-radius: 4px; }
   main { padding-inline: 10px; }
   .pic { max-width: 420px; }

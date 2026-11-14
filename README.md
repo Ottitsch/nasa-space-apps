@@ -241,6 +241,9 @@ pipeline/            Python: NISAR products to map data
 web/                 the static site
   index.html
   css/style.css
+  act.html           take action: report, letter, find the others
+  action/            city files, translations and policy examples for that page
+  js/act.js          the take action page
   js/app.js          map, layers, panels
   js/data.js         reading the per place grids
   js/timeline.js     the time bar
@@ -249,12 +252,62 @@ web/                 the static site
   vendor/            MapLibre GL JS and PMTiles
 ```
 
-## Next steps
+## Take action
 
-The idea is to go from seeing the problem to acting on it: help people contact
-the authority responsible for their area, and find others nearby facing the
-same thing. That is not built yet. The app already announces what a person is
-looking at, so that feature can plug in without touching the map code:
+Seeing the problem is step zero. `web/act.html` turns a spot on the map into
+something a person can use. It opens from the place panel or from the popup
+after clicking a building.
+
+| Step | What the person gets |
+| --- | --- |
+| 1. Get the proof | A one page report for their spot: the measured sinking, when the ground passes each damage limit, a picture of the buildings around them by risk class, counts of buildings within 250 or 500 m, and the honest limits of the data. It prints on one A4 page and has a link to share. |
+| 2. Send it | A ready written letter, filled in with those numbers, asking for an inspection or for answers about groundwater pumping. It names the office responsible and the law that obliges a reply. Copy, email, print or download. |
+| 3. Find the others | A link to the city's group, ways to pass the report on, a short guide to turning a few neighbours into a group, and four cities that stopped their sinking with what they did. |
+
+Nothing the person types (name, address) leaves their device.
+
+### Cities with a full local guide
+
+For the ten places where the most built up land is projected to pass the
+cracking limit, the responsible offices, their contact pages, the right to
+information mechanism and the emergency number were looked up on official
+pages: Mexico City, Mashhad, Tehran, Quetta, Toluca, Bandung, Delhi, Abidjan,
+Shanghai and Istanbul. Every other place gets the report, a general letter and
+general guidance on who is usually responsible.
+
+Each city is one file, `web/action/cities/<place id>.json`, described in
+`web/action/README.md`. Each contact carries the official page it was read
+from and the date it was checked. **Contacts go stale and were gathered by
+desk research, not by someone on the ground: a local person should check a
+city's file before it is promoted there.** Fixing or adding a city is a change
+to one JSON file, with no code.
+
+### Groups
+
+The idea is one group per city where neighbours organise. When a group exists,
+add it to that city's file and the page shows a join button:
+
+```json
+"groups": [{ "platform": "telegram", "url": "https://t.me/your_group", "label": "Sinking Ground Mexico City" }]
+```
+
+Until then the page says there is no group yet and invites the reader to start
+one. Each city file also records whether Telegram is reachable there and what
+neighbourhood groups normally use, because that differs by country.
+
+### Languages
+
+Every sentence of the page and the letters lives in
+`web/action/i18n/<language>.json`; `en.json` is the source. A language listed
+in `web/action/i18n/index.json` appears in the language menu. The page opens in
+the city's own language, and the letter is written in it. The examples of
+cities that stopped their sinking are in `web/action/cases.json`, each with its
+sources.
+
+### For other features
+
+The map announces what a person is looking at, so further features can plug in
+without touching the map code:
 
 ```js
 document.addEventListener('sinkingground:place', e => { /* e.detail: id, name, country, detected */ });
@@ -262,10 +315,15 @@ document.addEventListener('sinkingground:inspect', e => { /* e.detail: place, ln
 document.addEventListener('sinkingground:time', e => { /* e.detail: time, projected */ });
 ```
 
-Other useful directions: rerun the pipeline as passes accumulate, add places,
-mosaic neighbouring radar frames for places that straddle two, and use the
-weather model layers shipped inside the products for a better atmosphere
-correction.
+## Next steps
+
+* Have local people check each city file and translation.
+* Create the city groups and add their links.
+* Collect crack reports from residents on the map (this needs a server and
+  moderation, so it is not built).
+* Rerun the pipeline as radar passes accumulate, add places, mosaic
+  neighbouring radar frames for places that straddle two, and use the weather
+  model layers shipped inside the products for a better atmosphere correction.
 
 ## Credits
 
