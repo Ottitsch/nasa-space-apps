@@ -303,6 +303,11 @@ function clearBuildings() {
 
 // ---------------------------------------------------------- click to inspect
 
+/** Address of the take action page: report, letter and neighbours for one spot. */
+function actUrl(id, lng, lat) {
+  return `act.html#place=${id}` + (lng == null ? '' : `&lat=${lat.toFixed(5)}&lng=${lng.toFixed(5)}`);
+}
+
 function limitText(place, i, limit) {
   const yrs = place.yearsToLimit(i, limit);
   if (!isFinite(yrs)) return 'not at this rate';
@@ -336,7 +341,10 @@ function inspect(e) {
       <div class="row"><span>Structural limit (1/150)</span><span>${limitText(place, i, LIMITS.structural)}</span></div>
       <div class="note">Counted from the first radar pass on ${fmtDate(m.t0)}. One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
   }
+  state.spot = [lng, lat];
+  html += `<a class="pop-act" href="${actUrl(m.id, lng, lat)}">Take action for this spot</a>`;
   popup.setLngLat(e.lngLat).setHTML(html + '</div>').addTo(map);
+  $('place-act').href = actUrl(m.id, lng, lat);
   emit('inspect', {
     place: m.id, lng, lat, valid: !!valid, detected: !!sig, riskClass: cls,
     rate_mm_per_year: valid ? place.rate[i] : null, sunk_mm: sunk, time: state.time, projected: proj,
@@ -452,6 +460,7 @@ function showPanel(m) {
   $('st-rec').textContent = `${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}`;
   $('place-driver').textContent = m.driver ? `Main cause reported for this area: ${m.driver.toLowerCase()}.` : '';
   $('place-hot').hidden = !m.detected;
+  $('place-act').href = actUrl(m.id);
   for (const b of $('places').querySelectorAll('button')) b.setAttribute('aria-current', String(b.dataset.id === m.id));
 }
 

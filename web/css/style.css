@@ -189,3 +189,13 @@ dialog .close { position: absolute; top: 12px; right: 12px; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* take action entry points */
+.act { margin: 2px 0 14px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255, 165, 61, 0.4); background: rgba(255, 165, 61, 0.07); }
+.act h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warm); font-weight: 700; margin-bottom: 6px; }
+.act ol { margin: 0 0 10px; padding-left: 18px; display: grid; gap: 3px; font-size: 13px; color: #cfd8e6; }
+.act .fine { margin-top: 7px; }
+.btn.solid { display: block; text-align: center; text-decoration: none; background: var(--warm); color: #1a1004; border-color: transparent; font-weight: 700; }
+.btn.solid:hover { background: #ffb65e; }
+.pop-act { display: block; margin-top: 9px; padding: 7px 10px; border-radius: 8px; background: var(--warm); color: #1a1004; font-weight: 700; text-align: center; text-decoration: none; }
+.pop-act:hover { background: #ffb65e; }
