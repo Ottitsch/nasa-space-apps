@@ -4,6 +4,11 @@ __pycache__/
 *.pyc
 .venv/
 
+# NISAR subsidence build cache and web app build artifacts
+data_cache/
+web/node_modules/
+web/dist/
+
 # local instructions and editor files
 CLAUDE.local.md
 .vscode/
