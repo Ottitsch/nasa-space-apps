@@ -9,7 +9,7 @@ import {
   fmtDate, fmtMonth, fmtRate, fmtSunk, rampCSS, sinkCSS, sinkLUT, sinkU,
 } from './config.js';
 import { ATTRIBUTION, BASES, UNDER_LABELS, baseStyle } from './basemap.js';
-import { hotSunk, loadFrames, loadIndex, loadPlace } from './data.js';
+import { hotBefore, hotSunk, loadFrames, loadIndex, loadPlace } from './data.js';
 import { Timeline } from './timeline.js';
 
 const $ = id => document.getElementById(id);
@@ -174,11 +174,11 @@ const popup = new maplibregl.Popup({ maxWidth: '300px', focusAfterOpen: false, o
 const byId = id => state.index.places.find(p => p.id === id);
 
 function placesGeoJSON() {
-  const t = state.time;
+  const t = state.time, since = earlierSince();
   return {
     type: 'FeatureCollection',
     features: state.index.places.filter(p => p !== state.meta).map(p => {
-      const sunk = hotSunk(p, t);
+      const sunk = hotSunk(p, t) + hotBefore(p, since);
       const r = p.detected ? 5 + 21 * sinkU(sunk) : 4.2;
       return {
         type: 'Feature', geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
@@ -222,20 +222,20 @@ function removeOverlay() {
 function drawOverlay() {
   const place = state.place;
   if (!place || !map.getSource('sink')) return;
-  const y = place.years(state.time);
+  const y = place.years(state.time), ye = place.earlierYears();
   const { n, rate, alpha } = place;
   if (state.mode === 'risk') {
     const ys = place.strainYears(state.time);
     for (let i = 0; i < n; i++) pixels[i] = alpha[i] > 128 ? RISK_PX[place.classAt(i, ys)] : 0;
-  } else if (y <= 0) {
+  } else if (y <= 0 && !ye) {
     pixels.fill(0);
   } else {
     const { a, b, w } = place.blend(y);
-    const half = SINK_MIN_MM / 2, k = 255 / SINK_DECADES;
+    const half = SINK_MIN_MM / 2, k = 255 / SINK_DECADES, yt = Math.max(0, y) + ye;
     for (let i = 0; i < n; i++) {
       const al = alpha[i];
       if (!al) { pixels[i] = 0; continue; }
-      let d = rate[i] * y;
+      let d = rate[i] * yt;
       if (a) d += (1 - w) * a[i] + w * b[i];
       const s = -d;
       if (s <= half) { pixels[i] = 0; continue; }
@@ -340,7 +340,7 @@ function applyEarlier() {
   const since = place?.earlier ?? null;
   $('legend-note').hidden = since == null;
   $('legend-note').textContent = since == null ? ''
-    : `Damage classes count earlier uneven sinking too, assumed at today's rate since ${since}.`;
+    : `Sinking and damage classes count sinking from before NISAR too, assumed at today's rate since ${since}.`;
 }
 
 /** When a limit is passed, given how many years of uneven sinking it takes. */
@@ -375,14 +375,16 @@ function inspect(e) {
       <div class="note">Nothing detected here so far. Slower sinking than the limit above cannot be ruled out.</div>`;
   } else {
     html += (sig
-      ? `<div class="row"><span>Sinking rate</span><span>${fmtRate(place.rate[i])}</span></div>
-      <div class="row"><span>${proj ? 'Would have sunk by ' + fmtMonth(state.time) : 'Sunk by ' + fmtDate(state.time)}</span><span>${fmtSunk(sunk)}</span></div>`
+      ? `<div class="row"><span>Sinking rate</span><span>${fmtRate(place.rate[i])}</span></div>`
+        + (since == null ? ''
+          : `<div class="row"><span>${proj ? 'Would have sunk since ' + since + ' by ' + fmtMonth(state.time) : 'Sunk since ' + since + ' (estimate)'}</span><span>${fmtSunk(sunk + place.beforeAt(i))}</span></div>`)
+        + `<div class="row"><span>${since != null ? 'Measured by NISAR since ' + fmtDate(m.t0) : proj ? 'Would have sunk by ' + fmtMonth(state.time) : 'Sunk by ' + fmtDate(state.time)}</span><span>${fmtSunk(since != null ? place.sunkAt(i, Math.min(y, place.years(m.t1))) : sunk)}</span></div>`
       : `<div class="row"><span>Sinking rate</span><span>below ${m.threshold_mm_yr} mm per year</span></div>
       <div class="row"><span>Position</span><span>rim of a sinking zone</span></div>`) + `
       <div class="row"><span>Cracking limit (1/500)</span><span>${limitText(place, i, LIMITS.cracking)}</span></div>
       <div class="row"><span>Structural limit (1/150)</span><span>${limitText(place, i, LIMITS.structural)}</span></div>
-      <div class="note">${since == null ? 'Counted' : 'Sinking is counted'} from the first radar pass on ${fmtDate(m.t0)}.${since == null ? ''
-        : ` The damage limits also count earlier uneven sinking, assumed at today's rate since ${since}.`} One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
+      <div class="note">${since == null ? `Counted from the first radar pass on ${fmtDate(m.t0)}.`
+        : `Sinking and the damage limits also count the years before NISAR, assumed at today's rate since ${since}. That part is an estimate.`} One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
   }
   state.spot = [lng, lat];
   html += `<a class="pop-act" href="${actUrl(m.id, lng, lat)}">Take action for this spot</a>`;
@@ -391,7 +393,7 @@ function inspect(e) {
   emit('inspect', {
     place: m.id, lng, lat, valid: !!valid, detected: !!sig, riskClass: cls,
     rate_mm_per_year: valid ? place.rate[i] : null, sunk_mm: sunk, time: state.time, projected: proj,
-    earlierSince: since,
+    earlierSince: since, sunk_before_mm: place.beforeAt(i),
   });
 }
 
@@ -454,11 +456,12 @@ function buildList() {
 
 function drawChart() {
   const m = state.meta, svg = $('chart');
-  if (!m || !m.detected) { svg.innerHTML = ''; svg.style.display = 'none'; return; }
+  if (!m || !m.detected) { svg.innerHTML = ''; svg.style.display = 'none'; $('chart-note').hidden = true; return; }
   svg.style.display = '';
   const W = 300, H = 96, T = 14, Bm = 4, ih = H - T - Bm;
   const end = Date.UTC(END_YEAR, 11, 31);
   const max = hotSunk(m, end), now = hotSunk(m, m.t1);
+  const since = m.detected ? earlierSince() : null, before = hotBefore(m, since);
   const X = ms => timeline.frac(ms) * W;
   // The time bar gives the measured months a share of the width far larger
   // than their share of the years to 2050. The height axis gets the same
@@ -483,12 +486,16 @@ function drawChart() {
     <line x1="${xNow}" x2="${xNow}" y1="${T - 2}" y2="${H - Bm}" stroke="rgba(255,255,255,0.3)"/>
     <text x="${xNow - 6}" y="9" text-anchor="end">Measured</text>
     <text x="${xNow + 6}" y="9">Projected</text>
-    <text x="${xNow - 8}" y="${Y(now) - 8}" text-anchor="end" style="fill:#ffffff">${fmtSunk(now)}</text>
-    <text x="${W - 9}" y="${H - Bm - 6}" text-anchor="end" style="fill:#ffb340">${fmtSunk(max)} by ${END_YEAR}</text>
+    <text x="${xNow - 8}" y="${Y(now) - 8}" text-anchor="end" style="fill:#ffffff">${fmtSunk(now + before)}</text>
+    <text x="${W - 9}" y="${H - Bm - 6}" text-anchor="end" style="fill:#ffb340">${fmtSunk(max + before)} by ${END_YEAR}</text>
     <line id="chart-x" y1="${T - 2}" y2="${H - Bm}" stroke="#0a84ff" stroke-width="2"/>
     <circle id="chart-dot" r="4.5" fill="#0a84ff" stroke="#ffffff" stroke-width="1.5"/>`;
   svg.setAttribute('aria-label', `Sinking of the fastest zone: ${fmtSunk(now)} measured from ${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}, `
-    + `${fmtSunk(max)} by ${END_YEAR} if the same rate continues. The measured months are drawn larger on both axes.`);
+    + `${fmtSunk(max)} by ${END_YEAR} if the same rate continues`
+    + (before ? `, plus ${fmtSunk(before)} estimated before NISAR since ${since}.` : '.') + ' The measured months are drawn larger on both axes.');
+  $('chart-note').hidden = !before;
+  $('chart-note').textContent = before
+    ? `The line starts at ${fmtSunk(before)}: the sinking estimated from ${since} to ${fmtMonth(m.t0)} at the rate measured now.` : '';
   svg._X = X; svg._Y = Y;
 }
 
@@ -496,15 +503,26 @@ function updatePanel() {
   const m = state.meta;
   if (!m) return;
   const t = state.time, proj = t > m.t1;
-  const sunk = hotSunk(m, t);
+  const meas = hotSunk(m, t), since = m.detected ? earlierSince() : null, before = hotBefore(m, since);
+  const sunk = meas + before;
   $('place-big').classList.toggle('text', !m.detected);
   if (!m.detected) {
     $('place-big').textContent = 'No sinking detected';
-    $('place-big-label').textContent = `Nothing faster than ${m.threshold_mm_yr} mm per year over a wide area in ${m.months} months of radar passes. Slower sinking may show up as more passes arrive.`
-      + (m.sinking_area_km2 > 0 ? ` A few small spots (${m.sinking_area_km2} km² in total) are marked on the map; these can be earthworks, landfill or noise.` : '');
-  } else if (t <= m.t0) {
+    $('place-big-label').textContent = m.sinking_area_km2 > 0
+      ? `No built up land sinking faster than ${m.threshold_mm_yr} mm per year over 1 km² or more, in ${m.months} months of radar passes. `
+        + `${m.sinking_area_km2} km² of sinking is marked on the map, ${m.builtup_sinking_km2 ?? 0} km² of it under built up land; `
+        + `the rest is bare ground, farm edges, pits, mines or landfill.`
+      : `Nothing faster than ${m.threshold_mm_yr} mm per year over a wide area in ${m.months} months of radar passes. Slower sinking may show up as more passes arrive.`;
+  } else if (t <= m.t0 && !before) {
     $('place-big').textContent = '0 cm';
     $('place-big-label').textContent = `Radar passes here start on ${fmtDate(m.t0)}.`;
+  } else if (before) {
+    $('place-big').textContent = fmtSunk(sunk);
+    $('place-big-label').textContent = (proj
+      ? `How far the fastest zone would have sunk since ${since} by ${fmtMonth(t)} if the current rate continues.`
+      : `How far the fastest zone has sunk since ${since}.`)
+      + ` NISAR measured ${fmtSunk(Math.min(meas, hotSunk(m, m.t1)))} of it from ${fmtDate(m.t0)} to ${fmtDate(Math.min(t, m.t1))};`
+      + ` the ${fmtSunk(before)} before that is an estimate at the rate measured now.`;
   } else {
     $('place-big').textContent = fmtSunk(sunk);
     $('place-big-label').textContent = proj
@@ -513,7 +531,7 @@ function updatePanel() {
   }
   const svg = $('chart');
   if (svg._X && m.detected) {
-    const x = svg._X(Math.max(t, m.t0)), y = svg._Y(sunk);
+    const x = svg._X(Math.max(t, m.t0)), y = svg._Y(meas);
     $('chart-x')?.setAttribute('x1', x); $('chart-x')?.setAttribute('x2', x);
     $('chart-dot')?.setAttribute('cx', x); $('chart-dot')?.setAttribute('cy', y);
   }
@@ -692,7 +710,8 @@ function setEarlier(id) {
   applyEarlier();
   if (actSpot) setActLink(...actSpot);   // the report must use the same setting
   popup.remove();
-  drawOverlay(); updateBuildings(); updatePanel();
+  map.getSource('places')?.setData(placesGeoJSON());
+  drawOverlay(); updateBuildings(); drawChart(); updatePanel();
 }
 
 // ------------------------------------------------------------- base map
