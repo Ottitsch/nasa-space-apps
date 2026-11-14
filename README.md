@@ -45,6 +45,7 @@ loaded from public servers, so the visitor needs an internet connection.
 | Blue layer | How far the ground has sunk since the first radar pass (log scale, 1 cm to 10 m). |
 | Damage risk layer | The same ground coloured by risk class instead. |
 | Buildings | Coloured by the risk class of the ground under them at the chosen date. |
+| Built up land past damage limits | Area in each damage class at the chosen date, and the date each limit is first passed. |
 
 ### Why buildings change colour
 
@@ -65,6 +66,16 @@ grows every year the ground keeps sinking unevenly.
 The limits are the classic ones from foundation engineering (Skempton and
 MacDonald 1956, Bjerrum 1963). They are screening levels for neighbourhoods,
 not a verdict on any single building.
+
+**The three damage classes are empty at the latest radar pass, everywhere.**
+Uneven sinking is counted from the first radar pass, and the fastest tilting
+ground in the data gains under 1/1000 per year, so the first limit (1/500) is
+at least two years away from the first pass. No record is that long yet. That
+is the method working, not a failed detection. The place panel therefore says,
+for each class, when built up land first passes that limit if the measured rate
+continues (Mexico City: cracking possible from mid 2029), and how much built up
+land is past the cracking limit by 2050. Drag the time bar forward to see the
+classes fill in on the map.
 
 ## What the data shows so far
 
@@ -211,7 +222,8 @@ threshold, and turns early results into firm ones.
   neighbourhoods, not a single building's foundations.
 * **Strain from before NISAR is not counted.** Distortion is counted from the
   first radar pass (late 2025 at the earliest). Ground that has been sinking
-  unevenly for decades is in worse shape than shown.
+  unevenly for decades is in worse shape than shown. It is also why no place
+  shows a damage class until the projection.
 * **Short records only see fast sinking.** Most places have about four months
   of passes so far, which only reveals sinking faster than roughly 6 cm per
   year. "No sinking detected" there means "nothing that fast", not "stable".

@@ -303,13 +303,17 @@ function clearBuildings() {
 
 // ---------------------------------------------------------- click to inspect
 
-function limitText(place, i, limit) {
-  const yrs = place.yearsToLimit(i, limit);
+const END = Date.UTC(END_YEAR, 11, 31);
+
+/** When a limit is passed, given how many years after the first radar pass. */
+function whenText(place, yrs) {
   if (!isFinite(yrs)) return 'not at this rate';
   const ms = place.meta.t0 + yrs * YEAR;
-  if (ms > Date.UTC(END_YEAR, 11, 31)) return `after ${END_YEAR}`;
+  if (ms > END) return `after ${END_YEAR}`;
   return (ms <= state.time ? 'passed ' : 'around ') + fmtMonth(ms);
 }
+
+const limitText = (place, i, limit) => whenText(place, place.yearsToLimit(i, limit));
 
 function inspect(e) {
   if (e.defaultPrevented) return;
@@ -428,13 +432,39 @@ function updatePanel() {
   const place = state.place;
   if (place && m.detected) {
     const a = place.areaByClass(place.years(t), 5);
-    const fmt = v => (v >= 100 ? Math.round(v) : v.toFixed(1)) + ' km²';
     $('strain').hidden = false;
-    $('strain-bars').innerHTML = [2, 3, 4].map(i =>
-      `<li><i class="sw" style="background:${RISK[i].color}"></i><span>${RISK[i].short}</span><span class="v">${fmt(a[i])}</span></li>`).join('');
+    $('strain-bars').innerHTML = [2, 3, 4].map((i, k) => {
+      const yrs = place.yearsToFirstPass(STRAIN_LIMITS[k]);
+      const when = isFinite(yrs) && m.t0 + yrs * YEAR <= END ? 'first ' + whenText(place, yrs) : whenText(place, yrs);
+      return `<li><i class="sw" style="background:${RISK[i].color}"></i><span>${RISK[i].short}</span><span class="v">${fmtArea(a[i])}</span>
+        <span class="when">${when}</span></li>`;
+    }).join('');
+    $('strain-note').textContent = strainNote(place, a);
   } else {
     $('strain').hidden = true;
   }
+}
+
+const STRAIN_LIMITS = [LIMITS.cracking, LIMITS.damage, LIMITS.structural];
+const fmtArea = v => (v >= 100 ? Math.round(v) : v.toFixed(1)) + ' km²';
+const pastLimits = a => a[2] + a[3] + a[4];
+const endArea = new WeakMap();    // built up land past the limits at the end of the time bar
+
+/** Why the rows read what they read. Uneven sinking only counts from the first
+ *  radar pass, so through the measured period the honest answer is "none yet". */
+function strainNote(place, a) {
+  const since = `the first radar pass on ${fmtDate(place.meta.t0)}`;
+  const first = place.yearsToFirstPass(LIMITS.cracking);
+  if (!isFinite(first)) {
+    return 'Uneven sinking does not stand clear of the noise on built up land here yet. Longer records lower the noise.';
+  }
+  if (pastLimits(a) >= 0.05) return `Counted from ${since}. Strain from earlier sinking is not included.`;
+  if (place.meta.t0 + first * YEAR > END) {
+    return `Uneven sinking is counted from ${since}. What is measured here so far is too gentle to pass a limit before ${END_YEAR}.`;
+  }
+  if (!endArea.has(place)) endArea.set(place, pastLimits(place.areaByClass(place.years(END), 5)));
+  return `Uneven sinking is counted from ${since}, so no ground has had time to pass a limit yet. `
+    + `If the measured rate continues, ${fmtArea(endArea.get(place))} of built up land is past the cracking limit by ${END_YEAR}.`;
 }
 
 function showPanel(m) {

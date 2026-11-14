@@ -63,6 +63,7 @@ export class PlaceData {
     this.pixelKm2 = 0.0064;                        // 80 m pixels on the ground
     this.frames = null;
     this._cache = new Map();
+    this._firstRate = new Map();
     this._buildAlpha();
     this._findHot();
   }
@@ -199,6 +200,29 @@ export class PlaceData {
   yearsToLimit(i, limit) {
     const b = this.beta[i] * 1e-6;
     return b > 0 ? limit / b : Infinity;
+  }
+
+  /**
+   * Years after the first pass at which ground first passes a distortion
+   * limit. "First" is the moment the area past the limit reaches the smallest
+   * amount the panel can show (8 pixels, 0.05 km2), so that one noisy pixel
+   * does not set the date. Infinity when too little ground sinks unevenly.
+   * need = 5 looks at built up land only.
+   */
+  yearsToFirstPass(limit, need = 5) {
+    let b = this._firstRate.get(need);
+    if (b === undefined) {
+      const { n, flags, beta } = this;
+      const px = Math.ceil(0.05 / this.pixelKm2);
+      const top = [];
+      for (let i = 0; i < n; i++) {
+        if (beta[i] && (flags[i] & need) === need) top.push(beta[i]);
+      }
+      top.sort((p, q) => q - p);
+      b = top.length >= px ? top[px - 1] : 0;      // rate of the 8th fastest tilting pixel
+      this._firstRate.set(need, b);
+    }
+    return b > 0 ? limit / (b * 1e-6) : Infinity;
   }
 
   /** km2 of ground in each risk class. need = 5 counts built up land only. */
