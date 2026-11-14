@@ -23,3 +23,11 @@ body { font-family: system-ui, sans-serif; background: #0b1220; color: #e6edf7; 
 .legend-title { font-size: 0.75rem; opacity: 0.75; margin-bottom: 4px; }
 .legend-bar { height: 10px; border-radius: 3px; }
 .legend-labels { display: flex; justify-content: space-between; font-size: 0.7rem; opacity: 0.75; margin-top: 3px; }
+.panel-row.options { margin-bottom: 10px; justify-content: space-between; }
+.panel select {
+  flex: 1; min-width: 0; padding: 5px 8px; border-radius: 6px;
+  background: #16213a; color: #e6edf7; border: 1px solid #2a3858;
+}
+.toggle { display: flex; border: 1px solid #2a3858; border-radius: 6px; overflow: hidden; }
+.toggle button { padding: 5px 10px; background: #16213a; color: #e6edf7; border: 0; cursor: pointer; font-size: 0.8rem; }
+.toggle button.on { background: #2563eb; }

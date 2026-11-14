@@ -21,6 +21,7 @@ import argparse
 import json
 import re
 import sys
+import time
 import urllib.request
 from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime
@@ -58,6 +59,16 @@ SCALE = 0.1  # mm per int16 unit
 
 def log(*a):
     print(*a, file=sys.stderr, flush=True)
+
+
+def progress(done, total, t0, label=""):
+    """One progress line: bar, count, elapsed time and ETA."""
+    frac = done / total
+    elapsed = time.time() - t0
+    eta = elapsed / frac * (1 - frac) if done else 0
+    mmss = lambda sec: f"{int(sec // 60)}m{int(sec % 60):02d}s"
+    n = int(frac * 30)
+    log(f"[{'#' * n}{'-' * (30 - n)}] {done}/{total} {frac * 100:3.0f}%  elapsed {mmss(elapsed)}  ETA {mmss(eta)}  {label}")
 
 
 # ---------------------------------------------------------------- catalogue
@@ -133,20 +144,25 @@ def _warp(gdal, url, path, aoi, fine, resample="near", band=None):
 
 
 def read_pair(args):
-    """Worker: fetch phase/coherence/components for one pair (cached on disk)."""
+    """Worker: fetch phase/coherence/components/ionosphere for one pair (cached on disk)."""
     pair, aoi, fine, cache = args
     cache = Path(cache)
     f = cache / f"{pair['name']}.npz"
-    if f.exists():
+    fi = cache / f"{pair['name']}.iono.npz"
+    if f.exists() and fi.exists():
         return pair["name"], "cached"
     gdal = _setup_gdal(str(cache / "cookies.txt"))
     last = None
     for attempt in range(3):
         try:
-            phase = _warp(gdal, pair["url"], UNW + "unwrappedPhase", aoi, fine)
-            coh = _warp(gdal, pair["url"], UNW + "coherenceMagnitude", aoi, fine)
-            cc = _warp(gdal, pair["url"], UNW + "connectedComponents", aoi, fine)
-            np.savez_compressed(f, phase=phase.astype("float32"), coh=coh.astype("float32"), cc=cc.astype("uint16"))
+            if not f.exists():
+                phase = _warp(gdal, pair["url"], UNW + "unwrappedPhase", aoi, fine)
+                coh = _warp(gdal, pair["url"], UNW + "coherenceMagnitude", aoi, fine)
+                cc = _warp(gdal, pair["url"], UNW + "connectedComponents", aoi, fine)
+                np.savez_compressed(f, phase=phase.astype("float32"), coh=coh.astype("float32"), cc=cc.astype("uint16"))
+            if not fi.exists():
+                iono = _warp(gdal, pair["url"], UNW + "ionospherePhaseScreen", aoi, fine)
+                np.savez_compressed(fi, iono=iono.astype("float32"))
             return pair["name"], "ok"
         except Exception as exc:  # network hiccups happen
             last = exc
@@ -208,6 +224,31 @@ def coarse_pair(name, cache, f, min_coh, min_frac):
     return block_mean(ph, f, min_frac), block_mean(np.where(valid, coh, np.nan), f, min_frac)
 
 
+def gaussian_blur(a, sigma, keep_mask=False):
+    """NaN-aware (normalised) Gaussian blur. Fills small holes unless keep_mask."""
+    if sigma <= 0:
+        return a
+    r = int(3 * sigma)
+    k = np.exp(-0.5 * (np.arange(-r, r + 1) / sigma) ** 2)
+    k /= k.sum()
+
+    def conv(x):
+        x = np.apply_along_axis(lambda v: np.convolve(v, k, mode="same"), 0, x)
+        return np.apply_along_axis(lambda v: np.convolve(v, k, mode="same"), 1, x)
+
+    m = np.isfinite(a)
+    num, den = conv(np.where(m, a, 0.0)), conv(m.astype(float))
+    out = np.where(den > 1e-3, num / np.maximum(den, 1e-3), np.nan)
+    if keep_mask:
+        out = np.where(m, out, np.nan)
+    return out.astype("float32")
+
+
+def coarse_iono(name, cache, f):
+    iono = np.load(Path(cache) / f"{name}.iono.npz")["iono"]
+    return block_mean(iono, f, 0.3)
+
+
 def remove_ramp(ph):
     """Subtract a robustly fitted plane from every pair.
 
@@ -232,6 +273,23 @@ def remove_ramp(ph):
     return out
 
 
+def spread(ph):
+    """Robust noise level (rad) of one pair after ramp removal."""
+    r = remove_ramp(ph[None])[0]
+    v = r[np.isfinite(r)]
+    return 1.4826 * np.median(np.abs(v - np.median(v)))
+
+
+def trimmed_mean(x, trim):
+    """Per-pixel mean over axis 0 ignoring NaN and the `trim` fraction at each end."""
+    n = np.isfinite(x).sum(axis=0)
+    xs = np.sort(x, axis=0)  # NaN sorts last
+    idx = np.arange(x.shape[0])[:, None, None]
+    lo = np.floor(trim * n)
+    keep = (idx >= lo) & (idx < n - lo)
+    return np.where(n > 0, np.where(keep, xs, 0).sum(axis=0) / np.maximum(keep.sum(axis=0), 1), np.nan)
+
+
 def manual_reference(phase_stack, ref_arg, aoi, res):
     """Cells within radius_km of (lon, lat) that are valid in >90% of pairs."""
     t, h, w = phase_stack.shape
@@ -254,6 +312,12 @@ def main():
     p.add_argument("--min-coh", type=float, default=0.4, help="coherence below this is masked")
     p.add_argument("--min-valid-frac", type=float, default=0.7, help="a cell needs this share of valid pairs")
     p.add_argument("--ref", help="optional reference area lon,lat,radius_km assumed stable (applied after ramp removal)")
+    p.add_argument("--iono", choices=["auto", "always", "never"], default="auto",
+                   help="subtract the smoothed ionosphere screen: auto = per pair, only if it lowers the noise")
+    p.add_argument("--iono-sigma", type=float, default=8, help="ionosphere smoothing (cells)")
+    p.add_argument("--smooth", type=float, default=2, help="spatial Gaussian smoothing of the result (cells, 0 = off)")
+    p.add_argument("--trim", type=float, default=0.15, help="share trimmed at each end when estimating the trend")
+    p.add_argument("--label", help="name shown in the app (default: derived from track/direction/frame)")
     p.add_argument("--keep-ramp", action="store_true", help="do not remove the per-pair planar ramp")
     p.add_argument("--workers", type=int, default=6)
     p.add_argument("--max-pairs", type=int, help="only use the first N pairs of the chain (testing)")
@@ -279,15 +343,27 @@ def main():
     log(f"{len(steps)} pairs in chain: {steps[0]['ref']} -> {steps[-1]['sec']}")
 
     jobs = [(s, aoi, a.fine, str(cache)) for s in steps]
+    t0 = time.time()
     with ProcessPoolExecutor(max_workers=a.workers) as ex:
         for i, (name, status) in enumerate(ex.map(read_pair, jobs), 1):
-            log(f"[{i}/{len(jobs)}] {status}  {name[-70:-40]}")
+            progress(i, len(jobs), t0, f"{status}  {name[-70:-40]}")
             if status.startswith("FAILED"):
                 sys.exit("a read failed; rerun to resume from the cache")
 
     ph, co = zip(*(coarse_pair(s["name"], cache, f, a.min_coh, a.min_valid_frac) for s in steps))
     ph, co = np.stack(ph), np.stack(co)  # (T, H, W) radians / coherence
 
+    iono_used = []
+    if a.iono != "never":
+        for i, st in enumerate(steps):
+            io = gaussian_blur(coarse_iono(st["name"], cache, f), a.iono_sigma)
+            cand = ph[i] - io
+            before, after = spread(ph[i]), spread(cand)
+            use = a.iono == "always" or after < before
+            iono_used.append(bool(use))
+            if use:
+                ph[i] = cand
+            log(f"iono {st['ref']}->{st['sec']}: noise {before:.2f} -> {after:.2f} rad, {'applied' if use else 'skipped'}")
     if not a.keep_ramp:
         ph = remove_ramp(ph)
     if a.ref:
@@ -303,22 +379,36 @@ def main():
     sign = -POSITIVE_PHASE_IS_RANGE_INCREASE
     inc_mm = sign * ph * WAVELENGTH / (4 * np.pi) * 1000.0 / cos_inc
 
+    inc_mm = np.stack([gaussian_blur(x, a.smooth, keep_mask=True) for x in inc_mm])  # spatial smoothing
+
     ok = np.isfinite(inc_mm).mean(axis=0) >= a.min_valid_frac
     med = np.nanmedian(np.where(np.isfinite(inc_mm), inc_mm, np.nan), axis=0)
     filled = np.where(np.isfinite(inc_mm), inc_mm, med)  # missing pair -> that cell's median step
     cum = np.concatenate([np.zeros((1,) + med.shape, "float32"), np.cumsum(filled, axis=0)])
     cum[:, ~ok] = np.nan
 
-    q = np.where(np.isfinite(cum), np.clip(np.round(cum / SCALE), -32767, 32767), NODATA).astype("<i2")
+    # Robust linear trend: trimmed mean of per-pair rates (mm/yr), so a single bad pair cannot dominate.
+    day = lambda d: datetime.strptime(d, "%Y%m%d")
+    span_yr = np.array([(day(st["sec"]) - day(st["ref"])).days for st in steps]) / 365.25
+    rate = trimmed_mean(inc_mm / span_yr[:, None, None], a.trim)
+    t_yr = np.array([0.0] + [(day(st["sec"]) - day(steps[0]["ref"])).days / 365.25 for st in steps])
+    trend = (rate[None] * t_yr[:, None, None]).astype("float32")
+    trend[:, ~ok] = np.nan
+
+    pack = lambda arr: np.where(np.isfinite(arr), np.clip(np.round(arr / SCALE), -32767, 32767), NODATA).astype("<i2")
+    q, qt = pack(cum), pack(trend)
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     (out / "cube.bin").write_bytes(q.tobytes())
+    (out / "trend.bin").write_bytes(qt.tobytes())
 
     dates = [steps[0]["ref"]] + [s["sec"] for s in steps]
     iso = lambda d: datetime.strptime(d, "%Y%m%d").strftime("%Y-%m-%d")
     meta = dict(
         bounds=list(aoi), width=q.shape[2], height=q.shape[1], resolution_deg=a.res,
-        steps=q.shape[0], dates=[iso(d) for d in dates],
+        label=a.label or f"{'Ascending' if a.direction == 'A' else 'Descending'} track {a.track}, frame {a.frame}",
+        steps=q.shape[0], dates=[iso(d) for d in dates], trend_file="trend.bin",
+        rate_mm_per_year=dict(zip(["p5", "median", "p95"], [round(float(v), 1) for v in np.nanpercentile(rate[ok], [5, 50, 95])])),
         scale_mm=SCALE, nodata=NODATA, layout="int16 little-endian [step][row (north first)][col]",
         quantity="cumulative vertical displacement since first date, mm, positive = up",
         source=dict(track=a.track, direction=a.direction, frame=a.frame,
@@ -328,7 +418,9 @@ def main():
             positive_phase_is_range_increase=bool(POSITIVE_PHASE_IS_RANGE_INCREASE),
             vertical_assumption="line-of-sight motion divided by cos(incidence angle)",
             ramp_removed=not a.keep_ramp,
-            not_applied=["ionosphere", "troposphere", "solid earth tides"],
+            ionosphere_screen=dict(mode=a.iono, sigma_cells=a.iono_sigma, applied_pairs=sum(iono_used)),
+            spatial_smoothing_cells=a.smooth, trend_trim=a.trim,
+            not_applied=["troposphere", "solid earth tides"],
         ),
     )
     (out / "meta.json").write_text(json.dumps(meta, indent=1))

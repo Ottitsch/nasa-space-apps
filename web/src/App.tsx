@@ -3,13 +3,14 @@ import * as maplibregl from "maplibre-gl";
 import type { FeatureCollection } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { MONTHS, SYNTHETIC_LIMIT, buildField, monthLabel, stepKey } from "./synthetic";
-import { Cube, cubeValue, loadCube, renderStep, suggestLimit } from "./nisar";
+import { Cube, Dataset, ManifestEntry, cubeValue, loadDataset, loadManifest, renderStep } from "./nisar";
 import { colorStops } from "./colors";
 
 // Centre of California, zoomed so the whole state is visible on the globe.
 const CALIFORNIA_CENTER: [number, number] = [-119.5, 37.2];
 
-type Source = { kind: "loading" } | { kind: "nisar"; cube: Cube; limit: number } | { kind: "synthetic" };
+type Mode = "measured" | "trend";
+type Source = { kind: "loading" } | { kind: "nisar"; ds: Dataset } | { kind: "synthetic" };
 
 function syntheticFill(step: number): maplibregl.ExpressionSpecification {
   return [
@@ -25,104 +26,116 @@ const formatDate = (iso: string) =>
     day: "numeric", month: "short", year: "numeric", timeZone: "UTC",
   });
 
+const corners = (c: Cube): [[number, number], [number, number], [number, number], [number, number]] => {
+  const [w, s, e, n] = c.meta.bounds;
+  return [[w, n], [e, n], [e, s], [w, s]];
+};
+
 export default function App() {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const imageUrls = useRef<string[]>([]);
+  const datasets = useRef(new Map<string, Dataset>());
+  const imageUrls = useRef<{ cube: Cube | null; urls: string[] }>({ cube: null, urls: [] });
+  const [manifest, setManifest] = useState<ManifestEntry[]>([]);
   const [source, setSource] = useState<Source>({ kind: "loading" });
+  const [mode, setMode] = useState<Mode>("measured");
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   const stepRef = useRef(step);
   stepRef.current = step;
-  const sourceRef = useRef(source);
-  sourceRef.current = source;
 
-  const lastStep = source.kind === "nisar" ? source.cube.meta.steps - 1 : MONTHS;
-  const limit = source.kind === "nisar" ? source.limit : SYNTHETIC_LIMIT;
-  const stepLabel = (s: number) =>
-    source.kind === "nisar" ? formatDate(source.cube.meta.dates[s]) : monthLabel(s);
-  const baseline = source.kind === "nisar" ? formatDate(source.cube.meta.dates[0]) : monthLabel(0);
+  const ds = source.kind === "nisar" ? source.ds : null;
+  const cube = ds ? (mode === "trend" && ds.trend ? ds.trend : ds.measured) : null;
+  const cubeRef = useRef<Cube | null>(null);
+  cubeRef.current = cube;
 
+  const lastStep = cube ? cube.meta.steps - 1 : MONTHS;
+  const limit = ds ? ds.limit : SYNTHETIC_LIMIT;
+  const stepLabel = (s: number) => (cube ? formatDate(cube.meta.dates[s]) : monthLabel(s));
+  const baseline = cube ? formatDate(cube.meta.dates[0]) : monthLabel(0);
+
+  // Create the map once; show the first dataset (or synthetic data if none exist).
   useEffect(() => {
     let cancelled = false;
     let map: maplibregl.Map | undefined;
 
-    Promise.all([fetch("/data/california.geojson").then((r) => r.json()), loadCube()]).then(
-      ([state, cube]: [FeatureCollection, Cube | null]) => {
-        if (cancelled) return;
-        const limit = cube ? suggestLimit(cube) : SYNTHETIC_LIMIT;
-        const src: Source = cube ? { kind: "nisar", cube, limit } : { kind: "synthetic" };
-        const last = cube ? cube.meta.steps - 1 : MONTHS;
-        stepRef.current = last;
-        setSource(src);
-        setStep(last);
+    (async () => {
+      const [state, entries]: [FeatureCollection, ManifestEntry[]] = await Promise.all([
+        fetch("/data/california.geojson").then((r) => r.json()),
+        loadManifest(),
+      ]);
+      const first = entries.length ? await loadDataset(entries[0]) : null;
+      if (cancelled) return;
+      if (first) datasets.current.set(first.entry.id, first);
+      setManifest(entries);
+      const last = first ? first.measured.meta.steps - 1 : MONTHS;
+      stepRef.current = last;
+      setSource(first ? { kind: "nisar", ds: first } : { kind: "synthetic" });
+      setStep(last);
 
-        const [w, s, e, n] = cube?.meta.bounds ?? [0, 0, 0, 0];
-        map = new maplibregl.Map({
-          container: container.current!,
-          style: "https://demotiles.maplibre.org/style.json",
-          center: cube ? [(w + e) / 2, (s + n) / 2] : CALIFORNIA_CENTER,
-          zoom: cube ? 6.2 : 4.8,
-        });
-        mapRef.current = map;
-        map.on("style.load", () => map!.setProjection({ type: "globe" }));
+      const [w, s, e, n] = first?.measured.meta.bounds ?? [0, 0, 0, 0];
+      map = new maplibregl.Map({
+        container: container.current!,
+        style: "https://demotiles.maplibre.org/style.json",
+        center: first ? [(w + e) / 2, (s + n) / 2] : CALIFORNIA_CENTER,
+        zoom: first ? 6.2 : 4.8,
+      });
+      mapRef.current = map;
+      map.on("style.load", () => map!.setProjection({ type: "globe" }));
 
-        map.on("load", () => {
-          map!.addSource("california", { type: "geojson", data: state });
-          const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
+      map.on("load", () => {
+        map!.addSource("california", { type: "geojson", data: state });
+        const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
 
-          if (cube) {
-            imageUrls.current = [];
-            const urlFor = (st: number) => (imageUrls.current[st] ??= renderStep(cube, st, limit));
-            map!.addSource("nisar", {
-              type: "image",
-              url: urlFor(last),
-              coordinates: [[w, n], [e, n], [e, s], [w, s]],
-            });
-            map!.addLayer({
-              id: "nisar-raster",
-              type: "raster",
-              source: "nisar",
-              paint: { "raster-fade-duration": 0, "raster-resampling": "linear" },
-            });
-            map!.on("mousemove", (ev) => {
-              const v = cubeValue(cube, stepRef.current, ev.lngLat.lng, ev.lngLat.lat);
-              if (v === null) return popup.remove();
-              popup
-                .setLngLat(ev.lngLat)
-                .setHTML(`<strong>${v > 0 ? "+" : ""}${v.toFixed(0)} mm</strong><br/>since ${formatDate(cube.meta.dates[0])}`)
-                .addTo(map!);
-            });
-            map!.on("mouseout", () => popup.remove());
-          } else {
-            map!.addSource("subsidence", { type: "geojson", data: buildField(state) });
-            map!.addLayer({
-              id: "subsidence-fill",
-              type: "fill",
-              source: "subsidence",
-              paint: { "fill-color": syntheticFill(last), "fill-opacity": 0.85, "fill-antialias": false },
-            });
-            map!.on("mousemove", "subsidence-fill", (ev) => {
-              const p = ev.features?.[0]?.properties;
-              if (!p) return;
-              const v = p[stepKey(stepRef.current)] as number;
-              popup
-                .setLngLat(ev.lngLat)
-                .setHTML(`<strong>${v > 0 ? "+" : ""}${v} mm</strong><br/>since ${monthLabel(0)}<br/>trend ${p.rate} mm/month`)
-                .addTo(map!);
-            });
-            map!.on("mouseleave", "subsidence-fill", () => popup.remove());
-          }
-
+        if (first) {
+          const c = first.measured;
+          imageUrls.current = { cube: c, urls: [] };
+          const url = (imageUrls.current.urls[last] = renderStep(c, last, first.limit));
+          map!.addSource("nisar", { type: "image", url, coordinates: corners(c) });
           map!.addLayer({
-            id: "california-outline",
-            type: "line",
-            source: "california",
-            paint: { "line-color": "#f59e0b", "line-width": 3 },
+            id: "nisar-raster",
+            type: "raster",
+            source: "nisar",
+            paint: { "raster-fade-duration": 0, "raster-resampling": "linear" },
           });
+          map!.on("mousemove", (ev) => {
+            const cur = cubeRef.current;
+            const v = cur && cubeValue(cur, stepRef.current, ev.lngLat.lng, ev.lngLat.lat);
+            if (!cur || v === null || v === undefined) return popup.remove();
+            popup
+              .setLngLat(ev.lngLat)
+              .setHTML(`<strong>${v > 0 ? "+" : ""}${v.toFixed(0)} mm</strong><br/>since ${formatDate(cur.meta.dates[0])}`)
+              .addTo(map!);
+          });
+          map!.on("mouseout", () => popup.remove());
+        } else {
+          map!.addSource("subsidence", { type: "geojson", data: buildField(state) });
+          map!.addLayer({
+            id: "subsidence-fill",
+            type: "fill",
+            source: "subsidence",
+            paint: { "fill-color": syntheticFill(last), "fill-opacity": 0.85, "fill-antialias": false },
+          });
+          map!.on("mousemove", "subsidence-fill", (ev) => {
+            const p = ev.features?.[0]?.properties;
+            if (!p) return;
+            const v = p[stepKey(stepRef.current)] as number;
+            popup
+              .setLngLat(ev.lngLat)
+              .setHTML(`<strong>${v > 0 ? "+" : ""}${v} mm</strong><br/>since ${monthLabel(0)}<br/>trend ${p.rate} mm/month`)
+              .addTo(map!);
+          });
+          map!.on("mouseleave", "subsidence-fill", () => popup.remove());
+        }
+
+        map!.addLayer({
+          id: "california-outline",
+          type: "line",
+          source: "california",
+          paint: { "line-color": "#f59e0b", "line-width": 3 },
         });
-      },
-    );
+      });
+    })();
 
     return () => {
       cancelled = true;
@@ -131,21 +144,34 @@ export default function App() {
     };
   }, []);
 
-  // Repaint when the slider moves.
+  // Switch track: load (once) and show the dataset, jumping to its last step.
+  const selectDataset = async (entry: ManifestEntry) => {
+    let next = datasets.current.get(entry.id);
+    if (!next) {
+      const loaded = await loadDataset(entry);
+      if (!loaded) return;
+      datasets.current.set(entry.id, loaded);
+      next = loaded;
+    }
+    setPlaying(false);
+    setSource({ kind: "nisar", ds: next });
+    setStep(next.measured.meta.steps - 1);
+  };
+
+  // Repaint when the slider, track or measured/trend mode changes.
   useEffect(() => {
     const map = mapRef.current;
-    const src = sourceRef.current;
     if (!map) return;
-    if (src.kind === "nisar") {
+    if (cube && ds) {
       const image = map.getSource("nisar") as maplibregl.ImageSource | undefined;
-      const { cube, limit } = src;
-      const url = (imageUrls.current[step] ??= renderStep(cube, step, limit));
-      const [w, s, e, n] = cube.meta.bounds;
-      image?.updateImage({ url, coordinates: [[w, n], [e, n], [e, s], [w, s]] });
+      if (imageUrls.current.cube !== cube) imageUrls.current = { cube, urls: [] };
+      const st = Math.min(step, cube.meta.steps - 1);
+      const url = (imageUrls.current.urls[st] ??= renderStep(cube, st, ds.limit));
+      image?.updateImage({ url, coordinates: corners(cube) });
     } else if (map.getLayer("subsidence-fill")) {
       map.setPaintProperty("subsidence-fill", "fill-color", syntheticFill(step));
     }
-  }, [step]);
+  }, [step, cube, ds]);
 
   // Auto-play through the time steps, looping back to the baseline.
   useEffect(() => {
@@ -155,24 +181,44 @@ export default function App() {
   }, [playing, lastStep]);
 
   const gradient = `linear-gradient(to right, ${colorStops(limit).map(([, c]) => c).join(", ")})`;
-  const nisar = source.kind === "nisar" ? source.cube.meta : null;
+  const meta = cube?.meta;
+  const shownStep = Math.min(step, lastStep);
 
   return (
     <div className="app">
       <header className="header">
-        <h1>NISAR Subsidence — {nisar ? "Tulare Basin, California" : "California"}</h1>
+        <h1>NISAR Subsidence — {meta ? "Tulare Basin, California" : "California"}</h1>
         <p>
           {source.kind === "loading" && "Loading…"}
-          {nisar &&
-            `NISAR L2 GUNW, track ${nisar.source.track}${nisar.source.direction} frame ${nisar.source.frame}, ` +
-            `${nisar.source.pairs.length} pairs, ${formatDate(nisar.dates[0])} – ${formatDate(nisar.dates[nisar.dates.length - 1])}. ` +
-            `Experimental: atmosphere and ionosphere not corrected.`}
+          {meta &&
+            `NISAR L2 GUNW, ${meta.label}, ${meta.source.pairs.length} pairs, ` +
+            `${formatDate(meta.dates[0])} – ${formatDate(meta.dates[meta.dates.length - 1])}. ` +
+            `Experimental: troposphere not corrected.`}
           {source.kind === "synthetic" && "Synthetic demo data (no NISAR cube found — run scripts/build_subsidence.py)."}
         </p>
       </header>
       <div className="map-wrap">
         <div className="map" ref={container} />
         <section className="panel">
+          {ds && (
+            <div className="panel-row options">
+              <select
+                value={ds.entry.id}
+                onChange={(e) => selectDataset(manifest.find((m) => m.id === e.target.value)!)}
+                aria-label="Dataset"
+              >
+                {manifest.map((m) => (
+                  <option key={m.id} value={m.id}>{m.label}</option>
+                ))}
+              </select>
+              {ds.trend && (
+                <div className="toggle" role="group" aria-label="Display">
+                  <button className={mode === "measured" ? "on" : ""} onClick={() => setMode("measured")}>Measured</button>
+                  <button className={mode === "trend" ? "on" : ""} onClick={() => setMode("trend")}>Trend</button>
+                </div>
+              )}
+            </div>
+          )}
           <div className="panel-row">
             <button className="play" onClick={() => setPlaying((p) => !p)} aria-label={playing ? "Pause" : "Play"}>
               {playing ? "❚❚" : "▶"}
@@ -182,18 +228,19 @@ export default function App() {
               min={0}
               max={lastStep}
               step={1}
-              value={Math.min(step, lastStep)}
+              value={shownStep}
               onChange={(e) => {
                 setPlaying(false);
                 setStep(Number(e.target.value));
               }}
               aria-label="Time step"
             />
-            <span className="date">{stepLabel(Math.min(step, lastStep))}</span>
+            <span className="date">{stepLabel(shownStep)}</span>
           </div>
           <div className="legend">
             <div className="legend-title">
-              {nisar ? "Vertical displacement" : "Displacement"} since {baseline} (mm)
+              {cube ? (mode === "trend" ? "Steady-rate vertical displacement" : "Vertical displacement") : "Displacement"} since{" "}
+              {baseline} (mm)
             </div>
             <div className="legend-bar" style={{ background: gradient }} />
             <div className="legend-labels">

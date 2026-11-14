@@ -1,0 +1,17 @@
+[
+ {
+  "id": "combined",
+  "label": "Combined ascending + descending",
+  "path": "/data/subsidence/combined"
+ },
+ {
+  "id": "asc_034",
+  "label": "Ascending track 034, frame 020",
+  "path": "/data/subsidence/asc_034"
+ },
+ {
+  "id": "desc_114",
+  "label": "Descending track 114, frame 070",
+  "path": "/data/subsidence/desc_114"
+ }
+]

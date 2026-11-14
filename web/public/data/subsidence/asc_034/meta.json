@@ -8,6 +8,7 @@
  "width": 200,
  "height": 200,
  "resolution_deg": 0.01,
+ "label": "Ascending track 034, frame 020",
  "steps": 26,
  "dates": [
   "2025-11-24",
@@ -37,6 +38,12 @@
   "2026-09-20",
   "2026-10-14"
  ],
+ "trend_file": "trend.bin",
+ "rate_mm_per_year": {
+  "p5": -125.4,
+  "median": 18.0,
+  "p95": 105.3
+ },
  "scale_mm": 0.1,
  "nodata": -32768,
  "layout": "int16 little-endian [step][row (north first)][col]",
@@ -205,8 +212,14 @@
   "positive_phase_is_range_increase": true,
   "vertical_assumption": "line-of-sight motion divided by cos(incidence angle)",
   "ramp_removed": true,
+  "ionosphere_screen": {
+   "mode": "auto",
+   "sigma_cells": 8,
+   "applied_pairs": 17
+  },
+  "spatial_smoothing_cells": 2,
+  "trend_trim": 0.15,
   "not_applied": [
-   "ionosphere",
    "troposphere",
    "solid earth tides"
   ]

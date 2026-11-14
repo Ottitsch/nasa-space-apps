@@ -10,6 +10,9 @@ export interface Meta {
   scale_mm: number;
   nodata: number;
   quantity: string;
+  label: string;
+  trend_file?: string;
+  rate_mm_per_year?: { p5: number; median: number; p95: number };
   source: { track: string; direction: string; frame: string; pairs: { level: string }[] };
 }
 
@@ -18,22 +21,55 @@ export interface Cube {
   data: Int16Array; // [step][row, north first][col]
 }
 
-const BASE = "/data/subsidence";
+export interface ManifestEntry {
+  id: string;
+  label: string;
+  path: string;
+}
 
-/** Resolves to null when the cube has not been generated (app falls back to synthetic data). */
-export async function loadCube(): Promise<Cube | null> {
+/** A track's measured cube plus its robust linear-trend cube. */
+export interface Dataset {
+  entry: ManifestEntry;
+  measured: Cube;
+  trend: Cube | null;
+  limit: number; // shared colour-scale limit (mm)
+}
+
+const MANIFEST = "/data/subsidence/manifest.json";
+
+async function json<T>(url: string): Promise<T | null> {
   try {
-    const metaRes = await fetch(`${BASE}/meta.json`);
-    if (!metaRes.ok || !metaRes.headers.get("content-type")?.includes("json")) return null;
-    const meta: Meta = await metaRes.json();
-    const binRes = await fetch(`${BASE}/cube.bin`);
-    if (!binRes.ok) return null;
-    const data = new Int16Array(await binRes.arrayBuffer());
-    if (data.length !== meta.steps * meta.width * meta.height) return null;
-    return { meta, data };
+    const res = await fetch(url);
+    if (!res.ok || !res.headers.get("content-type")?.includes("json")) return null;
+    return (await res.json()) as T;
   } catch {
     return null;
   }
+}
+
+/** Empty when the cubes have not been generated (app falls back to synthetic data). */
+export async function loadManifest(): Promise<ManifestEntry[]> {
+  return (await json<ManifestEntry[]>(MANIFEST)) ?? [];
+}
+
+async function loadCube(path: string, meta: Meta, file: string): Promise<Cube | null> {
+  try {
+    const res = await fetch(`${path}/${file}`);
+    if (!res.ok) return null;
+    const data = new Int16Array(await res.arrayBuffer());
+    return data.length === meta.steps * meta.width * meta.height ? { meta, data } : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function loadDataset(entry: ManifestEntry): Promise<Dataset | null> {
+  const meta = await json<Meta>(`${entry.path}/meta.json`);
+  if (!meta) return null;
+  const measured = await loadCube(entry.path, meta, "cube.bin");
+  if (!measured) return null;
+  const trend = meta.trend_file ? await loadCube(entry.path, meta, meta.trend_file) : null;
+  return { entry, measured, trend, limit: suggestLimit(measured) };
 }
 
 /** Displacement in mm at a coordinate, or null outside the data / on no-data cells. */
