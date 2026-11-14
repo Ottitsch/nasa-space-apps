@@ -55,7 +55,9 @@ the tile address in `web/js/basemap.js` if you need something else.
 
 | Thing on screen | Meaning |
 | --- | --- |
-| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. A small faint dot means nothing detected yet. |
+| Bubbles on the globe | One per place with sinking detected. Size and colour show how far the fastest zone has sunk at the date on the time bar. |
+| Rings on the globe | Places NISAR measures where nothing sinks fast enough to detect yet. Hover one for the length of its record and the smallest rate it can detect. |
+| Chart in the place panel | How far the fastest zone has sunk: measured (white), then projected (orange). Like the time bar, it gives the measured months more room than the years after them, and it does so on both axes, so a steady rate draws one straight line and the projection carries straight on from the measurements. |
 | Time bar, white ticks | Measured by NISAR. One tick per radar pass, 12 days apart. |
 | Time bar, orange ticks | Projection to 2050, one tick per year, that assumes the measured rate simply continues. A scenario, not a forecast. |
 | Blue layer | How far the ground has sunk since the first radar pass (log scale, 1 cm to 10 m). |
@@ -172,7 +174,10 @@ The `pipeline` folder turns raw NISAR products into the small files the map
 loads. For each place in `pipeline/places.json` it does this:
 
 1. **Search** NASA's catalogue (CMR) for NISAR Level 2 GUNW products
-   (geocoded unwrapped interferograms) over the place. `search.py`
+   (geocoded unwrapped interferograms) over the place, and pick the track
+   that covers it. A track that covers the whole place wins, unless another
+   covers at least 90 percent of it with a record half as long again: the
+   record length sets the smallest sinking that can be detected. `search.py`
 2. **Read only what is needed.** Each product is a 2 GB HDF5 file. We open it
    remotely, ask HDF5 where the chunks covering the place live, and download
    just those byte ranges: about 25 MB and 8 seconds per file. `fetch.py`
