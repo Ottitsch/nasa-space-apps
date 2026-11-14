@@ -55,7 +55,9 @@ the tile address in `web/js/basemap.js` if you need something else.
 
 | Thing on screen | Meaning |
 | --- | --- |
-| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. A small faint dot means nothing detected yet. |
+| Bubbles on the globe | One per place with sinking detected. Size and colour show how far the fastest zone has sunk at the date on the time bar. |
+| Rings on the globe | Places NISAR measures where nothing sinks fast enough to detect yet. Hover one for the length of its record and the smallest rate it can detect. |
+| Chart in the place panel | How far the fastest zone has sunk: measured (white), then projected (orange). Like the time bar, it gives the measured months more room than the years after them, and it does so on both axes, so a steady rate draws one straight line and the projection carries straight on from the measurements. |
 | Time bar, white ticks | Measured by NISAR. One tick per radar pass, 12 days apart. |
 | Time bar, orange ticks | Projection to 2050, one tick per year, that assumes the measured rate simply continues. A scenario, not a forecast. |
 | Blue layer | How far the ground has sunk since the first radar pass (log scale, 1 cm to 10 m). |
@@ -121,20 +123,27 @@ assumed since 2000:
 | Toluca, Mexico | 1.3 km² | 1.1 km² | 1.5 km² |
 | Quetta, Pakistan | 0.0 km² | 2.0 km² | 0.6 km² |
 | Delhi, India | 1.2 km² | 1.2 km² | 0.0 km² |
+| Puebla, Mexico | 0.2 km² | 1.4 km² | 0.0 km² |
 | Bandung, Indonesia | 0.0 km² | 0.9 km² | 0.0 km² |
+| Zumpango and Tecámac, Mexico | 0.6 km² | 0.2 km² | 0.0 km² |
+| Neyshabur, Iran | 0.4 km² | 0.4 km² | 0.0 km² |
 | Celaya, Mexico | 0.5 km² | 0.0 km² | 0.0 km² |
+| Kerman, Iran | 0.1 km² | 0.3 km² | 0.0 km² |
 | Rafsanjan Plain, Iran | 0.2 km² | 0.0 km² | 0.0 km² |
 | Istanbul, Türkiye | 0.0 km² | 0.1 km² | 0.0 km² |
+| Los Angeles, United States | 0.1 km² | 0.1 km² | 0.0 km² |
+| Chandigarh and Mohali, India | 0.1 km² | 0.0 km² | 0.0 km² |
+| Tunis, Tunisia | 0.1 km² | 0.0 km² | 0.0 km² |
 
 Each area is counted once, in its worst class. With "not counted" every figure
-above is zero. In Abidjan, Ahmedabad, Corcoran, Isfahan and Shanghai the uneven
-sinking does not stand clear of chance yet, so they show no damage classes
-under any setting.
+above is zero. In Abidjan, Ahmedabad, Antelope Valley, Bakersfield, Coachella
+Valley, Corcoran, Isfahan and Shanghai the uneven sinking does not stand clear
+of chance yet, so they show no damage classes under any setting.
 
 ## What the data shows so far
 
-Built on 2026-11-14 from 64 places. Sinking is detected over at least
-1 km² in 15 of them:
+Built on 2026-11-14 from 112 places. Sinking is detected over at least
+1 km² in 25 of them:
 
 | Place | Fastest zone | Area sinking | Record | Smallest detectable rate |
 | --- | --- | --- | --- | --- |
@@ -142,27 +151,67 @@ Built on 2026-11-14 from 64 places. Sinking is detected over at least
 | Tehran Plain, Iran | 23 cm per year | 56 km² | 4 months (early) | 6.1 cm per year |
 | Quetta, Pakistan | 18 cm per year | 49 km² | 4 months (early) | 6.1 cm per year |
 | Mashhad, Iran | 18 cm per year | 108 km² | 4 months (early) | 6.1 cm per year |
+| Kerman, Iran | 16 cm per year | 50 km² | 4 months (early) | 6.1 cm per year |
 | Toluca, Mexico | 16 cm per year | 9 km² | 11 months | 2.8 cm per year |
 | Rafsanjan Plain, Iran | 16 cm per year | 22 km² | 4 months (early) | 6.1 cm per year |
+| Neyshabur, Iran | 14 cm per year | 4 km² | 4 months (early) | 6.1 cm per year |
 | Central Valley (Corcoran), United States | 14 cm per year | 3 km² | 11 months | 5.9 cm per year |
+| Chandigarh and Mohali, India | 13 cm per year | 8 km² | 11 months | 5.4 cm per year |
+| Puebla, Mexico | 13 cm per year | 1 km² | 4 months (early) | 6.1 cm per year |
 | Abidjan, Côte d'Ivoire | 13 cm per year | 4 km² | 4 months (early) | 9.7 cm per year |
 | Istanbul, Türkiye | 11 cm per year | 6 km² | 4 months (early) | 7.1 cm per year |
+| Zumpango and Tecámac, Mexico | 11 cm per year | 8 km² | 11 months | 2.1 cm per year |
 | Bandung, Indonesia | 11 cm per year | 16 km² | 4 months (early) | 6.1 cm per year |
+| Bakersfield, United States | 11 cm per year | 4 km² | 11 months | 2.3 cm per year |
+| Tunis, Tunisia | 11 cm per year | 1 km² | 4 months (early) | 6.1 cm per year |
 | Delhi, India | 10 cm per year | 3 km² | 11 months | 2.3 cm per year |
 | Shanghai, China | 8 cm per year | 2 km² | 4 months (early) | 6.8 cm per year |
 | Celaya, Mexico | 8 cm per year | 5 km² | 11 months | 2.4 cm per year |
 | Isfahan, Iran | 8 cm per year | 1 km² | 4 months (early) | 6.1 cm per year |
+| Coachella Valley (Indio), United States | 8 cm per year | 3 km² | 11 months | 2.4 cm per year |
+| Antelope Valley (Lancaster), United States | 7 cm per year | 1 km² | 11 months | 3.4 cm per year |
 | Ahmedabad, India | 4 cm per year | 5 km² | 11 months | 2.2 cm per year |
+| Los Angeles, United States | 3 cm per year | 1 km² | 11 months | 2.3 cm per year |
 
 "Early" means only about four months of radar passes. Those rates were
 measured over a single season, so the yearly figure may change as the record
 grows.
 
-No sinking above the detection limit (yet) in the other 49 places, among
+No sinking above the detection limit (yet) in the other 87 places, among
 them Jakarta, Houston, New Orleans, New York and Venice, all known to sink more
-slowly than a few months of data can reveal. Five places in `places.json`
-(Willcox Basin, Larissa, Konya Basin, Kathmandu, Yangon) are skipped for now
-because too little built up ground gave a stable radar signal.
+slowly than a few months of data can reveal. Six places in `places.json` are
+skipped for now: Willcox Basin, Larissa, Konya Basin, Kathmandu and Yangon
+because too little built up ground gave a stable radar signal, and Islamabad
+because its only radar track is too noisy (its detection bar would be near
+25 cm per year).
+
+### Why most of the sinking found so far is in Iran and Mexico
+
+Mostly because of the length of the record, not because the rest of the world
+is stable. Three things decide where sinking shows up:
+
+1. **The record length sets the bar.** Ground counts as sinking only where its
+   rate beats both three times the map noise and 2 cm divided by the record
+   length (wet and dry seasons move the radar phase by a centimetre or two
+   without the ground going anywhere). Four months of passes put that bar near
+   6 cm per year. Eleven months put it near 2 cm per year.
+2. **NASA's records are long in only a few regions.** NISAR products start in
+   late 2025 over parts of the United States, central Mexico, north west
+   India, Japan, Taiwan, Venezuela, the Andes and a few other frames.
+   Everywhere else they start in June 2026. Of the 112 places, 33 have nine to
+   eleven months of passes and 79 have about four.
+3. **Few cities sink faster than 6 cm per year.** The basins of Iran, Quetta
+   and the old lake beds of central Mexico are among the fastest sinking
+   cities measured anywhere, so they clear even the four month bar. Jakarta,
+   Ho Chi Minh City, Bangkok, Houston and Tianjin are known to sink, but over
+   most of their built up land more slowly than that, so for now they read as
+   "nothing detected yet".
+
+Where the record is long, sinking turns up well beyond Mexico: Delhi,
+Ahmedabad and Chandigarh in India, and Bakersfield, Coachella Valley, Antelope
+Valley and Los Angeles in California. Every rerun of the pipeline lengthens
+the records. By about June 2027 every place will have a full year of passes
+and a bar near 2 cm per year.
 
 ![The globe in 2035 if current rates continue](docs/globe-2035.png)
 
@@ -172,7 +221,10 @@ The `pipeline` folder turns raw NISAR products into the small files the map
 loads. For each place in `pipeline/places.json` it does this:
 
 1. **Search** NASA's catalogue (CMR) for NISAR Level 2 GUNW products
-   (geocoded unwrapped interferograms) over the place. `search.py`
+   (geocoded unwrapped interferograms) over the place, and pick the track
+   that covers it. A track that covers the whole place wins, unless another
+   covers at least 90 percent of it with a record half as long again: the
+   record length sets the smallest sinking that can be detected. `search.py`
 2. **Read only what is needed.** Each product is a 2 GB HDF5 file. We open it
    remotely, ask HDF5 where the chunks covering the place live, and download
    just those byte ranges: about 25 MB and 8 seconds per file. `fetch.py`
@@ -226,8 +278,8 @@ Checks made while building it:
 
 | Folder | What | Size |
 | --- | --- | --- |
-| `web/data` | what the map loads: one small index and two files per place | 16 MB |
-| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 1.2 GB |
+| `web/data` | what the map loads: one small index and two files per place | 24 MB |
+| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 1.7 GB |
 
 Both are in the repository. `data/nisar` is the downloaded radar data in a
 compact form (see `data/nisar/README.md`), so nothing has to be fetched again
@@ -357,10 +409,12 @@ report stays clickable.
 
 ### Cities with a full local guide
 
-For the ten places where the most built up land is projected to pass the
-cracking limit, each has its own file naming the offices responsible, how to
-reach them, the law that obliges a reply and its deadline, and the emergency
-number. Every other place gets the report, a general letter and general
+Ten places have their own file naming the offices responsible, how to reach
+them, the law that obliges a reply and its deadline, and the emergency number.
+They were the ten with the most built up land projected to pass the cracking
+limit when the guides were written. Places added later have none yet, although
+Puebla, Neyshabur and Zumpango and Tecámac now rank above Istanbul, Abidjan and
+Shanghai. Every other place gets the report, a general letter and general
 guidance on who is usually responsible.
 
 | City | Page and letter language | Telegram reachable there |
@@ -437,6 +491,9 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
 * Translate the map itself.
 * Collect crack reports from residents on the map (this needs a server and
   moderation, so it is not built).
+* Write local guides for Puebla, Neyshabur and Zumpango and Tecámac, which
+  now rank among the ten places with the most built up land projected past
+  the cracking limit.
 * Rerun the pipeline as radar passes accumulate, add places, mosaic
   neighbouring radar frames for places that straddle two, and use the weather
   model layers shipped inside the products for a better atmosphere correction.

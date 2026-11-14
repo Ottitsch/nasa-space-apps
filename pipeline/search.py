@@ -135,7 +135,12 @@ def search(bbox) -> dict[str, list[Granule]]:
 
 def rank_stacks(bbox, stacks, min_coverage=0.6):
     """Score each stack by how much of the box it covers and how long it runs.
-    Returns [(stack_id, coverage, n_pairs, span_days)] best first."""
+    Returns [(stack_id, coverage, n_pairs, span_days)] best first.
+
+    A stack that covers the whole box comes first, unless another one covers
+    nearly all of it (90 percent) and runs at least half as long again. The
+    record length sets the smallest sinking that can be detected, so a year of
+    passes over 95 percent of a place beats four months over all of it."""
     from datetime import date
 
     def d(s):
@@ -148,5 +153,10 @@ def rank_stacks(bbox, stacks, min_coverage=0.6):
             continue
         span = (d(max(g.sec_date for g in gs)) - d(min(g.ref_date for g in gs))).days
         out.append((sid, cov, len(gs), span))
-    out.sort(key=lambda t: (-(t[1] >= 0.98), -t[3], -t[1], -t[2]))
+    full_span = max((t[3] for t in out if t[1] >= 0.98), default=0)
+
+    def covers(t):
+        return t[1] >= 0.98 or (t[1] >= 0.9 and t[3] >= 1.5 * full_span)
+
+    out.sort(key=lambda t: (-covers(t), -t[3], -t[1], -t[2]))
     return out
