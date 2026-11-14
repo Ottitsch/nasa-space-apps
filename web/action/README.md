@@ -23,6 +23,8 @@ Always include `en`, plus every language listed in `languages`.
   "id": "mexico-city",
   "checked": "2026-11-14",
   "languages": ["es"],
+  "place_name": { "en": "Mexico City", "es": "Ciudad de México" },
+  "country_name": { "en": "Mexico", "es": "México" },
   "summary": { "en": "Two or three plain sentences: who is in charge of what here.", "es": "..." },
   "bodies": [
     {

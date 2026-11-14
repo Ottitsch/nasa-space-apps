@@ -22,7 +22,7 @@
 
   "s1.title": "Get the proof",
   "s1.lead": "This is a report for one spot, measured from orbit. Save it, print it or send the link. A worry is easy to wave away. A dated measurement is not.",
-  "tools.radius": "Neighbourhood",
+  "tools.radius": "Area around the spot",
   "tools.year": "Picture shows",
   "tools.year.now": "today",
   "tools.locate": "Use my location",
@@ -45,7 +45,7 @@
   "early": "Early result: only {months} months of radar passes so far.",
 
   "fact.rate": "Sinking rate here",
-  "fact.sunk": "Sunk from {from} to {to}, measured",
+  "fact.sunk": "Measured sinking, {from} to {to}",
   "fact.by": "By {year}, if the rate continues",
   "fact.crack": "Cracking limit (1/500)",
   "fact.damage": "Damage limit (1/300)",
@@ -73,7 +73,7 @@
 
   "hood.title": "Within {radius} of this spot",
   "hood.built": "Built up land",
-  "hood.sinking": "Of it on sinking or tilting ground",
+  "hood.sinking": "Built up land on sinking or tilting ground",
   "hood.fastest": "Fastest sinking nearby",
   "hood.buildings": "Buildings",
   "hood.col.now": "Today",
@@ -112,7 +112,7 @@
   "s2.to.contact": "Contact page",
   "s2.to.email": "Email",
   "s2.to.phone": "Phone",
-  "s2.to.postal": "Post",
+  "s2.to.postal": "Postal address",
   "s2.to.pick": "Address the letter to this office",
   "s2.to.picked": "Letter addressed to this office",
   "s2.generic.title": "We have not looked up the offices for {place} yet. These are usually the ones responsible:",

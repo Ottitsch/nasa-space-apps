@@ -1,0 +1,46 @@
+{
+  "cases": {
+    "tokyo": {
+      "place": "Tokio, Japón",
+      "before": "Desde la década de 1910, las fábricas y después los edificios de oficinas bombearon tanta agua subterránea que partes del este de Tokio se hundieron más de 4.5 metros. En los peores años el terreno bajó más de 20 cm.",
+      "action": "Japón aprobó la Ley de Agua Industrial en 1956 y una ley sobre el agua subterránea que se bombea para edificios en 1962, y Tokio añadió sus propias reglas. Desde 1961 se prohibieron los pozos nuevos en los distritos más afectados de Tokio, el bombeo se restringió desde mediados de la década de 1960 y en su lugar se suministró agua de río.",
+      "after": "El bombeo en el centro de Tokio se redujo a cerca de una décima parte entre 1964 y 1975, y el hundimiento fue más lento cada año a partir de 1972. Desde entonces prácticamente se ha detenido en la ciudad, pero la altura perdida no se recuperó."
+    },
+    "houston": {
+      "place": "Houston y Galveston, Texas, Estados Unidos",
+      "before": "Las ciudades y la industria de los alrededores de Houston dependían sobre todo de pozos para obtener agua. Para 1979, partes de la zona se habían hundido hasta 3 metros (10 pies) y las inundaciones costeras habían empeorado.",
+      "action": "Después de que grupos ciudadanos presionaron para que se bombeara menos, la Legislatura de Texas creó en 1975 el Distrito de Subsidencia Harris-Galveston. Este otorga o niega los permisos para pozos grandes y obliga a los usuarios a cambiar a agua de río.",
+      "after": "Los pozos aportaban alrededor del 60 por ciento del agua del distrito en 1976 y alrededor del 21 por ciento en 2020, y el hundimiento se ha detenido en gran medida en el sur y el este. En el norte y el oeste, donde el cambio se extiende hasta 2035, algunos lugares todavía se hundieron más de 2 cm al año entre 2018 y 2022."
+    },
+    "bangkok": {
+      "place": "Bangkok, Tailandia",
+      "before": "Desde la década de 1950, el servicio de agua de la ciudad y después la industria privada bombearon cada vez más agua subterránea. Para 1980 el centro de Bangkok se hundía claramente, y los lugares más afectados bajaban hasta 12 cm al año.",
+      "action": "Con base en la Ley de Aguas Subterráneas de 1977, el gobierno de Tailandia declaró las áreas más afectadas zonas críticas sin pozos nuevos y empezó a cobrar por el bombeo en 1985. El servicio de agua de la ciudad pasó a usar agua superficial, y el cobro aumentó a más del doble entre 1994 y 2003.",
+      "after": "El bombeo disminuyó y los niveles del agua subterránea empezaron a recuperarse. A principios de la década de 2010 el hundimiento se había reducido a cerca de 1 cm al año en la mayor parte de la ciudad, y a entre 2 y 3 cm en algunas zonas industriales."
+    },
+    "shanghai": {
+      "place": "Shanghái, China",
+      "before": "El hundimiento se registró por primera vez en 1921 y aumentó conforme las fábricas bombeaban más agua subterránea, hasta llegar a casi 10 cm al año entre 1956 y 1959. Para 1965 el punto más afectado de la ciudad había bajado unos 2.6 metros.",
+      "action": "En 1963 el gobierno de la ciudad de Shanghái restringió el bombeo de pozos profundos y pasó algunas fábricas al uso de agua superficial. Desde mediados de la década de 1960 también bombeó agua de regreso al subsuelo cada año, lo que se conoce como recarga artificial.",
+      "after": "El hundimiento en la ciudad bajó a 23 mm en 1965 y se mantuvo en cerca de 1 mm al año hasta 1985. Volvió a aumentar después de 1986 con el crecimiento de la ciudad, y un reglamento municipal de 2013 lo ha mantenido en cerca de 5 mm al año en todo Shanghái."
+    }
+  },
+  "asks": {
+    "monitor": {
+      "title": "Medir el hundimiento y publicarlo",
+      "text": "Pedimos a las autoridades que midan cada año la altura del terreno y los niveles del agua subterránea en puntos fijos y que publiquen los resultados. Tokio, Houston, Bangkok y Shanghái dieron seguimiento a su hundimiento de esta manera y fijaron las reglas de bombeo con base en los datos."
+    },
+    "limit": {
+      "title": "Limitar el bombeo de agua subterránea y cobrar por él",
+      "text": "Pedimos un permiso para cada pozo grande, un tope al bombeo en las zonas que se hunden y una cuota por cada metro cúbico bombeado. En las cuatro ciudades el hundimiento solo disminuyó después de que se redujo el bombeo."
+    },
+    "supply": {
+      "title": "Ofrecer otra fuente de agua",
+      "text": "Pedimos un plan con fechas para llevar agua entubada de ríos o presas a las viviendas y los negocios que hoy dependen de pozos. Tokio, Houston y Bangkok pudieron reducir el bombeo porque a los usuarios se les dio otra agua."
+    },
+    "inspect": {
+      "title": "Inspeccionar y proteger las zonas que se hunden de forma desigual",
+      "text": "Pedimos inspecciones periódicas de construcciones, tuberías y obras de protección contra inundaciones donde el terreno se hunde de forma desigual, y reglas de construcción en las zonas más afectadas. El terreno hundido no vuelve a subir, y Shanghái aplica hoy reglas especiales en zonas como estas."
+    }
+  }
+}

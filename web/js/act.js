@@ -41,7 +41,19 @@ async function dict(lang) {
   }
   return dicts[lang];
 }
-const ctx = lang => ({ lang, d: dicts[lang] || dicts.en });
+// Numbers and dates follow the country of the place, not just the language:
+// Spanish in Mexico writes 2.2 m and 2,484, Spanish in Spain the reverse.
+const REGION = {
+  Mexico: 'MX', Iran: 'IR', Pakistan: 'PK', India: 'IN', Indonesia: 'ID', 'Türkiye': 'TR', "Côte d'Ivoire": 'CI',
+  China: 'CN', 'United States': 'US', 'United Kingdom': 'GB', Colombia: 'CO', Peru: 'PE', Brazil: 'BR', Argentina: 'AR',
+  Chile: 'CL', Netherlands: 'NL', Italy: 'IT', Spain: 'ES', Greece: 'GR', Egypt: 'EG', Nigeria: 'NG', Tanzania: 'TZ',
+  'South Africa': 'ZA', Afghanistan: 'AF', Nepal: 'NP', Bangladesh: 'BD', Myanmar: 'MM', Thailand: 'TH', Vietnam: 'VN',
+  Singapore: 'SG', Philippines: 'PH', Taiwan: 'TW', Japan: 'JP', Australia: 'AU',
+};
+function localeFor(lang) {
+  try { return new Intl.Locale(lang, { region: REGION[S.meta?.country] }).toString(); } catch { return lang; }
+}
+const ctx = lang => ({ lang, loc: localeFor(lang), d: dicts[lang] || dicts.en });
 const caseDicts = { en: null };
 async function caseDict(lang) {
   if (!(lang in caseDicts)) {
@@ -60,19 +72,23 @@ const t = (key, vars) => tr(S.ui, key, vars);
 /** Text from a city file: { en: "...", es: "..." }. */
 const pick = (obj, lang) => (obj && typeof obj === 'object' ? obj[lang] ?? obj.en ?? '' : obj || '');
 
-const num = (L, n, d = 0) => new Intl.NumberFormat(L.lang, { maximumFractionDigits: d }).format(n);
-const day = (L, ms) => new Intl.DateTimeFormat(L.lang, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(ms);
-const month = (L, ms) => new Intl.DateTimeFormat(L.lang, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(ms);
-const yearText = (L, y) => new Intl.DateTimeFormat(L.lang, { year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(y, 6, 1));
+const num = (L, n, d = 0) => new Intl.NumberFormat(L.loc, { maximumFractionDigits: d }).format(n);
+const day = (L, ms) => new Intl.DateTimeFormat(L.loc, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(ms);
+const month = (L, ms) => new Intl.DateTimeFormat(L.loc, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(ms);
+const yearText = (L, y) => new Intl.DateTimeFormat(L.loc, { year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(y, 6, 1));
 function sunk(L, mm) {
   const a = Math.abs(mm);
   if (a < 995) return tr(L, 'u.cm', { n: num(L, a / 10, a < 100 ? 1 : 0) });
-  return tr(L, 'u.m', { n: new Intl.NumberFormat(L.lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(a / 1000) });
+  return tr(L, 'u.m', { n: new Intl.NumberFormat(L.loc, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(a / 1000) });
 }
 const rate = (L, mm) => tr(L, 'u.cmyr', { n: num(L, Math.abs(mm) / 10, Math.abs(mm) < 100 ? 1 : 0) });
 const mmyr = (L, v) => tr(L, 'u.mmyr', { n: num(L, v, 1) });
 const ha = (L, v) => tr(L, 'u.ha', { n: num(L, v, v < 10 ? 1 : 0) });
 const metresText = (L, m) => tr(L, 'u.dist', { n: num(L, m) });
+
+/** Place and country in the reader's language when the city file knows them. */
+const placeName = L => pick(S.city?.place_name, L.lang) || S.meta.name;
+const countryName = L => pick(S.city?.country_name, L.lang) || S.meta.country;
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const web = u => (/^https?:\/\//i.test(u || '') ? u : null);
@@ -214,7 +230,7 @@ function timelineSVG() {
 function renderSheet() {
   const m = S.meta, A = S.A, sp = A.spot, L = S.ui;
   const radius = metresText(L, S.r);
-  $('sh-place').textContent = `${m.name}, ${m.country}`;
+  $('sh-place').textContent = `${placeName(L)}, ${countryName(L)}`;
   $('sh-meta').textContent = `${t('sheet.spot')}: ${S.lat.toFixed(5)}, ${S.lng.toFixed(5)} · ${t('sheet.made', { date: day(L, Date.now()) })}`;
   $('sh-url').textContent = shareUrl().replace(/^https?:\/\//, '');
 
@@ -423,10 +439,11 @@ function onIdle() {
 
 function buildLetter() {
   const L = S.letter, m = S.meta, A = S.A, sp = A.spot, c = S.city;
-  const local = c && c.languages.includes(L.lang);
+  // an English letter uses the English names of offices and laws, any other language the local names
+  const local = L.lang !== 'en';
   const name = $('you-name').value.trim(), addr = $('you-address').value.trim(), contact = $('you-contact').value.trim();
   const body = c?.bodies.find(b => b.id === S.body);
-  const where = addr || tr(L, 'letter.where.point', { lat: S.lat.toFixed(5), lng: S.lng.toFixed(5), place: m.name });
+  const where = addr || tr(L, 'letter.where.point', { lat: S.lat.toFixed(5), lng: S.lng.toFixed(5), place: placeName(L) });
   const radius = metresText(L, S.r);
   const subject = tr(L, 'letter.subject.' + S.ask, { where });
 
@@ -495,7 +512,7 @@ function renderBodies() {
   const c = S.city, L = S.ui, lang = L.lang;
   if (!c) {
     $('city-summary').textContent = '';
-    $('bodies').innerHTML = `<p>${esc(t('s2.generic.title', { place: S.meta.name }))}</p>
+    $('bodies').innerHTML = `<p>${esc(t('s2.generic.title', { place: placeName(S.ui) }))}</p>
       <ul class="plain" style="margin-top:8px">${[1, 2, 3, 4].map(k => `<li>${esc(t('s2.generic.' + k))}</li>`).join('')}</ul>`;
     $('bodies-note').textContent = '';
     return;
@@ -552,7 +569,7 @@ function renderLead() {
 }
 
 function renderOthers() {
-  const c = S.city, lang = S.ui.lang, place = S.meta.name;
+  const c = S.city, lang = S.ui.lang, place = placeName(S.ui);
   const groups = (c?.groups || []).filter(g => web(g.url));
   $('groups').innerHTML = groups.length
     ? groups.map(g => `<a class="btn group-btn" href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.label || t('s3.group.join', { place }))}</a>`).join('')
@@ -580,7 +597,7 @@ function renderOthers() {
 // ---------------------------------------------------------------- controls
 
 function renderShare() {
-  const url = shareUrl(), text = t('act.share.text', { place: S.meta.name });
+  const url = shareUrl(), text = t('act.share.text', { place: placeName(S.ui) });
   const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
   const wa = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
   for (const id of ['share-tg', 'share-tg2']) $(id).href = tg;
@@ -606,7 +623,7 @@ function writeHash() {
 }
 
 function setSpot(lng, lat) {
-  if (S.place.index(lng, lat) < 0) { toast(t('tools.outside', { place: S.meta.name })); return false; }
+  if (S.place.index(lng, lat) < 0) { toast(t('tools.outside', { place: placeName(S.ui) })); return false; }
   S.lng = lng; S.lat = lat;
   S.A = null;
   analyse(); renderSheet(); renderShare(); renderLead(); refreshLetter(); placeMap(); writeHash();
