@@ -3,7 +3,7 @@
 
 Both cubes must share the same grid (same --aoi/--res in build_subsidence.py).
 Each cell's time series is interpolated to common dates and averaged where both
-tracks are valid (noise drops by ~sqrt(2) if their errors are independent).
+tracks are valid, weighting each track by 1/noise^2 so the noisier one counts less.
 
 Usage: python3 scripts/combine_tracks.py [folder]   (default: web/public/data/subsidence)
 """
@@ -14,6 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
+from build_subsidence import gaussian_blur
 from cube_utils import load, rate_map
 
 SCALE, NODATA = 0.1, -32768
@@ -29,6 +30,20 @@ def interp(cube, years, target):
     return out
 
 
+def noise_level(rate):
+    """Robust small-scale noise of a rate map (mm/yr): what is left after removing its smooth part."""
+    hp = rate - gaussian_blur(rate, 3)
+    v = hp[np.isfinite(hp)]
+    return 1.4826 * np.median(np.abs(v - np.median(v)))
+
+
+def wmean(a, b, wa, wb):
+    """Inverse-variance weighted mean; falls back to whichever input is valid."""
+    num = np.nansum([a * wa, b * wb], axis=0)
+    den = np.nansum([np.where(np.isfinite(a), wa, np.nan), np.where(np.isfinite(b), wb, np.nan)], axis=0)
+    return np.where(den > 0, num / np.where(den > 0, den, 1), np.nan)
+
+
 def pack(a):
     return np.where(np.isfinite(a), np.clip(np.round(a / SCALE), -32767, 32767), NODATA).astype("<i2")
 
@@ -40,6 +55,9 @@ def main(root):
     ta, td = np.array(ma["dates"]), np.array(md["dates"])
     ra, rd = rate_map(ca, ya), rate_map(cd, yd)
 
+    na, nd = noise_level(ra), noise_level(rd)
+    wa, wd = 1 / na**2, 1 / nd**2
+    print(f"noise ascending {na:.0f}, descending {nd:.0f} mm/yr -> weights {wa / (wa + wd):.2f} / {wd / (wa + wd):.2f}")
     both = np.isfinite(ra) & np.isfinite(rd)
     corr = np.corrcoef(ra[both], rd[both])[0, 1]
     print(f"rate agreement ascending vs descending: {both.sum()} shared cells, correlation {corr:.2f}, "
@@ -56,14 +74,14 @@ def main(root):
     ia, id_ = interp(ca, abs_a, tgt), interp(cd, abs_d, tgt)
     # restart both at the first common date so they are comparable
     ia, id_ = ia - ia[0], id_ - id_[0]
-    comb = np.nanmean(np.stack([ia, id_]), axis=0)
+    comb = wmean(ia, id_, wa, wd)
     comb[:, ~(np.isfinite(ia[-1]) | np.isfinite(id_[-1]))] = np.nan
 
     # combined trend: average of the two tracks' trend cubes at the common dates
     _, ta_c, ya_t = load(root / "asc_034", "trend.bin")
     _, td_c, yd_t = load(root / "desc_114", "trend.bin")
     ra_t, rd_t = ta_c[-1] / ya_t[-1], td_c[-1] / yd_t[-1]  # mm/yr
-    trate = np.nanmean(np.stack([ra_t, rd_t]), axis=0)
+    trate = wmean(ra_t, rd_t, wa, wd)
     trend = (trate[None] * tgt[:, None, None]).astype("float32")
     trend[:, ~np.isfinite(trate)] = np.nan
 
@@ -78,7 +96,8 @@ def main(root):
         rate_mm_per_year=dict(zip(["p5", "median", "p95"], [round(float(v), 1) for v in np.nanpercentile(trate, [5, 50, 95])])),
         source=dict(track="034A + 114D", direction="A+D", frame="020 + 070",
                     pairs=ma["source"]["pairs"] + md["source"]["pairs"]),
-        combination=dict(rate_correlation=round(float(corr), 3), method="mean of both tracks at common 12-day dates"),
+        combination=dict(rate_correlation=round(float(corr), 3), method="inverse-variance weighted mean of both tracks at common 12-day dates",
+                         weights=dict(ascending=round(float(wa / (wa + wd)), 3), descending=round(float(wd / (wa + wd)), 3))),
     )
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     print(f"combined cube: {len(dates)} dates {dates[0]} -> {dates[-1]}")

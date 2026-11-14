@@ -303,19 +303,25 @@ def coarse_iono(name, cache, f):
     return block_mean(iono, f, 0.3)
 
 
-def remove_ramp(ph):
-    """Subtract a robustly fitted plane from every pair.
+def remove_ramp(ph, dem=None):
+    """Subtract a robustly fitted plane (and optionally a terrain-height term) from every pair.
 
     Each pair carries a large planar ramp (orbit, ionosphere, tides) that is
-    unrelated to ground motion. Cells far from the typical level (e.g. a
-    subsiding bowl) are excluded from the fit so they are not fitted away.
+    unrelated to ground motion. The optional height term absorbs the stratified
+    atmosphere, which makes high ground read differently from the valley.
+    Cells far from the typical level (e.g. a subsiding bowl) are excluded from
+    the fit so they are not fitted away.
     """
     t, h, w = ph.shape
     yy, xx = np.mgrid[0:h, 0:w]
+    cols = [np.ones((h, w)), xx, yy]
+    if dem is not None:
+        cols.append((dem - np.nanmean(dem)) / 1000.0)
+    basis = np.stack(cols, axis=-1)  # (h, w, k)
     out = np.empty_like(ph)
     for i in range(t):
         v = np.isfinite(ph[i])
-        A = np.c_[np.ones(v.sum()), xx[v], yy[v]]
+        A = basis[v]
         y = ph[i][v]
         keep = np.ones(len(y), bool)
         for _ in range(5):
@@ -323,13 +329,31 @@ def remove_ramp(ph):
             r = y - A @ c
             sigma = 1.4826 * np.median(np.abs(r[keep] - np.median(r[keep])))
             keep = np.abs(r) < 2.5 * max(sigma, 1e-6)
-        out[i] = ph[i] - (c[0] + c[1] * xx + c[2] * yy)
+        out[i] = ph[i] - basis @ c
     return out
 
 
-def spread(ph):
+def despike(ph, k, win=5):
+    """Mask cells that differ from their local median by more than k robust sigmas.
+
+    Catches isolated unwrapping errors and speckle without touching smooth signal.
+    """
+    t, h, w = ph.shape
+    r = win // 2
+    out = ph.copy()
+    padded = np.pad(ph, ((0, 0), (r, r), (r, r)), constant_values=np.nan)
+    for i in range(t):
+        stack = np.stack([padded[i, dy:dy + h, dx:dx + w] for dy in range(win) for dx in range(win)])
+        resid = ph[i] - np.nanmedian(stack, axis=0)
+        v = resid[np.isfinite(resid)]
+        sigma = 1.4826 * np.median(np.abs(v - np.median(v)))
+        out[i] = np.where(np.abs(resid) > k * max(sigma, 1e-6), np.nan, ph[i])
+    return out
+
+
+def spread(ph, dem=None):
     """Robust noise level (rad) of one pair after ramp removal."""
-    r = remove_ramp(ph[None])[0]
+    r = remove_ramp(ph[None], dem)[0]
     v = r[np.isfinite(r)]
     return 1.4826 * np.median(np.abs(v - np.median(v)))
 
@@ -376,6 +400,9 @@ def main():
     p.add_argument("--smooth", type=float, default=2, help="spatial Gaussian smoothing of the result (cells, 0 = off)")
     p.add_argument("--trim", type=float, default=0.15, help="share trimmed at each end when estimating the trend")
     p.add_argument("--label", help="name shown in the app (default: derived from track/direction/frame)")
+    p.add_argument("--height-term", action="store_true", help="also fit a terrain-height term when removing the ramp (stratified atmosphere)")
+    p.add_argument("--despike", type=float, default=0, help="mask cells > K robust sigmas from their 5x5 median (0 = off)")
+    p.add_argument("--max-step-mm", type=float, default=0, help="mask any 12-day step larger than this (unwrapping errors; 0 = off)")
     p.add_argument("--keep-ramp", action="store_true", help="do not remove the per-pair planar ramp")
     p.add_argument("--workers", type=int, default=6)
     p.add_argument("--max-pairs", type=int, help="only use the first N pairs of the chain (testing)")
@@ -401,8 +428,8 @@ def main():
     log(f"{len(steps)} pairs in chain: {steps[0]['ref']} -> {steps[-1]['sec']}")
 
     dem_file = None
+    dem = load_dem(aoi, a.res, cache) if (a.tropo != "never" or a.height_term) else None
     if a.tropo != "never":
-        dem = load_dem(aoi, a.res, cache)
         dem_file = str(cache / "dem_current.npy")
         np.save(dem_file, dem)
         log(f"terrain height {dem.min():.0f}-{dem.max():.0f} m (median {np.median(dem):.0f} m)")
@@ -417,12 +444,13 @@ def main():
     ph, co = zip(*(coarse_pair(s["name"], cache, f, a.min_coh, a.min_valid_frac) for s in steps))
     ph, co = np.stack(ph), np.stack(co)  # (T, H, W) radians / coherence
 
+    ramp_dem = dem if a.height_term else None
     iono_used = []
     if a.iono != "never":
         for i, st in enumerate(steps):
             io = gaussian_blur(coarse_iono(st["name"], cache, f), a.iono_sigma)
             cand = ph[i] - io
-            before, after = spread(ph[i]), spread(cand)
+            before, after = spread(ph[i], ramp_dem), spread(cand, ramp_dem)
             use = a.iono == "always" or after < before
             iono_used.append(bool(use))
             if use:
@@ -433,14 +461,16 @@ def main():
         for i, st in enumerate(steps):
             wet = np.load(cache / f"{st['name']}.wet.npz")["wet"]
             cand = ph[i] - wet
-            before, after = spread(ph[i]), spread(cand)
+            before, after = spread(ph[i], ramp_dem), spread(cand, ramp_dem)
             use = after < before * (1 - a.min_gain)
             tropo_used.append(bool(use))
             if use:
                 ph[i] = cand
             log(f"tropo {st['ref']}->{st['sec']}: noise {before:.2f} -> {after:.2f} rad, {'applied' if use else 'skipped'}")
     if not a.keep_ramp:
-        ph = remove_ramp(ph)
+        ph = remove_ramp(ph, ramp_dem)
+    if a.despike > 0:
+        ph = despike(ph, a.despike)
     if a.ref:
         lon, lat, r = (float(x) for x in a.ref.split(","))
         ref = manual_reference(ph, (lon, lat, r), aoi, a.res)
@@ -454,6 +484,8 @@ def main():
     sign = -POSITIVE_PHASE_IS_RANGE_INCREASE
     inc_mm = sign * ph * WAVELENGTH / (4 * np.pi) * 1000.0 / cos_inc
 
+    if a.max_step_mm > 0:  # a 12-day step this large is an unwrapping error, not ground motion
+        inc_mm = np.where(np.abs(inc_mm) > a.max_step_mm, np.nan, inc_mm)
     inc_mm = np.stack([gaussian_blur(x, a.smooth, keep_mask=True) for x in inc_mm])  # spatial smoothing
 
     ok = np.isfinite(inc_mm).mean(axis=0) >= a.min_valid_frac
@@ -495,6 +527,7 @@ def main():
             ramp_removed=not a.keep_ramp,
             ionosphere_screen=dict(mode=a.iono, sigma_cells=a.iono_sigma, applied_pairs=sum(iono_used)),
             troposphere_wet_screen=dict(mode=a.tropo, min_gain=a.min_gain, applied_pairs=sum(tropo_used)),
+            height_term=a.height_term, despike_sigma=a.despike, max_step_mm=a.max_step_mm,
             spatial_smoothing_cells=a.smooth, trend_smoothing_cells=a.trend_smooth, trend_trim=a.trim,
             not_applied=["hydrostatic troposphere", "solid earth tides"],
         ),
