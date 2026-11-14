@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sinking Ground: where the land is going down, seen by NISAR</title>
+  <meta name="description" content="A global map of sinking ground measured by the NASA and ISRO NISAR radar satellite. Scrub through time to see which areas and buildings are at risk.">
+  <link rel="stylesheet" href="vendor/maplibre-gl.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="map" aria-label="Map of sinking ground"></div>
+
+  <header class="brand panel">
+    <h1>Sinking Ground</h1>
+    <p>Where the land is going down, measured from orbit by NISAR</p>
+    <button id="about-open" class="link" type="button">How this works</button>
+  </header>
+
+  <aside id="list" class="panel list" aria-label="Places">
+    <div class="list-head">
+      <h2>Places measured</h2>
+      <button id="list-toggle" class="icon" type="button" aria-expanded="true" aria-controls="list-body" title="Collapse">▾</button>
+    </div>
+    <div id="list-body">
+      <input id="search" type="search" placeholder="Search a place" autocomplete="off" aria-label="Search a place">
+      <ol id="places"></ol>
+      <p class="fine" id="list-note"></p>
+    </div>
+  </aside>
+
+  <aside id="place" class="panel place" hidden aria-live="polite">
+    <button id="place-close" class="icon close" type="button" title="Back to the globe">✕</button>
+    <p class="eyebrow" id="place-country"></p>
+    <h2 id="place-name"></h2>
+    <p class="status" id="place-status"></p>
+
+    <div class="headline">
+      <div class="big" id="place-big"></div>
+      <div class="big-label" id="place-big-label"></div>
+    </div>
+
+    <svg id="chart" viewBox="0 0 300 96" role="img" aria-label="Sinking of the fastest zone over time"></svg>
+
+    <dl class="stats">
+      <div><dt>Fastest sinking</dt><dd id="st-rate"></dd></div>
+      <div><dt>Area detected sinking</dt><dd id="st-area"></dd></div>
+      <div><dt>Smallest rate we can detect</dt><dd id="st-thr"></dd></div>
+      <div><dt>Radar passes used</dt><dd id="st-span"></dd></div>
+    </dl>
+
+    <div id="strain" class="block">
+      <h3>Ground past building damage limits</h3>
+      <ul class="bars" id="strain-bars"></ul>
+    </div>
+
+    <div id="bldg" class="block">
+      <h3>Buildings in view</h3>
+      <p class="fine" id="bldg-hint">Zoom in to street level to see individual buildings.</p>
+      <ul class="bars" id="bldg-bars" hidden></ul>
+    </div>
+
+    <p class="fine" id="place-driver"></p>
+    <button id="place-hot" class="btn" type="button">Fly to the fastest sinking spot</button>
+  </aside>
+
+  <section class="panel legend" aria-label="Legend">
+    <div class="legend-row">
+      <span class="legend-title">Ground has sunk</span>
+      <div class="ramp" id="ramp"></div>
+      <div class="ramp-ticks"><span>1 cm</span><span>10 cm</span><span>1 m</span><span>10 m</span></div>
+    </div>
+    <div class="legend-row">
+      <span class="legend-title">Buildings</span>
+      <ul class="swatches" id="swatches"></ul>
+    </div>
+  </section>
+
+  <footer class="panel time" aria-label="Time">
+    <button id="play" class="play" type="button" aria-label="Play">▶</button>
+    <div class="time-main">
+      <div class="time-read">
+        <span id="time-date"></span>
+        <span id="time-mode" class="mode"></span>
+      </div>
+      <div class="track">
+        <div class="track-bg"><div class="track-meas" id="track-meas"></div></div>
+        <input id="slider" type="range" min="0" max="1000" step="1" value="350" aria-label="Date">
+        <div class="ticks" id="ticks"></div>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="about">
+    <form method="dialog"><button class="icon close" aria-label="Close">✕</button></form>
+    <h2>How this works</h2>
+    <p><strong>What you are looking at.</strong> NISAR, a radar satellite built by NASA and ISRO, images the same ground every 12 days. Comparing the radar phase between two passes (a technique called InSAR) shows how far the ground moved toward or away from the satellite, down to millimetres. We chain those comparisons into a history of ground motion for each place, and fit a rate.</p>
+    <p><strong>Measured and projected.</strong> Everything up to the latest radar pass is measured. Everything after it is a projection that assumes the ground keeps sinking at the rate measured so far. That is a scenario, not a forecast: rates change when pumping, rainfall or regulation change.</p>
+    <p><strong>Why buildings are coloured.</strong> A building that sinks evenly with its whole neighbourhood is usually fine structurally, though flooding and drainage get worse. Damage comes from uneven sinking, where one side of a street drops faster than the other. We measure that as angular distortion: the difference in sinking between neighbouring ground divided by the distance between them. Engineering practice uses rough limits of 1/500 (cracking becomes possible), 1/300 (cracking likely) and 1/150 (structural damage likely). Buildings change colour on the date the ground beneath them passes each limit, counted from the first radar pass.</p>
+    <p><strong>What this cannot tell you.</strong> Each radar pixel is 80 m wide, so this is a screening map of neighbourhoods, not an inspection of a single building. Distortion that built up before NISAR started watching is not included, so real conditions can be worse than shown. Places with only a few months of passes have a higher detection limit, and slow sinking there stays invisible for now. Motion is read as vertical. Building outlines come from OpenStreetMap and are incomplete in some cities.</p>
+    <p><strong>Data.</strong> NISAR Level 2 geocoded unwrapped interferograms (GUNW), NASA and ISRO, from the Alaska Satellite Facility. Elevation from the Copernicus DEM. Night lights from NASA GIBS. Base map from OpenFreeMap and OpenStreetMap contributors.</p>
+    <p class="fine" id="about-meta"></p>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
