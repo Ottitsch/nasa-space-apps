@@ -39,8 +39,9 @@ counted (see below).
 Every push to `main` is published by Cloudflare Pages, which is connected to
 this repository. Before publishing it runs `node scripts/check-site.mjs`, and a
 failed check stops the publish. `.github/workflows/check.yml` runs the same
-check on pull requests. To host it somewhere else, publish the `web` folder on
-any static host (GitHub Pages, Netlify, an S3 bucket).
+check on pull requests, together with `python3 web/action/check.py`. To host it
+somewhere else, publish the `web` folder on any static host (GitHub Pages,
+Netlify, an S3 bucket).
 
 The imagery, map tiles, building outlines and night lights are loaded from
 public servers, so the visitor needs an internet connection. The close up
@@ -294,7 +295,7 @@ threshold, and turns early results into firm ones.
 ## Layout
 
 ```
-.github/workflows/   check.yml: runs the site check on pull requests
+.github/workflows/   check.yml: runs the checks on pull requests
 scripts/
   check-site.mjs     checks the site before it is published
 data/nisar/          the radar windows, elevation, land cover and manifest

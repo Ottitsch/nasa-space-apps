@@ -1,9 +1,10 @@
 name: check
 
-# Checks the site on pull requests to main and on main itself.
+# Checks the site and the take action files on pull requests to main and on
+# main itself.
 #
 # Publishing is done by Cloudflare Pages, which is connected to this repository
-# and runs the same check as its build command. That is why no deploy token or
+# and runs the site check as its build command. That is why no deploy token or
 # secret is stored here.
 
 on:
@@ -28,3 +29,5 @@ jobs:
             scripts
 
       - run: node scripts/check-site.mjs
+
+      - run: python3 web/action/check.py
