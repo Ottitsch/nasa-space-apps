@@ -2,11 +2,16 @@
 
     python -m pipeline.run --place mexico-city
     python -m pipeline.run --all
+    python -m pipeline.run --all --offline
     python -m pipeline.run --lat 19.4 --lon -99.05 --size 64 --id my-city --name "My City"
 
 For each place this searches NASA's catalogue for NISAR interferograms, reads
 the window over the place from each remote file, builds a ground motion time
 series, and writes compact files under web/data for the map to load.
+
+The radar windows it downloads are kept in data/nisar (in the repository), with
+a manifest of the NASA products they came from. With --offline nothing is
+searched or downloaded: the map data is rebuilt from data/nisar alone.
 """
 from __future__ import annotations
 
@@ -32,6 +37,45 @@ ROOT = Path(__file__).resolve().parent.parent
 PLACES = ROOT / "pipeline" / "places.json"
 
 
+class Pair:
+    """One interferogram as listed in the manifest (enough to find its window)."""
+
+    def __init__(self, ref, sec, name="", url=None):
+        self.ref_date, self.sec_date, self.name, self.url = ref, sec, name, url
+
+
+def read_manifest(raw):
+    path = Path(raw) / "manifest.json"
+    return json.loads(path.read_text()) if path.exists() else {}
+
+
+def write_manifest(raw, pid, bbox, chosen, stacks):
+    """Record which NASA products each stored window came from."""
+    man = read_manifest(raw)
+    man[pid] = dict(
+        bbox=[round(v, 5) for v in bbox],
+        stacks=[dict(id=sid, coverage=round(cov, 3), span_days=span,
+                     pairs=[dict(ref=g.ref_date, sec=g.sec_date, product=g.name) for g in stacks[sid]])
+                for sid, cov, npairs, span in chosen])
+    path = Path(raw) / "manifest.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(dict(sorted(man.items())), indent=1))
+
+
+def static_layers(raw, pid, sid, grid, cache):
+    """Elevation (m) and land cover on the stack grid. Kept next to the radar
+    windows so a rebuild needs no network at all."""
+    path = Path(raw) / pid / sid / "static.npz"
+    if path.exists():
+        z = np.load(path)
+        if z["dem"].shape == (grid["ny"], grid["nx"]):
+            return z["dem"].astype(np.float32), z["landcover"]
+    elev = np.round(D.dem_on_grid(grid, cache)).astype(np.int16)
+    cover = L.landcover_on_grid(grid, cache, f"{pid}_{sid}")
+    F.save_npz(path, dict(dem=elev, landcover=cover))
+    return elev.astype(np.float32), cover
+
+
 def choose_stacks(bbox, stacks, max_tracks=2):
     """Best stack overall, plus the best one looking from the other side when it
     covers the place and runs for a comparable length of time."""
@@ -48,8 +92,8 @@ def choose_stacks(bbox, stacks, max_tracks=2):
     return chosen
 
 
-def fetch_stack(place_id, sid, granules, bbox, cache, workers, log):
-    folder = Path(cache) / place_id / sid
+def fetch_stack(place_id, sid, granules, bbox, raw, workers, log):
+    folder = Path(raw) / place_id / sid
     def path(g):
         return folder / f"{g.ref_date}_{g.sec_date}.npz"
     first = F.fetch_to_cache((granules[0].url, bbox, None, str(path(granules[0])), True))
@@ -90,22 +134,32 @@ def resample_in_time(sec, t_abs):
     return out - out[0][None]
 
 
-def run_place(place, cache, out, workers=5, max_tracks=2, fetch_only=False, log=print):
+def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False, offline=False,
+              log=print):
     t_start = time.time()
     pid = place["id"]
     bbox = S.bbox_from_center(place["lat"], place["lon"], place.get("size_km", 56))
-    stacks = S.search(bbox)
-    chosen = choose_stacks(bbox, stacks, max_tracks)
-    if not chosen:
-        raise RuntimeError("no NISAR interferograms cover this place yet")
+    if offline:
+        entry = read_manifest(raw).get(pid)
+        if not entry:
+            raise RuntimeError("not in data/nisar/manifest.json: run once without --offline")
+        stacks = {st["id"]: [Pair(p["ref"], p["sec"], p["product"]) for p in st["pairs"]]
+                  for st in entry["stacks"]}
+        chosen = [(st["id"], st["coverage"], len(st["pairs"]), st["span_days"])
+                  for st in entry["stacks"]][:max_tracks]
+    else:
+        stacks = S.search(bbox)
+        chosen = choose_stacks(bbox, stacks, max_tracks)
+        if not chosen:
+            raise RuntimeError("no NISAR interferograms cover this place yet")
+        write_manifest(raw, pid, bbox, chosen, stacks)
     mg = E.mercator_grid(bbox, place["lat"])
 
     tracks, layers = [], []
     for sid, cov, npairs, span in chosen:
         log(f"  {sid}: {npairs} pairs over {span} days, coverage {cov:.0%}")
-        items, grid, failed = fetch_stack(pid, sid, stacks[sid], bbox, cache, workers, log)
-        elev = D.dem_on_grid(grid, cache)
-        cover = L.landcover_on_grid(grid, cache, f"{pid}_{sid}")
+        items, grid, failed = fetch_stack(pid, sid, stacks[sid], bbox, raw, workers, log)
+        elev, cover = static_layers(raw, pid, sid, grid, cache)
         if fetch_only:
             continue
         if len(items) < 4:
@@ -229,7 +283,12 @@ def main(argv=None):
     ap.add_argument("--size", type=float, default=56, help="box edge in km")
     ap.add_argument("--id")
     ap.add_argument("--name")
-    ap.add_argument("--cache", default=str(ROOT / ".cache"))
+    ap.add_argument("--offline", action="store_true",
+                    help="no search, no download: rebuild from data/nisar only")
+    ap.add_argument("--raw", default=str(ROOT / "data" / "nisar"),
+                    help="where the radar windows are kept (in the repository)")
+    ap.add_argument("--cache", default=str(ROOT / ".cache"),
+                    help="scratch downloads of public elevation and land cover tiles")
     ap.add_argument("--out", default=str(ROOT / "web" / "data"))
     ap.add_argument("--workers", type=int, default=5)
     ap.add_argument("--tracks", type=int, default=2, help="max tracks to combine (1 or 2)")
@@ -258,8 +317,8 @@ def main(argv=None):
             continue
         print(f"[{i + 1}/{len(todo)}] {place['name']}", flush=True)
         try:
-            entry = run_place(place, a.cache, a.out, a.workers, a.tracks, a.fetch_only,
-                              log=lambda m: print(m, flush=True))
+            entry = run_place(place, a.cache, a.out, a.raw, a.workers, a.tracks, a.fetch_only,
+                              a.offline, log=lambda m: print(m, flush=True))
             if entry is not None:
                 update_index(a.out, entry)
         except Exception as e:  # keep going: one bad place should not stop the batch

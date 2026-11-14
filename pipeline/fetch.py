@@ -270,12 +270,65 @@ def read_subset(url, bbox, grid=None, geometry=True):
                 meta=meta, stats=stats)
 
 
+# ---------------------------------------------------------------- storage
+# Each window is kept as a small npz so a stack never has to be downloaded
+# twice. The format is compact enough to live in the repository:
+#   phase   int16   unwrapped phase minus phase_offset, in steps of PHASE_STEP
+#                   (0.01 rad, which is 0.2 mm of motion at L band); -32768 = missing
+#   coh     uint8   coherence in percent; 255 = missing
+#   cc      uint16  connected component labels from the unwrapper
+#   flags   uint8   bit 0 water, bit 1 unusable sample
+#   iono    float16 ionosphere phase screen at one eighth resolution (it is smooth)
+# plus grid_* and meta_* scalars. Members are LZMA compressed.
+
+PHASE_STEP = 0.01
+IONO_STEP = 8
+
+
+def pack(d):
+    """In memory window (see read_subset) to the stored arrays."""
+    unw = d["unw"]
+    fin = np.isfinite(unw)
+    offset = float(np.median(unw[fin])) if fin.any() else 0.0
+    q = np.round((unw - offset) / PHASE_STEP)
+    fits = fin & (np.abs(q) <= 32767)
+    out = dict(
+        phase=np.where(fits, q, -32768).astype("<i2"),
+        phase_offset=np.array(offset),
+        coh=np.where(np.isfinite(d["coh"]), np.round(np.clip(d["coh"], 0, 1) * 100), 255).astype(np.uint8),
+        cc=d["cc"].astype("<u2"),
+        flags=(d["water"].astype(np.uint8) | (d["bad"].astype(np.uint8) << 1)),
+        iono=d["iono"][::IONO_STEP, ::IONO_STEP].astype(np.float16),
+    )
+    for k, v in d["meta"].items():
+        out["meta_" + k] = np.array(v)
+    for k, v in d["grid"].items():
+        out["grid_" + k] = np.array(v)
+    return out
+
+
+def save_npz(path, arrays):
+    """Like np.savez_compressed, but LZMA (about 15 percent smaller here)."""
+    import zipfile
+
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.stem + ".tmp.npz")
+    with zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_LZMA) as zf:
+        for name, arr in arrays.items():
+            with zf.open(name + ".npy", "w") as fh:
+                np.lib.format.write_array(fh, np.asanyarray(arr), allow_pickle=False)
+    tmp.rename(path)
+
+
 def fetch_to_cache(args):
-    """Worker: read one granule window and store it as a compressed npz."""
+    """Worker: read one granule window and store it."""
     url, bbox, grid, path, geometry = args
     path = Path(path)
     if path.exists():
         return str(path), 0.0, None
+    if url is None:
+        return str(path), 0.0, "not in the local store"
     t = time.time()
     err = None
     for attempt in range(3):
@@ -289,22 +342,28 @@ def fetch_to_cache(args):
             time.sleep(5 * (attempt + 1))
     else:
         return str(path), time.time() - t, err
-    flat = dict(unw=d["unw"], coh=d["coh"], cc=d["cc"], iono=d["iono"],
-                water=d["water"], bad=d["bad"])
-    for k, v in d["meta"].items():
-        flat["meta_" + k] = np.array(v)
-    for k, v in d["grid"].items():
-        flat["grid_" + k] = np.array(v)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_name(path.stem + ".tmp.npz")
-    np.savez_compressed(tmp, **flat)
-    tmp.rename(path)
+    save_npz(path, pack(d))
     return str(path), time.time() - t, None
 
 
 def load_cached(path):
+    """Stored window back to the arrays process.py works with."""
     z = np.load(path)
-    d = {k: z[k] for k in ("unw", "coh", "cc", "iono", "water", "bad")}
+    d = {}
+    if "phase" in z.files:
+        q = z["phase"]
+        d["unw"] = np.where(q == -32768, np.nan,
+                            q.astype(np.float32) * PHASE_STEP + float(z["phase_offset"])).astype(np.float32)
+        c = z["coh"]
+        d["coh"] = np.where(c == 255, np.nan, c.astype(np.float32) / 100).astype(np.float32)
+        d["cc"] = z["cc"]
+        d["water"] = (z["flags"] & 1).astype(bool)
+        d["bad"] = (z["flags"] & 2).astype(bool)
+        ny, nx = q.shape
+        d["iono"] = np.repeat(np.repeat(z["iono"].astype(np.float32), IONO_STEP, axis=0),
+                              IONO_STEP, axis=1)[:ny, :nx]
+    else:   # older full precision layout
+        d = {k: z[k] for k in ("unw", "coh", "cc", "iono", "water", "bad")}
     d["meta"] = {k[5:]: z[k].item() for k in z.files if k.startswith("meta_")}
     d["grid"] = {k[5:]: z[k].item() for k in z.files if k.startswith("grid_")}
     return d

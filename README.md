@@ -154,15 +154,32 @@ Checks made while building it:
 * New York appeared to sink 6 cm in its first winter and then not at all.
   The sustained sinking rule removes that kind of episode.
 
-### Rebuild or add places
+### Where the data lives
+
+| Folder | What | Size |
+| --- | --- | --- |
+| `web/data` | what the map loads: one small index and two files per place | 16 MB |
+| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | about 1 GB |
+
+Both are in the repository. `data/nisar` is the downloaded radar data in a
+compact form (see `data/nisar/README.md`), so nothing has to be fetched again
+to rebuild or retune the map data.
+
+### Rebuild from the repository (no download, no login)
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r pipeline/requirements.txt
 ```
 
-You need a free Earthdata Login token (https://urs.earthdata.nasa.gov, Generate
-Token). Never commit it.
+```bash
+.venv/bin/python -m pipeline.run --all --offline
+```
+
+### Update or add places
+
+Fetching new radar passes needs a free Earthdata Login token
+(https://urs.earthdata.nasa.gov, Generate Token). Never commit it.
 
 ```bash
 export EARTHDATA_TOKEN=paste_your_token_here
@@ -183,7 +200,8 @@ km) and run it. A one off box also works:
 .venv/bin/python -m pipeline.run --lat 19.4 --lon -99.05 --size 64 --id my-place --name "My Place"
 ```
 
-Downloads are cached in `.cache`, so reruns only fetch new radar passes. As
+New windows are added to `data/nisar`, so reruns only fetch radar passes that
+are not there yet. Commit the new files along with the updated `web/data`. As
 NISAR keeps flying, rerunning lengthens every record, lowers every detection
 threshold, and turns early results into firm ones.
 
@@ -209,11 +227,12 @@ threshold, and turns early results into firm ones.
 ## Layout
 
 ```
+data/nisar/          the radar windows, elevation, land cover and manifest
 pipeline/            Python: NISAR products to map data
   places.json        the places to process
   run.py             command line entry point
   search.py          find products in NASA's catalogue
-  fetch.py           remote partial reads of the HDF5 products
+  fetch.py           remote partial reads of the HDF5 products, storage format
   process.py         interferograms to ground motion, detection, distortion
   dem.py             Copernicus elevation
   landcover.py       ESA WorldCover
