@@ -36,15 +36,16 @@ A view can be shared by its address, for example
 `&earlier=2015` or `&earlier=none` to change how sinking from before NISAR is
 counted (see below).
 
-Every push to `main` is published to GitHub Pages by
-`.github/workflows/deploy.yml`, at https://ottitsch.github.io/nasa-space-apps/.
-The same workflow checks pull requests before they are merged. To host it
-somewhere else, publish the `web` folder on any static host (Netlify, an S3
-bucket). The imagery, map tiles, building outlines and night
-lights are loaded from public servers, so the visitor needs an internet
-connection. The close up imagery (Sentinel-2 cloudless by EOX) is licensed for
-non commercial use; swap the tile address in `web/js/basemap.js` if you need
-something else.
+Every push to `main` is published by Cloudflare Pages, which is connected to
+this repository. Before publishing it runs `node scripts/check-site.mjs`, and a
+failed check stops the publish. `.github/workflows/check.yml` runs the same
+check on pull requests. To host it somewhere else, publish the `web` folder on
+any static host (GitHub Pages, Netlify, an S3 bucket).
+
+The imagery, map tiles, building outlines and night lights are loaded from
+public servers, so the visitor needs an internet connection. The close up
+imagery (Sentinel-2 cloudless by EOX) is licensed for non commercial use; swap
+the tile address in `web/js/basemap.js` if you need something else.
 
 ## What you see
 
@@ -293,7 +294,9 @@ threshold, and turns early results into firm ones.
 ## Layout
 
 ```
-.github/workflows/   deploy.yml: checks the site, publishes it to GitHub Pages
+.github/workflows/   check.yml: runs the site check on pull requests
+scripts/
+  check-site.mjs     checks the site before it is published
 data/nisar/          the radar windows, elevation, land cover and manifest
 pipeline/            Python: NISAR products to map data
   places.json        the places to process
