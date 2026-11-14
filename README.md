@@ -122,33 +122,36 @@ assumed since 2000:
 
 | Place | Cracking possible | Cracking likely | Structural damage likely |
 | --- | --- | --- | --- |
-| Mexico City, Mexico | 52.3 km² | 25.0 km² | 1.4 km² |
-| Tehran Plain, Iran | 15.0 km² | 5.4 km² | 0.5 km² |
+| Mexico City, Mexico | 51.6 km² | 24.8 km² | 1.4 km² |
+| Tehran Plain, Iran | 14.9 km² | 5.3 km² | 0.5 km² |
 | Mashhad, Iran | 17.0 km² | 1.8 km² | 0.0 km² |
-| Quetta, Pakistan | 11.6 km² | 4.8 km² | 0.0 km² |
+| Quetta, Pakistan | 11.7 km² | 4.8 km² | 0.0 km² |
 | Toluca, Mexico | 1.3 km² | 1.5 km² | 0.5 km² |
+| Kabul, Afghanistan | 1.6 km² | 0.8 km² | 0.0 km² |
 | Bandung, Indonesia | 2.3 km² | 0.0 km² | 0.0 km² |
 | Neyshabur, Iran | 2.2 km² | 0.0 km² | 0.0 km² |
 | Puebla, Mexico | 2.2 km² | 0.0 km² | 0.0 km² |
-| Kabul, Afghanistan | 0.9 km² | 0.8 km² | 0.0 km² |
 | Delhi, India | 1.2 km² | 0.1 km² | 0.0 km² |
-| Kerman, Iran | 0.5 km² | 0.0 km² | 0.0 km² |
 | Caracas, Venezuela | 0.2 km² | 0.2 km² | 0.0 km² |
+| Kerman, Iran | 0.4 km² | 0.0 km² | 0.0 km² |
 | Zumpango and Tecámac, Mexico | 0.3 km² | 0.0 km² | 0.0 km² |
+| Abidjan, Côte d'Ivoire | 0.2 km² | 0.1 km² | 0.0 km² |
 | León, Mexico | 0.3 km² | 0.0 km² | 0.0 km² |
 | Accra, Ghana | 0.3 km² | 0.0 km² | 0.0 km² |
 | Taipei, Taiwan | 0.2 km² | 0.0 km² | 0.0 km² |
 | Istanbul, Türkiye | 0.2 km² | 0.0 km² | 0.0 km² |
-| Jakarta, Indonesia | 0.1 km² | 0.0 km² | 0.0 km² |
 | Rafsanjan Plain, Iran | 0.1 km² | 0.0 km² | 0.0 km² |
 
 Each area is counted once, in its worst class. With "not counted" every figure
 above is zero. In the other places with sinking detected the uneven sinking
 does not stand clear of chance yet, so they show no damage classes under any
 setting. The table is smaller than it should be for two reasons: four months
-of passes leave a noise floor of about 1/20000 per year in the tilt, and 80 m
-pixels smooth out the sharp steps where buildings crack first (see What this
-cannot tell you).
+of passes leave a noise floor of about 1/25000 per year in the tilt, and the
+radar pixels smooth out the sharp steps where buildings crack first (see What
+this cannot tell you). Most tilt measured so far is gentle: it passes 1/500
+over the coming decades rather than by today, so drag the time bar to 2050 to
+see it. Mashhad, for example, goes from 19 km² of built up land past the
+limits today to 62 km² by 2050, Tehran from 21 to 49 km².
 
 ## What the data shows so far
 
@@ -288,10 +291,15 @@ loads. For each place in `pipeline/places.json` it does this:
    (angular distortion per year). Over one 80 m pixel the noise floor sat near
    1/10000 per year, above the gentle tilt that passes a limit over decades;
    over 240 m it is about half that. It is kept only where it is clearly above
-   the noise: steeper than 99
-   percent of the ground that is not sinking, and in a patch larger than that
-   ground would show even once by chance. The map multiplies this rate by
-   decades, so a handful of noisy pixels must not get through.
+   the noise: steeper than 95 percent of the ground that is not sinking, and in
+   a patch larger than that ground would show even once by chance. The patch
+   size is measured on the same quiet ground, so a lower floor is paid for
+   with a larger patch and chance still gives less than one false patch per
+   place. The map multiplies this rate by decades, so a handful of noisy
+   pixels must not get through. (Until November 2026 the floor was 99 percent
+   over one pixel. Lowering it barely changes the damage at today's date:
+   tilt between the old and the new floor is too gentle to pass 1/500 since
+   2000, but it does pass before 2050.)
 9. **Export** a Web Mercator grid per place at 80 m: rate, distortion rate,
    flags, and the measured wiggle around the straight line at every pass.
    `export.py`

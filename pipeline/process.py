@@ -415,7 +415,7 @@ def chance_patch_px(chance, area_ratio, least=8):
 
 
 def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.0, seasonal_m=0.01,
-           tilt_px=3.0):
+           tilt_px=3.0, beta_pct=95.0):
     """Find ground that is clearly sinking and measure how unevenly it sinks.
 
     Returns dict(sigma, threshold, significant, beta_rate, beta_floor,
@@ -430,9 +430,12 @@ def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.
                    which halves the noise floor compared with one pixel, so
                    the gentle tilt that passes a limit over decades shows
                    instead of being lost under the noise. Zero unless it stands
-                   clear of the noise: steeper than 99 percent of the ground
-                   that is not sinking (beta_floor), in a patch larger than
-                   that ground would show even once by chance (beta_min_px).
+                   clear of the noise: steeper than beta_pct (95) percent of
+                   the ground that is not sinking (beta_floor), in a patch
+                   larger than that ground would show even once by chance
+                   (beta_min_px). The patch test is measured on that same
+                   quiet ground, so a lower floor is paid for with a larger
+                   patch: chance still gives less than one false patch.
                    The map multiplies this rate by decades, so a few noisy
                    pixels must not get through.
 
@@ -465,7 +468,7 @@ def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.
     near = ndi.binary_dilation(sig, iterations=5) & valid & np.isfinite(beta)
     beta_floor, beta_min_px = 0.0, 8
     if quiet.sum() > 500:      # enough quiet ground to tell what noise looks like
-        beta_floor = float(np.nanpercentile(beta[quiet], 99))
+        beta_floor = float(np.nanpercentile(beta[quiet], beta_pct))
         beta_min_px = chance_patch_px(quiet & (beta > beta_floor), near.sum() / quiet.sum())
     uneven = _keep_patches(near & (beta > beta_floor), beta_min_px)
     beta_rate = np.where(uneven, beta, 0).astype(np.float32)
