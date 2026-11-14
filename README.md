@@ -24,27 +24,39 @@ python3 -m http.server 8000 --directory web
 
 Then open http://localhost:8000.
 
-Pick a place on the globe or in the list, drag the time bar, and zoom in to
-street level to see individual buildings. Click anywhere inside a place to read
-the rate, how far that spot has sunk, and when it passes the damage limits.
+Pick a place on the globe or in the list (the search button, top right), drag
+the time bar, and zoom in to street level to see individual buildings. Click
+anywhere inside a place to read the rate, how far that spot has sunk, and when
+it passes the damage limits. The pane at the top left switches between ground
+sinking and damage risk, and between satellite imagery and a dark map with city
+lights.
 
 A view can be shared by its address, for example
-`#place=mexico-city&t=2040-01-01`.
+`#place=mexico-city&t=2040-01-01`. Add `&base=night` for the dark map, and
+`&earlier=2015` or `&earlier=none` to change how sinking from before NISAR is
+counted (see below).
 
-To put it online, publish the `web` folder on any static host (GitHub Pages,
-Netlify, an S3 bucket). The map tiles, building outlines and night lights are
-loaded from public servers, so the visitor needs an internet connection.
+Every push to `main` is published to GitHub Pages by
+`.github/workflows/deploy.yml`, at https://ottitsch.github.io/nasa-space-apps/.
+The same workflow checks pull requests before they are merged. To host it
+somewhere else, publish the `web` folder on any static host (Netlify, an S3
+bucket). The imagery, map tiles, building outlines and night
+lights are loaded from public servers, so the visitor needs an internet
+connection. The close up imagery (Sentinel-2 cloudless by EOX) is licensed for
+non commercial use; swap the tile address in `web/js/basemap.js` if you need
+something else.
 
 ## What you see
 
 | Thing on screen | Meaning |
 | --- | --- |
-| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. Hollow grey means nothing detected yet. |
-| Time bar, solid part | Measured by NISAR. One step per radar pass, 12 days apart. |
-| Time bar, dashed part | Projection to 2050 that assumes the measured rate simply continues. A scenario, not a forecast. |
+| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. A small faint dot means nothing detected yet. |
+| Time bar, white ticks | Measured by NISAR. One tick per radar pass, 12 days apart. |
+| Time bar, orange ticks | Projection to 2050, one tick per year, that assumes the measured rate simply continues. A scenario, not a forecast. |
 | Blue layer | How far the ground has sunk since the first radar pass (log scale, 1 cm to 10 m). |
 | Damage risk layer | The same ground coloured by risk class instead. |
 | Buildings | Coloured by the risk class of the ground under them at the chosen date. |
+| Built up land past damage limits | Area in each damage class at the chosen date, and when each limit is first passed. An estimate: it counts sinking from before NISAR (see below). |
 
 ### Why buildings change colour
 
@@ -65,6 +77,54 @@ grows every year the ground keeps sinking unevenly.
 The limits are the classic ones from foundation engineering (Skempton and
 MacDonald 1956, Bjerrum 1963). They are screening levels for neighbourhoods,
 not a verdict on any single building.
+
+### Sinking from before NISAR
+
+NISAR has watched these places since late 2025. Where sinking is detected, the
+fastest tilting ground gains about 1/1250 per year, so counted from the first
+radar pass no ground reaches even the first limit (1/500) for two and a half
+years. On that count the damage classes are empty through everything measured
+so far. But the ground NISAR sees sinking was sinking long before it launched.
+
+So the damage classes also count earlier strain, and the assumption for it
+comes from the NISAR data itself: **the uneven sinking measured now is taken to
+have been going on at the same rate since 2000.** It is the assumption the
+projection makes (the measured rate continues to 2050) applied backwards over
+the same length of time. It is an estimate, not a measurement, and the app says
+so wherever it is used.
+
+* The place panel has a control, **Sinking before NISAR**: assumed since 2000
+  (the default), assumed since 2015, or not counted. "Not counted" shows only
+  the strain built up since the first radar pass, and then says when each limit
+  is first passed.
+* Only the damage classes use it. How far the ground has sunk (the blue layer,
+  the big number, the chart) is always counted from the first radar pass.
+* A rate carried back 25 years carries its noise back too. Uneven sinking is
+  therefore kept only where it stands clear of chance (step 8 below).
+* It is only assumed in places where sinking is detected over at least 1 km².
+  The small spots in other places can be earthworks or landfill, which have
+  not been sinking like that for decades.
+
+Built up land past the damage limits at the latest radar pass, with sinking
+assumed since 2000:
+
+| Place | Cracking possible | Cracking likely | Structural damage likely |
+| --- | --- | --- | --- |
+| Mexico City, Mexico | 52.2 km² | 35.8 km² | 7.5 km² |
+| Mashhad, Iran | 2.1 km² | 7.5 km² | 0.2 km² |
+| Tehran Plain, Iran | 2.0 km² | 5.2 km² | 0.6 km² |
+| Toluca, Mexico | 1.3 km² | 1.1 km² | 1.5 km² |
+| Quetta, Pakistan | 0.0 km² | 2.0 km² | 0.6 km² |
+| Delhi, India | 1.2 km² | 1.2 km² | 0.0 km² |
+| Bandung, Indonesia | 0.0 km² | 0.9 km² | 0.0 km² |
+| Celaya, Mexico | 0.5 km² | 0.0 km² | 0.0 km² |
+| Rafsanjan Plain, Iran | 0.2 km² | 0.0 km² | 0.0 km² |
+| Istanbul, Türkiye | 0.0 km² | 0.1 km² | 0.0 km² |
+
+Each area is counted once, in its worst class. With "not counted" every figure
+above is zero. In Abidjan, Ahmedabad, Corcoran, Isfahan and Shanghai the uneven
+sinking does not stand clear of chance yet, so they show no damage classes
+under any setting.
 
 ## What the data shows so far
 
@@ -132,7 +192,10 @@ loads. For each place in `pipeline/places.json` it does this:
    at least 30 percent of its share, which removes one off episodes such as
    a frozen winter.
 8. **Measure uneven sinking** as the slope of the rate map (angular distortion
-   per year), kept only where it is clearly above the noise.
+   per year), kept only where it is clearly above the noise: steeper than 99
+   percent of the ground that is not sinking, and in a patch larger than that
+   ground would show even once by chance. The map multiplies this rate by
+   decades, so a handful of noisy pixels must not get through.
 9. **Export** a Web Mercator grid per place at 80 m: rate, distortion rate,
    flags, and the measured wiggle around the straight line at every pass.
    `export.py`
@@ -209,9 +272,12 @@ threshold, and turns early results into firm ones.
 
 * **It is a screening map.** One radar pixel is 80 m wide. It describes
   neighbourhoods, not a single building's foundations.
-* **Strain from before NISAR is not counted.** Distortion is counted from the
-  first radar pass (late 2025 at the earliest). Ground that has been sinking
-  unevenly for decades is in worse shape than shown.
+* **Strain from before NISAR is assumed, not measured.** The damage classes
+  take today's uneven sinking to have gone on at the same rate since 2000.
+  Where sinking began later or used to be slower (new fill, reclaimed land)
+  they overstate. Where it used to be faster they understate. Set "Sinking
+  before NISAR" to "not counted" to see only what has built up since the first
+  radar pass.
 * **Short records only see fast sinking.** Most places have about four months
   of passes so far, which only reveals sinking faster than roughly 6 cm per
   year. "No sinking detected" there means "nothing that fast", not "stable".
@@ -227,6 +293,7 @@ threshold, and turns early results into firm ones.
 ## Layout
 
 ```
+.github/workflows/   deploy.yml: checks the site, publishes it to GitHub Pages
 data/nisar/          the radar windows, elevation, land cover and manifest
 pipeline/            Python: NISAR products to map data
   places.json        the places to process
@@ -245,12 +312,13 @@ web/                 the static site
   action/            city files, translations and policy examples for that page
   js/act.js          the take action page
   js/pdf.js          PDF downloads made in the browser
-  js/app.js          map, layers, panels
+  js/app.js          map layers, panes, controls
+  js/basemap.js      the map style: imagery or night lights, borders, names
   js/data.js         reading the per place grids
   js/timeline.js     the time bar
   js/config.js       colours, limits, formatting
   data/              output of the pipeline (index.json and two files per place)
-  vendor/            MapLibre GL JS and PMTiles
+  vendor/            MapLibre GL JS, PMTiles, html2canvas and the Figtree typeface
 ```
 
 ## Take action
@@ -266,6 +334,11 @@ after clicking a building.
 | 3. Find the others | A link to the city's group, ways to pass the report on, a short guide to turning a few neighbours into a group, and four cities that stopped their sinking with what they did. |
 
 Nothing the person types (name, address) leaves their device.
+
+The report and the letter use the same damage classes as the map, so they also
+count sinking from before NISAR (see above). The page takes the map's setting
+from the link (`&earlier=2015`, `&earlier=none`), and both the report and the
+letter say that this part is an estimate, not a measurement.
 
 The PDFs are made in the browser, with no server: the page is drawn to an
 image and wrapped in a PDF file (`web/js/pdf.js`). That keeps every script
@@ -345,7 +418,7 @@ without touching the map code:
 
 ```js
 document.addEventListener('sinkingground:place', e => { /* e.detail: id, name, country, detected */ });
-document.addEventListener('sinkingground:inspect', e => { /* e.detail: place, lng, lat, riskClass, rate_mm_per_year, sunk_mm, time, projected */ });
+document.addEventListener('sinkingground:inspect', e => { /* e.detail: place, lng, lat, riskClass, rate_mm_per_year, sunk_mm, time, projected, earlierSince */ });
 document.addEventListener('sinkingground:time', e => { /* e.detail: time, projected */ });
 ```
 
@@ -367,8 +440,14 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
   Satellite Facility DAAC.
 * Elevation: Copernicus DEM GLO 90, ESA.
 * Land cover: ESA WorldCover 2021.
-* Night lights on the globe: NASA GIBS, VIIRS Black Marble.
+* Imagery on the globe: NASA GIBS, Blue Marble and VIIRS Black Marble (night
+  lights).
+* Close up imagery: Sentinel-2 cloudless by EOX IT Services GmbH
+  (https://cloudless.eox.at, contains modified Copernicus Sentinel data 2024),
+  CC BY-NC-SA 4.0.
 * Buildings: Google Open Buildings, Microsoft Building Footprints and
   OpenStreetMap, merged by VIDA (source.coop).
-* Base map: OpenFreeMap, OpenMapTiles, OpenStreetMap contributors.
-* Map library: MapLibre GL JS. Tile archive reader: PMTiles.
+* Borders, roads and names: OpenFreeMap, OpenMapTiles, OpenStreetMap
+  contributors.
+* Map library: MapLibre GL JS. Tile archive reader: PMTiles. Typeface: Figtree
+  (SIL Open Font License).

@@ -63,6 +63,9 @@ export class PlaceData {
     this.pixelKm2 = 0.0064;                        // 80 m pixels on the ground
     this.frames = null;
     this._cache = new Map();
+    this._firstRate = new Map();
+    this.strainT0 = meta.t0;                       // moment uneven sinking is counted from
+    this.earlier = null;                           // year it is assumed to go back to, if any
     this._buildAlpha();
     this._findHot();
   }
@@ -126,6 +129,22 @@ export class PlaceData {
 
   years(ms) { return (ms - this.meta.t0) / YEAR; }
 
+  /**
+   * Count uneven sinking from the start of `year` instead of from the first
+   * radar pass, assuming the distortion rate measured now was already going
+   * on by then. null (or a year after the first pass) counts from the first
+   * pass only. Sinking itself (sunkAt) is always counted from the first pass.
+   */
+  setEarlier(year) {
+    this.earlier = year != null && Date.UTC(year, 0, 1) < this.meta.t0 ? year : null;
+    this.strainT0 = this.earlier == null ? this.meta.t0 : Date.UTC(this.earlier, 0, 1);
+  }
+
+  /** Years of uneven sinking counted at a moment in time. This, not years(),
+   *  is the `y` that classAt and areaByClass take, and what yearsToLimit and
+   *  yearsToFirstPass count in. */
+  strainYears(ms) { return (ms - this.strainT0) / YEAR; }
+
   setFrames(buf) {
     const w = this.W / 4, h = this.H / 4;
     const N = this.meta.dates.length;
@@ -185,7 +204,7 @@ export class PlaceData {
     return -(this.rate[i] * y + (a ? (1 - w) * a[i] + w * b[i] : 0));
   }
 
-  /** Risk class 0..4 of the ground at one pixel, y years after the first pass. */
+  /** Risk class 0..4 of the ground at one pixel after y years of uneven sinking. */
   classAt(i, y) {
     if (i < 0 || y <= 0 || !(this.flags[i] & 1)) return 0;
     const d = this.beta[i] * 1e-6 * y;
@@ -195,13 +214,37 @@ export class PlaceData {
     return this.flags[i] & 2 ? 1 : 0;
   }
 
-  /** Years after the first pass at which a pixel passes a distortion limit. */
+  /** Years of uneven sinking after which a pixel passes a distortion limit. */
   yearsToLimit(i, limit) {
     const b = this.beta[i] * 1e-6;
     return b > 0 ? limit / b : Infinity;
   }
 
-  /** km2 of ground in each risk class. need = 5 counts built up land only. */
+  /**
+   * Years of uneven sinking after which ground first passes a distortion
+   * limit. "First" is the moment the area past the limit reaches the smallest
+   * amount the panel can show (8 pixels, 0.05 km2), so that one noisy pixel
+   * does not set the date. Infinity when too little ground sinks unevenly.
+   * need = 5 looks at built up land only.
+   */
+  yearsToFirstPass(limit, need = 5) {
+    let b = this._firstRate.get(need);
+    if (b === undefined) {
+      const { n, flags, beta } = this;
+      const px = Math.ceil(0.05 / this.pixelKm2);
+      const top = [];
+      for (let i = 0; i < n; i++) {
+        if (beta[i] && (flags[i] & need) === need) top.push(beta[i]);
+      }
+      top.sort((p, q) => q - p);
+      b = top.length >= px ? top[px - 1] : 0;      // rate of the 8th fastest tilting pixel
+      this._firstRate.set(need, b);
+    }
+    return b > 0 ? limit / (b * 1e-6) : Infinity;
+  }
+
+  /** km2 of ground in each risk class after y years of uneven sinking.
+   *  need = 5 counts built up land only. */
   areaByClass(y, need = 1) {
     const out = [0, 0, 0, 0, 0];
     if (y <= 0) return out;

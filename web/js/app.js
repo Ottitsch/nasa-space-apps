@@ -1,12 +1,14 @@
 // Sinking Ground: a globe of places where NISAR sees the ground going down,
 // a time bar to scrub through measured and projected sinking, and buildings
 // coloured by the strain the ground under them has built up.
+// The screen is the map; controls are small panes of glass along its edges.
 
 import * as maplibregl from '../vendor/maplibre-gl.mjs';
 import {
-  END_YEAR, LIMITS, RISK, SINK_DECADES, SINK_MIN_MM, YEAR,
+  EARLIER, EARLIER_DEFAULT, END_YEAR, LIMITS, RISK, SINK_DECADES, SINK_MIN_MM, YEAR,
   fmtDate, fmtMonth, fmtRate, fmtSunk, rampCSS, sinkCSS, sinkLUT, sinkU,
 } from './config.js';
+import { ATTRIBUTION, BASES, UNDER_LABELS, baseStyle } from './basemap.js';
 import { hotSunk, loadFrames, loadIndex, loadPlace } from './data.js';
 import { Timeline } from './timeline.js';
 
@@ -16,20 +18,37 @@ const $ = id => document.getElementById(id);
 const BLDG_URL = 'pmtiles://https://data.source.coop/vida/google-microsoft-osm-open-buildings/pmtiles/goog_msft_osm.pmtiles';
 const BLDG = { source: 'bldg', sourceLayer: 'goog_msft_osm_building_footprints' };
 const BLDG_MIN_ZOOM = 13.5;
-const NIGHT = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/2016-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png';
-const GLOBE_VIEW = { center: [-75, 18], zoom: 2.1, pitch: 0, bearing: 0 };
-// keep the globe clear of the panels on wide screens
-const globePad = () => (narrow() ? { top: 60, bottom: 110, left: 0, right: 0 } : { top: 0, bottom: 90, left: 320, right: 0 });
-const narrow = () => window.innerWidth <= 860;
+const narrow = () => window.innerWidth <= 760;
+// room the pane on the right takes from the map on wide screens
+const PANE = 392;
+// keep the globe clear of the panes
+const globePad = () => (narrow()
+  ? { top: 30, bottom: 110, left: 0, right: 0 }
+  : { top: 0, bottom: 90, left: 0, right: ui.panel === 'none' ? 0 : PANE });
+// the whole globe, sized to the free part of the window (it is about 610 px
+// across at zoom 2.1); on a phone it may run past the sides
+function globeView() {
+  const pad = globePad();
+  const high = window.innerHeight - pad.top - pad.bottom, wide = window.innerWidth - pad.left - pad.right;
+  const across = narrow() ? Math.min(high * 0.9, wide * 1.35) : Math.min(high, wide) * 0.96;
+  return { center: [-75, 18], zoom: Math.max(1, 2.1 + Math.log2(Math.max(240, across) / 610)), pitch: 0, bearing: 0 };
+}
 
 const state = {
   mode: 'sink',     // 'sink': how far the ground has sunk, 'risk': damage risk classes
+  earlier: EARLIER_DEFAULT,   // uneven sinking from before NISAR: an id from EARLIER
+  base: 'satellite', // 'satellite': real imagery, 'night': dark map with city lights
   index: null,
   meta: null,       // selected place (index entry)
   place: null,      // its loaded PlaceData
   time: 0,
   loadToken: 0,
 };
+
+// which pane is open on the right ('none', 'finder': the list of places,
+// 'place': the selected place), and whether the list should come back when a
+// place is closed
+const ui = { panel: 'none', pinned: false };
 
 /** Other features (for example a "contact your authority" flow) can listen for
  *  sinkingground:place, sinkingground:inspect and sinkingground:time on document. */
@@ -51,17 +70,13 @@ if (window.pmtiles) maplibregl.addProtocol('pmtiles', new window.pmtiles.Protoco
 
 const map = new maplibregl.Map({
   container: 'map',
-  style: 'https://tiles.openfreemap.org/styles/dark',
-  ...GLOBE_VIEW,
+  style: baseStyle(readHash().base),
+  ...globeView(),
   minZoom: 1,
   maxPitch: 70,
-  attributionControl: false,
+  attributionControl: false,   // credits are in the line along the bottom
 });
-map.addControl(new maplibregl.AttributionControl({
-  compact: true,
-  customAttribution: 'NISAR (NASA, ISRO) via ASF · NASA GIBS · Buildings: Google, Microsoft, OSM via VIDA',
-}), 'bottom-right');
-map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
+map.addControl(new maplibregl.ScaleControl({ maxWidth: 120 }), 'bottom-right');
 map.on('error', e => console.warn('map:', e.error?.message || e));
 
 const canvas = document.createElement('canvas');
@@ -76,32 +91,12 @@ const RISK_PX = RISK.map((r, i) => {
 let image = null, pixels = null;
 
 function addLayers() {
-  map.setProjection({ type: 'globe' });
-  try {
-    map.setSky({
-      'sky-color': '#0a1220', 'horizon-color': '#1b2c48', 'fog-color': '#0a1220',
-      'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0],
-    });
-    map.setLight({ anchor: 'viewport', intensity: 0.22, color: '#ffffff', position: [1.3, 200, 35] });
-  } catch (e) { /* sky and light are decoration only */ }
-
-  const layers = map.getStyle().layers;
-  const firstSymbol = layers.find(l => l.type === 'symbol')?.id;
-  const below = layers.find(l => l.id === 'waterway') ? 'waterway' : firstSymbol;
-
-  // city lights on the globe, fading out as you approach street level
-  map.addSource('night', { type: 'raster', tiles: [NIGHT], tileSize: 256, maxzoom: 8 });
-  map.addLayer({
-    id: 'night', type: 'raster', source: 'night', maxzoom: 9,
-    paint: { 'raster-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0.95, 5, 0.85, 8.5, 0] },
-  }, below);
-
   // outline of the area we have data for
   map.addSource('extent', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
   map.addLayer({
     id: 'extent', type: 'line', source: 'extent',
-    paint: { 'line-color': '#5fd4e8', 'line-opacity': 0.45, 'line-width': 1, 'line-dasharray': [3, 3] },
-  }, firstSymbol);
+    paint: { 'line-color': '#ffffff', 'line-opacity': 0.55, 'line-width': 1, 'line-dasharray': [3, 3] },
+  }, UNDER_LABELS);
 
   // buildings, coloured through feature state by updateBuildings()
   if (window.pmtiles) {
@@ -110,39 +105,42 @@ function addLayers() {
       id: 'bldg', type: 'fill-extrusion', source: BLDG.source, 'source-layer': BLDG.sourceLayer, minzoom: BLDG_MIN_ZOOM,
       paint: {
         'fill-extrusion-color': ['match', ['coalesce', ['feature-state', 'risk'], 0],
-          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#3d4654'],
+          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#46505f'],
         // heights are not in the data: one modest height for every building
         'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], BLDG_MIN_ZOOM, 0, 15, 7],
         'fill-extrusion-opacity': 0.93,
       },
-    }, firstSymbol);
+    }, UNDER_LABELS);
   }
 
   // one bubble per place
   map.addSource('places', { type: 'geojson', data: placesGeoJSON() });
   const detected = ['==', ['get', 'detected'], 1];
+  // a soft shadow keeps the bubbles readable on bright ground
   map.addLayer({
-    id: 'places-glow', type: 'circle', source: 'places', maxzoom: 9.5, filter: detected,
-    paint: { 'circle-radius': ['*', 2.4, ['get', 'r']], 'circle-color': ['get', 'color'], 'circle-opacity': 0.22, 'circle-blur': 1 },
+    id: 'places-shadow', type: 'circle', source: 'places', maxzoom: 9.5,
+    paint: { 'circle-radius': ['+', ['get', 'r'], 5], 'circle-color': '#000000', 'circle-opacity': ['case', detected, 0.4, 0.25], 'circle-blur': 0.7 },
   });
   map.addLayer({
     id: 'places-dot', type: 'circle', source: 'places', maxzoom: 9.5,
     paint: {
       'circle-radius': ['get', 'r'],
-      'circle-color': ['case', detected, ['get', 'color'], 'rgba(120,135,160,0.25)'],
-      'circle-stroke-color': ['case', detected, '#ffffff', '#8f9bb0'],
-      'circle-stroke-width': ['case', detected, 1.3, 1],
+      'circle-color': ['case', detected, ['get', 'color'], '#ffffff'],
+      'circle-opacity': ['case', detected, 0.86, 0.22],
+      'circle-stroke-color': '#ffffff',
+      'circle-stroke-opacity': ['case', detected, 1, 0.8],
+      'circle-stroke-width': ['case', detected, 1.6, 1.1],
     },
   });
   map.addLayer({
     id: 'places-label', type: 'symbol', source: 'places', maxzoom: 9.5, filter: detected,
     layout: {
-      'text-field': ['format', ['get', 'name'], {}, '\n', {}, ['get', 'label'], { 'font-scale': 0.88 }],
-      'text-font': ['Noto Sans Regular'], 'text-size': 12.5,
+      'text-field': ['format', ['get', 'name'], {}, '\n', {}, ['get', 'label'], { 'font-scale': 0.9, 'text-font': ['literal', ['Noto Sans Regular']] }],
+      'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-line-height': 1.2,
       'text-variable-anchor': ['top', 'bottom', 'left', 'right'], 'text-radial-offset': ['get', 'ro'],
       'text-justify': 'auto', 'symbol-sort-key': ['-', 0, ['get', 'sunk']],
     },
-    paint: { 'text-color': '#e8eef8', 'text-halo-color': 'rgba(7,11,18,0.9)', 'text-halo-width': 1.5 },
+    paint: { 'text-color': '#ffffff', 'text-halo-color': 'rgba(8,12,18,0.85)', 'text-halo-width': 1.5, 'text-halo-blur': 0.5 },
   });
 
   map.on('click', 'places-dot', e => { selectPlace(e.features[0].properties.id); e.preventDefault(); });
@@ -151,16 +149,17 @@ function addLayers() {
   map.on('mousemove', 'places-dot', e => {
     const p = byId(e.features[0].properties.id);
     hover.setLngLat([p.lon, p.lat]).setHTML(
-      `<div class="pop"><h4>${p.name}</h4>${p.detected
+      `<div class="pop hover"><h4>${p.name}</h4>${p.detected
         ? `<div>Fastest zone sinking ${fmtRate(p.hotRate)}</div>`
         : `<div>No sinking detected above ${p.threshold_mm_yr} mm per year</div>`}</div>`).addTo(map);
   });
   map.on('click', inspect);
   map.on('idle', scanBuildings);
+  map.on('zoom', updateLegend);
 }
 
-const hover = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 14 });
-const popup = new maplibregl.Popup({ maxWidth: '300px' });
+const hover = new maplibregl.Popup({ closeButton: false, closeOnClick: false, focusAfterOpen: false, offset: 16, className: 'tip' });
+const popup = new maplibregl.Popup({ maxWidth: '300px', focusAfterOpen: false, offset: 10 });
 const byId = id => state.index.places.find(p => p.id === id);
 
 function placesGeoJSON() {
@@ -169,11 +168,11 @@ function placesGeoJSON() {
     type: 'FeatureCollection',
     features: state.index.places.filter(p => p !== state.meta).map(p => {
       const sunk = hotSunk(p, t);
-      const r = p.detected ? 5 + 21 * sinkU(sunk) : 3.5;
+      const r = p.detected ? 5 + 21 * sinkU(sunk) : 3.2;
       return {
         type: 'Feature', geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
         properties: {
-          id: p.id, name: p.name, detected: p.detected ? 1 : 0, sunk, r, ro: r / 12.5 + 0.35,
+          id: p.id, name: p.name, detected: p.detected ? 1 : 0, sunk, r, ro: r / 13 + 0.4,
           color: sinkCSS(Math.max(sunk, SINK_MIN_MM + 1)),
           label: sunk > 1 ? fmtSunk(sunk) : fmtRate(p.hotRate).replace(' per year', '/yr'),
         },
@@ -191,14 +190,13 @@ function addOverlay(place) {
   pixels = new Uint32Array(image.data.buffer);
   const [w, s, e, n] = place.meta.bounds;
   map.addSource('sink', { type: 'canvas', canvas, animate: false, coordinates: [[w, n], [e, n], [e, s], [w, s]] });
-  const before = map.getLayer('building') ? 'building' : (map.getLayer('extent') ? 'extent' : undefined);
   map.addLayer({
     id: 'sink', type: 'raster', source: 'sink',
     paint: {
       'raster-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0.9, 13, 0.8, 15.5, 0.55],
       'raster-fade-duration': 0, 'raster-resampling': 'linear',
     },
-  }, before);
+  }, 'extent');
   map.getSource('extent').setData({
     type: 'Feature', geometry: { type: 'LineString', coordinates: [[w, n], [e, n], [e, s], [w, s], [w, n]] },
   });
@@ -215,10 +213,11 @@ function drawOverlay() {
   if (!place || !map.getSource('sink')) return;
   const y = place.years(state.time);
   const { n, rate, alpha } = place;
-  if (y <= 0) {
+  if (state.mode === 'risk') {
+    const ys = place.strainYears(state.time);
+    for (let i = 0; i < n; i++) pixels[i] = alpha[i] > 128 ? RISK_PX[place.classAt(i, ys)] : 0;
+  } else if (y <= 0) {
     pixels.fill(0);
-  } else if (state.mode === 'risk') {
-    for (let i = 0; i < n; i++) pixels[i] = alpha[i] > 128 ? RISK_PX[place.classAt(i, y)] : 0;
   } else {
     const { a, b, w } = place.blend(y);
     const half = SINK_MIN_MM / 2, k = 255 / SINK_DECADES;
@@ -279,7 +278,7 @@ function scanBuildings() {
 function updateBuildings() {
   const place = state.place;
   if (!place || !B.ids.length) return;
-  const y = place.years(state.time);
+  const y = place.strainYears(state.time);
   const counts = [0, 0, 0, 0, 0];
   for (const id of B.ids) {
     const c = place.classAt(B.where.get(id), y);
@@ -293,7 +292,7 @@ function updateBuildings() {
   const ul = $('bldg-bars');
   ul.hidden = false;
   ul.innerHTML = RISK.map((r, i) =>
-    `<li><i class="sw" style="background:${r.color}"></i><span>${r.short}</span><span class="v">${counts[i].toLocaleString()}</span></li>`).join('');
+    `<li><span class="k"><i class="sw" style="background:${r.color}"></i>${r.short}</span><span class="v">${counts[i].toLocaleString()}</span></li>`).join('');
 }
 
 function clearBuildings() {
@@ -305,16 +304,44 @@ function clearBuildings() {
 
 /** Address of the take action page: report, letter and neighbours for one spot. */
 function actUrl(id, lng, lat) {
-  return `act.html#place=${id}` + (lng == null ? '' : `&lat=${lat.toFixed(5)}&lng=${lng.toFixed(5)}`);
+  return `act.html#place=${id}` + (lng == null ? '' : `&lat=${lat.toFixed(5)}&lng=${lng.toFixed(5)}`)
+    + (state.earlier === EARLIER_DEFAULT ? '' : `&earlier=${state.earlier}`);
 }
 
-function limitText(place, i, limit) {
-  const yrs = place.yearsToLimit(i, limit);
+/** Point the panel's take action button at a place, or at one spot in it. */
+let actSpot = null;
+function setActLink(id, lng, lat) {
+  actSpot = [id, lng, lat];
+  $('place-act').href = actUrl(id, lng, lat);
+}
+
+const END = Date.UTC(END_YEAR, 11, 31);
+
+/** The year uneven sinking is assumed to go back to, or null: first radar pass. */
+const earlierSince = () => EARLIER.find(e => e.id === state.earlier).since;
+
+/** Apply the setting to the loaded place. Earlier sinking is only assumed where
+ *  sinking is detected over at least 1 km2. The small spots in other places can
+ *  be earthworks or landfill, which have not been sinking like that for decades. */
+function applyEarlier() {
+  const place = state.place;
+  place?.setEarlier(place.meta.detected ? earlierSince() : null);
+  const since = place?.earlier ?? null;
+  $('legend-note').hidden = since == null;
+  $('legend-note').textContent = since == null ? ''
+    : `Damage classes count earlier uneven sinking too, assumed at today's rate since ${since}.`;
+}
+
+/** When a limit is passed, given how many years of uneven sinking it takes. */
+function whenText(place, yrs) {
   if (!isFinite(yrs)) return 'not at this rate';
-  const ms = place.meta.t0 + yrs * YEAR;
-  if (ms > Date.UTC(END_YEAR, 11, 31)) return `after ${END_YEAR}`;
+  const ms = place.strainT0 + yrs * YEAR;
+  if (ms > END) return `after ${END_YEAR}`;
+  if (ms < place.meta.t0) return 'passed before NISAR began';   // only with earlier sinking counted
   return (ms <= state.time ? 'passed ' : 'around ') + fmtMonth(ms);
 }
+
+const limitText = (place, i, limit) => whenText(place, place.yearsToLimit(i, limit));
 
 function inspect(e) {
   if (e.defaultPrevented) return;
@@ -325,59 +352,92 @@ function inspect(e) {
   if (i < 0) return;
   const m = place.meta, y = place.years(state.time);
   const valid = place.flags[i] & 1, sig = place.flags[i] & 2;
-  const cls = place.classAt(i, y);
+  const cls = place.classAt(i, place.strainYears(state.time));
   const sunk = place.sunkAt(i, y);
+  const since = place.earlier;
   const proj = state.time > m.t1;
-  let html = `<div class="pop"><span class="chip" style="background:${RISK[cls].color}">${RISK[cls].label}</span>`;
+  let html = `<div class="pop"><div class="cls"><i class="sw" style="background:${RISK[cls].color}"></i>${RISK[cls].label}</div>`;
   if (!valid) {
     html += `<div class="note">No reliable radar signal here. Water, farmland, vegetation and steep ground are left out.</div>`;
-  } else if (!sig) {
+  } else if (!sig && !place.beta[i]) {
     html += `<div class="row"><span>Sinking rate</span><span>below ${m.threshold_mm_yr} mm per year</span></div>
       <div class="note">Nothing detected here so far. Slower sinking than the limit above cannot be ruled out.</div>`;
   } else {
-    html += `<div class="row"><span>Sinking rate</span><span>${fmtRate(place.rate[i])}</span></div>
-      <div class="row"><span>${proj ? 'Would have sunk by ' + fmtMonth(state.time) : 'Sunk by ' + fmtDate(state.time)}</span><span>${fmtSunk(sunk)}</span></div>
+    html += (sig
+      ? `<div class="row"><span>Sinking rate</span><span>${fmtRate(place.rate[i])}</span></div>
+      <div class="row"><span>${proj ? 'Would have sunk by ' + fmtMonth(state.time) : 'Sunk by ' + fmtDate(state.time)}</span><span>${fmtSunk(sunk)}</span></div>`
+      : `<div class="row"><span>Sinking rate</span><span>below ${m.threshold_mm_yr} mm per year</span></div>
+      <div class="row"><span>Position</span><span>rim of a sinking zone</span></div>`) + `
       <div class="row"><span>Cracking limit (1/500)</span><span>${limitText(place, i, LIMITS.cracking)}</span></div>
       <div class="row"><span>Structural limit (1/150)</span><span>${limitText(place, i, LIMITS.structural)}</span></div>
-      <div class="note">Counted from the first radar pass on ${fmtDate(m.t0)}. One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
+      <div class="note">${since == null ? 'Counted' : 'Sinking is counted'} from the first radar pass on ${fmtDate(m.t0)}.${since == null ? ''
+        : ` The damage limits also count earlier uneven sinking, assumed at today's rate since ${since}.`} One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
   }
   state.spot = [lng, lat];
   html += `<a class="pop-act" href="${actUrl(m.id, lng, lat)}">Take action for this spot</a>`;
   popup.setLngLat(e.lngLat).setHTML(html + '</div>').addTo(map);
-  $('place-act').href = actUrl(m.id, lng, lat);
+  setActLink(m.id, lng, lat);
   emit('inspect', {
     place: m.id, lng, lat, valid: !!valid, detected: !!sig, riskClass: cls,
     rate_mm_per_year: valid ? place.rate[i] : null, sunk_mm: sunk, time: state.time, projected: proj,
+    earlierSince: since,
   });
 }
 
-// ------------------------------------------------------------- place panel
+// ------------------------------------------------- panes on the right side
+
+function setPanel(which) {
+  ui.panel = which;
+  document.body.dataset.panel = which;
+  $('finder').hidden = which !== 'finder';
+  $('place').hidden = which !== 'place';
+  const b = $('finder-open'), open = which === 'finder';
+  b.classList.toggle('open', open);
+  b.setAttribute('aria-expanded', String(open));
+  b.setAttribute('aria-label', open ? 'Close the list of places' : 'Search places');
+}
+
+function toggleFinder() {
+  const open = ui.panel !== 'finder';
+  if (!state.meta) ui.pinned = open;
+  setPanel(open ? 'finder' : state.meta ? 'place' : 'none');
+  if (open && !narrow()) $('search').focus();
+  if (!state.meta && !narrow()) { stopSpin(); map.easeTo({ padding: globePad(), duration: 500 }); }
+}
 
 function buildList() {
   const places = [...state.index.places].sort((a, b) => a.hotRate - b.hotRate || a.name.localeCompare(b.name));
-  const max = Math.max(...places.map(p => -p.hotRate), 1);
-  $('places').innerHTML = places.map(p => `
+  const row = p => `
     <li data-q="${(p.name + ' ' + p.country).toLowerCase()}"><button type="button" data-id="${p.id}">
-      <span class="nm">${p.name}</span>
-      <span class="rt ${p.detected ? '' : 'none'}">${p.detected ? fmtRate(p.hotRate).replace(' per year', '/yr') : 'not detected'}</span>
-      <span class="ct">${p.country} · ${p.months} mo of data</span><span></span>
-      <span class="bar"><i style="width:${p.detected ? Math.sqrt(-p.hotRate / max) * 100 : 0}%"></i></span>
-    </button></li>`).join('');
-  $('places').addEventListener('click', e => {
+      <span class="nm">${p.name}<span class="ct">, ${p.country}</span></span>
+      ${p.detected
+        ? `<span class="rt">${p.early ? '<small title="Only a few months of radar passes so far">early</small>' : ''}${fmtRate(p.hotRate).replace(' per year', '/yr')}</span>`
+        : `<span class="rt none">${p.months} mo of data</span>`}
+    </button></li>`;
+  const yes = places.filter(p => p.detected), no = places.filter(p => !p.detected);
+  const list = $('places');
+  list.innerHTML = `
+    <h3 class="places-head">Sinking detected</h3><ol>${yes.map(row).join('')}</ol>
+    <h3 class="places-head">Nothing detected yet</h3><ol>${no.map(row).join('')}</ol>
+    <p class="empty" hidden>No place matches that.</p>
+    <p class="fine">Rates are for the fastest zone in each place. Places with only a few months of passes can only show fast sinking so far.</p>`;
+  $('list-note').textContent = `${places.length} measured by NISAR, ${yes.length} with sinking detected`;
+  list.addEventListener('click', e => {
     const b = e.target.closest('button[data-id]');
     if (b) selectPlace(b.dataset.id);
   });
-  $('search').addEventListener('input', e => {
-    const q = e.target.value.trim().toLowerCase();
-    for (const li of $('places').children) li.hidden = q && !li.dataset.q.includes(q);
-  });
-  const n = places.filter(p => p.detected).length;
-  $('list-note').textContent = `${places.length} places measured, ${n} with sinking detected. Rates are for the fastest zone in each place. Places with only a few months of passes can only show fast sinking so far.`;
-  $('list-toggle').addEventListener('click', () => {
-    const body = $('list-body');
-    body.hidden = !body.hidden;
-    $('list-toggle').textContent = body.hidden ? '▸' : '▾';
-    $('list-toggle').setAttribute('aria-expanded', String(!body.hidden));
+  const rows = [...list.querySelectorAll('li')], heads = [...list.querySelectorAll('.places-head')];
+  const filter = () => {
+    const q = $('search').value.trim().toLowerCase();
+    for (const li of rows) li.hidden = !!q && !li.dataset.q.includes(q);
+    for (const h of heads) h.hidden = !h.nextElementSibling.querySelector('li:not([hidden])');
+    list.querySelector('.empty').hidden = rows.some(li => !li.hidden);
+  };
+  $('search').addEventListener('input', filter);
+  $('search').addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const first = rows.find(li => !li.hidden);
+    if (first) selectPlace(first.firstElementChild.dataset.id);
   });
 }
 
@@ -385,7 +445,7 @@ function drawChart() {
   const m = state.meta, svg = $('chart');
   if (!m || !m.detected) { svg.innerHTML = ''; svg.style.display = 'none'; return; }
   svg.style.display = '';
-  const W = 300, H = 96, T = 12, Bm = 4, ih = H - T - Bm;
+  const W = 300, H = 96, T = 14, Bm = 4, ih = H - T - Bm;
   const end = Date.UTC(END_YEAR, 11, 31);
   const max = hotSunk(m, end);
   const X = ms => timeline.frac(ms) * W;
@@ -396,16 +456,17 @@ function drawChart() {
   const path = pts => pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('');
   const xNow = X(m.t1);
   svg.innerHTML = `
-    <path d="${path(meas)}L${xNow} ${H - Bm}L${meas[0][0]} ${H - Bm}Z" fill="rgba(95,212,232,0.16)"/>
-    <path d="${path(proj)}L${W} ${H - Bm}L${xNow} ${H - Bm}Z" fill="rgba(255,165,61,0.10)"/>
-    <path d="${path(meas)}" fill="none" stroke="#5fd4e8" stroke-width="2"/>
-    <path d="${path(proj)}" fill="none" stroke="#ffa53d" stroke-width="2" stroke-dasharray="4 4"/>
-    <line x1="${xNow}" x2="${xNow}" y1="${T - 6}" y2="${H - Bm}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="2 3"/>
-    <text x="${xNow - 5}" y="9" text-anchor="end" font-size="9.5" fill="#93a3bb">measured</text>
-    <text x="${xNow + 5}" y="9" font-size="9.5" fill="#93a3bb">projected</text>
-    <text x="${W - 4}" y="${H - Bm - 5}" text-anchor="end" font-size="9.5" fill="#c9a377">${fmtSunk(max)} by ${END_YEAR}</text>
-    <line id="chart-x" y1="${T - 6}" y2="${H - Bm}" stroke="#fff" stroke-opacity="0.5"/>
-    <circle id="chart-dot" r="4" fill="#fff" stroke="#070b12" stroke-width="1.5"/>`;
+    <path d="${path(meas)}L${xNow} ${H - Bm}L${meas[0][0]} ${H - Bm}Z" fill="rgba(255,255,255,0.16)"/>
+    <path d="${path(proj)}L${W} ${H - Bm}L${xNow} ${H - Bm}Z" fill="rgba(255,179,64,0.13)"/>
+    <line x1="0" x2="${W}" y1="${H - Bm}" y2="${H - Bm}" stroke="rgba(255,255,255,0.18)"/>
+    <path d="${path(meas)}" fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="${path(proj)}" fill="none" stroke="#ffb340" stroke-width="2" stroke-dasharray="1 5" stroke-linecap="round"/>
+    <line x1="${xNow}" x2="${xNow}" y1="${T - 2}" y2="${H - Bm}" stroke="rgba(255,255,255,0.3)"/>
+    <text x="${xNow - 6}" y="9" text-anchor="end">Measured</text>
+    <text x="${xNow + 6}" y="9">Projected</text>
+    <text x="${W - 9}" y="${H - Bm - 6}" text-anchor="end" style="fill:#ffb340">${fmtSunk(max)} by ${END_YEAR}</text>
+    <line id="chart-x" y1="${T - 2}" y2="${H - Bm}" stroke="#0a84ff" stroke-width="2"/>
+    <circle id="chart-dot" r="4.5" fill="#0a84ff" stroke="#ffffff" stroke-width="1.5"/>`;
   svg._X = X; svg._Y = Y;
 }
 
@@ -414,6 +475,7 @@ function updatePanel() {
   if (!m) return;
   const t = state.time, proj = t > m.t1;
   const sunk = hotSunk(m, t);
+  $('place-big').classList.toggle('text', !m.detected);
   if (!m.detected) {
     $('place-big').textContent = 'No sinking detected';
     $('place-big-label').textContent = `Nothing faster than ${m.threshold_mm_yr} mm per year over a wide area in ${m.months} months of radar passes. Slower sinking may show up as more passes arrive.`
@@ -435,32 +497,62 @@ function updatePanel() {
   }
   const place = state.place;
   if (place && m.detected) {
-    const a = place.areaByClass(place.years(t), 5);
-    const fmt = v => (v >= 100 ? Math.round(v) : v.toFixed(1)) + ' km²';
+    const a = place.areaByClass(place.strainYears(t), 5);
     $('strain').hidden = false;
-    $('strain-bars').innerHTML = [2, 3, 4].map(i =>
-      `<li><i class="sw" style="background:${RISK[i].color}"></i><span>${RISK[i].short}</span><span class="v">${fmt(a[i])}</span></li>`).join('');
+    $('strain-bars').innerHTML = [2, 3, 4].map((i, k) => {
+      const when = whenText(place, place.yearsToFirstPass(STRAIN_LIMITS[k])).replace(/^(passed|around) /, 'first $1 ');
+      return `<li><span class="k"><i class="sw" style="background:${RISK[i].color}"></i>${RISK[i].short}</span><span class="v">${fmtArea(a[i])}</span>
+        <span class="when">${when}</span></li>`;
+    }).join('');
+    $('strain-note').textContent = strainNote(place, a);
   } else {
     $('strain').hidden = true;
   }
 }
 
+const STRAIN_LIMITS = [LIMITS.cracking, LIMITS.damage, LIMITS.structural];
+const fmtArea = v => (v >= 100 ? Math.round(v) : v.toFixed(1)) + ' km²';
+const pastLimits = a => a[2] + a[3] + a[4];
+const endArea = new WeakMap();    // built up land past the limits at the end of the time bar
+
+/** What the rows rest on. With earlier sinking counted they are an estimate,
+ *  and say so. Without it they count from the first radar pass, which no
+ *  record is long enough for yet, so the honest answer is "none so far". */
+function strainNote(place, a) {
+  const m = place.meta, since = place.earlier;
+  const first = place.yearsToFirstPass(LIMITS.cracking);
+  if (!isFinite(first)) {
+    return 'Uneven sinking does not stand clear of the noise on built up land here yet. Longer records lower the noise.';
+  }
+  if (since != null) {
+    return `Estimate. The radar has watched this place since ${fmtDate(m.t0)}. These areas assume the uneven sinking it measures now was already going on at the same rate since ${since}.`
+      + (m.early ? ` With only ${m.months} months of passes that rate is still rough.` : '');
+  }
+  const pass = `the first radar pass on ${fmtDate(m.t0)}`;
+  if (pastLimits(a) >= 0.05) return `Counted from ${pass}. Strain from earlier sinking is not included.`;
+  if (m.t0 + first * YEAR > END) {
+    return `Uneven sinking is counted from ${pass}. What is measured here so far is too gentle to pass a limit before ${END_YEAR}.`;
+  }
+  if (!endArea.has(place)) endArea.set(place, pastLimits(place.areaByClass((END - m.t0) / YEAR, 5)));
+  return `Uneven sinking is counted from ${pass}, so no ground has had time to pass a limit yet. `
+    + `If the measured rate continues, ${fmtArea(endArea.get(place))} of built up land is past the cracking limit by ${END_YEAR}.`;
+}
+
 function showPanel(m) {
-  $('place').hidden = false;
-  document.body.classList.add('has-place');
-  $('place-country').textContent = m.country;
+  setPanel('place');
   $('place-name').textContent = m.name;
-  $('place-status').innerHTML = `<span class="status ${m.detected ? '' : 'none'}">${m.detected ? 'Sinking detected' : 'No sinking detected'}</span>`
-    + (m.early ? `<span class="status early">Early result: ${m.months} months of data</span>` : '');
+  $('place-sub').innerHTML = `${m.country} · ${m.detected ? 'Sinking detected' : 'No sinking detected'}`
+    + (m.early ? ` · <span class="early">Early result, ${m.months} months of data</span>` : '');
   $('st-rate').textContent = m.detected ? fmtRate(m.hotRate) : 'none detected';
   $('st-area').textContent = m.detected ? `${m.sinking_area_km2.toLocaleString()} km²` : '0 km²';
   $('st-built').textContent = `${(m.builtup_sinking_km2 ?? 0).toLocaleString()} km²`;
   $('st-thr').textContent = `${m.threshold_mm_yr} mm per year`;
-  $('st-span').textContent = `${m.dates.length} dates, ${m.tracks.length} ${m.tracks.length > 1 ? 'viewing directions' : 'viewing direction'}`;
+  $('st-span').textContent = `${m.dates.length} dates, ${m.tracks.length} ${m.tracks.length > 1 ? 'directions' : 'direction'}`;
   $('st-rec').textContent = `${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}`;
   $('place-driver').textContent = m.driver ? `Main cause reported for this area: ${m.driver.toLowerCase()}.` : '';
   $('place-hot').hidden = !m.detected;
-  $('place-act').href = actUrl(m.id);
+  setActLink(m.id);
+  $('place').querySelector('.scroll').scrollTop = 0;
   for (const b of $('places').querySelectorAll('button')) b.setAttribute('aria-current', String(b.dataset.id === m.id));
 }
 
@@ -474,15 +566,17 @@ async function selectPlace(id, opts = {}) {
   clearBuildings();
   removeOverlay();
   state.meta = m; state.place = null;
+  applyEarlier();
   stopSpin();
   showPanel(m);
-  timeline.setRange(m.t0, m.t1);
-  drawChart(); updatePanel();
+  timeline.setRange(m.t0, m.t1, m.dates.map(d => Date.parse(d + 'T00:00:00Z')));
+  drawChart(); updatePanel(); updateLegend();
   map.getSource('places')?.setData(placesGeoJSON());
   const [w, s, e, n] = m.bounds;
   if (opts.fly !== false) {
     map.fitBounds([[w, s], [e, n]], {
-      padding: narrow() ? { top: 70, bottom: 300, left: 12, right: 12 } : { top: 30, bottom: 130, left: 340, right: 370 },
+      padding: narrow() ? { top: 300, bottom: 120, left: 12, right: 12 }
+        : { top: 40, bottom: 130, left: window.innerWidth > 1100 ? 200 : 16, right: PANE + 10 },
       pitch: 0, bearing: 0, duration: 2600, essential: true,
     });
   }
@@ -491,6 +585,7 @@ async function selectPlace(id, opts = {}) {
     const place = await loadPlace(m);
     if (token !== state.loadToken) return;
     state.place = place;
+    applyEarlier();
     addOverlay(place);
     drawOverlay(); updatePanel(); scanBuildings();
     toast('');
@@ -511,12 +606,13 @@ function deselect() {
   popup.remove();
   clearBuildings(); removeOverlay();
   state.meta = null; state.place = null;
-  $('place').hidden = true;
-  document.body.classList.remove('has-place');
+  applyEarlier();
+  setPanel(ui.pinned ? 'finder' : 'none');
+  updateLegend();
   for (const b of $('places').querySelectorAll('button')) b.removeAttribute('aria-current');
   globalRange();
   map.getSource('places')?.setData(placesGeoJSON());
-  map.flyTo({ ...GLOBE_VIEW, center: map.getCenter(), padding: globePad(), duration: 2200, essential: true });
+  map.flyTo({ ...globeView(), center: map.getCenter(), padding: globePad(), duration: 2200, essential: true });
   writeHash();
 }
 
@@ -538,7 +634,7 @@ function startSpin() {
     if (!spinning) return;
     const dt = Math.min(100, now - last);
     last = now;
-    if (!state.meta && map.getZoom() <= 3.2) {
+    if (!state.meta && map.getZoom() <= 3.4) {
       const c = map.getCenter();
       map.jumpTo({ center: [c.lng + dt * 0.0028, c.lat] });   // about 3 degrees a second
     }
@@ -555,15 +651,75 @@ for (const ev of ['mousedown', 'touchstart', 'wheel', 'keydown']) {
   map.getCanvasContainer().addEventListener(ev, stopSpin, { passive: true });
 }
 
-// --------------------------------------------------------------- map layer
+// ------------------------------------------------- what the map shows
 
 function setMode(mode) {
   state.mode = mode;
+  document.body.dataset.mode = mode;
   $('mode-sink').setAttribute('aria-pressed', String(mode === 'sink'));
   $('mode-risk').setAttribute('aria-pressed', String(mode === 'risk'));
-  $('legend-sink').hidden = mode !== 'sink';
-  $('legend-risk-title').textContent = mode === 'risk' ? 'Ground and buildings' : 'Buildings';
+  updateLegend();
   drawOverlay();
+}
+
+// ------------------------------------------- sinking from before NISAR
+
+function setEarlier(id) {
+  state.earlier = EARLIER.some(e => e.id === id) ? id : EARLIER_DEFAULT;
+  $('earlier').value = state.earlier;
+  applyEarlier();
+  if (actSpot) setActLink(...actSpot);   // the report must use the same setting
+  popup.remove();
+  drawOverlay(); updateBuildings(); updatePanel();
+}
+
+// ------------------------------------------------------------- base map
+
+function setBase(base) {
+  state.base = BASES[base] ? base : 'satellite';
+  document.body.dataset.base = state.base;
+  for (const b of Object.keys(BASES)) {
+    $('base-' + b).setAttribute('aria-pressed', String(b === state.base));
+    for (const id of BASES[b]) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', b === state.base ? 'visible' : 'none');
+    }
+  }
+  writeHash();
+}
+
+/** The legend only shows what is on the map right now: the colour ramp for the
+ *  ground and the bubbles, the risk classes once ground or buildings use them. */
+function updateLegend() {
+  const inPlace = !!state.meta;
+  const classes = inPlace && (state.mode === 'risk' || map.getZoom() >= BLDG_MIN_ZOOM);
+  if ($('legend-classes').hidden === classes) $('legend-classes').hidden = !classes;
+  $('legend-sink').hidden = inPlace && state.mode === 'risk';
+  $('legend-classes-title').textContent = state.mode === 'risk' ? 'Ground and buildings' : 'Buildings';
+}
+
+// ------------------------------------------- zoom, north, where the pointer is
+
+function mapControls() {
+  $('zoom-in').addEventListener('click', () => { stopSpin(); map.zoomIn(); });
+  $('zoom-out').addEventListener('click', () => { stopSpin(); map.zoomOut(); });
+  $('north').addEventListener('click', () => map.easeTo({ bearing: 0, pitch: 0, duration: 700 }));
+  const turned = () => {
+    const bearing = map.getBearing(), pitch = map.getPitch();
+    $('north').hidden = Math.abs(bearing) < 0.5 && pitch < 0.5;
+    $('north-needle').style.transform = `rotate(${-bearing}deg)`;
+  };
+  map.on('rotate', turned);
+  map.on('pitch', turned);
+
+  const part = (v, pos, neg) => {
+    const a = Math.abs(v), d = Math.floor(a), min = Math.floor((a - d) * 60);
+    return `${d}° ${String(min).padStart(2, '0')}′ ${v >= 0 ? pos : neg}`;
+  };
+  map.on('mousemove', e => {
+    const { lng, lat } = e.lngLat.wrap();
+    $('coords').textContent = `${part(lat, 'N', 'S')}\u2002${part(lng, 'E', 'W')}`;
+  });
+  map.on('mouseout', () => ($('coords').textContent = ''));
 }
 
 // --------------------------------------------------------------------- time
@@ -594,32 +750,78 @@ function writeHash() {
     const parts = [];
     if (state.meta) parts.push('place=' + state.meta.id);
     parts.push('t=' + new Date(state.time).toISOString().slice(0, 10));
+    if (state.earlier !== EARLIER_DEFAULT) parts.push('earlier=' + state.earlier);
+    if (state.base !== 'satellite') parts.push('base=' + state.base);
     history.replaceState(null, '', '#' + parts.join('&'));
   }, 250);
 }
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   const t = Date.parse(q.get('t') || '');
-  return { place: q.get('place'), time: isNaN(t) ? null : t };
+  return {
+    place: q.get('place'), time: isNaN(t) ? null : t, earlier: q.get('earlier'),
+    base: BASES[q.get('base')] ? q.get('base') : 'satellite',
+  };
 }
 
 // --------------------------------------------------------------------- boot
 
 function staticUI() {
   $('ramp').style.background = rampCSS();
-  $('swatches').innerHTML = RISK.map(r => `<li><i style="background:${r.color}"></i>${r.short}</li>`).join('');
-  $('about-open').addEventListener('click', () => $('about').showModal());
+  const TINY = ['Not detected', 'Even sinking', 'Cracks possible', 'Cracks likely', 'Structural damage'];
+  $('swatches').innerHTML = RISK.map((r, i) =>
+    `<li style="--c:${r.color};--on:${i === 2 ? '#1a1206' : '#fff'}"><span class="long">${r.short}</span><span class="tiny">${TINY[i]}</span></li>`).join('');
+  $('attrib').innerHTML = ATTRIBUTION;
+  const about = $('about');
+  $('title').addEventListener('click', () => about.showModal());
+  $('about-open').addEventListener('click', () => about.showModal());
+  about.addEventListener('click', e => {          // a click outside the text closes it
+    const r = about.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) about.close();
+  });
+  $('finder-open').addEventListener('click', toggleFinder);
   $('mode-sink').addEventListener('click', () => setMode('sink'));
   $('mode-risk').addEventListener('click', () => setMode('risk'));
+  $('base-satellite').addEventListener('click', () => setBase('satellite'));
+  $('base-night').addEventListener('click', () => setBase('night'));
   $('place-close').addEventListener('click', deselect);
+  $('earlier').innerHTML = EARLIER.map(e => `<option value="${e.id}">${e.label}</option>`).join('');
+  $('earlier').addEventListener('change', e => { setEarlier(e.target.value); writeHash(); });
   $('place-hot').addEventListener('click', () => {
     const hot = state.place?.hot;
     if (hot) map.flyTo({ center: hot, zoom: 15.2, pitch: 55, bearing: -18, duration: 3200, essential: true });
   });
+
+  // the layer list folds away on wide screens and pops up from a button on phones
+  const layers = $('layers');
+  $('layers-toggle').addEventListener('click', () => {
+    const shut = layers.classList.toggle('collapsed');
+    $('layers-toggle').setAttribute('aria-expanded', String(!shut));
+    $('layers-toggle').setAttribute('aria-label', shut ? 'Expand' : 'Collapse');
+  });
+  const pop = open => {
+    layers.classList.toggle('open', open);
+    $('layers-open').setAttribute('aria-expanded', String(open));
+  };
+  $('layers-open').addEventListener('click', e => { e.stopPropagation(); pop(!layers.classList.contains('open')); });
+  layers.addEventListener('click', e => { if (e.target.closest('.item')) pop(false); });
+  document.addEventListener('click', e => { if (!layers.contains(e.target)) pop(false); });
+
+  window.addEventListener('keydown', e => {
+    if (e.key !== 'Escape' || about.open) return;
+    if (layers.classList.contains('open')) pop(false);
+    else if (ui.panel === 'finder') toggleFinder();
+  });
 }
 
 async function boot() {
+  const h = readHash();
+  state.base = h.base;
+  document.body.dataset.base = h.base;
+  $('base-satellite').setAttribute('aria-pressed', String(h.base === 'satellite'));
+  $('base-night').setAttribute('aria-pressed', String(h.base === 'night'));
   staticUI();
+  mapControls();
   const mapReady = new Promise(res => map.once('load', res));
   try {
     state.index = await loadIndex();
@@ -630,14 +832,19 @@ async function boot() {
   }
   $('about-meta').textContent = `Data built ${state.index.generated} from ${state.index.places.length} places. ${state.index.source}.`;
   buildList();
-  const h = readHash();
+  setEarlier(h.earlier);
   globalRange();
   if (h.time) timeline.setTime(h.time);
+  // on a wide screen the list of places is open from the start
+  const opens = h.place && byId(h.place);
+  ui.pinned = !narrow();
+  if (!opens) setPanel(ui.pinned ? 'finder' : 'none');
   await mapReady;
-  map.setPadding(globePad());
+  map.jumpTo({ ...globeView(), padding: globePad() });
   addLayers();
-  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode };
-  if (h.place && byId(h.place)) {
+  updateLegend();
+  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode, setBase, setEarlier };
+  if (opens) {
     await selectPlace(h.place);
     if (h.time) timeline.setTime(h.time);
   } else {

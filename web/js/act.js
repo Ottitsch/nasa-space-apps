@@ -4,7 +4,7 @@
 // anywhere.
 
 import * as maplibregl from '../vendor/maplibre-gl.mjs';
-import { END_YEAR, LIMITS, RISK, YEAR } from './config.js';
+import { EARLIER, EARLIER_DEFAULT, END_YEAR, LIMITS, RISK, YEAR } from './config.js';
 import { loadFrames, loadIndex, loadPlace, mercY } from './data.js';
 import { build, draw, paginate, save } from './pdf.js';
 
@@ -23,6 +23,7 @@ const END = Date.UTC(END_YEAR, 11, 31);
 const S = {
   meta: null, place: null, city: null, cases: null, langs: [],
   lat: 0, lng: 0, r: 500, year: 2040,
+  earlier: EARLIER_DEFAULT,         // uneven sinking from before the radar: an id from EARLIER, as on the map
   ui: null, letter: null,           // language contexts: { lang, d }
   ask: 'inspection', body: null,
   A: null,                          // analysis of the current spot
@@ -112,8 +113,13 @@ function toast(text) {
 
 // ----------------------------------------------------------------- analysis
 
+/** Years of measured and projected sinking: counted from the first radar pass. */
 const yearsTo = year => (Date.UTC(year, 0, 1) - S.meta.t0) / YEAR;
-const horizonY = h => (h === 'now' ? S.meta.span : yearsTo(h));
+/** Years of uneven sinking behind the damage classes. Like the map, these also
+ *  count sinking from before the radar when the place has that switched on. */
+const horizonY = h => S.place.strainYears(h === 'now' ? S.meta.t1 : Date.UTC(h, 0, 1));
+/** Part of the address that carries the setting over from the map. */
+const earlierHash = () => (S.earlier === EARLIER_DEFAULT ? '' : `&earlier=${S.earlier}`);
 
 function metres(lng1, lat1, lng2, lat2) {
   const k = Math.cos(((lat1 + lat2) / 2) * Math.PI / 180);
@@ -138,7 +144,7 @@ function analyse() {
   }
   const valid = i >= 0 && !!(p.flags[i] & 1), sig = valid && !!(p.flags[i] & 2);
   const edge = valid && !sig && p.beta[i] > 0;   // not sinking fast itself, but tilting next to ground that is
-  const when = limit => (valid ? m.t0 + p.yearsToLimit(i, limit) * YEAR : Infinity);
+  const when = limit => (valid ? p.strainT0 + p.yearsToLimit(i, limit) * YEAR : Infinity);
   const spot = {
     i, valid, sig, edge, near,
     rate: valid ? p.rate[i] : 0,
@@ -146,7 +152,7 @@ function analyse() {
     now: valid ? p.sunkAt(i, m.span) : 0,
     by: Object.fromEntries([2030, 2040, 2050].map(y => [y, valid ? p.sunkAt(i, yearsTo(y)) : 0])),
     limits: { crack: when(LIMITS.cracking), damage: when(LIMITS.damage), struct: when(LIMITS.structural) },
-    cls: valid ? p.classAt(i, m.span) : 0,
+    cls: valid ? p.classAt(i, horizonY('now')) : 0,
   };
 
   // the neighbourhood: built up pixels within the radius
@@ -178,12 +184,13 @@ function analyse() {
 function limitText(L, ms) {
   if (!isFinite(ms)) return tr(L, 'limit.never');
   if (ms > END) return tr(L, 'limit.after', { year: yearText(L, END_YEAR) });
+  if (ms < S.meta.t0) return tr(L, 'limit.before');      // only with earlier sinking counted
   return tr(L, ms <= S.meta.t1 ? 'limit.passed' : 'limit.around', { date: month(L, ms) });
 }
 
 function shareUrl() {
   const u = new URL(location.href);
-  u.hash = `place=${S.meta.id}&lat=${S.lat.toFixed(4)}&lng=${S.lng.toFixed(4)}&r=${S.r}`;
+  u.hash = `place=${S.meta.id}&lat=${S.lat.toFixed(4)}&lng=${S.lng.toFixed(4)}&r=${S.r}${earlierHash()}`;
   return u.toString();
 }
 
@@ -233,7 +240,7 @@ function timelineSVG() {
 
 function renderSheet() {
   const m = S.meta, A = S.A, sp = A.spot, L = S.ui;
-  const radius = metresText(L, S.r);
+  const radius = metresText(L, S.r), since = S.place.earlier;
   $('sh-place').textContent = `${placeName(L)}, ${countryName(L)}`;
   $('sh-meta').textContent = `${t('sheet.spot')}: ${S.lat.toFixed(5)}, ${S.lng.toFixed(5)} · ${t('sheet.made', { date: day(L, Date.now()) })}`;
   $('sh-url').textContent = shareUrl().replace(/^https?:\/\//, '');
@@ -272,8 +279,10 @@ function renderSheet() {
   $('sh-measured').innerHTML = sp.sig
     ? `<h3>${esc(t('chart.measured'))}</h3><p class="sub">${esc(t('chart.measured.sub'))}</p>${measuredSVG()}` : '';
   $('sh-timeline').innerHTML = sp.valid
-    ? `<h3>${esc(t('chart.timeline'))}</h3><p class="sub">${esc(t('chart.timeline.sub'))}</p>${timelineSVG()}` : '';
+    ? `<h3>${esc(t('chart.timeline'))}</h3><p class="sub">${esc(since == null ? t('chart.timeline.sub') : t('fact.assume', { year: yearText(L, since) }))}</p>${timelineSVG()}` : '';
 
+  $('sh-read2').textContent = since == null ? t('read.2')
+    : t('read.2.earlier', { year: yearText(L, since) });
   renderHood();
   $('sh-source').textContent = t('source', {
     n: num(L, m.dates.length), from: day(L, m.t0), to: day(L, m.t1),
@@ -463,10 +472,13 @@ function buildLetter() {
     if (A.hood.fastest < 0) ev.push(tr(L, 'letter.ev.hood.fastest', { fastest: rate(L, A.hood.fastest) }));
     if (A.nSinking > 0) ev.push(tr(L, 'letter.ev.hood.buildings', { buildings: num(L, A.nSinking) }));
   }
-  if (sp.limits.crack <= END) ev.push(tr(L, 'letter.ev.limit', { date: month(L, sp.limits.crack) }));
+  // the damage limits: with earlier sinking counted, say so, as that part is assumed
+  const since = S.place.earlier, assume = () => since != null && ev.push(tr(L, 'letter.ev.assume', { year: yearText(L, since) }));
+  if (since != null && sp.limits.crack <= m.t1) ev.push(tr(L, 'letter.ev.limit.passed', { year: yearText(L, since) }));
+  else if (sp.limits.crack <= END) { ev.push(tr(L, 'letter.ev.limit', { date: month(L, sp.limits.crack) })); assume(); }
   else if (A.buildings) {
     const k = HORIZONS.indexOf(2040), n = A.buildings[k][2] + A.buildings[k][3] + A.buildings[k][4];
-    if (n > 0) ev.push(tr(L, 'letter.ev.limit.hood', { n: num(L, n), radius, year: yearText(L, 2040) }));
+    if (n > 0) { ev.push(tr(L, 'letter.ev.limit.hood', { n: num(L, n), radius, year: yearText(L, 2040) })); assume(); }
   }
   const seen = SEEN.filter(k => $('seen-' + k).checked).map(k => '  • ' + tr(L, 'letter.seen.' + k));
   const asks = [1, 2, 3].map(k => `  ${num(L, k)}. ${tr(L, `letter.ask.${S.ask}.${k}`)}`);
@@ -701,12 +713,12 @@ function renderAll() {
   document.documentElement.dir = RTL.has(S.ui.lang) ? 'rtl' : 'ltr';
   document.title = t('page.title');
   for (const el of document.querySelectorAll('[data-t]')) el.textContent = t(el.dataset.t);
-  $('back').href = `index.html#place=${S.meta.id}`;
+  $('back').href = `index.html#place=${S.meta.id}${earlierHash()}`;
   renderTools(); renderSheet(); renderAsks(); renderBodies(); renderCity(); renderOthers(); renderShare(); refreshLetter();
 }
 
 function writeHash() {
-  history.replaceState(null, '', `#place=${S.meta.id}&lat=${S.lat.toFixed(5)}&lng=${S.lng.toFixed(5)}&r=${S.r}&lang=${S.ui.lang}`);
+  history.replaceState(null, '', `#place=${S.meta.id}&lat=${S.lat.toFixed(5)}&lng=${S.lng.toFixed(5)}&r=${S.r}&lang=${S.ui.lang}${earlierHash()}`);
 }
 
 function setSpot(lng, lat) {
@@ -842,6 +854,10 @@ async function boot() {
     S.place = await loadPlace(meta);
     S.place.setFrames(await loadFrames(meta));
   } catch { return fail('error.load'); }
+  // the map's setting for sinking from before the radar, so both give the same classes.
+  // As on the map, it only applies where sinking is detected over a real area.
+  if (EARLIER.some(e => e.id === q.get('earlier'))) S.earlier = q.get('earlier');
+  S.place.setEarlier(meta.detected ? EARLIER.find(e => e.id === S.earlier).since : null);
 
   const lat = parseFloat(q.get('lat')), lng = parseFloat(q.get('lng'));
   const start = isFinite(lat) && isFinite(lng) && S.place.index(lng, lat) >= 0 ? [lng, lat] : S.place.hot || [meta.lon, meta.lat];
