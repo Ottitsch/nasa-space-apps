@@ -28,11 +28,13 @@ export class Timeline {
     });
   }
 
-  /** start: first radar pass, now: latest radar pass. Keeps the current date if it fits. */
+  /** start: first radar pass, now: latest radar pass. A date in the projection
+   *  is kept; a date in the measured part moves to the new latest pass. */
   setRange(start, now) {
+    const wasProjected = this.time > this.now + 45 * 86400000;
     this.start = start; this.now = now;
     this._ticks();
-    this._set(Math.min(this.end, Math.max(start, this.time || now)), true);
+    this._set(wasProjected ? Math.min(this.end, Math.max(now, this.time)) : now, true);
   }
 
   fromPos(p) {
@@ -58,9 +60,11 @@ export class Timeline {
     if (moveSlider) this.slider.value = String(Math.round(this.toPos(ms)));
     const proj = this.projected;
     this.dateEl.textContent = proj ? fmtMonth(ms) : fmtDate(ms);
-    this.modeEl.textContent = proj ? 'Projected, if the current rate continues' : 'Measured by NISAR';
+    this.modeEl.innerHTML = proj
+      ? 'Projected<span class="wide">, if the current rate continues</span>'
+      : 'Measured<span class="wide"> by NISAR</span>';
     this.modeEl.classList.toggle('proj', proj);
-    this.slider.setAttribute('aria-valuetext', this.dateEl.textContent + ', ' + this.modeEl.textContent);
+    this.slider.setAttribute('aria-valuetext', this.dateEl.textContent + ', ' + (proj ? 'projected' : 'measured'));
     this.onChange(ms);
   }
 
@@ -68,7 +72,7 @@ export class Timeline {
     const mk = (ms, text, cls) => `<span class="${cls || ''}" style="left:${this.frac(ms) * 100}%">${text}</span>`;
     let html = mk(this.start, fmtMonth(this.start));
     html += mk(this.now, 'Latest pass', 'now');
-    for (const y of [2030, 2035, 2040, 2045]) html += mk(Date.UTC(y, 0, 1), y);
+    for (const y of [2030, 2035, 2040, 2045]) html += mk(Date.UTC(y, 0, 1), y, y === 2040 ? '' : 'minor');
     html += mk(this.end, END_YEAR);
     this.ticksEl.innerHTML = html;
   }

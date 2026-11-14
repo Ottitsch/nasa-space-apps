@@ -27,7 +27,11 @@ export async function loadIndex() {
     p.t0 = Date.parse(p.dates[0] + 'T00:00:00Z');
     p.t1 = Date.parse(p.dates[p.dates.length - 1] + 'T00:00:00Z');
     p.span = p.t_years[p.t_years.length - 1];
-    p.detected = p.sinking_area_km2 > 0 && Array.isArray(p.hot_series_mm);
+    p.months = Math.max(1, Math.round(p.span * 12));
+    p.early = p.span < 0.7;                         // under about eight months of passes
+    // a place counts as sinking when at least 1 km2 is detected; smaller
+    // patches still show on the map but do not make the headline
+    p.detected = p.sinking_area_km2 >= 1 && Array.isArray(p.hot_series_mm);
     // mean rate of the fastest sinking zone, mm per year (negative)
     p.hotRate = p.detected ? p.hot_series_mm[p.hot_series_mm.length - 1] / p.span : 0;
   }
@@ -52,7 +56,7 @@ export class PlaceData {
     const W = (this.W = meta.width), H = (this.H = meta.height), n = (this.n = W * H);
     this.rate = new Int16Array(core, 0, n);        // mm per year, negative = sinking
     this.beta = new Uint16Array(core, 2 * n, n);   // angular distortion rate, 1e-6 per year
-    this.flags = new Uint8Array(core, 4 * n, n);   // bit 0 valid, bit 1 significant
+    this.flags = new Uint8Array(core, 4 * n, n);   // bit 0 valid, bit 1 significant, bit 2 built up
     const [w, s, e, nn] = meta.bounds;
     this.west = w; this.east = e;
     this.yN = mercY(nn); this.yS = mercY(s);
@@ -197,15 +201,15 @@ export class PlaceData {
     return b > 0 ? limit / b : Infinity;
   }
 
-  /** km2 of ground in each risk class. */
-  areaByClass(y) {
+  /** km2 of ground in each risk class. need = 5 counts built up land only. */
+  areaByClass(y, need = 1) {
     const out = [0, 0, 0, 0, 0];
     if (y <= 0) return out;
     const { n, flags, beta } = this;
     const c2 = (LIMITS.cracking / y) * 1e6, c3 = (LIMITS.damage / y) * 1e6, c4 = (LIMITS.structural / y) * 1e6;
     for (let i = 0; i < n; i++) {
       const f = flags[i];
-      if (!(f & 1)) continue;
+      if ((f & need) !== need) continue;
       const b = beta[i];
       if (b >= c4) out[4]++; else if (b >= c3) out[3]++; else if (b >= c2) out[2]++; else if (f & 2) out[1]++;
     }

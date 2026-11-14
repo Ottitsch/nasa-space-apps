@@ -11,12 +11,19 @@ import { hotSunk, loadFrames, loadIndex, loadPlace } from './data.js';
 import { Timeline } from './timeline.js';
 
 const $ = id => document.getElementById(id);
-const VECTOR = 'openmaptiles';
+// Building outlines: Google Open Buildings + Microsoft + OpenStreetMap, merged
+// by VIDA and served as one PMTiles archive (read with HTTP range requests).
+const BLDG_URL = 'pmtiles://https://data.source.coop/vida/google-microsoft-osm-open-buildings/pmtiles/goog_msft_osm.pmtiles';
+const BLDG = { source: 'bldg', sourceLayer: 'goog_msft_osm_building_footprints' };
+const BLDG_MIN_ZOOM = 13.5;
 const NIGHT = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/2016-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png';
-const GLOBE_VIEW = { center: [40, 20], zoom: 1.7, pitch: 0, bearing: 0 };
+const GLOBE_VIEW = { center: [-75, 18], zoom: 2.1, pitch: 0, bearing: 0 };
+// keep the globe clear of the panels on wide screens
+const globePad = () => (narrow() ? { top: 60, bottom: 110, left: 0, right: 0 } : { top: 0, bottom: 90, left: 320, right: 0 });
 const narrow = () => window.innerWidth <= 860;
 
 const state = {
+  mode: 'sink',     // 'sink': how far the ground has sunk, 'risk': damage risk classes
   index: null,
   meta: null,       // selected place (index entry)
   place: null,      // its loaded PlaceData
@@ -40,6 +47,8 @@ function toast(text, ms = 0) {
 
 // ---------------------------------------------------------------- map setup
 
+if (window.pmtiles) maplibregl.addProtocol('pmtiles', new window.pmtiles.Protocol().tile);
+
 const map = new maplibregl.Map({
   container: 'map',
   style: 'https://tiles.openfreemap.org/styles/dark',
@@ -50,7 +59,7 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.AttributionControl({
   compact: true,
-  customAttribution: 'Ground motion: NISAR (NASA, ISRO) via ASF DAAC · Night lights: NASA GIBS',
+  customAttribution: 'NISAR (NASA, ISRO) via ASF · NASA GIBS · Buildings: Google, Microsoft, OSM via VIDA',
 }), 'bottom-right');
 map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
 map.on('error', e => console.warn('map:', e.error?.message || e));
@@ -58,6 +67,12 @@ map.on('error', e => console.warn('map:', e.error?.message || e));
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
 const LUT = sinkLUT();
+// risk class colours packed for the canvas (little endian ABGR)
+const RISK_PX = RISK.map((r, i) => {
+  const v = parseInt(r.color.slice(1), 16);
+  const a = [0, 120, 215, 230, 240][i];
+  return ((a << 24) | ((v & 255) << 16) | (((v >> 8) & 255) << 8) | (v >> 16)) >>> 0;
+});
 let image = null, pixels = null;
 
 function addLayers() {
@@ -88,17 +103,16 @@ function addLayers() {
   }, firstSymbol);
 
   // buildings, coloured through feature state by updateBuildings()
-  const hasBuildings = layers.some(l => l['source-layer'] === 'building');
-  if (hasBuildings) {
+  if (window.pmtiles) {
+    map.addSource(BLDG.source, { type: 'vector', url: BLDG_URL, minzoom: 12 });
     map.addLayer({
-      id: 'bldg', type: 'fill-extrusion', source: VECTOR, 'source-layer': 'building', minzoom: 13,
+      id: 'bldg', type: 'fill-extrusion', source: BLDG.source, 'source-layer': BLDG.sourceLayer, minzoom: BLDG_MIN_ZOOM,
       paint: {
         'fill-extrusion-color': ['match', ['coalesce', ['feature-state', 'risk'], 0],
-          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#333c4b'],
-        'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 13, 0, 14.5,
-          ['max', ['coalesce', ['get', 'render_height'], 6], 4]],
-        'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
-        'fill-extrusion-opacity': 0.92,
+          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#39424f'],
+        // heights are not in the data: one modest height for every building
+        'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], BLDG_MIN_ZOOM, 0, 15, 7],
+        'fill-extrusion-opacity': 0.93,
       },
     }, firstSymbol);
   }
@@ -179,7 +193,10 @@ function addOverlay(place) {
   const before = map.getLayer('building') ? 'building' : (map.getLayer('extent') ? 'extent' : undefined);
   map.addLayer({
     id: 'sink', type: 'raster', source: 'sink',
-    paint: { 'raster-opacity': 0.9, 'raster-fade-duration': 0, 'raster-resampling': 'linear' },
+    paint: {
+      'raster-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0.9, 13, 0.8, 15.5, 0.55],
+      'raster-fade-duration': 0, 'raster-resampling': 'linear',
+    },
   }, before);
   map.getSource('extent').setData({
     type: 'Feature', geometry: { type: 'LineString', coordinates: [[w, n], [e, n], [e, s], [w, s], [w, n]] },
@@ -199,6 +216,8 @@ function drawOverlay() {
   const { n, rate, alpha } = place;
   if (y <= 0) {
     pixels.fill(0);
+  } else if (state.mode === 'risk') {
+    for (let i = 0; i < n; i++) pixels[i] = alpha[i] > 128 ? RISK_PX[place.classAt(i, y)] : 0;
   } else {
     const { a, b, w } = place.blend(y);
     const half = SINK_MIN_MM / 2, k = 255 / SINK_DECADES;
@@ -237,13 +256,13 @@ function centroid(g) {
 
 function scanBuildings() {
   const place = state.place;
-  if (!place || !map.getLayer('bldg') || map.getZoom() < 13) {
+  if (!place || !map.getLayer('bldg') || map.getZoom() < BLDG_MIN_ZOOM) {
     B.ids = [];
     $('bldg-bars').hidden = true; $('bldg-hint').hidden = false;
     return;
   }
   const seen = new Set();
-  for (const f of map.querySourceFeatures(VECTOR, { sourceLayer: 'building' })) {
+  for (const f of map.querySourceFeatures(BLDG.source, { sourceLayer: BLDG.sourceLayer })) {
     const id = f.id;
     if (id == null || seen.has(id)) continue;
     seen.add(id);
@@ -266,7 +285,7 @@ function updateBuildings() {
     counts[c]++;
     if (B.cls.get(id) !== c) {
       B.cls.set(id, c);
-      map.setFeatureState({ source: VECTOR, sourceLayer: 'building', id }, { risk: c });
+      map.setFeatureState({ source: BLDG.source, sourceLayer: BLDG.sourceLayer, id }, { risk: c });
     }
   }
   $('bldg-hint').hidden = true;
@@ -277,7 +296,7 @@ function updateBuildings() {
 }
 
 function clearBuildings() {
-  if (map.getSource(VECTOR)) map.removeFeatureState({ source: VECTOR, sourceLayer: 'building' });
+  if (map.getSource(BLDG.source)) map.removeFeatureState(BLDG);
   B.where.clear(); B.cls.clear(); B.ids = [];
 }
 
@@ -305,7 +324,7 @@ function inspect(e) {
   const proj = state.time > m.t1;
   let html = `<div class="pop"><span class="chip" style="background:${RISK[cls].color}">${RISK[cls].label}</span>`;
   if (!valid) {
-    html += `<div class="note">No reliable radar signal here (water, dense vegetation or steep ground).</div>`;
+    html += `<div class="note">No reliable radar signal here. Water, farmland, vegetation and steep ground are left out.</div>`;
   } else if (!sig) {
     html += `<div class="row"><span>Sinking rate</span><span>below ${m.threshold_mm_yr} mm per year</span></div>
       <div class="note">Nothing detected here so far. Slower sinking than the limit above cannot be ruled out.</div>`;
@@ -332,7 +351,7 @@ function buildList() {
     <li data-q="${(p.name + ' ' + p.country).toLowerCase()}"><button type="button" data-id="${p.id}">
       <span class="nm">${p.name}</span>
       <span class="rt ${p.detected ? '' : 'none'}">${p.detected ? fmtRate(p.hotRate).replace(' per year', '/yr') : 'not detected'}</span>
-      <span class="ct">${p.country}</span><span></span>
+      <span class="ct">${p.country} · ${p.months} mo of data</span><span></span>
       <span class="bar"><i style="width:${p.detected ? Math.sqrt(-p.hotRate / max) * 100 : 0}%"></i></span>
     </button></li>`).join('');
   $('places').addEventListener('click', e => {
@@ -344,7 +363,7 @@ function buildList() {
     for (const li of $('places').children) li.hidden = q && !li.dataset.q.includes(q);
   });
   const n = places.filter(p => p.detected).length;
-  $('list-note').textContent = `${places.length} places measured, ${n} with sinking detected. Rates are for the fastest zone in each place.`;
+  $('list-note').textContent = `${places.length} places measured, ${n} with sinking detected. Rates are for the fastest zone in each place. Places with only a few months of passes can only show fast sinking so far.`;
   $('list-toggle').addEventListener('click', () => {
     const body = $('list-body');
     body.hidden = !body.hidden;
@@ -375,7 +394,7 @@ function drawChart() {
     <line x1="${xNow}" x2="${xNow}" y1="${T - 6}" y2="${H - Bm}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="2 3"/>
     <text x="${xNow - 5}" y="9" text-anchor="end" font-size="9.5" fill="#93a3bb">measured</text>
     <text x="${xNow + 5}" y="9" font-size="9.5" fill="#93a3bb">projected</text>
-    <text x="${W - 2}" y="${T + 10}" text-anchor="end" font-size="9.5" fill="#93a3bb">${fmtSunk(max)} by ${END_YEAR}</text>
+    <text x="${W - 4}" y="${H - Bm - 5}" text-anchor="end" font-size="9.5" fill="#c9a377">${fmtSunk(max)} by ${END_YEAR}</text>
     <line id="chart-x" y1="${T - 6}" y2="${H - Bm}" stroke="#fff" stroke-opacity="0.5"/>
     <circle id="chart-dot" r="4" fill="#fff" stroke="#070b12" stroke-width="1.5"/>`;
   svg._X = X; svg._Y = Y;
@@ -388,7 +407,8 @@ function updatePanel() {
   const sunk = hotSunk(m, t);
   if (!m.detected) {
     $('place-big').textContent = 'No sinking detected';
-    $('place-big-label').textContent = `Nothing faster than ${m.threshold_mm_yr} mm per year in ${m.dates.length} radar passes. Slower sinking may show up as more passes arrive.`;
+    $('place-big-label').textContent = `Nothing faster than ${m.threshold_mm_yr} mm per year over a wide area in ${m.months} months of radar passes. Slower sinking may show up as more passes arrive.`
+      + (m.sinking_area_km2 > 0 ? ` A few small spots (${m.sinking_area_km2} km² in total) are marked on the map; these can be earthworks, landfill or noise.` : '');
   } else if (t <= m.t0) {
     $('place-big').textContent = '0 cm';
     $('place-big-label').textContent = `Radar passes here start on ${fmtDate(m.t0)}.`;
@@ -406,11 +426,11 @@ function updatePanel() {
   }
   const place = state.place;
   if (place && m.detected) {
-    const a = place.areaByClass(place.years(t));
+    const a = place.areaByClass(place.years(t), 5);
     const fmt = v => (v >= 100 ? Math.round(v) : v.toFixed(1)) + ' km²';
     $('strain').hidden = false;
     $('strain-bars').innerHTML = [2, 3, 4].map(i =>
-      `<li><i class="sw" style="background:${RISK[i].color}"></i><span>${RISK[i].short}</span><span class="v">${fmt(a[i] + (i < 4 ? 0 : 0))}</span></li>`).join('');
+      `<li><i class="sw" style="background:${RISK[i].color}"></i><span>${RISK[i].short}</span><span class="v">${fmt(a[i])}</span></li>`).join('');
   } else {
     $('strain').hidden = true;
   }
@@ -421,12 +441,14 @@ function showPanel(m) {
   document.body.classList.add('has-place');
   $('place-country').textContent = m.country;
   $('place-name').textContent = m.name;
-  $('place-status').textContent = m.detected ? 'Sinking detected' : 'No sinking detected';
-  $('place-status').classList.toggle('none', !m.detected);
+  $('place-status').innerHTML = `<span class="status ${m.detected ? '' : 'none'}">${m.detected ? 'Sinking detected' : 'No sinking detected'}</span>`
+    + (m.early ? `<span class="status early">Early result: ${m.months} months of data</span>` : '');
   $('st-rate').textContent = m.detected ? fmtRate(m.hotRate) : 'none detected';
   $('st-area').textContent = m.detected ? `${m.sinking_area_km2.toLocaleString()} km²` : '0 km²';
+  $('st-built').textContent = `${(m.builtup_sinking_km2 ?? 0).toLocaleString()} km²`;
   $('st-thr').textContent = `${m.threshold_mm_yr} mm per year`;
-  $('st-span').textContent = `${m.dates.length}, ${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}`;
+  $('st-span').textContent = `${m.dates.length} dates, ${m.tracks.length} ${m.tracks.length > 1 ? 'viewing directions' : 'viewing direction'}`;
+  $('st-rec').textContent = `${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}`;
   $('place-driver').textContent = m.driver ? `Main cause reported for this area: ${m.driver.toLowerCase()}.` : '';
   $('place-hot').hidden = !m.detected;
   for (const b of $('places').querySelectorAll('button')) b.setAttribute('aria-current', String(b.dataset.id === m.id));
@@ -442,6 +464,7 @@ async function selectPlace(id, opts = {}) {
   clearBuildings();
   removeOverlay();
   state.meta = m; state.place = null;
+  stopSpin();
   showPanel(m);
   timeline.setRange(m.t0, m.t1);
   drawChart(); updatePanel();
@@ -483,13 +506,47 @@ function deselect() {
   for (const b of $('places').querySelectorAll('button')) b.removeAttribute('aria-current');
   globalRange();
   map.getSource('places')?.setData(placesGeoJSON());
-  map.flyTo({ ...GLOBE_VIEW, center: map.getCenter(), duration: 2200, essential: true });
+  map.flyTo({ ...GLOBE_VIEW, center: map.getCenter(), padding: globePad(), duration: 2200, essential: true });
   writeHash();
 }
 
 function globalRange() {
   const ps = state.index.places;
   timeline.setRange(Math.min(...ps.map(p => p.t0)), Math.max(...ps.map(p => p.t1)));
+}
+
+// ------------------------------------------------- slow spin of the globe
+
+let spinning = false;
+function spin() {
+  if (!spinning || state.meta || map.getZoom() > 3.2) return;
+  const c = map.getCenter();
+  map.easeTo({ center: [c.lng + 14, c.lat], duration: 5000, easing: t => t, essential: false });
+}
+function startSpin() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  spinning = true;
+  spin();
+}
+function stopSpin() {
+  if (!spinning) return;
+  spinning = false;
+  map.stop();
+}
+map.on('moveend', () => { if (spinning) spin(); });
+for (const ev of ['mousedown', 'touchstart', 'wheel', 'keydown']) {
+  map.getCanvasContainer().addEventListener(ev, stopSpin, { passive: true });
+}
+
+// --------------------------------------------------------------- map layer
+
+function setMode(mode) {
+  state.mode = mode;
+  $('mode-sink').setAttribute('aria-pressed', String(mode === 'sink'));
+  $('mode-risk').setAttribute('aria-pressed', String(mode === 'risk'));
+  $('legend-sink').hidden = mode !== 'sink';
+  $('legend-risk-title').textContent = mode === 'risk' ? 'Ground and buildings' : 'Buildings';
+  drawOverlay();
 }
 
 // --------------------------------------------------------------------- time
@@ -535,6 +592,8 @@ function staticUI() {
   $('ramp').style.background = rampCSS();
   $('swatches').innerHTML = RISK.map(r => `<li><i style="background:${r.color}"></i>${r.short}</li>`).join('');
   $('about-open').addEventListener('click', () => $('about').showModal());
+  $('mode-sink').addEventListener('click', () => setMode('sink'));
+  $('mode-risk').addEventListener('click', () => setMode('risk'));
   $('place-close').addEventListener('click', deselect);
   $('place-hot').addEventListener('click', () => {
     const hot = state.place?.hot;
@@ -558,12 +617,15 @@ async function boot() {
   globalRange();
   if (h.time) timeline.setTime(h.time);
   await mapReady;
+  map.setPadding(globePad());
   addLayers();
+  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode };
   if (h.place && byId(h.place)) {
     await selectPlace(h.place);
     if (h.time) timeline.setTime(h.time);
+  } else {
+    startSpin();
   }
-  window.sinkingGround = { map, state, timeline, selectPlace, deselect };
 }
 
 boot();

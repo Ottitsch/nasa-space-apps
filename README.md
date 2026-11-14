@@ -1,0 +1,213 @@
+# Sinking Ground
+
+A global map of ground that is sinking, measured from orbit by the NASA and ISRO
+radar satellite NISAR, with a time bar that lets you go back through what has
+been measured and forward into what happens if it continues.
+
+It answers three questions for each place:
+
+1. **Where is the ground going down, and how fast?**
+2. **Which built up areas and buildings sit on ground that is sinking unevenly**
+   enough to crack or damage them, and when do they pass the limits?
+3. **How sure are we?** Every place states the smallest rate the data can
+   detect so far, and short records are marked as early results.
+
+![Mexico City in 2050 if current rates continue](docs/mexico-city-2050.png)
+
+## Run it
+
+The app is a static site with no build step.
+
+```bash
+python3 -m http.server 8000 --directory web
+```
+
+Then open http://localhost:8000.
+
+Pick a place on the globe or in the list, drag the time bar, and zoom in to
+street level to see individual buildings. Click anywhere inside a place to read
+the rate, how far that spot has sunk, and when it passes the damage limits.
+
+A view can be shared by its address, for example
+`#place=mexico-city&t=2040-01-01`.
+
+## What you see
+
+| Thing on screen | Meaning |
+| --- | --- |
+| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. Hollow grey means nothing detected yet. |
+| Time bar, solid part | Measured by NISAR. One step per radar pass, 12 days apart. |
+| Time bar, dashed part | Projection to 2050 that assumes the measured rate simply continues. A scenario, not a forecast. |
+| Blue layer | How far the ground has sunk since the first radar pass (log scale, 1 cm to 10 m). |
+| Damage risk layer | The same ground coloured by risk class instead. |
+| Buildings | Coloured by the risk class of the ground under them at the chosen date. |
+
+### Why buildings change colour
+
+A building that sinks evenly with its whole neighbourhood is usually fine
+structurally (flooding and drainage are another matter). Damage comes from
+uneven sinking. We measure that as **angular distortion**: the difference in
+sinking between neighbouring ground divided by the distance between them. It
+grows every year the ground keeps sinking unevenly.
+
+| Class | Rule | Colour |
+| --- | --- | --- |
+| No sinking detected | below the detection threshold | grey |
+| Sinking evenly | sinking detected, distortion below 1/500 | yellow |
+| Cracking possible | distortion past 1/500 | orange |
+| Cracking likely | distortion past 1/300 | red |
+| Structural damage likely | distortion past 1/150 | pink |
+
+The limits are the classic ones from foundation engineering (Skempton and
+MacDonald 1956, Bjerrum 1963). They are screening levels for neighbourhoods,
+not a verdict on any single building.
+
+## How the data is made
+
+The `pipeline` folder turns raw NISAR products into the small files the map
+loads. For each place in `pipeline/places.json` it does this:
+
+1. **Search** NASA's catalogue (CMR) for NISAR Level 2 GUNW products
+   (geocoded unwrapped interferograms) over the place. `search.py`
+2. **Read only what is needed.** Each product is a 2 GB HDF5 file. We open it
+   remotely, ask HDF5 where the chunks covering the place live, and download
+   just those byte ranges: about 25 MB and 8 seconds per file. `fetch.py`
+3. **Keep ground that can be trusted.** Radar phase over wetlands follows the
+   water level, and over forest, grass and farmland it follows the moisture in
+   plants and soil. So only built up and bare ground (ESA WorldCover) is
+   analysed, and only pixels whose radar echo stays stable (coherence of 0.5
+   or more). `landcover.py`
+4. **Clean each interferogram.** Remove a plane and a term proportional to
+   elevation (orbit errors and layered atmosphere), then remove the smooth
+   atmosphere estimated from ground that is not moving. `process.py`
+5. **Build the time series.** A small baseline style network inversion gives
+   the ground position at every radar pass. Whatever is fast in time but
+   smooth in space is treated as weather and removed.
+6. **Combine two viewing directions** (ascending and descending tracks) when
+   both cover the place. Motion is read as vertical.
+7. **Detect sinking.** A pixel counts as sinking when its rate is beyond
+   three times the map noise and beyond a seasonal allowance of 2 cm divided
+   by the record length, on gentle terrain, in patches of at least a quarter
+   of a square kilometre. Short records therefore have to clear a higher bar.
+8. **Measure uneven sinking** as the slope of the rate map (angular distortion
+   per year), kept only where it is clearly above the noise.
+9. **Export** a Web Mercator grid per place at 80 m: rate, distortion rate,
+   flags, and the measured wiggle around the straight line at every pass.
+   `export.py`
+
+Checks made while building it:
+
+* Mexico City comes out at about 30 cm per year in the fastest zones over a
+  full year of passes, in line with the map NASA and JPL published in 2026 and
+  with earlier studies.
+* The two independent viewing directions over Mexico City agree to about
+  1 cm per year.
+* Before the land cover and seasonal rules were added, forest around
+  São Paulo, marsh around New Orleans and rice fields around Semarang all
+  showed up as fast "sinking" while the built up land beside them read zero.
+  They no longer do. That is why those rules exist.
+
+### Rebuild or add places
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r pipeline/requirements.txt
+```
+
+You need a free Earthdata Login token (https://urs.earthdata.nasa.gov, Generate
+Token). Never commit it.
+
+```bash
+export EARTHDATA_TOKEN=paste_your_token_here
+```
+
+```bash
+.venv/bin/python -m pipeline.run --place mexico-city
+```
+
+```bash
+.venv/bin/python -m pipeline.run --all
+```
+
+To add a place, add an entry to `pipeline/places.json` (centre and box size in
+km) and run it. A one off box also works:
+
+```bash
+.venv/bin/python -m pipeline.run --lat 19.4 --lon -99.05 --size 64 --id my-place --name "My Place"
+```
+
+Downloads are cached in `.cache`, so reruns only fetch new radar passes. As
+NISAR keeps flying, rerunning lengthens every record, lowers every detection
+threshold, and turns early results into firm ones.
+
+## What this cannot tell you
+
+* **It is a screening map.** One radar pixel is 80 m wide. It describes
+  neighbourhoods, not a single building's foundations.
+* **Strain from before NISAR is not counted.** Distortion is counted from the
+  first radar pass (late 2025 at the earliest). Ground that has been sinking
+  unevenly for decades is in worse shape than shown.
+* **Short records only see fast sinking.** Most places have about four months
+  of passes so far, which only reveals sinking faster than roughly 6 cm per
+  year. "No sinking detected" there means "nothing that fast", not "stable".
+* **The projection is a straight line.** Real rates change with pumping,
+  rainfall and regulation.
+* **Farmland, grass, forest and wetland are blank** by design, including
+  places where the ground under them truly is sinking.
+* **Motion is read as vertical.** Sideways motion on slopes is not separated.
+* **NISAR products used here are provisional** releases.
+* **Building outlines are machine drawn** from aerial imagery. Some are missing
+  or wrong, and heights are not known.
+
+## Layout
+
+```
+pipeline/            Python: NISAR products to map data
+  places.json        the places to process
+  run.py             command line entry point
+  search.py          find products in NASA's catalogue
+  fetch.py           remote partial reads of the HDF5 products
+  process.py         interferograms to ground motion, detection, distortion
+  dem.py             Copernicus elevation
+  landcover.py       ESA WorldCover
+  export.py          grids and files for the web app
+web/                 the static site
+  index.html
+  css/style.css
+  js/app.js          map, layers, panels
+  js/data.js         reading the per place grids
+  js/timeline.js     the time bar
+  js/config.js       colours, limits, formatting
+  data/              output of the pipeline (index.json and two files per place)
+  vendor/            MapLibre GL JS and PMTiles
+```
+
+## Next steps
+
+The idea is to go from seeing the problem to acting on it: help people contact
+the authority responsible for their area, and find others nearby facing the
+same thing. That is not built yet. The app already announces what a person is
+looking at, so that feature can plug in without touching the map code:
+
+```js
+document.addEventListener('sinkingground:place', e => { /* e.detail: id, name, country, detected */ });
+document.addEventListener('sinkingground:inspect', e => { /* e.detail: place, lng, lat, riskClass, rate_mm_per_year, sunk_mm, time, projected */ });
+document.addEventListener('sinkingground:time', e => { /* e.detail: time, projected */ });
+```
+
+Other useful directions: rerun the pipeline as passes accumulate, add places,
+mosaic neighbouring radar frames for places that straddle two, and use the
+weather model layers shipped inside the products for a better atmosphere
+correction.
+
+## Credits
+
+* Ground motion: NISAR L2 GUNW, NASA and ISRO, distributed by the Alaska
+  Satellite Facility DAAC.
+* Elevation: Copernicus DEM GLO 90, ESA.
+* Land cover: ESA WorldCover 2021.
+* Night lights on the globe: NASA GIBS, VIIRS Black Marble.
+* Buildings: Google Open Buildings, Microsoft Building Footprints and
+  OpenStreetMap, merged by VIDA (source.coop).
+* Base map: OpenFreeMap, OpenMapTiles, OpenStreetMap contributors.
+* Map library: MapLibre GL JS. Tile archive reader: PMTiles.

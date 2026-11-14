@@ -1,8 +1,11 @@
 """Land cover on the stack grid, from ESA WorldCover 2021 (10 m, public on AWS).
 
-Radar phase over wetlands follows the water level, and over forest and crops it
-follows moisture. Neither is the ground moving. We keep the analysis on land
-cover where a phase change means the ground itself went up or down.
+Radar phase over wetlands follows the water level, and over forest, grass and
+crops it follows the moisture in plants and soil. Neither is the ground moving.
+In testing, farmland next to Semarang read as "sinking" 13 cm per year through
+the dry season while the built up land beside it read zero. So the analysis is
+kept on built up and bare ground, where a phase change means the ground itself
+went up or down. That is also the ground where buildings stand.
 """
 from __future__ import annotations
 
@@ -15,7 +18,7 @@ import numpy as np
 BASE = "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map"
 TREES, SHRUB, GRASS, CROP, BUILT, BARE, SNOW, WATER, WETLAND, MANGROVE, MOSS = \
     10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 100
-SOLID_GROUND = (SHRUB, GRASS, CROP, BUILT, BARE)
+SOLID_GROUND = (BUILT, BARE)
 
 
 def _tile_url(lat3: int, lon3: int) -> str:

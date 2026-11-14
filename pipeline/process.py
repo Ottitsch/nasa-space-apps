@@ -174,7 +174,7 @@ def process_stack(items, dem=None, landcover=None, use_iono=False, atmo_px=50, s
     unw, coh, cc, iono, water, bad, meta, plus ref_date and sec_date.
     dem: elevation on the same grid (optional but recommended).
     landcover: ESA WorldCover classes on the same grid (optional but
-    recommended). Forest, wetland, water and ice are left out.
+    recommended). Only built up and bare ground is analysed.
     use_iono: subtract the product's split spectrum ionosphere screen.
     atmo_px: scale (pixels) of the atmosphere surface interpolated from stable
     ground and removed from every interferogram. 0 turns it off.
