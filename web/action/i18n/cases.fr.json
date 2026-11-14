@@ -1,0 +1,46 @@
+{
+  "cases": {
+    "tokyo": {
+      "place": "Tokyo, Japon",
+      "before": "À partir des années 1910, les usines, puis les immeubles de bureaux, ont pompé tant d'eau souterraine que certaines parties de l'est de Tokyo se sont affaissées de plus de 4,5 mètres. Les pires années, le sol a baissé de plus de 20 cm en un an.",
+      "action": "Le Japon a adopté la loi sur l'eau industrielle en 1956, puis en 1962 une loi sur l'eau souterraine pompée pour les bâtiments, et Tokyo y a ajouté ses propres règles. À partir de 1961, les nouveaux puits ont été interdits dans les arrondissements les plus touchés de Tokyo, le pompage a été restreint à partir du milieu des années 1960 et de l'eau de rivière a été fournie à la place.",
+      "after": "Le pompage dans le centre de Tokyo est tombé à environ un dixième entre 1964 et 1975, et l'affaissement a ralenti chaque année à partir de 1972. Il s'est depuis pratiquement arrêté dans la ville, mais la hauteur perdue n'est pas revenue."
+    },
+    "houston": {
+      "place": "Houston et Galveston, Texas, États-Unis",
+      "before": "Les villes et l'industrie autour de Houston dépendaient surtout de puits pour leur eau. En 1979, certaines parties de la région s'étaient affaissées jusqu'à 3 mètres (10 pieds), et les inondations côtières s'étaient aggravées.",
+      "action": "Après que des groupes de citoyens ont réclamé une réduction du pompage, le Parlement du Texas a créé en 1975 le Harris-Galveston Subsidence District. Cet organisme délivre ou refuse les permis pour les grands puits et oblige les usagers à passer à l'eau de rivière.",
+      "after": "Les puits fournissaient environ 60 % de l'eau du district en 1976 et environ 21 % en 2020, et l'affaissement s'est en grande partie arrêté dans le sud et l'est. Dans le nord et l'ouest, où la conversion se poursuit jusqu'en 2035, certains endroits s'affaissaient encore de plus de 2 cm par an de 2018 à 2022."
+    },
+    "bangkok": {
+      "place": "Bangkok, Thaïlande",
+      "before": "À partir des années 1950, le service des eaux de la ville, puis l'industrie privée, ont pompé de plus en plus d'eau souterraine. En 1980, le centre de Bangkok s'affaissait nettement, et les endroits les plus touchés baissaient jusqu'à 12 cm par an.",
+      "action": "En application de la loi de 1977 sur les eaux souterraines, le gouvernement thaïlandais a classé les secteurs les plus touchés en zones critiques où aucun nouveau puits n'est autorisé, et il a commencé à faire payer le pompage en 1985. Le service des eaux de la ville est passé à l'eau de surface, et la redevance a plus que doublé entre 1994 et 2003.",
+      "after": "Le pompage a diminué et le niveau des nappes a commencé à remonter. Au début des années 2010, l'affaissement avait ralenti à environ 1 cm par an dans la majeure partie de la ville, et à 2 à 3 cm dans certaines zones industrielles."
+    },
+    "shanghai": {
+      "place": "Shanghai, Chine",
+      "before": "L'affaissement a été constaté pour la première fois en 1921 et s'est accentué à mesure que les usines pompaient davantage d'eau souterraine, atteignant près de 10 cm par an entre 1956 et 1959. En 1965, le point le plus touché de la ville avait baissé d'environ 2,6 mètres.",
+      "action": "En 1963, la municipalité de Shanghai a restreint le pompage dans les puits profonds et a fait passer certaines usines à l'eau de surface. À partir du milieu des années 1960, elle a aussi réinjecté chaque année de l'eau sous terre, ce que l'on appelle la recharge artificielle.",
+      "after": "L'affaissement dans la ville est tombé à 23 mm en 1965 et s'est maintenu à environ 1 mm par an jusqu'en 1985. Il a de nouveau augmenté après 1986 avec la croissance de la ville, et un règlement municipal de 2013 l'a contenu à environ 5 mm par an dans l'ensemble de Shanghai."
+    }
+  },
+  "asks": {
+    "monitor": {
+      "title": "Mesurer l'affaissement et publier les résultats",
+      "text": "Nous demandons aux autorités de mesurer chaque année, en des points fixes, la hauteur du sol et le niveau des nappes, et d'en publier les résultats. Tokyo, Houston, Bangkok et Shanghai ont toutes suivi leur affaissement de cette manière et fixé leurs règles de pompage d'après ces données."
+    },
+    "limit": {
+      "title": "Limiter le pompage d'eau souterraine et le faire payer",
+      "text": "Nous demandons un permis pour chaque grand puits, un plafond de pompage dans les zones qui s'affaissent et une redevance pour chaque mètre cube pompé. Dans les quatre villes, l'affaissement n'a ralenti qu'après la réduction du pompage."
+    },
+    "supply": {
+      "title": "Fournir une autre source d'eau",
+      "text": "Nous demandons un plan assorti de dates pour amener par canalisation l'eau des rivières ou des réservoirs jusqu'aux logements et aux entreprises qui dépendent aujourd'hui de puits. Tokyo, Houston et Bangkok ont pu réduire le pompage parce que les usagers ont reçu une autre eau."
+    },
+    "inspect": {
+      "title": "Inspecter et protéger les zones qui s'affaissent de façon inégale",
+      "text": "Nous demandons des inspections régulières des bâtiments, des canalisations et des ouvrages de protection contre les inondations là où le sol s'affaisse de façon inégale, ainsi que des règles de construction dans les zones les plus touchées. Un sol affaissé ne remonte pas, et Shanghai applique désormais des règles particulières dans des zones de ce type."
+    }
+  }
+}

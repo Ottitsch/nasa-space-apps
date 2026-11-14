@@ -1,0 +1,46 @@
+{
+  "cases": {
+    "tokyo": {
+      "place": "Tokyo, Jepang",
+      "before": "Sejak tahun 1910-an, pabrik dan kemudian gedung perkantoran memompa air tanah begitu banyak sehingga sebagian wilayah timur Tokyo turun lebih dari 4,5 meter. Pada tahun yang terburuk, tanah turun lebih dari 20 cm.",
+      "action": "Jepang mengesahkan Undang-Undang Air Industri pada 1956 dan sebuah undang-undang tentang air tanah yang dipompa untuk gedung pada 1962, dan Tokyo menambahkan aturannya sendiri. Sejak 1961 sumur baru dilarang di distrik Tokyo yang terdampak paling parah, pemompaan dibatasi sejak pertengahan 1960-an, dan sebagai gantinya dipasok air sungai.",
+      "after": "Pemompaan di pusat Tokyo turun menjadi sekitar sepersepuluhnya antara 1964 dan 1975, dan penurunan tanah melambat setiap tahun sejak 1972. Sejak itu penurunan tanah praktis berhenti di kota tersebut, tetapi ketinggian yang hilang tidak kembali."
+    },
+    "houston": {
+      "place": "Houston dan Galveston, Texas, Amerika Serikat",
+      "before": "Kota dan industri di sekitar Houston terutama mengandalkan sumur untuk memperoleh air. Pada 1979 sebagian kawasan itu telah turun hingga 3 meter (10 kaki), dan banjir pesisir makin parah.",
+      "action": "Setelah kelompok warga mendesak agar pemompaan dikurangi, Badan Legislatif Texas membentuk Harris-Galveston Subsidence District pada 1975. Lembaga ini menerbitkan atau menolak izin untuk sumur besar dan mewajibkan pengguna beralih ke air sungai.",
+      "after": "Sumur memasok sekitar 60 persen air di distrik itu pada 1976 dan sekitar 21 persen pada 2020, dan penurunan tanah sebagian besar telah berhenti di bagian selatan dan timur. Di bagian utara dan barat, tempat peralihan berlangsung hingga 2035, beberapa tempat masih turun lebih dari 2 cm per tahun pada 2018 sampai 2022."
+    },
+    "bangkok": {
+      "place": "Bangkok, Thailand",
+      "before": "Sejak 1950-an perusahaan air minum kota dan kemudian industri swasta memompa air tanah makin banyak. Pada 1980 pusat Bangkok jelas mengalami penurunan tanah, dan tempat yang terparah turun hingga 12 cm per tahun.",
+      "action": "Berdasarkan Undang-Undang Air Tanah tahun 1977, pemerintah Thailand menetapkan kawasan terparah sebagai zona kritis tanpa sumur baru dan mulai memungut biaya pemompaan pada 1985. Perusahaan air minum kota beralih ke air permukaan, dan biaya itu naik lebih dari dua kali lipat antara 1994 dan 2003.",
+      "after": "Pemompaan berkurang dan muka air tanah mulai pulih. Pada awal 2010-an penurunan tanah telah melambat menjadi sekitar 1 cm per tahun di sebagian besar kota, dan 2 sampai 3 cm di beberapa kawasan industri."
+    },
+    "shanghai": {
+      "place": "Shanghai, Tiongkok",
+      "before": "Penurunan tanah pertama kali tercatat pada 1921 dan meningkat seiring pabrik memompa lebih banyak air tanah, hingga mencapai hampir 10 cm per tahun antara 1956 dan 1959. Pada 1965 titik terparah di kota itu telah turun sekitar 2,6 meter.",
+      "action": "Pada 1963 pemerintah kota Shanghai membatasi pemompaan dari sumur dalam dan mengalihkan sebagian pabrik ke air permukaan. Sejak pertengahan 1960-an pemerintah kota juga memompa air kembali ke bawah tanah setiap tahun, yang disebut pengimbuhan buatan.",
+      "after": "Penurunan tanah di kota itu berkurang menjadi 23 mm pada 1965 dan bertahan pada sekitar 1 mm per tahun hingga 1985. Penurunan meningkat lagi setelah 1986 seiring pertumbuhan kota, dan sebuah peraturan kota tahun 2013 menahannya pada sekitar 5 mm per tahun di seluruh Shanghai."
+    }
+  },
+  "asks": {
+    "monitor": {
+      "title": "Ukur penurunan tanah dan umumkan hasilnya",
+      "text": "Kami meminta pihak berwenang mengukur ketinggian tanah dan muka air tanah di titik tetap setiap tahun dan mengumumkan hasilnya. Tokyo, Houston, Bangkok, dan Shanghai semuanya memantau penurunan tanahnya dengan cara ini dan menetapkan aturan pemompaan berdasarkan data tersebut."
+    },
+    "limit": {
+      "title": "Batasi pemompaan air tanah dan kenakan biaya",
+      "text": "Kami meminta agar setiap sumur besar wajib berizin, agar ada batas atas pemompaan di zona yang turun, dan agar dikenakan biaya untuk setiap meter kubik yang dipompa. Di keempat kota itu penurunan tanah baru melambat setelah pemompaan dikurangi."
+    },
+    "supply": {
+      "title": "Sediakan sumber air lain",
+      "text": "Kami meminta rencana berjadwal untuk mengalirkan air perpipaan dari sungai atau waduk ke rumah dan tempat usaha yang kini bergantung pada sumur. Tokyo, Houston, dan Bangkok dapat mengurangi pemompaan karena penggunanya diberi air lain."
+    },
+    "inspect": {
+      "title": "Periksa dan lindungi zona yang turun tidak merata",
+      "text": "Kami meminta pemeriksaan rutin atas bangunan, pipa, dan pelindung banjir di tempat tanah turun tidak merata, serta aturan bangunan di zona terparah. Tanah yang telah turun tidak naik lagi, dan Shanghai kini menerapkan aturan khusus di zona seperti ini."
+    }
+  }
+}

@@ -75,7 +75,7 @@ const pick = (obj, lang) => (obj && typeof obj === 'object' ? obj[lang] ?? obj.e
 const num = (L, n, d = 0) => new Intl.NumberFormat(L.loc, { maximumFractionDigits: d }).format(n);
 const day = (L, ms) => new Intl.DateTimeFormat(L.loc, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(ms);
 const month = (L, ms) => new Intl.DateTimeFormat(L.loc, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(ms);
-const yearText = (L, y) => new Intl.DateTimeFormat(L.loc, { year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(y, 6, 1));
+const yearText = (L, y) => new Intl.DateTimeFormat(L.loc, { year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(y, 0, 1));
 function sunk(L, mm) {
   const a = Math.abs(mm);
   if (a < 995) return tr(L, 'u.cm', { n: num(L, a / 10, a < 100 ? 1 : 0) });
@@ -186,22 +186,25 @@ function shareUrl() {
   return u.toString();
 }
 
+/** Chart labels sit in left to right drawings: keep right to left text in its own order. */
+const iso = text => (RTL.has(S.ui.lang) ? `\u2067${text}\u2069` : text);
+
 function measuredSVG() {
   const m = S.meta, s = S.A.spot.series, L = S.ui;
-  const W = 330, H = 118, l = 6, r = 46, top = 8, b = 18, iw = W - l - r, ih = H - top - b;
+  const W = 330, H = 118, l = 6, r = 84, top = 8, b = 18, iw = W - l - r, ih = H - top - b;
   const max = Math.max(...s, 5) * 1.12;
   const X = k => l + (iw * m.t_years[k]) / m.span, Y = v => top + (ih * Math.max(0, v)) / max;
   const pts = s.map((v, k) => `${X(k).toFixed(1)},${Y(v).toFixed(1)}`);
   const last = s[s.length - 1];
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t('chart.measured'))}">
+  return `<svg viewBox="0 0 ${W} ${H}" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.measured'))}">
     <line x1="${l}" x2="${W - r}" y1="${top}" y2="${top}" stroke="#9aa5b4" stroke-dasharray="2 3"/>
     <polygon points="${l},${top} ${pts.join(' ')} ${W - r},${top}" fill="rgba(30,130,220,0.12)"/>
     <polyline points="${pts.join(' ')}" fill="none" stroke="#1e82dc" stroke-width="2"/>
     ${s.map((v, k) => `<circle cx="${X(k).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="2.2" fill="#1e82dc"/>`).join('')}
     <text x="${W - r + 5}" y="${top + 4}" font-size="10" fill="#5a6779">0</text>
-    <text x="${W - r + 5}" y="${Math.max(top + 16, Y(last) + 4)}" font-size="10.5" font-weight="700" fill="#17202e">${esc(sunk(L, last))}</text>
-    <text x="${l}" y="${H - 4}" font-size="10" fill="#5a6779">${esc(day(L, m.t0))}</text>
-    <text x="${W - r}" y="${H - 4}" font-size="10" fill="#5a6779" text-anchor="end">${esc(day(L, m.t1))}</text>
+    <text x="${W - r + 5}" y="${Math.max(top + 16, Y(last) + 4)}" font-size="10.5" font-weight="700" fill="#17202e">${esc(iso(sunk(L, last)))}</text>
+    <text x="${l}" y="${H - 4}" font-size="10" fill="#5a6779">${esc(iso(day(L, m.t0)))}</text>
+    <text x="${W - r}" y="${H - 4}" font-size="10" fill="#5a6779" text-anchor="end">${esc(iso(day(L, m.t1)))}</text>
   </svg>`;
 }
 
@@ -220,10 +223,10 @@ function timelineSVG() {
     return `<line x1="${x}" x2="${x}" y1="${y + h}" y2="${y + h + 4}" stroke="#5a6779"/><text x="${x}" y="${H - 4}" font-size="10" fill="#5a6779" text-anchor="${yy === 2050 ? 'end' : 'middle'}">${esc(yearText(L, yy))}</text>`;
   }).join('');
   const xn = X(m.t1);
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t('chart.timeline'))}">
+  return `<svg viewBox="0 0 ${W} ${H}" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.timeline'))}">
     ${out}<rect x="${l}" y="${y}" width="${iw}" height="${h}" fill="none" stroke="#9aa5b4"/>
     <path d="M${xn} ${y - 1}l-4 -6h8z" fill="#17202e"/>
-    <text x="${xn + 7}" y="${y - 4}" font-size="10" fill="#17202e">${esc(t('chart.today'))}</text>
+    <text x="${xn + 7}" y="${y - 4}" font-size="10" fill="#17202e">${esc(iso(t('chart.today')))}</text>
     ${ticks}</svg>`;
 }
 
@@ -237,7 +240,7 @@ function renderSheet() {
   const chip = `<span class="chip" style="background:${sp.cls ? RISK[sp.cls].color : '#6b7686'}">${esc(t('class.' + sp.cls))}</span>`;
   let v;
   if (!sp.valid) v = `<p class="big">${esc(t('verdict.nodata'))}</p><p class="sub">${esc(t('verdict.nodata.sub'))}</p>`;
-  else if (sp.edge) v = `<p class="big">${chip}${esc(t('verdict.edge'))}</p><p class="sub">${esc(t('verdict.edge.sub'))}</p>`;
+  else if (sp.edge) v = `<p class="big">${sp.cls >= 2 ? chip : ''}${esc(t('verdict.edge'))}</p><p class="sub">${esc(t('verdict.edge.sub'))}</p>`;
   else if (!sp.sig) v = `<p class="big">${chip}${esc(t('verdict.none'))}</p><p class="sub">${esc(t('verdict.none.sub', { thr: mmyr(L, m.threshold_mm_yr) }))}</p>`;
   else v = `<p class="big">${chip}${esc(t('verdict.sinking', { rate: rate(L, sp.rate) }))}</p>`;
   if (sp.valid && sp.near) v += `<p class="sub">${esc(t('verdict.near', { dist: metresText(L, sp.near) }))}</p>`;
@@ -284,8 +287,8 @@ function renderHood() {
   const row = (k, val) => `<dt>${esc(k)}</dt><dd>${esc(val)}</dd>`;
   let facts = row(t('hood.built'), ha(L, h.builtHa)) + row(t('hood.sinking'), `${ha(L, h.sinkingHa)} (${num(L, pct)}%)`);
   if (h.fastest < 0) facts += row(t('hood.fastest'), rate(L, h.fastest));
-  const counted = A.buildings && !S.buildingsFailed;
-  facts += row(t('hood.buildings'), counted ? num(L, A.nBuildings) : S.buildingsFailed ? '·' : t('hood.counting'));
+  const counted = A.buildings && !S.buildingsFailed, missing = S.buildingsFailed || A.sparse;
+  if (!missing) facts += row(t('hood.buildings'), counted ? num(L, A.nBuildings) : t('hood.counting'));
   const cols = HORIZONS.map(y => `<th>${esc(y === 'now' ? t('hood.col.now') : yearText(L, y))}</th>`).join('');
   const cell = v => (counted ? num(L, v) : ha(L, v));
   const data = counted ? A.buildings : h.area;
@@ -293,7 +296,7 @@ function renderHood() {
   $('sh-hood').innerHTML = `<h3>${esc(t('hood.title', { radius: metresText(L, S.r) }))}</h3>
     <div class="hood-grid"><dl class="facts">${facts}</dl>
     <div><table><thead><tr><th>${esc(counted ? t('hood.buildings') : t('hood.built'))}</th>${cols}</tr></thead><tbody>${rows}</tbody></table>
-    <p class="note">${esc(S.buildingsFailed ? t('hood.nobuildings') : t('hood.note'))}</p></div></div>`;
+    <p class="note">${esc(missing ? t('hood.nobuildings') : t('hood.note'))}</p></div></div>`;
 }
 
 // ------------------------------------------------- the picture (offscreen map)
@@ -423,8 +426,12 @@ function onIdle() {
       const counts = S.A.ys.map(y => { const c = [0, 0, 0, 0, 0]; for (const i of inside) c[p.classAt(i, y)]++; return c; });
       const key = JSON.stringify(counts);
       if (key !== S.A.key) {
-        S.A.key = key; S.A.buildings = counts; S.A.nBuildings = inside.length;
-        S.A.nSinking = inside.filter(i => i >= 0 && ((p.flags[i] & 2) || p.beta[i])).length;
+        // fewer than one outline per hectare of built up land means the open
+        // building data barely covers this place (mainland China, for one)
+        const sparse = inside.length < S.A.hood.builtHa;
+        S.A.key = key; S.A.sparse = sparse;
+        S.A.buildings = sparse ? null : counts; S.A.nBuildings = sparse ? null : inside.length;
+        S.A.nSinking = sparse ? null : inside.filter(i => i >= 0 && ((p.flags[i] & 2) || p.beta[i])).length;
         renderHood(); renderLead(); refreshLetter();
       }
     }
@@ -462,7 +469,9 @@ function buildLetter() {
   }
   const seen = SEEN.filter(k => $('seen-' + k).checked).map(k => '  • ' + tr(L, 'letter.seen.' + k));
   const asks = [1, 2, 3].map(k => `  ${num(L, k)}. ${tr(L, `letter.ask.${S.ask}.${k}`)}`);
-  const law = c?.right_to_answer;
+  // an access to information law backs a request for information, not a request
+  // for an inspection, unless the city file says it covers both
+  const law = (c?.right_to_answer?.asks || ['groundwater']).includes(S.ask) ? c?.right_to_answer : null;
   const right = law
     ? tr(L, law.deadline_days ? 'letter.right' : 'letter.right.nodays', { law: local ? law.name : law.name_en || law.name, deadline: deadline(L, law) })
     : tr(L, 'letter.noright');
@@ -600,7 +609,10 @@ function renderShare() {
   const url = shareUrl(), text = t('act.share.text', { place: placeName(S.ui) });
   const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
   const wa = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
-  for (const id of ['share-tg', 'share-tg2']) $(id).href = tg;
+  // no point offering a Telegram button where Telegram does not open
+  const tgWorks = S.city?.organising?.telegram_usable !== false;
+  for (const id of ['share-tg', 'share-tg2']) { $(id).href = tg; $(id).hidden = !tgWorks; }
+  $('share-wa2').classList.toggle('ghost', tgWorks);
   for (const id of ['share-wa', 'share-wa2']) $(id).href = wa;
 }
 

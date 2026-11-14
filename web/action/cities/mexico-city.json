@@ -135,6 +135,10 @@
   "right_to_answer": {
     "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley General de Transparencia y Acceso a la Información Pública",
     "name_en": "Article 8 of the Constitution (right of petition) and the General Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
     "what": {
       "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: at most 20 working days under the General Law, which can be extended by up to 10 more. Mexico City bodies have 9 working days, extendable by 7, under the city's own transparency law of July 2026.",
       "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: como máximo 20 días hábiles según la Ley General, ampliables hasta por 10 más. Las dependencias de la Ciudad de México tienen 9 días hábiles, ampliables por 7, según la ley local de transparencia de julio de 2026."

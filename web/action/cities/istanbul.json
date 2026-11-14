@@ -1,0 +1,161 @@
+{
+  "id": "istanbul",
+  "checked": "2026-11-14",
+  "languages": ["tr"],
+  "place_name": { "en": "Istanbul", "tr": "İstanbul" },
+  "country_name": { "en": "Türkiye", "tr": "Türkiye" },
+  "summary": {
+    "en": "In Istanbul a cracking building is first a matter for your district municipality (Üsküdar, Kadıköy or Beykoz for the zones on the map), which has to act on buildings in danger of collapse. The Metropolitan Municipality (İBB) studies ground conditions and ground movement through its Earthquake and Ground Investigation Directorate, and the provincial disaster authority AFAD coordinates emergency response. Deeper groundwater wells need documents from the State Hydraulic Works (DSİ) and the city utility İSKİ runs the water and sewer network; all of them can be reached with a formal request through CİMER.",
+    "tr": "İstanbul'da çatlayan bir bina için ilk muhatap ilçe belediyenizdir (haritadaki bölgeler için Üsküdar, Kadıköy veya Beykoz); yıkılma tehlikesi olan yapılarla ilgili işlem yapmak belediyenin görevidir. İstanbul Büyükşehir Belediyesi (İBB), Deprem ve Zemin İnceleme Şube Müdürlüğü eliyle zemin koşullarını ve zemin hareketlerini inceler; il düzeyindeki afet kurumu AFAD ise acil durumlarda müdahaleyi koordine eder. Belirli bir derinliği aşan yeraltı suyu kuyuları için Devlet Su İşleri'nden (DSİ) belge alınır, su ve kanalizasyon şebekesini İSKİ işletir; bu kurumların hepsine CİMER üzerinden resmî başvuru yapılabilir."
+  },
+  "bodies": [
+    {
+      "id": "ilce-belediyeleri",
+      "name": "İlçe belediyeleri (Üsküdar, Kadıköy, Beykoz ve diğer ilçeler)",
+      "name_en": "District municipalities (Üsküdar, Kadıköy, Beykoz and the other districts)",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Under Article 39 of the Zoning Law (No. 3194), buildings in danger of collapse are identified by the municipality or the governor's office, which must notify the owner and have the danger removed. Write to your district municipality to ask for an on site inspection of cracks or settlement. Call centres: Üsküdar 444 0 875 (uskudar.bel.tr), Kadıköy 444 55 22 (kadikoy.bel.tr), Beykoz 444 6 661 (beykoz.bel.tr). The link lists every district municipality in Istanbul.",
+        "tr": "3194 sayılı İmar Kanunu'nun 39. maddesine göre yıkılacak derecede tehlikeli yapılar belediye veya valilik tarafından tespit edilir; idare yapı sahibine tebligat yapar ve tehlikenin giderilmesini sağlar. Çatlak veya oturma için yerinde inceleme talebinizi ilçe belediyenize yazın. Çağrı merkezleri: Üsküdar 444 0 875 (uskudar.bel.tr), Kadıköy 444 55 22 (kadikoy.bel.tr), Beykoz 444 6 661 (beykoz.bel.tr). Bağlantıda İstanbul'daki bütün ilçe belediyeleri listelenir."
+      },
+      "website": "https://www.turkiye.gov.tr/istanbul-belediyeleri",
+      "contact_url": "https://www.turkiye.gov.tr/istanbul-belediyeleri",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.turkiye.gov.tr/istanbul-belediyeleri"
+    },
+    {
+      "id": "ibb-deprem-zemin",
+      "name": "İstanbul Büyükşehir Belediyesi Deprem ve Zemin İnceleme Şube Müdürlüğü",
+      "name_en": "Istanbul Metropolitan Municipality, Earthquake and Ground Investigation Directorate",
+      "level": "city",
+      "handles": ["inspection", "groundwater"],
+      "role": {
+        "en": "The metropolitan unit that prepares geological and geotechnical studies and hazard maps for Istanbul and carries out research and monitoring on ground movements. Write to ask what it knows about ground movement at your address and to request an examination of the ground. General requests to the Metropolitan Municipality can also go through the Alo 153 Solution Centre.",
+        "tr": "İstanbul için jeolojik ve jeoteknik etütleri ve tehlike haritalarını hazırlayan, zemin hareketlerine ilişkin araştırma ve izleme çalışmalarını yürüten büyükşehir birimidir. Adresinizdeki zemin hareketi hakkında ellerindeki bilgiyi sormak ve zeminin incelenmesini istemek için yazın. Büyükşehir Belediyesi'ne genel başvurular Alo 153 Çözüm Merkezi üzerinden de yapılabilir."
+      },
+      "website": "https://depremzemin.ibb.istanbul",
+      "contact_url": "https://www.ibb.istanbul/deprem-ve-zemin-inceleme-sube-mudurlugu/",
+      "email": "depremzemin@ibb.gov.tr",
+      "phone": "0212 455 38 05",
+      "postal": "Osmaniye Mahallesi, Çobançeşme Koşuyolu Bulvarı No:5, Bakırköy/İstanbul",
+      "source": "https://www.ibb.istanbul/deprem-ve-zemin-inceleme-sube-mudurlugu/"
+    },
+    {
+      "id": "afad-istanbul",
+      "name": "İstanbul İl Afet ve Acil Durum Müdürlüğü (AFAD İstanbul)",
+      "name_en": "Istanbul Provincial Directorate of Disaster and Emergency Management (AFAD Istanbul)",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The provincial arm of the national disaster authority: it coordinates response to disasters and emergencies in Istanbul and assesses disaster hazards and damage. Write to it when ground movement threatens several buildings or a whole street. In an emergency call 112.",
+        "tr": "Ulusal afet kurumunun il teşkilatıdır: İstanbul'da afet ve acil durumlara müdahaleyi koordine eder, afet tehlikelerini ve hasarı değerlendirir. Zemin hareketi birden çok binayı veya bütün bir sokağı tehdit ediyorsa bu müdürlüğe yazın. Acil durumda 112'yi arayın."
+      },
+      "website": "https://istanbul.afad.gov.tr",
+      "contact_url": "https://istanbul.afad.gov.tr",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.turkiye.gov.tr/afet-ve-acil-durum-yonetimi-baskanligi"
+    },
+    {
+      "id": "dsi-14-bolge",
+      "name": "Devlet Su İşleri (DSİ) 14. Bölge Müdürlüğü",
+      "name_en": "State Hydraulic Works (DSİ), 14th Regional Directorate (Istanbul)",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "Under the Groundwater Law (No. 167) groundwater is under the authority of the State, and wells deeper than the limit set by DSİ need exploration and use documents from DSİ. Write to ask which wells hold documents near you, how much water they may draw, and what groundwater level measurements exist for your area.",
+        "tr": "167 sayılı Yeraltı Suları Hakkında Kanun'a göre yeraltı suları Devletin hüküm ve tasarrufu altındadır ve DSİ'nin belirlediği derinliği aşan kuyular için DSİ'den arama ve kullanma belgesi alınması gerekir. Çevrenizdeki belgeli kuyuları, çekilmesine izin verilen su miktarını ve bölgenize ait yeraltı suyu seviye ölçümlerini sormak için yazın."
+      },
+      "website": "https://bolge14.dsi.gov.tr",
+      "contact_url": "https://bolge14.dsi.gov.tr",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=167&MevzuatTur=1&MevzuatTertip=4"
+    },
+    {
+      "id": "iski",
+      "name": "İstanbul Su ve Kanalizasyon İdaresi (İSKİ) Genel Müdürlüğü",
+      "name_en": "Istanbul Water and Sewerage Administration (İSKİ)",
+      "level": "city",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The city water utility: by law it supplies water from underground and surface sources, runs the water and sewer network and has to prevent activities that deplete water sources. Write to ask about groundwater use near you and about any leaking water or sewer pipes, since leaks can also make the ground settle.",
+        "tr": "Şehrin su idaresidir: kanun gereği yeraltı ve yerüstü kaynaklarından su sağlar, su ve kanalizasyon şebekesini işletir ve su kaynaklarının azalmasına yol açacak faaliyetleri önlemekle görevlidir. Yakınınızdaki yeraltı suyu kullanımını ve su veya kanalizasyon hattı kaçaklarını sormak için yazın; kaçaklar da zeminde oturmaya yol açabilir."
+      },
+      "website": "https://www.iski.istanbul",
+      "contact_url": "https://www.iski.istanbul",
+      "email": null,
+      "phone": "+90 212 321 00 00",
+      "postal": "Güzeltepe Mahallesi, Osmanpaşa Caddesi No:7, 34060 Eyüpsultan/İstanbul",
+      "source": "https://www.turkiye.gov.tr/istanbul-su-ve-kanalizasyon-idaresi-genel-mudurlugu"
+    },
+    {
+      "id": "cimer",
+      "name": "Cumhurbaşkanlığı İletişim Merkezi (CİMER)",
+      "name_en": "Presidential Communication Centre (CİMER)",
+      "level": "national",
+      "handles": ["information"],
+      "role": {
+        "en": "The national system for right to information requests and petitions to any public body, including municipalities, AFAD, DSİ and İSKİ. Your application is forwarded to the institution you choose and you can follow the reply in the system.",
+        "tr": "Belediyeler, AFAD, DSİ ve İSKİ dahil bütün kamu kurumlarına bilgi edinme başvurusu ve dilekçe iletmek için kullanılan ulusal başvuru sistemidir. Başvurunuz seçtiğiniz kuruma yönlendirilir ve cevabı sistemden izleyebilirsiniz."
+      },
+      "website": "https://www.cimer.gov.tr",
+      "contact_url": "https://www.cimer.gov.tr",
+      "email": null,
+      "phone": "150",
+      "postal": "T.C. Cumhurbaşkanlığı Külliyesi, 06560 Beştepe, Ankara",
+      "source": "https://www.cimer.gov.tr/"
+    }
+  ],
+  "right_to_answer": {
+    "name": "4982 sayılı Bilgi Edinme Hakkı Kanunu",
+    "name_en": "Right to Information Law (No. 4982)",
+    "what": {
+      "en": "Public institutions must give access to the information or documents you request within 15 working days. If another unit or institution has to be consulted the limit is 30 working days, and they must tell you so in writing before the first 15 working days run out. A request for action or a complaint counts as a petition under Law No. 3071 and must receive a reasoned reply within 30 days.",
+      "tr": "Kurum ve kuruluşlar, istenen bilgi veya belgeye erişimi 15 iş günü içinde sağlamak zorundadır. Başka bir birimin veya kurumun görüşünün alınması gerekiyorsa süre 30 iş günüdür ve bu durum ilk 15 iş günü dolmadan size yazılı olarak bildirilir. İşlem yapılmasına yönelik istek ve şikâyetler 3071 sayılı Dilekçe Hakkının Kullanılmasına Dair Kanun kapsamındadır ve en geç 30 gün içinde gerekçeli olarak cevaplanır."
+    },
+    "how": {
+      "en": "Apply through CİMER (cimer.gov.tr, also reachable with your e-Devlet login), by phone on 150, or by letter or fax. Choose the institution and state clearly which information or documents you want. A written application must carry your name, signature and home or work address; in CİMER your identity is confirmed electronically. Ask for records the institution already holds, because requests that would need separate research can be refused. If your request is refused you can object to the Right to Information Review Board within 15 days of being notified.",
+      "tr": "Başvurunuzu CİMER üzerinden (cimer.gov.tr; e-Devlet girişiyle de kullanılabilir), 150'yi arayarak ya da mektup veya faksla yapabilirsiniz. İlgili kurumu seçin ve hangi bilgi veya belgeyi istediğinizi açıkça yazın. Yazılı başvuruda adınız, soyadınız, imzanız ve oturma yeri ya da iş adresiniz bulunmalıdır; CİMER'de kimliğiniz elektronik olarak doğrulanır. Kurumun elinde bulunan kayıtları isteyin, çünkü ayrı bir araştırma veya inceleme gerektiren başvurular reddedilebilir. Başvurunuz reddedilirse kararın tebliğinden itibaren 15 gün içinde Bilgi Edinme Değerlendirme Kurulu'na itiraz edebilirsiniz."
+    },
+    "url": "https://www.cimer.gov.tr",
+    "deadline_days": 15,
+    "deadline_text": { "en": "15 working days", "tr": "15 iş günü" },
+    "source": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4982&MevzuatTur=1&MevzuatTertip=5"
+  },
+  "urgent": {
+    "phone": "112",
+    "what": {
+      "en": "If a building looks about to fail, leave it, keep others away and call 112, the single emergency number in Türkiye. The 112 Emergency Call Centre sends the fire brigade, AFAD search and rescue teams, police and ambulances as needed.",
+      "tr": "Bir bina yıkılacak gibi görünüyorsa binayı boşaltın, çevredekileri uzak tutun ve Türkiye'nin tek acil çağrı numarası olan 112'yi arayın. 112 Acil Çağrı Merkezi ihtiyaca göre itfaiye, AFAD arama kurtarma ekipleri, polis ve ambulans yönlendirir."
+    },
+    "source": "https://www.icisleri.gov.tr/hayat-112-acil-mobil-ihbar-uygulamasi-adres"
+  },
+  "context": {
+    "en": "Satellite radar (InSAR) studies have measured slow sinking in parts of Istanbul. A 2018 study in the journal Remote Sensing, covering 1992 to 2017, found sites sinking by 5 to 15 mm a year, mainly along the Haramidere and Ayamama stream valleys on the European side, on reclaimed land along the coast and around one tall tower, and linked the movement to weak ground, land reclamation and human activity. We found no published official sinking rate for Üsküdar, Kadıköy or Beykoz. Within the Metropolitan Municipality, studying and monitoring ground movements and microzonation are duties of the Earthquake and Ground Investigation Directorate.",
+    "tr": "Uydu radarı (InSAR) çalışmaları İstanbul'un bazı kesimlerinde yavaş bir çökme ölçmüştür. Remote Sensing dergisinde 2018'de yayımlanan ve 1992 ile 2017 arasını kapsayan bir çalışma, yılda 5 ila 15 mm çöken alanlar belirlemiş ve bu hareketi zayıf zemine, kıyı dolgularına ve insan etkilerine bağlamıştır; bu alanların başlıcaları Avrupa Yakası'ndaki Haramidere ve Ayamama dere vadileri, kıyıdaki dolgu alanları ve yüksek bir gökdelenin çevresidir. Üsküdar, Kadıköy veya Beykoz için yayımlanmış resmî bir çökme hızına ulaşamadık. İstanbul Büyükşehir Belediyesi'nde zemin hareketlerini incelemek, izlemek ve mikrobölgeleme çalışmalarını yürütmek Deprem ve Zemin İnceleme Şube Müdürlüğü'nün görevidir.",
+    "sources": [
+      "https://doi.org/10.3390/rs10030408",
+      "https://www.ibb.istanbul/deprem-ve-zemin-inceleme-sube-mudurlugu/"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram is normally reachable in Türkiye without a VPN, and apartment and neighbourhood groups mostly run on WhatsApp. Access to social media and messaging apps has at times been slowed in Istanbul during political unrest: for about two days in March 2025, and again in September 2025, when YouTube, X, Instagram and WhatsApp were affected. Agree on a second way to reach each other, such as phone calls or SMS. In the group, share measured data and its source and avoid unverified claims that could cause alarm: Article 217/A of the Penal Code makes it an offence to publicly spread false information about public order or public health with the sole aim of creating fear or panic.",
+      "tr": "Telegram Türkiye'de normalde VPN olmadan erişilebilir durumdadır; apartman ve mahalle grupları ise çoğunlukla WhatsApp üzerinden yürür. Siyasi gerginlik dönemlerinde İstanbul'da sosyal medya ve mesajlaşma uygulamalarına erişim zaman zaman yavaşlatılmıştır: Mart 2025'te bu durum yaklaşık iki gün sürmüş, Eylül 2025'te ise YouTube, X, Instagram ve WhatsApp etkilenmiştir. Bu nedenle telefon veya SMS gibi ikinci bir iletişim yolu üzerinde anlaşın. Grupta ölçülmüş veriyi ve kaynağını paylaşın, doğrulanmamış ve korku yaratabilecek iddialardan kaçının: Türk Ceza Kanunu'nun 217/A maddesi, kamu düzeni veya genel sağlıkla ilgili gerçeğe aykırı bilgiyi sırf halk arasında korku veya panik yaratmak amacıyla alenen yaymayı suç sayar."
+    },
+    "sources": [
+      "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/turkey",
+      "https://freedomhouse.org/country/turkey/freedom-net/2025",
+      "https://www.euronews.com/next/2025/09/08/turkey-restricts-internet-access-amid-opposition-party-standoff",
+      "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5237&MevzuatTur=1&MevzuatTertip=5"
+    ]
+  },
+  "groups": []
+}

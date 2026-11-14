@@ -1,0 +1,174 @@
+{
+  "id": "mashhad",
+  "checked": "2026-11-14",
+  "languages": ["fa"],
+  "place_name": {
+    "en": "Mashhad",
+    "fa": "مشهد"
+  },
+  "country_name": {
+    "en": "Iran",
+    "fa": "ایران"
+  },
+  "summary": {
+    "en": "In Mashhad a cracking or dangerous building is first the municipality's job: under clause 14 of Article 55 of the Municipality Law your district municipality must have it examined and order the danger removed, and requests are registered through the municipality's 137 centre. Along the plain north west of the city, outside the city limits, the local municipality or village administration answers first, with the county governor's office and the governorate's crisis management office above them. Wells and groundwater pumping are licensed and supervised by the Khorasan Razavi Regional Water Company (Ministry of Energy), and the sinking is studied by the Geological Survey of Iran's North East office in Mashhad and mapped by the National Cartographic Center.",
+    "fa": "در مشهد رسیدگی به ساختمان ترک‌خورده یا خطرناک در گام نخست با شهرداری است: طبق بند ۱۴ ماده ۵۵ قانون شهرداری، شهرداری منطقه باید پس از بازدید مأمور فنی خود دستور رفع خطر بدهد و درخواست‌ها از راه مرکز ارتباطات مردمی ۱۳۷ ثبت می‌شود. در امتداد دشت در شمال غرب شهر و بیرون از محدوده شهر، نخست شهرداری یا دهیاری محل و سپس فرمانداری شهرستان و اداره کل مدیریت بحران استانداری خراسان رضوی پاسخ‌گو هستند. صدور پروانه چاه و نظارت بر برداشت آب زیرزمینی با شرکت آب منطقه‌ای خراسان رضوی (وابسته به وزارت نیرو) است و فرونشست را اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق در مشهد بررسی می‌کند و سازمان نقشه‌برداری کشور نقشه آن را تهیه کرده است."
+  },
+  "bodies": [
+    {
+      "id": "mashhad-districts",
+      "name": "شهرداری منطقه شما، شهرداری مشهد",
+      "name_en": "Your district municipality, Mashhad Municipality",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Under the Municipality Law (Article 55, clause 14) the municipality must have a dangerous building or wall examined and the danger removed, so call 137 at any hour or email the municipality's 137 centre to request a site visit, and send your letter to your own district municipality, whose number is on the municipality's contact page.",
+        "fa": "طبق بند ۱۴ ماده ۵۵ قانون شهرداری، رفع خطر از بناها و دیوارهای شکسته و خطرناک وظیفه شهرداری است؛ برای درخواست بازدید در هر ساعت از شبانه‌روز با ۱۳۷ تماس بگیرید یا به مرکز ارتباطات مردمی ۱۳۷ ایمیل بزنید و نامه خود را به شهرداری منطقه خودتان بدهید که شماره تماس آن در صفحه ارتباط با ما در درگاه شهرداری مشهد آمده است."
+      },
+      "website": "https://www.mashhad.ir/",
+      "contact_url": "https://www.mashhad.ir/web_directory/84769-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7.html",
+      "email": "137@mashhad.ir",
+      "phone": "137",
+      "postal": "مشهد، میدان شهدا، ساختمان شهرداری مشهد، کد پستی ۹۱۳۳۶۸۳۶۳۲",
+      "source": "https://137.mashhad.ir/sis_contact_us/1681324-%D9%85%D8%B1%DA%A9%D8%B2-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D9%85%D8%B1%D8%AF%D9%85%DB%8C-137-%D8%B4%D9%87%D8%B1%D8%AF%D8%A7%D8%B1%DB%8C-%D9%85%D8%B4%D9%87%D8%AF.html"
+    },
+    {
+      "id": "mashhad-fire",
+      "name": "سازمان آتش‌نشانی و خدمات ایمنی شهرداری مشهد",
+      "name_en": "Mashhad Fire and Safety Services Organization",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The city's fire and rescue service, whose prevention unit deals with unsafe and high risk buildings and follows up residents' safety requests; write to it when cracks make you doubt that a building is safe to stay in.",
+        "fa": "سازمان آتش‌نشانی شهر مشهد که واحد پیشگیری آن به ساختمان‌های ناایمن و پرخطر رسیدگی می‌کند و درخواست‌های ایمنی شهروندان را پی می‌گیرد؛ اگر ترک‌ها شما را درباره ایمن بودن ساختمان برای ماندن نگران کرده است به این سازمان نامه بنویسید."
+      },
+      "website": "https://125.mashhad.ir/",
+      "contact_url": "https://125.mashhad.ir/web_directory/9195-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7-%D9%BE%D8%B3%D8%AA-%D9%87%D8%A7%DB%8C-%D8%B3%D8%A7%D8%B2%D9%85%D8%A7%D9%86.html?submenu_id=1",
+      "email": "125@mashhad.ir",
+      "phone": "051 31507514",
+      "postal": "مشهد، بولوار وکیل‌آباد، حدفاصل وکیل‌آباد ۳۱ و ۳۳، نرسیده به پل دانشجو، سازمان آتش‌نشانی و خدمات ایمنی شهرداری مشهد",
+      "source": "https://125.mashhad.ir/"
+    },
+    {
+      "id": "razavi-khorasan-crisis",
+      "name": "اداره کل مدیریت بحران استانداری خراسان رضوی",
+      "name_en": "Crisis Management Directorate General, Razavi Khorasan Governorate",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "For the towns and villages along the plain north west of Mashhad that lie outside the city's districts, where the county governor heads crisis management; this governorate office coordinates the counties, so write to it when cracks or sinking appear in a place that no Mashhad district municipality covers.",
+        "fa": "ویژه شهرها و روستاهای امتداد دشت در شمال غرب مشهد که بیرون از مناطق شهرداری مشهد هستند و ریاست مدیریت بحران شهرستان در آن‌ها با فرماندار است؛ این اداره کل کار شهرستان‌ها را هماهنگ می‌کند، پس هرگاه ترک‌خوردگی یا نشست زمین در جایی دیده شد که در محدوده هیچ‌یک از مناطق شهرداری مشهد نیست به این اداره نامه بنویسید."
+      },
+      "website": "https://havades.khorasan.ir/",
+      "contact_url": "https://ostandari.khorasan.ir/RContent/2WA9LYZC-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7-%D8%A8%D8%A7-%D9%85%D8%A7.aspx",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://havades.khorasan.ir/"
+    },
+    {
+      "id": "khrw",
+      "name": "شرکت آب منطقه‌ای خراسان رضوی",
+      "name_en": "Khorasan Razavi Regional Water Company",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The Ministry of Energy company that licenses wells and supervises groundwater across Razavi Khorasan, including the Mashhad plain, and has a water resources office for Mashhad county; write to it to ask what is being done about pumping near you or to report a well you believe is unauthorised.",
+        "fa": "شرکت وابسته به وزارت نیرو که در خراسان رضوی، از جمله دشت مشهد، پروانه چاه صادر می‌کند و بر آب‌های زیرزمینی نظارت دارد و در شهرستان مشهد نیز امور منابع آب دارد؛ برای پرسش درباره برداشت آب در نزدیکی محل زندگی خود یا گزارش چاهی که گمان می‌کنید غیرمجاز است به این شرکت نامه بنویسید."
+      },
+      "website": "https://www.khrw.ir/",
+      "contact_url": "https://www.khrw.ir/SC.php?type=static&id=263",
+      "email": "info@khrw.ir",
+      "phone": "051 31335",
+      "postal": "مشهد، بلوار خیام، نبش خیام جنوبی ۳۵، شرکت آب منطقه‌ای خراسان رضوی، کد پستی ۹۱۸۵۹۱۶۱۹۶",
+      "source": "https://www.khrw.ir/"
+    },
+    {
+      "id": "gsi-northeast",
+      "name": "اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق",
+      "name_en": "Geological Survey of Iran, North East Regional Directorate (Mashhad)",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The Mashhad office of the Geological Survey of Iran, which studies subsidence and sinkholes on the Mashhad plain; write to it to ask what its surveys show for your area and whether the ground under your street has been examined.",
+        "fa": "دفتر سازمان زمین‌شناسی و اکتشافات معدنی کشور در مشهد که فرونشست و فروچاله‌ها را در دشت مشهد بررسی می‌کند؛ برای پرسش از نتیجه بررسی‌ها در محدوده خود و اینکه آیا زمین زیر خیابان شما بررسی شده است به این اداره کل نامه بنویسید."
+      },
+      "website": "https://www.gsinet.ir/",
+      "contact_url": "https://www.gsinet.ir/AboutUs/default.aspx",
+      "email": "info@gsinet.ir",
+      "phone": "051 38218146",
+      "postal": "مشهد، میدان حر، بلوار سرافرازان، انتهای سرافرازان ۱۸، اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق",
+      "source": "https://www.gsinet.ir/"
+    },
+    {
+      "id": "iranfoia",
+      "name": "سامانه انتشار و دسترسی آزاد به اطلاعات",
+      "name_en": "National portal for publication of and free access to information",
+      "level": "national",
+      "handles": ["information"],
+      "role": {
+        "en": "The national portal for formal information requests under the Law on Publication of and Free Access to Information; use it to ask any of the offices above for records such as inspection reports, well permits near you or subsidence measurements for your area.",
+        "fa": "درگاه ملی ثبت درخواست رسمی اطلاعات بر پایه قانون انتشار و دسترسی آزاد به اطلاعات؛ از این راه می‌توانید از هر یک از نهادهای بالا اسنادی مانند گزارش بازدید، پروانه چاه‌های نزدیک محل زندگی خود یا اندازه‌گیری‌های فرونشست محدوده‌تان را بخواهید."
+      },
+      "website": "https://iranfoia.ir/",
+      "contact_url": "https://iranfoia.ir/web/guest/help",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://iranfoia.ir/web/guest/home"
+    }
+  ],
+  "right_to_answer": {
+    "name": "قانون انتشار و دسترسی آزاد به اطلاعات",
+    "name_en": "Law on Publication of and Free Access to Information",
+    "what": {
+      "en": "Every Iranian has the right to ask for information held by public institutions. Under Article 8 the institution must reply as quickly as possible and in any case within 10 days of receiving the request (the executive regulation counts these as working days). If it refuses or does not reply, you can complain through the same portal to the Commission for Publication of and Free Access to Information.",
+      "fa": "هر ایرانی حق دارد اطلاعات موجود در مؤسسات عمومی را درخواست کند. طبق ماده ۸ این قانون، مؤسسه باید در سریع‌ترین زمان ممکن پاسخ دهد و مدت پاسخ در هر صورت نمی‌تواند از ده روز پس از دریافت درخواست بیشتر شود (آیین‌نامه اجرایی این مهلت را ده روز کاری دانسته است). اگر مؤسسه درخواست را رد کند یا پاسخ ندهد، می‌توانید در همان سامانه به کمیسیون انتشار و دسترسی آزاد به اطلاعات شکایت کنید."
+    },
+    "how": {
+      "en": "Register on the national portal iranfoia.ir with your national ID number and mobile phone, choose the institution you are asking (for example the municipality, the regional water company or the Geological Survey) and write your request; the reply arrives in your account on the portal or by email. If the institution is not listed there, hand or post the written request to its secretariat and ask for the registration number and date.",
+      "fa": "در سامانه iranfoia.ir با کد ملی و شماره تلفن همراه خود ثبت‌نام کنید، مؤسسه مورد نظر (برای نمونه شهرداری، شرکت آب منطقه‌ای یا سازمان زمین‌شناسی و اکتشافات معدنی کشور) را برگزینید و درخواست خود را بنویسید؛ پاسخ در کارپوشه شما در همان سامانه قرار می‌گیرد یا با ایمیل فرستاده می‌شود. اگر نام مؤسسه در سامانه نبود، درخواست کتبی را به دبیرخانه همان مؤسسه تحویل دهید یا پست کنید و شماره و تاریخ ثبت نامه را بگیرید."
+    },
+    "url": "https://iranfoia.ir/",
+    "deadline_days": 10,
+    "deadline_text": {
+      "en": "10 working days",
+      "fa": "۱۰ روز کاری"
+    },
+    "source": "https://iranfoia.ir/web/guest/-5"
+  },
+  "urgent": {
+    "phone": "125",
+    "what": {
+      "en": "125 is the Mashhad Fire and Safety Services Organization, whose crews are trained for search and rescue under rubble. Get everyone out first, call from outside and give the full address. If a building is unsafe but not in immediate danger, call the municipality on 137.",
+      "fa": "۱۲۵ شماره سازمان آتش‌نشانی و خدمات ایمنی شهرداری مشهد است که نیروهایش برای جست‌وجو و نجات در حوادث آوار آموزش دیده‌اند. نخست همه را از ساختمان بیرون ببرید، از بیرون تماس بگیرید و نشانی را کامل بگویید. اگر ساختمان ناایمن است ولی خطر فوری ندارد، با مرکز ۱۳۷ شهرداری تماس بگیرید."
+    },
+    "source": "https://www.125.mashhad.ir/media_content/2712072-%D9%85%D8%B9%D8%B1%D9%81%DB%8C-%D8%B4%D9%85%D8%A7%D8%B1%D9%87-125.html"
+  },
+  "context": {
+    "en": "Sinking of the Mashhad plain has been studied since the mid 2000s and is attributed to heavy groundwater pumping. A study in Geophysical Journal International (2007) measured up to 28 to 30 cm a year north west of the city in 2003 to 2005, with about 70 km² of the valley floor, including north western Mashhad, sinking faster than 15 cm a year. The Geological Survey of Iran began surveying subsidence on the Mashhad and Neyshabur plains in 2006, and the National Cartographic Center published a subsidence map of the Mashhad plain in 2018. In recent years researchers and officials of the Ministry of Roads and Urban Development have put the rate north west of the city at about 17 to 20 cm a year.",
+    "fa": "فرونشست دشت مشهد از میانه دهه ۱۳۸۰ بررسی شده و عامل آن برداشت بی‌رویه آب زیرزمینی دانسته می‌شود. پژوهشی در نشریه Geophysical Journal International (۲۰۰۷) در سال‌های ۲۰۰۳ تا ۲۰۰۵ نرخ ۲۸ تا ۳۰ سانتی‌متر در سال را در شمال غرب شهر اندازه گرفت و نشان داد حدود ۷۰ کیلومتر مربع از کف دشت، از جمله شمال غرب مشهد، سالانه بیش از ۱۵ سانتی‌متر نشست می‌کند. سازمان زمین‌شناسی و اکتشافات معدنی کشور بررسی فرونشست دشت‌های مشهد و نیشابور را در سال ۱۳۸۵ آغاز کرد و سازمان نقشه‌برداری کشور در سال ۱۳۹۷ نقشه فرونشست دشت مشهد را منتشر کرده است. در سال‌های اخیر پژوهشگران و مسئولان وزارت راه و شهرسازی نرخ فرونشست شمال غرب مشهد را حدود ۱۷ تا ۲۰ سانتی‌متر در سال اعلام کرده‌اند.",
+    "sources": [
+      "https://doi.org/10.1111/j.1365-246X.2006.03246.x",
+      "https://www.gsinet.ir/Pages/%D9%81%D8%B1%D9%88%D9%86%D8%B4%D8%B3%D8%AA-%D8%AF%D8%B4%D8%AA-%D9%85%D8%B4%D9%87%D8%AF-1849.aspx",
+      "https://www.ncc.gov.ir/fa/news/1491/%D9%86%D9%82%D8%B4%D9%87-%D9%87%D8%A7%DB%8C-%D9%81%D8%B1%D9%88%D9%86%D8%B4%D8%B3%D8%AA",
+      "https://www.etemadonline.com/fa/tiny/news-709734",
+      "https://www.entekhab.ir/fa/amp/news/791007"
+    ]
+  },
+  "organising": {
+    "telegram_usable": false,
+    "note": {
+      "en": "Telegram has been blocked in Iran since May 2018 and was still blocked in autumn 2026. It opens only through a circumvention tool (VPN), and a directive of the Supreme Council of Cyberspace issued in February 2024 forbids using such tools without a legal permit. WhatsApp was also reported as filtered in 2026. Many people still reach these apps through a VPN, but a group that every neighbour can join without one has to be on a domestic messenger such as Bale, Eitaa or Rubika, which are run inside Iran under Iranian regulations. Between January and May 2026 internet access was cut nationwide for long periods, so keep a list of your neighbours' phone numbers as well. On any messenger, post only what you would be comfortable seeing made public, and keep your evidence report and copies of your letters outside the group too.",
+      "fa": "تلگرام از اردیبهشت ۱۳۹۷ در ایران فیلتر است و در پاییز ۱۴۰۵ همچنان فیلتر بود. این پیام‌رسان تنها با فیلترشکن باز می‌شود و طبق مصوبه شورای عالی فضای مجازی که در اسفند ۱۴۰۲ ابلاغ شد، استفاده از فیلترشکن بدون مجوز قانونی ممنوع است. واتس‌اپ نیز در سال ۱۴۰۵ فیلتر گزارش شده است. بسیاری از مردم همچنان با فیلترشکن از این برنامه‌ها استفاده می‌کنند، ولی گروهی که همه همسایه‌ها بتوانند بدون فیلترشکن در آن عضو شوند باید در یکی از پیام‌رسان‌های داخلی مانند بله، ایتا یا روبیکا ساخته شود که در داخل کشور و طبق مقررات ایران کار می‌کنند. از دی ۱۴۰۴ تا خرداد ۱۴۰۵ اینترنت کشور بارها و برای مدت‌های طولانی قطع بود، پس فهرستی از شماره تلفن همسایه‌ها نیز داشته باشید. در هر پیام‌رسانی فقط چیزی را بنویسید که انتشار عمومی آن برایتان مشکلی نداشته باشد و گزارش شواهد و رونوشت نامه‌ها را بیرون از گروه نیز نگه دارید."
+    },
+    "sources": [
+      "https://filter.watch/english/2026/11/06/network-monitoring-october-2026-filtering-the-internet-through-pricing/",
+      "https://parsi.euronews.com/2026/09/17/iran-removed-from-global-speedtest-rankings-internet-expensive-slow-unstable",
+      "https://www.aljazeera.com/news/2024/2/24/iran-unveils-plan-for-tighter-internet-rules-to-promote-local-platforms",
+      "https://www.apr.org/2026-05-28/iranians-are-back-online-after-a-monthslong-shutdown-but-face-heavy-restrictions",
+      "https://www.iranintl.com/en/202511019424"
+    ]
+  },
+  "groups": []
+}

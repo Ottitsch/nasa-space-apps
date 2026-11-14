@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DASH = re.compile("[—–]")
+DASH = re.compile("[" + chr(0x2014) + chr(0x2013) + "]")   # long dashes, which this project does not use
 HANDLES = {"inspection", "groundwater", "information"}
 problems = []
 
@@ -94,6 +94,8 @@ def check_city(path, place_ids):
         texts(f"{w} how", r.get("how"), langs)
         url(f"{w} url", r.get("url"))
         url(f"{w} source", r.get("source"), required=True)
+        if set(r.get("asks") or []) - {"inspection", "groundwater"}:
+            bad(w, "asks should be some of ['groundwater', 'inspection']")
         if r.get("deadline_days") is not None:
             if not isinstance(r["deadline_days"], int):
                 bad(w, "deadline_days should be a whole number")

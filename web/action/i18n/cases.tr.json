@@ -1,0 +1,46 @@
+{
+  "cases": {
+    "tokyo": {
+      "place": "Tokyo, Japonya",
+      "before": "1910'lu yıllardan itibaren fabrikalar, ardından da ofis binaları o kadar çok yeraltı suyu çekti ki Tokyo'nun doğusundaki bazı kesimler 4,5 metreden fazla çöktü. En kötü yıllarda zemin 20 cm'den fazla alçaldı.",
+      "action": "Japonya 1956'da Sanayi Suyu Kanunu'nu, 1962'de de binalar için çekilen yeraltı suyuna ilişkin bir kanunu kabul etti; Tokyo buna kendi kurallarını ekledi. 1961'den itibaren Tokyo'nun en çok etkilenen ilçelerinde yeni kuyu açılması yasaklandı, 1960'ların ortasından itibaren su çekimi kısıtlandı ve bunun yerine nehir suyu sağlandı.",
+      "after": "Tokyo'nun merkezinde su çekimi 1964 ile 1975 arasında yaklaşık onda birine düştü ve çökme 1972'den itibaren her yıl yavaşladı. O zamandan beri şehirde çökme fiilen durdu, ancak kaybedilen yükseklik geri gelmedi."
+    },
+    "houston": {
+      "place": "Houston ve Galveston, Teksas, ABD",
+      "before": "Houston çevresindeki şehirler ve sanayi, su ihtiyacını ağırlıklı olarak kuyulardan karşılıyordu. 1979'a gelindiğinde bölgenin bazı kesimleri 3 metreye (10 fit) varan ölçüde çökmüş, kıyı taşkınları da ağırlaşmıştı.",
+      "action": "Yurttaş grupları su çekiminin azaltılması için baskı yaptıktan sonra Teksas Yasama Meclisi 1975'te Harris-Galveston Subsidence District adlı kurumu kurdu. Bu kurum büyük kuyular için izin verir veya izni reddeder ve kullanıcıların nehir suyuna geçmesini zorunlu kılar.",
+      "after": "Kuyular 1976'da bölgenin suyunun yaklaşık yüzde 60'ını, 2020'de ise yaklaşık yüzde 21'ini sağlıyordu; güney ve doğuda çökme büyük ölçüde durdu. Geçişin 2035'e kadar sürdüğü kuzey ve batıda ise bazı yerler 2018 ile 2022 arasında hâlâ yılda 2 cm'den fazla çöküyordu."
+    },
+    "bangkok": {
+      "place": "Bangkok, Tayland",
+      "before": "1950'lerden itibaren önce şehrin su idaresi, ardından özel sanayi giderek daha fazla yeraltı suyu çekti. 1980'e gelindiğinde Bangkok'un merkezi açıkça çöküyordu ve en kötü yerler yılda 12 cm'ye kadar alçalıyordu.",
+      "action": "Tayland hükümeti, 1977 tarihli Yeraltı Suyu Kanunu uyarınca en kötü durumdaki alanları yeni kuyu açılamayan kritik bölgeler ilan etti ve 1985'te su çekimi için ücret almaya başladı. Şehrin su idaresi yüzey suyuna geçti ve ücret 1994 ile 2003 arasında iki katından fazlasına çıktı.",
+      "after": "Su çekimi azaldı ve yeraltı suyu seviyeleri toparlanmaya başladı. 2010'ların başına gelindiğinde çökme, şehrin büyük bölümünde yılda yaklaşık 1 cm'ye, bazı sanayi bölgelerinde ise 2 ila 3 cm'ye gerilemişti."
+    },
+    "shanghai": {
+      "place": "Şanghay, Çin",
+      "before": "Çökme ilk kez 1921'de kaydedildi ve fabrikalar daha fazla yeraltı suyu çektikçe arttı; 1956 ile 1959 arasında yılda neredeyse 10 cm'ye ulaştı. 1965'e gelindiğinde şehrin en kötü noktası yaklaşık 2,6 metre alçalmıştı.",
+      "action": "1963'te Şanghay şehir yönetimi derin kuyulardan su çekimini kısıtladı ve bazı fabrikaları yüzey suyuna geçirdi. 1960'ların ortasından itibaren her yıl yeraltına geri su da bastı; buna yapay besleme denir.",
+      "after": "Şehirdeki çökme 1965'te 23 mm'ye düştü ve 1985'e kadar yılda yaklaşık 1 mm düzeyinde kaldı. 1986'dan sonra şehir büyüdükçe yeniden arttı; 2013 tarihli bir şehir yönetmeliği ise çökmeyi Şanghay genelinde yılda yaklaşık 5 mm'de tutuyor."
+    }
+  },
+  "asks": {
+    "monitor": {
+      "title": "Çökmeyi ölçün ve yayımlayın",
+      "text": "Yetkililerden, zemin yüksekliğini ve yeraltı suyu seviyelerini sabit noktalarda her yıl ölçmelerini ve sonuçları yayımlamalarını istiyoruz. Tokyo, Houston, Bangkok ve Şanghay çökmeyi bu yolla izledi ve su çekimi kurallarını bu verilere göre belirledi."
+    },
+    "limit": {
+      "title": "Yeraltı suyu çekimini sınırlayın ve ücretlendirin",
+      "text": "Her büyük kuyu için izin zorunluluğu, çöken bölgelerde su çekimine üst sınır ve çekilen her metreküp için ücret istiyoruz. Dört şehrin hepsinde çökme ancak su çekimi azaltıldıktan sonra yavaşladı."
+    },
+    "supply": {
+      "title": "Başka bir su kaynağı sağlayın",
+      "text": "Bugün kuyulara bağımlı olan evlere ve işyerlerine nehirlerden veya barajlardan şebeke suyu getirilmesi için tarihleri belli bir plan istiyoruz. Tokyo, Houston ve Bangkok, kullanıcılara başka su sağlandığı için su çekimini azaltabildi."
+    },
+    "inspect": {
+      "title": "Eşit olmayan biçimde çöken bölgeleri denetleyin ve koruyun",
+      "text": "Zeminin eşit olmayan biçimde çöktüğü yerlerde binaların, boruların ve taşkın koruma yapılarının düzenli olarak denetlenmesini, en kötü durumdaki bölgeler için de yapı kuralları getirilmesini istiyoruz. Çöken zemin yeniden yükselmez; Şanghay bugün bu tür bölgelerde özel kurallar uyguluyor."
+    }
+  }
+}

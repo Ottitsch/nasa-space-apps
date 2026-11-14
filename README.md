@@ -266,21 +266,41 @@ after clicking a building.
 
 Nothing the person types (name, address) leaves their device.
 
+![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
+
 ### Cities with a full local guide
 
 For the ten places where the most built up land is projected to pass the
-cracking limit, the responsible offices, their contact pages, the right to
-information mechanism and the emergency number were looked up on official
-pages: Mexico City, Mashhad, Tehran, Quetta, Toluca, Bandung, Delhi, Abidjan,
-Shanghai and Istanbul. Every other place gets the report, a general letter and
-general guidance on who is usually responsible.
+cracking limit, each has its own file naming the offices responsible, how to
+reach them, the law that obliges a reply and its deadline, and the emergency
+number. Every other place gets the report, a general letter and general
+guidance on who is usually responsible.
+
+| City | Page and letter language | Telegram reachable there |
+| --- | --- | --- |
+| Mexico City, Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| Toluca, Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| Tehran, Iran | Persian | no, blocked |
+| Mashhad, Iran | Persian | no, blocked |
+| Quetta, Pakistan | Urdu, English | no, blocked |
+| Delhi, India | English, Hindi | yes |
+| Bandung, Indonesia | Indonesian | yes (neighbours mostly use WhatsApp) |
+| Istanbul, Türkiye | Turkish | yes |
+| Abidjan, Côte d'Ivoire | French | yes (neighbours mostly use WhatsApp) |
+| Shanghai, China | Chinese | no, blocked |
 
 Each city is one file, `web/action/cities/<place id>.json`, described in
-`web/action/README.md`. Each contact carries the official page it was read
-from and the date it was checked. **Contacts go stale and were gathered by
-desk research, not by someone on the ground: a local person should check a
-city's file before it is promoted there.** Fixing or adding a city is a change
-to one JSON file, with no code.
+`web/action/README.md`. Each contact carries the official page it comes from
+and the date it was gathered.
+
+**Before promoting the page in a city, have someone who lives there check its
+file and its translation.** The contacts were gathered by research from a
+desk in November 2026. Many government sites refused connections from the
+research environment, so a good share of the phone numbers and addresses were
+read from search results of the official site, not from the live page. The
+translations were written by a language model and have not been read by
+native speakers. Fixing or adding a city is a change to one JSON file, with
+no code. `python3 web/action/check.py` checks every city file and translation.
 
 ### Groups
 
@@ -292,17 +312,24 @@ add it to that city's file and the page shows a join button:
 ```
 
 Until then the page says there is no group yet and invites the reader to start
-one. Each city file also records whether Telegram is reachable there and what
-neighbourhood groups normally use, because that differs by country.
+one. `platform` is free text, so a WhatsApp or WeChat group works the same
+way. That matters: Telegram is blocked in four of the ten cities (see the
+table), and where it does work most neighbourhood groups run on WhatsApp.
+Each city file's `organising` note says what applies there and what to be
+careful about, and the page hides the Telegram share button where Telegram
+does not open.
 
 ### Languages
 
-Every sentence of the page and the letters lives in
+The page and the letters exist in English, Spanish, French, Turkish,
+Indonesian, Persian, Urdu, Hindi and Chinese. Every sentence lives in
 `web/action/i18n/<language>.json`; `en.json` is the source. A language listed
 in `web/action/i18n/index.json` appears in the language menu. The page opens in
-the city's own language, and the letter is written in it. The examples of
-cities that stopped their sinking are in `web/action/cases.json`, each with its
-sources.
+the city's own language and writes the letter in it, with numbers and dates in
+the local format (the Persian page uses the Solar Hijri calendar). The
+examples of cities that stopped their sinking are in `web/action/cases.json`,
+each with its sources, with translations in `web/action/i18n/cases.<language>.json`.
+The map itself is in English only.
 
 ### For other features
 
@@ -318,7 +345,9 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
 ## Next steps
 
 * Have local people check each city file and translation.
-* Create the city groups and add their links.
+* Create the city groups and add their links, on a platform that opens in
+  each country.
+* Translate the map itself.
 * Collect crack reports from residents on the map (this needs a server and
   moderation, so it is not built).
 * Rerun the pipeline as radar passes accumulate, add places, mosaic

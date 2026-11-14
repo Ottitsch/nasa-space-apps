@@ -48,6 +48,7 @@ Always include `en`, plus every language listed in `languages`.
     "what": { "en": "What it obliges the authority to do, and by when.", "es": "..." },
     "how": { "en": "How a resident files a request: which portal or office.", "es": "..." },
     "url": "https://official portal",
+    "asks": ["inspection", "groundwater"],
     "deadline_days": 20,
     "deadline_text": { "en": "20 working days", "es": "20 días hábiles" },
     "source": "https://official source for the law or deadline"
@@ -88,6 +89,10 @@ Field notes:
 * `right_to_answer`: the access to information or petition mechanism that
   legally obliges a reply. `null` if there is none. `deadline_text` is the
   deadline as a short phrase that says whether the days are working days.
+  `asks` lists the letters that may cite it. Leave it out for a plain access
+  to information law (it then backs the groundwater letter only, which is a
+  request for information). List `inspection` too only when the mechanism
+  also obliges a reply to a request for action, such as a right of petition.
 * `groups`: filled in by the project owners once a group exists, for example
   `[{ "platform": "telegram", "url": "https://t.me/...", "label": "Sinking Ground Mexico City" }]`.
 * `checked`: the day the contacts were last confirmed on the official pages.

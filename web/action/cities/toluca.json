@@ -135,6 +135,10 @@
   "right_to_answer": {
     "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley General de Transparencia y Acceso a la Información Pública",
     "name_en": "Article 8 of the Constitution (right of petition) and the General Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
     "what": {
       "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: the General Law gives every authority in the country at most 20 working days, which can be extended by up to 10 more. The State of Mexico issued a new transparency law on 1 October 2026 that closes the state institute Infoem and hands its role to a new body, Transparencia Mexiquense; requests are still received and answered during the change, but appeals may be slow until the new body is working.",
       "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: la Ley General da a toda autoridad del país como máximo 20 días hábiles, ampliables hasta por 10 más. El Estado de México expidió el 1 de octubre de 2026 una nueva ley de transparencia que extingue el Infoem y pasa sus funciones a un nuevo órgano, Transparencia Mexiquense; durante el cambio las solicitudes se siguen recibiendo y contestando, pero los recursos pueden tardar hasta que el nuevo órgano funcione."
