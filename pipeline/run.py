@@ -225,12 +225,16 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
     built = prim["built"]
     sizes = E.write_place(Path(out) / pid, vel, det["beta_rate"], valid, sig, built, cum, t)
 
-    # headline numbers
+    # headline numbers. The fastest zone is taken from built up ground when at
+    # least 1 km2 of it sinks (the map counts a place as sinking from there),
+    # so a gravel pit, mine or landfill at the edge of a city does not set its
+    # headline rate.
     area = float(sig.sum()) * 0.0064
-    peak = float(np.percentile(vel[sig], 0.5)) if sig.any() else None
+    base = sig & built if (sig & built).sum() * 0.0064 >= 1 else sig
+    peak = float(np.percentile(vel[base], 0.5)) if base.any() else None
     series = None
-    if sig.any():
-        hot = sig & (vel <= np.percentile(vel[sig], 10))
+    if base.any():
+        hot = base & (vel <= np.percentile(vel[base], 10))
         series = [round(float(np.nanmean(f[hot])) * 1000, 1) for f in cum]
     entry = dict(
         id=pid, name=place["name"], country=place.get("country", ""),
