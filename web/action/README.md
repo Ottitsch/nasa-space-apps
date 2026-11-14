@@ -47,6 +47,7 @@ Always include `en`, plus every language listed in `languages`.
     "how": { "en": "How a resident files a request: which portal or office.", "es": "..." },
     "url": "https://official portal",
     "deadline_days": 20,
+    "deadline_text": { "en": "20 working days", "es": "20 días hábiles" },
     "source": "https://official source for the law or deadline"
   },
   "urgent": {
@@ -83,7 +84,8 @@ Field notes:
   that page in `source`). Otherwise `null`. Never guess or build an address
   from a pattern.
 * `right_to_answer`: the access to information or petition mechanism that
-  legally obliges a reply. `null` if there is none.
+  legally obliges a reply. `null` if there is none. `deadline_text` is the
+  deadline as a short phrase that says whether the days are working days.
 * `groups`: filled in by the project owners once a group exists, for example
   `[{ "platform": "telegram", "url": "https://t.me/...", "label": "Sinking Ground Mexico City" }]`.
 * `checked`: the day the contacts were last confirmed on the official pages.

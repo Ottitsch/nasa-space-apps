@@ -42,6 +42,16 @@ async function dict(lang) {
   return dicts[lang];
 }
 const ctx = lang => ({ lang, d: dicts[lang] || dicts.en });
+const caseDicts = { en: null };
+async function caseDict(lang) {
+  if (!(lang in caseDicts)) {
+    try {
+      const r = await fetch(`action/i18n/cases.${lang}.json`);
+      caseDicts[lang] = r.ok ? await r.json() : null;
+    } catch { caseDicts[lang] = null; }
+  }
+  return caseDicts[lang];
+}
 function tr(L, key, vars) {
   const s = L.d[key] ?? dicts.en[key] ?? key;
   return vars ? s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m)) : s;
@@ -67,6 +77,13 @@ const metresText = (L, m) => tr(L, 'u.dist', { n: num(L, m) });
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const web = u => (/^https?:\/\//i.test(u || '') ? u : null);
 const host = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+/** Host plus a shortened path, so two links on the same site can be told apart. */
+const pageName = u => {
+  try {
+    const x = new URL(u), p = decodeURIComponent(x.pathname).replace(/\/$/, '');
+    return x.hostname.replace(/^www\./, '') + (p.length > 34 ? p.slice(0, 32) + '…' : p);
+  } catch { return u; }
+};
 const link = (u, text) => (web(u) ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(text || host(u))}</a>` : '');
 
 function toast(text) {
@@ -430,7 +447,7 @@ function buildLetter() {
   const asks = [1, 2, 3].map(k => `  ${num(L, k)}. ${tr(L, `letter.ask.${S.ask}.${k}`)}`);
   const law = c?.right_to_answer;
   const right = law
-    ? tr(L, law.deadline_days ? 'letter.right' : 'letter.right.nodays', { law: local ? law.name : law.name_en || law.name, days: num(L, law.deadline_days || 0) })
+    ? tr(L, law.deadline_days ? 'letter.right' : 'letter.right.nodays', { law: local ? law.name : law.name_en || law.name, deadline: deadline(L, law) })
     : tr(L, 'letter.noright');
 
   const parts = [
@@ -448,6 +465,11 @@ function buildLetter() {
     `${tr(L, 'letter.closing')}\n\n${name || tr(L, 'letter.name.placeholder')}${contact ? '' : '\n' + tr(L, 'letter.contact.placeholder')}`,
   ];
   return { subject, text: parts.filter(Boolean).join('\n\n'), email: body?.email || '' };
+}
+
+/** "20 working days": the city file's own wording when it has one. */
+function deadline(L, law) {
+  return pick(law.deadline_text, L.lang) || tr(L, 'u.days', { n: num(L, law.deadline_days) });
 }
 
 function refreshLetter() {
@@ -490,7 +512,7 @@ function renderBodies() {
       <p class="role">${esc(pick(b.role, lang))}</p>
       <dl>
         ${line('s2.to.website', link(b.website))}
-        ${line('s2.to.contact', b.contact_url && b.contact_url !== b.website ? link(b.contact_url) : '')}
+        ${line('s2.to.contact', b.contact_url && b.contact_url !== b.website ? link(b.contact_url, pageName(b.contact_url)) : '')}
         ${line('s2.to.email', b.email ? `<a href="mailto:${encodeURIComponent(b.email)}">${esc(b.email)}</a>` : '')}
         ${line('s2.to.phone', b.phone ? `<a href="tel:${esc(String(b.phone).replace(/[^+\d]/g, ''))}" dir="ltr">${esc(b.phone)}</a>` : '')}
         ${line('s2.to.postal', b.postal ? esc(b.postal) : '')}
@@ -508,7 +530,7 @@ function renderCity() {
   if (law) {
     $('right').innerHTML = `<p><b>${esc(law.name)}</b>${law.name_en && law.name_en !== law.name ? ` <span class="fine">${esc(law.name_en)}</span>` : ''}</p>
       <p>${esc(pick(law.what, lang))}</p><p>${esc(pick(law.how, lang))}</p>
-      <p class="fine">${law.deadline_days ? esc(t('s2.right.deadline', { days: num(S.ui, law.deadline_days) })) + ' ' : ''}
+      <p class="fine">${law.deadline_days ? esc(t('s2.right.deadline', { deadline: deadline(S.ui, law) })) + ' ' : ''}
       ${web(law.url) ? `${esc(t('s2.right.portal'))}: ${link(law.url)}` : ''} ${web(law.source) ? '· ' + link(law.source, t('s2.to.source')) : ''}</p>`;
   }
   const u = c?.urgent;
@@ -537,18 +559,20 @@ function renderOthers() {
     : `<p>${esc(t('s3.group.none', { place }))}</p>`;
   $('organising').textContent = pick(c?.organising?.note, lang);
   $('kit').innerHTML = [1, 2, 3, 4, 5].map(k => `<li><b>${esc(t(`s3.kit.${k}.t`))}</b><span>${esc(t('s3.kit.' + k))}</span></li>`).join('');
-  const cs = S.cases;
+  const cs = S.cases, over = caseDicts[lang];
+  const ct = (k, f) => over?.cases?.[k.id]?.[f] || pick(k[f], 'en');
+  const at = (a, f) => over?.asks?.[a.id]?.[f] || pick(a[f], 'en');
   $('cases-card').hidden = !cs?.cases?.length;
   $('asks-card').hidden = !cs?.asks?.length;
   if (cs?.cases?.length) {
-    $('cases').innerHTML = cs.cases.map(k => `<div class="case"><h4>${esc(pick(k.place, lang))}</h4><dl>
-      <dt>${esc(t('s3.cases.before'))}</dt><dd>${esc(pick(k.before, lang))}</dd>
-      <dt>${esc(t('s3.cases.action'))}</dt><dd>${esc(pick(k.action, lang))}</dd>
-      <dt>${esc(t('s3.cases.after'))}</dt><dd>${esc(pick(k.after, lang))}</dd></dl>
+    $('cases').innerHTML = cs.cases.map(k => `<div class="case"><h4>${esc(ct(k, 'place'))}</h4><dl>
+      <dt>${esc(t('s3.cases.before'))}</dt><dd>${esc(ct(k, 'before'))}</dd>
+      <dt>${esc(t('s3.cases.action'))}</dt><dd>${esc(ct(k, 'action'))}</dd>
+      <dt>${esc(t('s3.cases.after'))}</dt><dd>${esc(ct(k, 'after'))}</dd></dl>
       <p class="src">${esc(t('s3.cases.sources'))}: ${(k.sources || []).map(s => link(s)).filter(Boolean).join(' · ')}</p></div>`).join('');
   }
   if (cs?.asks?.length) {
-    $('policy-asks').innerHTML = cs.asks.map(a => `<li><b>${esc(pick(a.title, lang))}.</b> ${esc(pick(a.text, lang))}</li>`).join('');
+    $('policy-asks').innerHTML = cs.asks.map(a => `<li><b>${esc(at(a, 'title'))}.</b> ${esc(at(a, 'text'))}</li>`).join('');
   }
   renderLead();
 }
@@ -666,7 +690,7 @@ function wire() {
   window.addEventListener('afterprint', () => document.body.classList.remove('print-letter'));
 
   $('lang').addEventListener('change', async e => {
-    await dict(e.target.value);
+    await Promise.all([dict(e.target.value), caseDict(e.target.value)]);
     S.ui = ctx(e.target.value);
     renderAll(); writeHash();
   });
@@ -697,7 +721,7 @@ async function boot() {
 
   // interface language: asked for, else the city's own, else the browser's
   const wanted = [q.get('lang'), ...(city?.languages || []), (navigator.language || '').slice(0, 2), 'en'].find(c => c && have(c));
-  await dict(wanted);
+  await Promise.all([dict(wanted), caseDict(wanted)]);
   S.ui = ctx(dicts[wanted] ? wanted : 'en');
   $('lang').innerHTML = S.langs.map(l => `<option value="${esc(l.code)}" ${l.code === S.ui.lang ? 'selected' : ''}>${esc(l.name)}</option>`).join('');
 
