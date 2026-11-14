@@ -4,6 +4,7 @@
 import type { Feature, FeatureCollection, Polygon, MultiPolygon } from "geojson";
 
 export const MONTHS = 12; // time steps after the baseline
+export const SYNTHETIC_LIMIT = 100; // mm, colour scale limit for the demo field
 const START = new Date(Date.UTC(2025, 10, 1)); // baseline: Nov 2025
 const CELL = 0.1; // degrees
 

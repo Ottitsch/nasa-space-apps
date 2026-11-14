@@ -18,7 +18,7 @@ body { font-family: system-ui, sans-serif; background: #0b1220; color: #e6edf7; 
   width: 32px; height: 32px; border-radius: 50%; border: 1px solid #2a3858;
   background: #16213a; color: #e6edf7; cursor: pointer;
 }
-.date { min-width: 74px; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.date { min-width: 96px; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
 .legend { margin-top: 12px; }
 .legend-title { font-size: 0.75rem; opacity: 0.75; margin-bottom: 4px; }
 .legend-bar { height: 10px; border-radius: 3px; }
