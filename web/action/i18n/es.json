@@ -1,7 +1,6 @@
 {
   "_name": "Español",
   "_dir": "ltr",
-
   "page.title": "Actúa: Sinking Ground",
   "app.back": "Volver al mapa",
   "lang.label": "Idioma",
@@ -11,7 +10,6 @@
   "loading": "Cargando las mediciones…",
   "error.noplace": "Abre esta página desde el mapa: elige un lugar, haz clic en un punto y luego elige “Take action”.",
   "error.load": "No se pudieron cargar las mediciones de este lugar.",
-
   "u.cm": "{n} cm",
   "u.m": "{n} m",
   "u.cmyr": "{n} cm por año",
@@ -19,7 +17,6 @@
   "u.ha": "{n} ha",
   "u.dist": "{n} m",
   "u.days": "{n} días",
-
   "s1.title": "Consigue la prueba",
   "s1.lead": "Este es un informe de un solo punto, medido desde el espacio. Guárdalo, imprímelo o envía el enlace. Una preocupación es fácil de ignorar. Una medición con fecha, no.",
   "tools.radius": "Alrededores",
@@ -30,7 +27,6 @@
   "tools.locate.fail": "No se pudo leer tu ubicación.",
   "tools.outside": "Ese punto está fuera del área medida para {place}.",
   "tools.hint": "¿No es el punto correcto? Haz clic en la imagen para mover el marcador a tu casa o edificio.",
-
   "sheet.kicker": "Informe de movimiento del terreno",
   "sheet.made": "Elaborado el {date}",
   "sheet.spot": "Punto",
@@ -43,7 +39,6 @@
   "verdict.nodata.sub": "Se excluyen el agua, los cultivos, la vegetación y las pendientes fuertes. Las cifras de los alrededores que aparecen abajo siguen siendo válidas.",
   "verdict.near": "Lectura tomada del terreno medido más cercano, a {dist}.",
   "early": "Resultado preliminar: hasta ahora solo hay {months} meses de pasadas de radar.",
-
   "fact.rate": "Ritmo de hundimiento aquí",
   "fact.sunk": "Hundimiento medido del {from} al {to}",
   "fact.by": "Para {year}, si el ritmo continúa",
@@ -59,18 +54,15 @@
   "class.2": "Grietas posibles",
   "class.3": "Grietas probables",
   "class.4": "Daño estructural probable",
-
   "map.caption.now": "Terreno y construcciones por clase de riesgo hoy. El círculo marca {radius} alrededor del punto.",
   "map.caption.year": "Terreno y construcciones por clase de riesgo en {year}, si continúa el ritmo actual. El círculo marca {radius} alrededor del punto.",
   "map.loading": "Dibujando el mapa…",
   "map.alt": "Mapa de los alrededores con las construcciones coloreadas por clase de riesgo",
-
   "chart.measured": "Medido hasta ahora",
   "chart.measured.sub": "Cuánto se había hundido este punto en cada pasada del radar",
   "chart.timeline": "Riesgo en este punto a lo largo del tiempo",
   "chart.timeline.sub": "Si continúa el ritmo actual",
   "chart.today": "última pasada",
-
   "hood.title": "En un radio de {radius} alrededor de este punto",
   "hood.built": "Área construida",
   "hood.sinking": "De ella, sobre terreno que se hunde o se inclina",
@@ -80,7 +72,6 @@
   "hood.counting": "contando…",
   "hood.nobuildings": "No se pudieron cargar los contornos de las construcciones, así que no se cuentan.",
   "hood.note": "Los contornos de las construcciones los traza una máquina a partir de imágenes aéreas, por lo que los conteos son aproximados.",
-
   "read.title": "Cómo leer esto",
   "read.1": "Esto es una estimación preliminar, no una inspección. Un pixel del radar mide 80 m de ancho: describe el terreno bajo una manzana, no los cimientos de una sola construcción.",
   "read.2": "Lo que daña a las construcciones es el hundimiento desigual. Los límites 1/500, 1/300 y 1/150 son umbrales habituales en ingeniería para la inclinación entre terrenos vecinos. Se cuentan desde la primera pasada del radar, así que no incluyen la deformación de años anteriores.",
@@ -89,7 +80,9 @@
   "source": "Fuente: satélite de radar NISAR (NASA e ISRO). {n} fechas del {from} al {to}, {tracks}. Ritmo mínimo detectable aquí: {thr}. Método y datos: {url}",
   "source.tracks.1": "una dirección de observación",
   "source.tracks.2": "dos direcciones de observación",
-
+  "act.pdf": "Descargar PDF",
+  "act.pdf.busy": "Preparando el PDF…",
+  "act.pdf.fail": "No se pudo crear el PDF. Usa Imprimir y elige Guardar como PDF.",
   "act.print": "Imprimir o guardar como PDF",
   "act.copy": "Copiar enlace",
   "act.copied": "Enlace copiado",
@@ -97,7 +90,6 @@
   "act.share.wa": "Compartir en WhatsApp",
   "act.share.text": "Mediciones satelitales del hundimiento del terreno en {place}. Busca tu calle:",
   "act.linknote": "El enlace muestra el punto que elegiste, con una precisión de unos 10 m.",
-
   "s2.title": "Envíala a quien debe responder",
   "s2.lead": "Una carta acompañada de una medición no se trata igual que una queja. Elige qué pedir, revisa el texto y envíala con tu propio nombre.",
   "s2.ask": "¿Qué quieres pedir?",
@@ -139,6 +131,7 @@
   "s2.email": "Abrir en el correo",
   "s2.print": "Imprimir carta",
   "s2.download": "Descargar como texto",
+  "s2.pdf": "Descargar la carta en PDF",
   "s2.right.title": "Por qué tienen que responder",
   "s2.right.deadline": "Plazo para responder: {deadline}.",
   "s2.right.portal": "Dónde presentarla",
@@ -150,7 +143,6 @@
   "s2.tip.1": "Adjunta el informe impreso del paso 1.",
   "s2.tip.2": "Agrega fotos con fecha de cualquier daño, con una regla o una moneda en la imagen para dar la escala.",
   "s2.tip.3": "Guarda una copia y anota el día en que la enviaste. Si nadie responde dentro del plazo, envíala otra vez y dilo.",
-
   "letter.subject.inspection": "Solicitud de inspección: hundimiento del terreno medido en {where}",
   "letter.subject.groundwater": "Solicitud de información: hundimiento del terreno y extracción de agua subterránea en {where}",
   "letter.subject.label": "Asunto:",
@@ -190,7 +182,6 @@
   "letter.closing": "Atentamente,",
   "letter.name.placeholder": "[Tu nombre]",
   "letter.contact.placeholder": "[Tus datos de contacto]",
-
   "s3.title": "Encuentra a los demás",
   "s3.lead.buildings": "Alrededor de {n} construcciones en un radio de {radius} de este punto están sobre el mismo terreno en movimiento. La mayoría de la gente que las ocupa nunca ha visto esto.",
   "s3.lead.none": "El hundimiento del terreno nunca es problema de un solo hogar. La causa es compartida y la solución también.",

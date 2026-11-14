@@ -18,6 +18,8 @@
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 70px; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+/* Persian and Urdu: prefer one font that has every letter, so words are not pieced together from two fonts */
+:lang(fa), :lang(ur) { font-family: "Noto Sans Arabic", "Noto Naskh Arabic", "Segoe UI", "Geeza Pro", "SF Arabic", Tahoma, var(--font); }
 h1, h2, h3, p, ul, ol, dl, figure { margin: 0; }
 a { color: var(--accent); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -166,6 +168,22 @@ textarea { width: 100%; margin-top: 8px; line-height: 1.5; resize: vertical; fon
   main { padding-inline: 10px; }
   .pic { max-width: 420px; }
 }
+
+/* the copy drawn into the PDF download: same compact layout as the printed page */
+html.pdf .sheet { box-shadow: none; border-radius: 0; padding: 2px 6px; width: 703px; max-width: none; font-size: 11px; line-height: 1.36; }
+html.pdf .sheet h2 { font-size: 19px; }
+html.pdf .verdict { margin: 9px 0; }
+html.pdf .verdict .big { font-size: 16.5px; }
+html.pdf .cols { grid-template-columns: 262px minmax(0, 1fr); gap: 16px; }
+html.pdf .hood-grid { grid-template-columns: 220px minmax(0, 1fr); gap: 16px; }
+html.pdf .chart { margin-top: 8px; }
+html.pdf .hood, html.pdf .read { margin-top: 9px; padding-top: 8px; }
+html.pdf .read ul { font-size: 10.2px; }
+html.pdf .source { margin-top: 7px; font-size: 9.5px; }
+/* spaced out letters are drawn one by one, which would break joined scripts such as Persian */
+html.pdf .sheet * { letter-spacing: 0 !important; font-variant-numeric: normal !important; }
+/* no overflow-wrap here: with it the PDF helper draws some words letter by letter, which unjoins Persian and Urdu */
+.letter-paper { position: absolute; left: -9999px; top: 0; width: 703px; padding: 4px 8px; background: #fff; color: #000; font: 14px/1.55 var(--font); }
 
 /* printing: the report alone on one page, or the letter alone */
 @page { size: A4; margin: 11mm 12mm; }

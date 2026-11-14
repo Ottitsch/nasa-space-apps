@@ -1,7 +1,6 @@
 {
   "_name": "English",
   "_dir": "ltr",
-
   "page.title": "Take action: Sinking Ground",
   "app.back": "Back to the map",
   "lang.label": "Language",
@@ -11,7 +10,6 @@
   "loading": "Loading the measurements…",
   "error.noplace": "Open this page from the map: pick a place, click a spot, then choose Take action.",
   "error.load": "The measurements for this place could not be loaded.",
-
   "u.cm": "{n} cm",
   "u.m": "{n} m",
   "u.cmyr": "{n} cm per year",
@@ -19,7 +17,6 @@
   "u.ha": "{n} ha",
   "u.dist": "{n} m",
   "u.days": "{n} days",
-
   "s1.title": "Get the proof",
   "s1.lead": "This is a report for one spot, measured from orbit. Save it, print it or send the link. A worry is easy to wave away. A dated measurement is not.",
   "tools.radius": "Area around the spot",
@@ -30,7 +27,6 @@
   "tools.locate.fail": "Your location could not be read.",
   "tools.outside": "That spot is outside the area measured for {place}.",
   "tools.hint": "Wrong spot? Click the picture to move the pin to your building.",
-
   "sheet.kicker": "Ground motion report",
   "sheet.made": "Made on {date}",
   "sheet.spot": "Spot",
@@ -43,7 +39,6 @@
   "verdict.nodata.sub": "Water, farmland, vegetation and steep ground are left out. The neighbourhood figures below still apply.",
   "verdict.near": "Read from the nearest measured ground, {dist} away.",
   "early": "Early result: only {months} months of radar passes so far.",
-
   "fact.rate": "Sinking rate here",
   "fact.sunk": "Measured sinking, {from} to {to}",
   "fact.by": "By {year}, if the rate continues",
@@ -59,18 +54,15 @@
   "class.2": "Cracking possible",
   "class.3": "Cracking likely",
   "class.4": "Structural damage likely",
-
   "map.caption.now": "Ground and buildings by risk class today. The circle is {radius} around the spot.",
   "map.caption.year": "Ground and buildings by risk class in {year}, if the current rate continues. The circle is {radius} around the spot.",
   "map.loading": "Drawing the map…",
   "map.alt": "Map of the neighbourhood with buildings coloured by risk class",
-
   "chart.measured": "Measured so far",
   "chart.measured.sub": "How far this spot had sunk at each radar pass",
   "chart.timeline": "Risk at this spot over time",
   "chart.timeline.sub": "If the current rate continues",
   "chart.today": "latest pass",
-
   "hood.title": "Within {radius} of this spot",
   "hood.built": "Built up land",
   "hood.sinking": "Built up land on sinking or tilting ground",
@@ -80,7 +72,6 @@
   "hood.counting": "counting…",
   "hood.nobuildings": "Building outlines could not be loaded, so buildings are not counted.",
   "hood.note": "Building outlines are drawn by machine from aerial images, so the counts are approximate.",
-
   "read.title": "How to read this",
   "read.1": "This is a screening estimate, not an inspection. One radar pixel is 80 m wide: it describes the ground under a block, not one building's foundations.",
   "read.2": "Buildings are damaged by uneven sinking. The limits 1/500, 1/300 and 1/150 are standard engineering thresholds for the tilt between neighbouring ground. They are counted from the first radar pass, so strain from earlier years is not included.",
@@ -89,7 +80,9 @@
   "source": "Source: NISAR radar satellite (NASA and ISRO). {n} dates from {from} to {to}, {tracks}. Smallest rate detectable here: {thr}. Method and data: {url}",
   "source.tracks.1": "one viewing direction",
   "source.tracks.2": "two viewing directions",
-
+  "act.pdf": "Download PDF",
+  "act.pdf.busy": "Preparing the PDF…",
+  "act.pdf.fail": "The PDF could not be made. Use Print and choose Save as PDF.",
   "act.print": "Print or save as PDF",
   "act.copy": "Copy link",
   "act.copied": "Link copied",
@@ -97,7 +90,6 @@
   "act.share.wa": "Share on WhatsApp",
   "act.share.text": "Satellite measurements of sinking ground in {place}. Look up your own street:",
   "act.linknote": "The link shows the spot you picked, to within about 10 m.",
-
   "s2.title": "Send it to someone who must answer",
   "s2.lead": "A letter with a measurement attached is treated differently from a complaint. Pick what to ask for, check the text, and send it under your own name.",
   "s2.ask": "What do you want to ask for?",
@@ -139,6 +131,7 @@
   "s2.email": "Open in email",
   "s2.print": "Print letter",
   "s2.download": "Download as text",
+  "s2.pdf": "Download letter as PDF",
   "s2.right.title": "Why they have to answer",
   "s2.right.deadline": "Deadline for a reply: {deadline}.",
   "s2.right.portal": "Where to file it",
@@ -150,7 +143,6 @@
   "s2.tip.1": "Attach the printed report from step 1.",
   "s2.tip.2": "Add dated photos of any damage, with a ruler or a coin in the picture for scale.",
   "s2.tip.3": "Keep a copy and write down the day you sent it. If nobody replies by the deadline, send it again and say so.",
-
   "letter.subject.inspection": "Request for an inspection: ground sinking measured at {where}",
   "letter.subject.groundwater": "Request for information: ground sinking and groundwater pumping at {where}",
   "letter.subject.label": "Subject:",
@@ -190,7 +182,6 @@
   "letter.closing": "Yours faithfully,",
   "letter.name.placeholder": "[Your name]",
   "letter.contact.placeholder": "[How to reach you]",
-
   "s3.title": "Find the others",
   "s3.lead.buildings": "About {n} buildings within {radius} of this spot stand on the same moving ground. Most of the people in them have never seen these measurements.",
   "s3.lead.none": "Sinking ground is never one household's problem. The cause is shared and so is the fix.",

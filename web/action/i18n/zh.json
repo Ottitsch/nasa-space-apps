@@ -1,7 +1,6 @@
 {
   "_name": "中文",
   "_dir": "ltr",
-
   "page.title": "采取行动：Sinking Ground",
   "app.back": "返回地图",
   "lang.label": "语言",
@@ -11,7 +10,6 @@
   "loading": "正在加载测量数据……",
   "error.noplace": "请从地图进入本页面：选择一个地点，点击某个位置，然后选择“Take action”。",
   "error.load": "无法加载该地点的测量数据。",
-
   "u.cm": "{n}厘米",
   "u.m": "{n}米",
   "u.cmyr": "每年{n}厘米",
@@ -19,7 +17,6 @@
   "u.ha": "{n}公顷",
   "u.dist": "{n}米",
   "u.days": "{n}天",
-
   "s1.title": "拿到证据",
   "s1.lead": "这是一份针对某一个位置的报告，数据来自卫星在轨测量。您可以保存、打印，或者把链接发给别人。一句担心，很容易被人一笑置之；一份带日期的测量结果，却不能。",
   "tools.radius": "该位置周围的范围",
@@ -30,7 +27,6 @@
   "tools.locate.fail": "无法获取您的位置。",
   "tools.outside": "该位置不在{place}的测量范围内。",
   "tools.hint": "位置不对？点击图片，把标记移到您的楼房上。",
-
   "sheet.kicker": "地面运动报告",
   "sheet.made": "制作日期：{date}",
   "sheet.spot": "位置",
@@ -43,7 +39,6 @@
   "verdict.nodata.sub": "水面、农田、植被和陡坡未纳入测量。下面的周边数据仍然适用。",
   "verdict.near": "数据取自{dist}外最近的已测地面。",
   "early": "初步结果：目前只有{months}个月的雷达过境数据。",
-
   "fact.rate": "此处下沉速度",
   "fact.sunk": "已测得的下沉量（{from}至{to}）",
   "fact.by": "到{year}（如果速度不变）",
@@ -59,18 +54,15 @@
   "class.2": "可能开裂",
   "class.3": "很可能开裂",
   "class.4": "很可能出现结构损坏",
-
   "map.caption.now": "今天按风险等级显示的地面和建筑物。圆圈表示该位置周围{radius}的范围。",
   "map.caption.year": "如果目前的速度不变，{year}按风险等级显示的地面和建筑物。圆圈表示该位置周围{radius}的范围。",
   "map.loading": "正在绘制地图……",
   "map.alt": "周边地图，建筑物按风险等级着色",
-
   "chart.measured": "目前已测得",
   "chart.measured.sub": "每次雷达过境时此处已下沉的量",
   "chart.timeline": "此处风险随时间的变化",
   "chart.timeline.sub": "如果目前的速度不变",
   "chart.today": "最近一次过境",
-
   "hood.title": "此处周围{radius}范围内",
   "hood.built": "建成区土地",
   "hood.sinking": "位于下沉或倾斜地面上的建成区土地",
@@ -80,7 +72,6 @@
   "hood.counting": "正在统计……",
   "hood.nobuildings": "建筑物轮廓未能加载，因此没有统计建筑物数量。",
   "hood.note": "建筑物轮廓由机器根据航拍影像绘制，因此数量只是近似值。",
-
   "read.title": "如何看懂这份报告",
   "read.1": "这是一份筛查性的估算，不是现场检查。一个雷达像元宽80米，描述的是一个街区下面的地面，而不是某一栋楼的地基。",
   "read.2": "损坏建筑物的是不均匀下沉。1/500、1/300和1/150是工程上常用的限值，针对的是相邻地面之间的倾斜。这些限值从第一次雷达过境算起，因此不包括此前年份累积的变形。",
@@ -89,7 +80,9 @@
   "source": "数据来源：NISAR雷达卫星（NASA和ISRO）。{from}至{to}共{n}个观测日期，{tracks}。此处可检测到的最小下沉速度：{thr}。方法和数据：{url}",
   "source.tracks.1": "一个观测方向",
   "source.tracks.2": "两个观测方向",
-
+  "act.pdf": "下载 PDF",
+  "act.pdf.busy": "正在生成 PDF…",
+  "act.pdf.fail": "无法生成 PDF。请使用打印功能，并选择另存为 PDF。",
   "act.print": "打印或保存为PDF",
   "act.copy": "复制链接",
   "act.copied": "链接已复制",
@@ -97,7 +90,6 @@
   "act.share.wa": "分享到WhatsApp",
   "act.share.text": "{place}地面下沉的卫星测量结果。查一查您自己住的街道：",
   "act.linknote": "链接显示您选定的位置，精确到约10米。",
-
   "s2.title": "寄给必须答复的人",
   "s2.lead": "附有测量数据的信，受到的对待和一般的投诉不一样。请选择您要提出的请求，核对文字，然后以您本人的名义寄出。",
   "s2.ask": "您想提出什么请求？",
@@ -139,6 +131,7 @@
   "s2.email": "用电子邮件打开",
   "s2.print": "打印信件",
   "s2.download": "下载为文本",
+  "s2.pdf": "下载信件 PDF",
   "s2.right.title": "他们为什么必须答复",
   "s2.right.deadline": "答复期限：{deadline}。",
   "s2.right.portal": "在哪里提交",
@@ -150,7 +143,6 @@
   "s2.tip.1": "附上第1步打印出来的报告。",
   "s2.tip.2": "附上带日期的损坏照片，照片里放一把尺子或一枚硬币作参照。",
   "s2.tip.3": "留一份副本，记下寄出的日期。如果到期无人答复，请再寄一次，并说明这一点。",
-
   "letter.subject.inspection": "关于{where}地面沉降的现场检查申请",
   "letter.subject.groundwater": "关于{where}地面沉降和地下水开采情况的信息申请",
   "letter.subject.label": "事由：",
@@ -190,7 +182,6 @@
   "letter.closing": "此致\n敬礼！",
   "letter.name.placeholder": "[您的姓名]",
   "letter.contact.placeholder": "[您的联系方式]",
-
   "s3.title": "找到其他人",
   "s3.lead.buildings": "此处周围{radius}范围内，约有{n}栋建筑物位于同一片正在移动的地面上。住在里面的人，大多从没见过这些数据。",
   "s3.lead.none": "地面下沉从来不是一户人家的事。原因是共同的，解决办法也是共同的。",

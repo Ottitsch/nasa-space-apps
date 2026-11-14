@@ -244,6 +244,7 @@ web/                 the static site
   act.html           take action: report, letter, find the others
   action/            city files, translations and policy examples for that page
   js/act.js          the take action page
+  js/pdf.js          PDF downloads made in the browser
   js/app.js          map, layers, panels
   js/data.js         reading the per place grids
   js/timeline.js     the time bar
@@ -260,11 +261,17 @@ after clicking a building.
 
 | Step | What the person gets |
 | --- | --- |
-| 1. Get the proof | A one page report for their spot: the measured sinking, when the ground passes each damage limit, a picture of the buildings around them by risk class, counts of buildings within 250 or 500 m, and the honest limits of the data. It prints on one A4 page and has a link to share. |
-| 2. Send it | A ready written letter, filled in with those numbers, asking for an inspection or for answers about groundwater pumping. It names the office responsible and the law that obliges a reply. Copy, email, print or download. |
+| 1. Get the proof | A one page report for their spot: the measured sinking, when the ground passes each damage limit, a picture of the buildings around them by risk class, counts of buildings within 250 or 500 m, and the honest limits of the data. It downloads as a one page PDF (or prints on one A4 page) and has a link to share. |
+| 2. Send it | A ready written letter, filled in with those numbers, asking for an inspection or for answers about groundwater pumping. It names the office responsible and the law that obliges a reply. Copy, email, print, or download as PDF or text. |
 | 3. Find the others | A link to the city's group, ways to pass the report on, a short guide to turning a few neighbours into a group, and four cities that stopped their sinking with what they did. |
 
 Nothing the person types (name, address) leaves their device.
+
+The PDFs are made in the browser, with no server: the page is drawn to an
+image and wrapped in a PDF file (`web/js/pdf.js`). That keeps every script
+looking exactly as the browser draws it, at the cost that the text in the PDF
+is a picture and cannot be selected or searched. The address of the live
+report stays clickable.
 
 ![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
 

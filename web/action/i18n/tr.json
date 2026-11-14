@@ -1,7 +1,6 @@
 {
   "_name": "Türkçe",
   "_dir": "ltr",
-
   "page.title": "Harekete geçin: Sinking Ground",
   "app.back": "Haritaya dön",
   "lang.label": "Dil",
@@ -11,7 +10,6 @@
   "loading": "Ölçümler yükleniyor…",
   "error.noplace": "Bu sayfayı haritadan açın: bir yer seçin, bir noktaya tıklayın, ardından Harekete geçin seçeneğine tıklayın.",
   "error.load": "Bu yerin ölçümleri yüklenemedi.",
-
   "u.cm": "{n} cm",
   "u.m": "{n} m",
   "u.cmyr": "yılda {n} cm",
@@ -19,7 +17,6 @@
   "u.ha": "{n} ha",
   "u.dist": "{n} m",
   "u.days": "{n} gün",
-
   "s1.title": "Kanıtı alın",
   "s1.lead": "Bu, tek bir nokta için yörüngeden ölçülmüş bir rapordur. Kaydedin, yazdırın veya bağlantısını gönderin. Bir endişeyi geçiştirmek kolaydır. Tarihli bir ölçümü geçiştirmek kolay değildir.",
   "tools.radius": "Noktanın çevresindeki alan",
@@ -30,7 +27,6 @@
   "tools.locate.fail": "Konumunuz okunamadı.",
   "tools.outside": "Bu nokta, {place} için ölçülen alanın dışında.",
   "tools.hint": "Yanlış nokta mı? İşareti binanıza taşımak için resme tıklayın.",
-
   "sheet.kicker": "Zemin hareketi raporu",
   "sheet.made": "Hazırlanma tarihi: {date}",
   "sheet.spot": "Nokta",
@@ -43,7 +39,6 @@
   "verdict.nodata.sub": "Su yüzeyleri, tarım arazileri, bitki örtüsü ve dik yamaçlar ölçüme katılmaz. Aşağıdaki mahalle değerleri yine de geçerlidir.",
   "verdict.near": "{dist} uzaklıktaki en yakın ölçülmüş zeminden okundu.",
   "early": "Erken sonuç: şimdiye kadar yalnızca {months} aylık radar geçişi var.",
-
   "fact.rate": "Buradaki çökme hızı",
   "fact.sunk": "Ölçülen çökme, {from} ile {to} arası",
   "fact.by": "Hız sürerse {year} yılına kadar",
@@ -59,18 +54,15 @@
   "class.2": "Çatlama olabilir",
   "class.3": "Çatlama muhtemel",
   "class.4": "Yapısal hasar muhtemel",
-
   "map.caption.now": "Bugünkü risk sınıfına göre zemin ve binalar. Daire, noktanın {radius} çevresini gösterir.",
   "map.caption.year": "Mevcut hız sürerse {year} yılındaki risk sınıfına göre zemin ve binalar. Daire, noktanın {radius} çevresini gösterir.",
   "map.loading": "Harita çiziliyor…",
   "map.alt": "Binaların risk sınıfına göre renklendirildiği mahalle haritası",
-
   "chart.measured": "Şimdiye kadar ölçülen",
   "chart.measured.sub": "Bu noktanın her radar geçişinde ne kadar çökmüş olduğu",
   "chart.timeline": "Bu noktadaki riskin zaman içindeki seyri",
   "chart.timeline.sub": "Mevcut hız sürerse",
   "chart.today": "son geçiş",
-
   "hood.title": "Bu noktanın {radius} çevresinde",
   "hood.built": "Yapılaşmış alan",
   "hood.sinking": "Çöken veya eğilen zemin üzerindeki yapılaşmış alan",
@@ -80,7 +72,6 @@
   "hood.counting": "sayılıyor…",
   "hood.nobuildings": "Bina sınırları yüklenemediği için binalar sayılmadı.",
   "hood.note": "Bina sınırları hava görüntülerinden makineyle çizildiği için sayılar yaklaşıktır.",
-
   "read.title": "Bu rapor nasıl okunur",
   "read.1": "Bu bir ön tarama tahminidir, yerinde inceleme değildir. Bir radar pikseli 80 m genişliğindedir: tek bir binanın temelini değil, bir yapı adasının altındaki zemini anlatır.",
   "read.2": "Binalara zarar veren, eşit olmayan çökmedir. 1/500, 1/300 ve 1/150 sınırları, komşu zeminler arasındaki eğim için kullanılan standart mühendislik eşikleridir. Bu sınırlar ilk radar geçişinden itibaren hesaplanır; önceki yıllardan gelen zorlanma hesaba katılmaz.",
@@ -89,7 +80,9 @@
   "source": "Kaynak: NISAR radar uydusu (NASA ve ISRO). {from} ile {to} arasında {n} tarih, {tracks}. Burada saptanabilen en düşük hız: {thr}. Yöntem ve veriler: {url}",
   "source.tracks.1": "tek bakış yönü",
   "source.tracks.2": "iki bakış yönü",
-
+  "act.pdf": "PDF indir",
+  "act.pdf.busy": "PDF hazırlanıyor…",
+  "act.pdf.fail": "PDF oluşturulamadı. Yazdır seçeneğini kullanıp PDF olarak kaydedin.",
   "act.print": "Yazdır veya PDF olarak kaydet",
   "act.copy": "Bağlantıyı kopyala",
   "act.copied": "Bağlantı kopyalandı",
@@ -97,7 +90,6 @@
   "act.share.wa": "WhatsApp'ta paylaş",
   "act.share.text": "{place}: çöken zeminin uydu ölçümleri. Kendi sokağınıza bakın:",
   "act.linknote": "Bağlantı, seçtiğiniz noktayı yaklaşık 10 m hassasiyetle gösterir.",
-
   "s2.title": "Cevap vermek zorunda olan birine gönderin",
   "s2.lead": "Ölçüm eklenmiş bir dilekçe, bir şikâyetten farklı ele alınır. Ne isteyeceğinizi seçin, metni kontrol edin ve kendi adınızla gönderin.",
   "s2.ask": "Ne talep etmek istiyorsunuz?",
@@ -139,6 +131,7 @@
   "s2.email": "E-postada aç",
   "s2.print": "Dilekçeyi yazdır",
   "s2.download": "Metin olarak indir",
+  "s2.pdf": "Dilekçeyi PDF olarak indir",
   "s2.right.title": "Neden cevap vermek zorundalar",
   "s2.right.deadline": "Cevap süresi: {deadline}.",
   "s2.right.portal": "Başvuru yeri",
@@ -150,7 +143,6 @@
   "s2.tip.1": "1. adımdaki raporun çıktısını ekleyin.",
   "s2.tip.2": "Varsa hasarın tarihli fotoğraflarını ekleyin; ölçek olması için kareye bir cetvel veya madeni para koyun.",
   "s2.tip.3": "Bir kopyasını saklayın ve gönderdiğiniz günü not edin. Süre dolduğunda cevap gelmediyse yeniden gönderin ve bunu belirtin.",
-
   "letter.subject.inspection": "Yerinde inceleme talebi: ölçülen zemin çökmesi ({where})",
   "letter.subject.groundwater": "Bilgi edinme talebi: zemin çökmesi ve yeraltı suyu çekimi ({where})",
   "letter.subject.label": "Konu:",
@@ -190,7 +182,6 @@
   "letter.closing": "Gereğini saygılarımla arz ederim.",
   "letter.name.placeholder": "[Adınız]",
   "letter.contact.placeholder": "[İletişim bilgileriniz]",
-
   "s3.title": "Diğerlerini bulun",
   "s3.lead.buildings": "Bu noktanın {radius} çevresinde yaklaşık {n} bina aynı hareketli zeminin üzerinde duruyor. İçlerinde yaşayanların çoğu bunu hiç görmedi.",
   "s3.lead.none": "Çöken zemin hiçbir zaman tek bir hanenin sorunu değildir. Nedeni ortaktır, çözümü de.",

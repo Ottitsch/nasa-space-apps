@@ -6,6 +6,7 @@
 import * as maplibregl from '../vendor/maplibre-gl.mjs';
 import { END_YEAR, LIMITS, RISK, YEAR } from './config.js';
 import { loadFrames, loadIndex, loadPlace, mercY } from './data.js';
+import { build, draw, paginate, save } from './pdf.js';
 
 const $ = id => document.getElementById(id);
 const BLDG_URL = 'pmtiles://https://data.source.coop/vida/google-microsoft-osm-open-buildings/pmtiles/goog_msft_osm.pmtiles';
@@ -196,7 +197,7 @@ function measuredSVG() {
   const X = k => l + (iw * m.t_years[k]) / m.span, Y = v => top + (ih * Math.max(0, v)) / max;
   const pts = s.map((v, k) => `${X(k).toFixed(1)},${Y(v).toFixed(1)}`);
   const last = s[s.length - 1];
-  return `<svg viewBox="0 0 ${W} ${H}" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.measured'))}">
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.measured'))}">
     <line x1="${l}" x2="${W - r}" y1="${top}" y2="${top}" stroke="#9aa5b4" stroke-dasharray="2 3"/>
     <polygon points="${l},${top} ${pts.join(' ')} ${W - r},${top}" fill="rgba(30,130,220,0.12)"/>
     <polyline points="${pts.join(' ')}" fill="none" stroke="#1e82dc" stroke-width="2"/>
@@ -223,7 +224,7 @@ function timelineSVG() {
     return `<line x1="${x}" x2="${x}" y1="${y + h}" y2="${y + h + 4}" stroke="#5a6779"/><text x="${x}" y="${H - 4}" font-size="10" fill="#5a6779" text-anchor="${yy === 2050 ? 'end' : 'middle'}">${esc(yearText(L, yy))}</text>`;
   }).join('');
   const xn = X(m.t1);
-  return `<svg viewBox="0 0 ${W} ${H}" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.timeline'))}">
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.timeline'))}">
     ${out}<rect x="${l}" y="${y}" width="${iw}" height="${h}" fill="none" stroke="#9aa5b4"/>
     <path d="M${xn} ${y - 1}l-4 -6h8z" fill="#17202e"/>
     <text x="${xn + 7}" y="${y - 4}" font-size="10" fill="#17202e">${esc(iso(t('chart.today')))}</text>
@@ -603,6 +604,80 @@ function renderOthers() {
   renderLead();
 }
 
+// ------------------------------------------------------------ PDF downloads
+
+/** Run a slow job behind a button: show that it is working, and say so if it fails. */
+async function withButton(id, job) {
+  const btn = $(id), label = btn.textContent;
+  if (btn.getAttribute('aria-disabled') === 'true') return;
+  btn.setAttribute('aria-disabled', 'true');
+  btn.textContent = t('act.pdf.busy');
+  try { await job(); } catch (err) { console.error(err); toast(t('act.pdf.fail')); }
+  btn.textContent = label;
+  btn.removeAttribute('aria-disabled');
+}
+
+/** The charts as pictures. The PDF helper misplaces live SVG, above all in right to left pages. */
+async function chartPictures() {
+  const out = [];
+  for (const svg of $('sheet').querySelectorAll('.chart svg')) {
+    const img = new Image();
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(svg));
+    await img.decode();
+    const box = svg.viewBox.baseVal, c = document.createElement('canvas');
+    c.width = box.width * 4; c.height = box.height * 4;
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    out.push(c.toDataURL('image/png'));
+  }
+  return out;
+}
+
+async function downloadReport() {
+  // the picture of the neighbourhood may still be drawing: give it a moment
+  for (let k = 0; k < 60 && S.mapReady && !$('pic-wait').hidden; k++) await new Promise(r => setTimeout(r, 250));
+  const charts = await chartPictures();
+  let link = null;
+  const canvas = await draw($('sheet'), {
+    prepare: (doc, el) => {
+      el.querySelectorAll('.chart svg').forEach((svg, i) => {
+        const im = doc.createElement('img');
+        im.src = charts[i];
+        im.style.cssText = 'display:block;width:100%;height:auto';
+        svg.replaceWith(im);
+      });
+      // where the address of the report sits, so it can be clicked in the PDF
+      const a = el.querySelector('.brand small')?.getBoundingClientRect(), b = el.getBoundingClientRect();
+      if (a && b.width) link = { x: (a.left - b.left) / b.width, y: (a.top - b.top) / b.width, w: a.width / b.width, h: a.height / b.width };
+    },
+  });
+  const k = canvas.width;
+  const blob = await build([canvas], {
+    title: `${t('sheet.kicker')}: ${placeName(S.ui)}, ${countryName(S.ui)}`,
+    links: link ? [{ page: 0, x: link.x * k, y: link.y * k, w: link.w * k, h: link.h * k, url: shareUrl() }] : [],
+  });
+  save(blob, `sinking-ground-${S.meta.id}-${S.lat.toFixed(4)}_${S.lng.toFixed(4)}.pdf`);
+}
+
+async function downloadLetter() {
+  const paper = document.createElement('div');
+  paper.className = 'letter-paper';
+  paper.dir = RTL.has(S.letter.lang) ? 'rtl' : 'ltr';
+  paper.lang = S.letter.lang;
+  // One block per line of the letter. (As a single block of preformatted text
+  // the PDF helper splits some Persian and Urdu words into unjoined letters.)
+  // Long addresses get invisible break points so they wrap inside the page.
+  for (const line of $('letter').value.split('\n')) {
+    const div = document.createElement('div');
+    div.textContent = line.replace(/https?:\/\/\S+/g, u => u.replace(/([\/&#=?])/g, '$1\u200b')) || '\u00a0';
+    paper.append(div);
+  }
+  document.body.append(paper);
+  try {
+    const blob = await build(paginate(await draw(paper)), { title: buildLetter().subject });
+    save(blob, `letter-${S.meta.id}.pdf`);
+  } finally { paper.remove(); }
+}
+
 // ---------------------------------------------------------------- controls
 
 function renderShare() {
@@ -669,6 +744,8 @@ function wire() {
       pos => setSpot(pos.coords.longitude, pos.coords.latitude),
       () => toast(t('tools.locate.fail')), { enableHighAccuracy: true, timeout: 15000 });
   });
+  $('pdf').addEventListener('click', () => withButton('pdf', downloadReport));
+  $('l-pdf').addEventListener('click', () => withButton('l-pdf', downloadLetter));
   $('print').addEventListener('click', () => window.print());
   const copyLink = async () => {
     try { await navigator.clipboard.writeText(shareUrl()); toast(t('act.copied')); } catch { prompt('', shareUrl()); }

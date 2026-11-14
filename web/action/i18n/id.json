@@ -1,7 +1,6 @@
 {
   "_name": "Bahasa Indonesia",
   "_dir": "ltr",
-
   "page.title": "Bertindak: Sinking Ground",
   "app.back": "Kembali ke peta",
   "lang.label": "Bahasa",
@@ -11,7 +10,6 @@
   "loading": "Memuat hasil pengukuran…",
   "error.noplace": "Buka halaman ini dari peta: pilih tempat, klik satu titik, lalu pilih Bertindak.",
   "error.load": "Hasil pengukuran untuk tempat ini tidak dapat dimuat.",
-
   "u.cm": "{n} cm",
   "u.m": "{n} m",
   "u.cmyr": "{n} cm per tahun",
@@ -19,7 +17,6 @@
   "u.ha": "{n} ha",
   "u.dist": "{n} m",
   "u.days": "{n} hari",
-
   "s1.title": "Dapatkan buktinya",
   "s1.lead": "Ini laporan untuk satu titik, diukur dari orbit. Simpan, cetak, atau kirim tautannya. Kekhawatiran mudah ditepis. Pengukuran bertanggal tidak.",
   "tools.radius": "Area di sekitar titik",
@@ -30,7 +27,6 @@
   "tools.locate.fail": "Lokasi Anda tidak dapat dibaca.",
   "tools.outside": "Titik itu berada di luar area yang diukur untuk {place}.",
   "tools.hint": "Titiknya salah? Klik gambar untuk memindahkan pin ke bangunan Anda.",
-
   "sheet.kicker": "Laporan pergerakan tanah",
   "sheet.made": "Dibuat pada {date}",
   "sheet.spot": "Titik",
@@ -43,7 +39,6 @@
   "verdict.nodata.sub": "Perairan, lahan pertanian, vegetasi, dan lereng curam tidak disertakan. Angka untuk lingkungan sekitar di bawah ini tetap berlaku.",
   "verdict.near": "Dibaca dari tanah terukur yang terdekat, berjarak {dist}.",
   "early": "Hasil awal: sejauh ini baru ada {months} bulan lintasan radar.",
-
   "fact.rate": "Laju penurunan di sini",
   "fact.sunk": "Penurunan terukur, {from} sampai {to}",
   "fact.by": "Pada tahun {year}, jika laju ini berlanjut",
@@ -59,18 +54,15 @@
   "class.2": "Retak mungkin terjadi",
   "class.3": "Kemungkinan besar retak",
   "class.4": "Kemungkinan besar rusak struktur",
-
   "map.caption.now": "Tanah dan bangunan menurut kelas risiko hari ini. Lingkaran menunjukkan jarak {radius} di sekitar titik.",
   "map.caption.year": "Tanah dan bangunan menurut kelas risiko pada tahun {year}, jika laju saat ini berlanjut. Lingkaran menunjukkan jarak {radius} di sekitar titik.",
   "map.loading": "Menggambar peta…",
   "map.alt": "Peta lingkungan sekitar dengan bangunan yang diwarnai menurut kelas risiko",
-
   "chart.measured": "Terukur sejauh ini",
   "chart.measured.sub": "Seberapa jauh titik ini telah turun pada setiap lintasan radar",
   "chart.timeline": "Risiko di titik ini dari waktu ke waktu",
   "chart.timeline.sub": "Jika laju saat ini berlanjut",
   "chart.today": "lintasan terakhir",
-
   "hood.title": "Dalam jarak {radius} dari titik ini",
   "hood.built": "Lahan terbangun",
   "hood.sinking": "Lahan terbangun di atas tanah yang turun atau miring",
@@ -80,7 +72,6 @@
   "hood.counting": "menghitung…",
   "hood.nobuildings": "Garis tepi bangunan tidak dapat dimuat, sehingga bangunan tidak dihitung.",
   "hood.note": "Garis tepi bangunan digambar oleh mesin dari citra udara, sehingga jumlahnya hanya perkiraan.",
-
   "read.title": "Cara membaca laporan ini",
   "read.1": "Ini perkiraan penapisan awal, bukan pemeriksaan. Satu piksel radar lebarnya 80 m: piksel itu menggambarkan tanah di bawah satu blok, bukan fondasi satu bangunan.",
   "read.2": "Bangunan rusak karena penurunan yang tidak merata. Batas 1/500, 1/300, dan 1/150 adalah ambang baku dalam ilmu teknik untuk kemiringan antara tanah yang bersebelahan. Batas itu dihitung sejak lintasan radar pertama, sehingga regangan dari tahun sebelumnya tidak ikut dihitung.",
@@ -89,7 +80,9 @@
   "source": "Sumber: satelit radar NISAR (NASA dan ISRO). {n} tanggal dari {from} sampai {to}, {tracks}. Laju terkecil yang dapat dideteksi di sini: {thr}. Metode dan data: {url}",
   "source.tracks.1": "satu arah pandang",
   "source.tracks.2": "dua arah pandang",
-
+  "act.pdf": "Unduh PDF",
+  "act.pdf.busy": "Menyiapkan PDF…",
+  "act.pdf.fail": "PDF tidak dapat dibuat. Gunakan Cetak lalu pilih Simpan sebagai PDF.",
   "act.print": "Cetak atau simpan sebagai PDF",
   "act.copy": "Salin tautan",
   "act.copied": "Tautan disalin",
@@ -97,7 +90,6 @@
   "act.share.wa": "Bagikan di WhatsApp",
   "act.share.text": "Pengukuran satelit atas tanah yang turun di {place}. Periksa jalan Anda sendiri:",
   "act.linknote": "Tautan ini menunjukkan titik yang Anda pilih, dengan ketelitian sekitar 10 m.",
-
   "s2.title": "Kirimkan kepada pihak yang wajib menjawab",
   "s2.lead": "Surat yang dilampiri hasil pengukuran diperlakukan berbeda dari keluhan. Pilih apa yang ingin Anda minta, periksa teksnya, lalu kirim atas nama Anda sendiri.",
   "s2.ask": "Apa yang ingin Anda minta?",
@@ -139,6 +131,7 @@
   "s2.email": "Buka di email",
   "s2.print": "Cetak surat",
   "s2.download": "Unduh sebagai teks",
+  "s2.pdf": "Unduh surat sebagai PDF",
   "s2.right.title": "Mengapa mereka wajib menjawab",
   "s2.right.deadline": "Batas waktu jawaban: {deadline}.",
   "s2.right.portal": "Tempat mengajukannya",
@@ -150,7 +143,6 @@
   "s2.tip.1": "Lampirkan laporan cetak dari langkah 1.",
   "s2.tip.2": "Sertakan foto bertanggal dari setiap kerusakan, dengan penggaris atau koin di dalam foto sebagai pembanding ukuran.",
   "s2.tip.3": "Simpan salinannya dan catat tanggal Anda mengirimnya. Jika sampai batas waktu tidak ada jawaban, kirim lagi dan sebutkan hal itu.",
-
   "letter.subject.inspection": "Permohonan pemeriksaan: penurunan tanah yang terukur di {where}",
   "letter.subject.groundwater": "Permohonan informasi: penurunan tanah dan pengambilan air tanah di {where}",
   "letter.subject.label": "Perihal:",
@@ -190,7 +182,6 @@
   "letter.closing": "Hormat saya,",
   "letter.name.placeholder": "[Nama Anda]",
   "letter.contact.placeholder": "[Cara menghubungi Anda]",
-
   "s3.title": "Temukan yang lain",
   "s3.lead.buildings": "Sekitar {n} bangunan dalam jarak {radius} dari titik ini berdiri di atas tanah bergerak yang sama. Sebagian besar penghuninya belum pernah melihat ini.",
   "s3.lead.none": "Tanah yang turun tidak pernah menjadi masalah satu rumah tangga saja. Penyebabnya ditanggung bersama, begitu pula jalan keluarnya.",

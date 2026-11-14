@@ -1,7 +1,6 @@
 {
   "_name": "Français",
   "_dir": "ltr",
-
   "page.title": "Agir : Sinking Ground",
   "app.back": "Retour à la carte",
   "lang.label": "Langue",
@@ -11,7 +10,6 @@
   "loading": "Chargement des mesures…",
   "error.noplace": "Ouvrez cette page depuis la carte : choisissez un lieu, cliquez sur un point, puis choisissez « Take action ».",
   "error.load": "Les mesures de ce lieu n'ont pas pu être chargées.",
-
   "u.cm": "{n} cm",
   "u.m": "{n} m",
   "u.cmyr": "{n} cm par an",
@@ -19,7 +17,6 @@
   "u.ha": "{n} ha",
   "u.dist": "{n} m",
   "u.days": "{n} jours",
-
   "s1.title": "Obtenir la preuve",
   "s1.lead": "Voici un rapport pour un point précis, mesuré depuis l'orbite. Vous pouvez l'enregistrer, l'imprimer ou en envoyer le lien. Une inquiétude, on l'écarte facilement. Une mesure datée, non.",
   "tools.radius": "Zone autour du point",
@@ -30,7 +27,6 @@
   "tools.locate.fail": "Votre position n'a pas pu être déterminée.",
   "tools.outside": "Ce point se trouve hors de la zone mesurée pour {place}.",
   "tools.hint": "Mauvais endroit ? Cliquez sur l'image pour déplacer le repère sur votre bâtiment.",
-
   "sheet.kicker": "Rapport sur les mouvements du sol",
   "sheet.made": "Établi le {date}",
   "sheet.spot": "Point",
@@ -43,7 +39,6 @@
   "verdict.nodata.sub": "L'eau, les terres agricoles, la végétation et les fortes pentes sont exclues. Les chiffres du quartier, plus bas, restent valables.",
   "verdict.near": "Valeur lue sur le sol mesuré le plus proche, à {dist}.",
   "early": "Résultat préliminaire : seulement {months} mois de passages radar pour l'instant.",
-
   "fact.rate": "Vitesse d'affaissement ici",
   "fact.sunk": "Affaissement mesuré, du {from} au {to}",
   "fact.by": "D'ici {year}, si la vitesse se maintient",
@@ -59,18 +54,15 @@
   "class.2": "Fissures possibles",
   "class.3": "Fissures probables",
   "class.4": "Dommages structurels probables",
-
   "map.caption.now": "Sol et bâtiments par classe de risque aujourd'hui. Le cercle marque {radius} autour du point.",
   "map.caption.year": "Sol et bâtiments par classe de risque en {year}, si la vitesse actuelle se maintient. Le cercle marque {radius} autour du point.",
   "map.loading": "Tracé de la carte…",
   "map.alt": "Carte du quartier avec les bâtiments colorés selon la classe de risque",
-
   "chart.measured": "Mesuré jusqu'ici",
   "chart.measured.sub": "Affaissement cumulé de ce point à chaque passage radar",
   "chart.timeline": "Risque à cet endroit au fil du temps",
   "chart.timeline.sub": "Si la vitesse actuelle se maintient",
   "chart.today": "dernier passage",
-
   "hood.title": "Dans un rayon de {radius} autour de ce point",
   "hood.built": "Terrains bâtis",
   "hood.sinking": "Terrains bâtis sur un sol qui s'affaisse ou s'incline",
@@ -80,7 +72,6 @@
   "hood.counting": "comptage…",
   "hood.nobuildings": "Les contours des bâtiments n'ont pas pu être chargés : les bâtiments ne sont donc pas comptés.",
   "hood.note": "Les contours des bâtiments sont tracés automatiquement à partir d'images aériennes : les décomptes sont donc approximatifs.",
-
   "read.title": "Comment lire ce rapport",
   "read.1": "Il s'agit d'une estimation indicative, pas d'une inspection. Un pixel radar mesure 80 m de large : il décrit le sol sous un pâté de maisons, pas les fondations d'un bâtiment.",
   "read.2": "Ce qui endommage les bâtiments, c'est un affaissement inégal. Les seuils 1/500, 1/300 et 1/150 sont des seuils courants en ingénierie pour l'inclinaison entre des sols voisins. Ils sont comptés à partir du premier passage radar : les contraintes des années antérieures ne sont donc pas incluses.",
@@ -89,7 +80,9 @@
   "source": "Source : satellite radar NISAR (NASA et ISRO). {n} dates du {from} au {to}, {tracks}. Plus petite vitesse détectable ici : {thr}. Méthode et données : {url}",
   "source.tracks.1": "une direction de visée",
   "source.tracks.2": "deux directions de visée",
-
+  "act.pdf": "Télécharger le PDF",
+  "act.pdf.busy": "Préparation du PDF…",
+  "act.pdf.fail": "Le PDF n'a pas pu être créé. Utilisez Imprimer et choisissez Enregistrer au format PDF.",
   "act.print": "Imprimer ou enregistrer en PDF",
   "act.copy": "Copier le lien",
   "act.copied": "Lien copié",
@@ -97,7 +90,6 @@
   "act.share.wa": "Partager sur WhatsApp",
   "act.share.text": "Mesures par satellite de l'affaissement du sol : {place}. Regardez votre propre rue :",
   "act.linknote": "Le lien montre le point que vous avez choisi, à environ 10 m près.",
-
   "s2.title": "L'envoyer à quelqu'un qui doit répondre",
   "s2.lead": "Une lettre accompagnée d'une mesure n'est pas traitée comme une plainte. Choisissez ce que vous demandez, vérifiez le texte et envoyez la lettre sous votre propre nom.",
   "s2.ask": "Que demander ?",
@@ -139,6 +131,7 @@
   "s2.email": "Ouvrir dans la messagerie",
   "s2.print": "Imprimer la lettre",
   "s2.download": "Télécharger en texte",
+  "s2.pdf": "Télécharger la lettre en PDF",
   "s2.right.title": "Pourquoi ils doivent répondre",
   "s2.right.deadline": "Délai de réponse : {deadline}.",
   "s2.right.portal": "Où déposer la demande",
@@ -150,7 +143,6 @@
   "s2.tip.1": "Joignez le rapport imprimé de l'étape 1.",
   "s2.tip.2": "Ajoutez des photos datées des dégâts, avec une règle ou une pièce de monnaie dans l'image pour donner l'échelle.",
   "s2.tip.3": "Gardez une copie et notez le jour de l'envoi. Si personne ne répond dans le délai, renvoyez la lettre en le signalant.",
-
   "letter.subject.inspection": "Demande d'inspection pour affaissement du sol mesuré. Lieu : {where}",
   "letter.subject.groundwater": "Demande d'information sur l'affaissement du sol et le pompage d'eau souterraine. Lieu : {where}",
   "letter.subject.label": "Objet :",
@@ -190,7 +182,6 @@
   "letter.closing": "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.",
   "letter.name.placeholder": "[Votre nom]",
   "letter.contact.placeholder": "[Comment vous joindre]",
-
   "s3.title": "Trouver les autres",
   "s3.lead.buildings": "Environ {n} bâtiments situés dans un rayon de {radius} autour de ce point reposent sur le même sol en mouvement. La plupart des personnes qui y vivent n'ont jamais vu cela.",
   "s3.lead.none": "Un sol qui s'affaisse n'est jamais le problème d'un seul foyer. La cause est commune, la solution aussi.",
