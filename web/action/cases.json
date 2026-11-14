@@ -1,0 +1,75 @@
+{
+  "checked": "2026-11-14",
+  "cases": [
+    {
+      "id": "tokyo",
+      "place": { "en": "Tokyo, Japan" },
+      "before": { "en": "From the 1910s, factories and later office buildings pumped so much groundwater that parts of eastern Tokyo sank by more than 4.5 metres. In the worst years the ground fell by more than 20 cm in a single year." },
+      "action": { "en": "Japan passed the Industrial Water Law in 1956 and a law on groundwater pumped for buildings in 1962, and Tokyo added its own rules. From 1961 new wells were banned in Tokyo's worst hit districts, pumping was restricted from the mid 1960s, and river water was supplied instead." },
+      "after": { "en": "Pumping in central Tokyo fell to about a tenth between 1964 and 1975, and the sinking slowed every year from 1972. It has since practically stopped in the city, but the lost height did not come back." },
+      "sources": [
+        "https://wwwrcamnl.wr.usgs.gov/rgws/Unesco/PDF-Chapters/Chapter9-4.pdf",
+        "https://www.env.go.jp/en/water/wq/wemj/ground.html",
+        "https://www.infura.metro.tokyo.lg.jp/pdf/65.pdf",
+        "https://piahs.copernicus.org/articles/372/189/2015/piahs-372-189-2015.pdf"
+      ]
+    },
+    {
+      "id": "houston",
+      "place": { "en": "Houston and Galveston, Texas, USA" },
+      "before": { "en": "Cities and industry around Houston relied mainly on wells for water. By 1979 parts of the area had sunk by as much as 3 metres (10 feet), and coastal flooding had grown worse." },
+      "action": { "en": "After citizens' groups pressed for less pumping, the Texas Legislature created the Harris-Galveston Subsidence District in 1975. It issues or refuses permits for large wells and requires users to switch to river water." },
+      "after": { "en": "Wells supplied about 60 percent of the district's water in 1976 and about 21 percent in 2020, and sinking has largely stopped in the south and east. In the north and west, where the switch runs until 2035, some places still sank by more than 2 cm a year in 2018 to 2022." },
+      "sources": [
+        "https://pubs.usgs.gov/circ/circ1182/pdf/07Houston.pdf",
+        "https://www.usgs.gov/centers/oklahoma-texas-water-science-center/science/houston-area-groundwater-level-and-subsidence",
+        "https://hgsubsidence.org/wp-content/uploads/2021/05/2020-HGSD-AGR_Executive-Summary_Final.pdf",
+        "https://hgsubsidence.org/wp-content/uploads/2024/09/2022-HGSD-Annual-Groundwater-Report-Infosheet.pdf"
+      ]
+    },
+    {
+      "id": "bangkok",
+      "place": { "en": "Bangkok, Thailand" },
+      "before": { "en": "From the 1950s the city waterworks and then private industry pumped more and more groundwater. By 1980 central Bangkok was clearly sinking, and the worst places fell by up to 12 cm a year." },
+      "action": { "en": "Under the Groundwater Act of 1977, Thailand's government made the worst areas critical zones with no new wells and began charging for pumping in 1985. The city waterworks moved to surface water, and the charge more than doubled between 1994 and 2003." },
+      "after": { "en": "Pumping fell and groundwater levels began to recover. By the early 2010s the sinking had slowed to about 1 cm a year in most of the city, and 2 to 3 cm in some industrial areas." },
+      "sources": [
+        "https://documents1.worldbank.org/curated/en/750761468304831965/pdf/518250BRI0Box31GWMATE1CP1201Bangkok.pdf",
+        "https://piahs.copernicus.org/articles/372/189/2015/piahs-372-189-2015.pdf"
+      ]
+    },
+    {
+      "id": "shanghai",
+      "place": { "en": "Shanghai, China" },
+      "before": { "en": "Sinking was first recorded in 1921 and grew as factories pumped more groundwater, reaching almost 10 cm a year between 1956 and 1959. By 1965 the worst point in the city had dropped about 2.6 metres." },
+      "action": { "en": "In 1963 the Shanghai city government restricted pumping from deep wells and moved some factories to surface water. From the mid 1960s it also pumped water back underground each year, which is called artificial recharge." },
+      "after": { "en": "Sinking in the city fell to 23 mm in 1965 and stayed at about 1 mm a year until 1985. It rose again after 1986 as the city grew, and a 2013 city regulation has held it to about 5 mm a year across Shanghai." },
+      "sources": [
+        "https://wwwrcamnl.wr.usgs.gov/rgws/Unesco/PDF-Chapters/Chapter9-2.pdf",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC6696418/"
+      ]
+    }
+  ],
+  "asks": [
+    {
+      "id": "monitor",
+      "title": { "en": "Measure the sinking and publish it" },
+      "text": { "en": "We ask the authorities to measure ground height and groundwater levels at fixed points every year and to publish the results. Tokyo, Houston, Bangkok and Shanghai all tracked their sinking this way and set pumping rules by the data." }
+    },
+    {
+      "id": "limit",
+      "title": { "en": "Limit and charge for groundwater pumping" },
+      "text": { "en": "We ask for a permit on every large well, a cap on pumping in the zones that sink, and a fee for each cubic metre pumped. In all four cities the sinking slowed only after pumping was cut." }
+    },
+    {
+      "id": "supply",
+      "title": { "en": "Provide another source of water" },
+      "text": { "en": "We ask for a dated plan to bring piped water from rivers or reservoirs to the homes and businesses that now depend on wells. Tokyo, Houston and Bangkok could cut pumping because users were given other water." }
+    },
+    {
+      "id": "inspect",
+      "title": { "en": "Inspect and protect the zones that sink unevenly" },
+      "text": { "en": "We ask for regular inspections of buildings, pipes and flood defences where the ground sinks unevenly, and for building rules in the worst zones. Sunken ground does not rise again, and Shanghai now applies special rules in zones like these." }
+    }
+  ]
+}

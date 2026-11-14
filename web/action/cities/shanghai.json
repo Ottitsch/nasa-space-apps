@@ -1,0 +1,165 @@
+{
+  "id": "shanghai",
+  "checked": "2026-11-14",
+  "languages": ["zh"],
+  "place_name": { "en": "Shanghai", "zh": "上海" },
+  "country_name": { "en": "China", "zh": "中国" },
+  "summary": {
+    "en": "In Shanghai, land subsidence prevention is led by the Municipal Bureau of Planning and Natural Resources under a dedicated local regulation in force since 1 July 2013; the Water Authority supervises groundwater pumping and recharge, and the construction authorities supervise subsidence around building works. A building that cracks or leans is a matter for the housing administration (the city bureau and the district housing bureaus) and for your district and subdistrict. Residents normally start with the 12345 citizen hotline or its online form, which passes the case to the responsible office.",
+    "zh": "在上海，地面沉降防治由上海市规划和自然资源局牵头负责，依据是2013年7月1日起施行的《上海市地面沉降防治管理条例》；上海市水务局负责地下水开采和回灌的监督管理，建设管理部门负责建设工程周边地面沉降防治的监督管理。房屋出现开裂、倾斜等安全问题，由房屋管理部门（市房屋管理局和各区房屋管理部门）以及所在的区和街道（镇）处理。居民通常先拨打12345市民服务热线或在网上提交诉求，由热线转交责任单位办理。"
+  },
+  "bodies": [
+    {
+      "id": "hotline-12345",
+      "name": "上海市12345市民服务热线",
+      "name_en": "Shanghai 12345 Citizen Service Hotline",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The 24 hour hotline and online platform that records a resident's request, passes it to the responsible district, subdistrict or bureau and reports back. It is the usual first step to get someone to come and look at a cracking building or sinking ground.",
+        "zh": "全天24小时受理市民诉求的热线和网上平台，登记后转交责任区、街道（镇）或委办局办理，并向市民反馈结果。房屋开裂、地面下沉需要有人上门查看时，通常先从这里反映。"
+      },
+      "website": "https://www.sh12345.gov.cn/",
+      "contact_url": "https://www.shanghai.gov.cn/nw38605/index.html",
+      "email": null,
+      "phone": "12345",
+      "postal": null,
+      "source": "https://english.shanghai.gov.cn/en/20231223/7b8359d283634bd99b4e7a2c5a89314c.html"
+    },
+    {
+      "id": "district-governments",
+      "name": "各区人民政府及街道办事处、镇人民政府（含浦东新区、闵行区）",
+      "name_en": "District governments and subdistrict or town offices (including Pudong New Area and Minhang District)",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "District departments, above all the district housing bureau, supervise the safe use of buildings and deal with hazards on their territory, and the subdistrict or town office is the nearest government desk; you can write to your district head or subdistrict through the city's official directory of online mailboxes. By OpenStreetMap boundaries the two zones on our map lie around Nanmatou Road Subdistrict in Pudong (Yanggao South Road and Liuliqiao) and Jiangchuan Road Subdistrict in Minhang (around Cangyuan Road), so check which subdistrict your own building belongs to.",
+        "zh": "各区的房屋管理等部门负责本辖区房屋使用安全的监督管理和隐患处置，街道办事处（镇人民政府）是离居民最近的政府窗口；可以通过市政府网站的“各区、街道（乡镇）网上领导信箱”给所在区的区长信箱或街道写信。按OpenStreetMap的区划，本图标出的两处分别在浦东新区南码头路街道（杨高南路、六里桥一带）和闵行区江川路街道（沧源路一带），请以自己房屋实际所属的街道（镇）为准。"
+      },
+      "website": "https://www.shanghai.gov.cn/",
+      "contact_url": "https://www.shanghai.gov.cn/nw40906/index.html",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.shanghai.gov.cn/nw40906/index.html"
+    },
+    {
+      "id": "housing-bureau",
+      "name": "上海市房屋管理局",
+      "name_en": "Shanghai Municipal Housing Administration Bureau",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Responsible citywide for the safe use of buildings and for oversight of building safety testing; it also guides the district housing bureaus and supervises owners' committees. Write to it about a building that cracks or leans and needs a safety test or urgent repair (property service hotline 962121, with an emergency repair centre in each district).",
+        "zh": "负责全市房屋（含附属设施）使用安全管理和房屋安全检测的行业管理，并指导各区房屋管理工作、指导监督业主委员会的组建和运作。房屋开裂、倾斜，需要安全检测或应急维修的，可向其反映；物业服务热线为962121，各区设有房屋维修应急中心。"
+      },
+      "website": "https://fgj.sh.gov.cn/",
+      "contact_url": "https://fgj.sh.gov.cn/xxgk2020/index.html",
+      "email": "shfgxxgk@shanghai.gov.cn",
+      "phone": "021-23115960",
+      "postal": "上海市浦东新区世博村路300号6号楼，邮政编码200125",
+      "source": "https://fgj.sh.gov.cn/xxgk2020/index.html"
+    },
+    {
+      "id": "planning-natural-resources",
+      "name": "上海市规划和自然资源局",
+      "name_en": "Shanghai Municipal Bureau of Planning and Natural Resources",
+      "level": "city",
+      "handles": ["groundwater", "information"],
+      "role": {
+        "en": "The lead supervisor of land subsidence prevention in the city: its duties include supervising excessive groundwater pumping and the subsidence it causes, and it organises the citywide monitoring network. Ask it for the monitoring results and the geological hazard assessment for your area.",
+        "zh": "本市地面沉降防治工作的综合监督管理部门，职责包括监督管理地下水过量开采及引发的地面沉降等地质问题，并组织全市地面沉降监测。可向其了解或申请公开您所在区域的地面沉降监测情况和地质灾害危险性评估信息。"
+      },
+      "website": "https://ghzyj.sh.gov.cn/",
+      "contact_url": "https://ghzyj.sh.gov.cn/zfxxgk/",
+      "email": null,
+      "phone": "021-63193188-20014",
+      "postal": "上海市北京西路99号信访办，市规划和自然资源局信息公开受理点（收），邮政编码200003",
+      "source": "https://ghzyj.sh.gov.cn/zfxxgk/"
+    },
+    {
+      "id": "water-authority",
+      "name": "上海市水务局（上海市海洋局）",
+      "name_en": "Shanghai Water Authority (Shanghai Municipal Oceanic Bureau)",
+      "level": "city",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "Supervises groundwater pumping and recharge for subsidence prevention, including abstraction permits, the cap on total pumping and artificial recharge. Write to it if you suspect groundwater is being pumped nearby, or to ask for the pumping and recharge records.",
+        "zh": "负责地面沉降防治工作中地下水开采与回灌的监督管理，包括取水许可、开采总量控制和人工回灌。如怀疑附近有抽取地下水的情况，可向其反映，或申请公开相关的开采和回灌信息。"
+      },
+      "website": "https://swj.sh.gov.cn/",
+      "contact_url": "https://swj.sh.gov.cn/swj-zfxxgkzn/20260116/bc0cdbf0b0b948d186de3b936325c56b.html",
+      "email": "ZWGK@swj.shanghai.gov.cn",
+      "phone": "021-62407105",
+      "postal": "上海市长宁区江苏路389号701室，邮政编码200050",
+      "source": "https://swj.sh.gov.cn/swj-zfxxgkzn/20260116/bc0cdbf0b0b948d186de3b936325c56b.html"
+    },
+    {
+      "id": "housing-construction-commission",
+      "name": "上海市住房和城乡建设管理委员会",
+      "name_en": "Shanghai Municipal Commission of Housing, Urban-Rural Development and Management",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The construction authority, which supervises subsidence prevention around building works, including the pumping of water out of deep excavations. Write to it when cracks or sinking appear next to a construction site or metro works.",
+        "zh": "建设行政管理部门，负责建设工程（包括深基坑降排水）涉及的周边地面沉降防治的监督管理。裂缝或沉降出现在工地、轨道交通等施工区域附近时，可向其反映。"
+      },
+      "website": "https://zjw.sh.gov.cn/",
+      "contact_url": "https://zjw.sh.gov.cn/xxgk2020/index.html",
+      "email": null,
+      "phone": "021-23111111（转市住建委办公室）",
+      "postal": "上海市大沽路100号，邮政编码200003",
+      "source": "https://zjw.sh.gov.cn/xxgk2020/index.html"
+    }
+  ],
+  "right_to_answer": {
+    "name": "《中华人民共和国政府信息公开条例》和《上海市政府信息公开规定》",
+    "name_en": "Regulations of the People's Republic of China on Open Government Information, with the Shanghai Provisions on Open Government Information",
+    "what": {
+      "en": "Anyone can ask an administrative body for government information it holds, for example the subsidence monitoring data for your area. If it cannot answer on the spot, the body must reply within 20 working days of receiving the request; with approval and notice to the applicant this can be extended by at most 20 more working days. Separately, a letter asking an authority to inspect and deal with a building or the ground is a petition: under the Regulations on Petition Work the body must tell you in writing within 15 days how it will be handled, and matters dealt with through the petition procedure must be concluded within 60 days of acceptance (30 more at most in complex cases). For 12345, the city's official English portal says the hotline typically aims to respond within 24 hours, to resolve minor issues within five days and to address complex matters within 15 days.",
+      "zh": "公民可以向行政机关申请公开其掌握的政府信息，例如您所在区域的地面沉降监测数据。行政机关能够当场答复的应当当场答复；不能当场答复的，应当自收到申请之日起20个工作日内答复，需要延长的，经批准并告知申请人后，延长期限最长不超过20个工作日。另外，写信要求查看和处理房屋或地面问题属于信访事项：按照《信访工作条例》，有关机关应当自收到之日起15日内书面告知接收情况和处理途径，按信访程序办理的事项应当自受理之日起60日内办结，情况复杂的最多可延长30日。关于12345热线，市政府英文门户网站介绍，热线一般在24小时内回应，简单问题最多5天内解决，复杂问题在15天内处理。"
+    },
+    "how": {
+      "en": "File an information request online on the 'disclosure on request' page of the Shanghai Municipal People's Government website (choose the city department or the district government), or post or hand in the application form as each body's disclosure guide explains. Give your name, contact details and a valid identity document, and describe the information as precisely as you can. To ask for an inspection or for the problem to be dealt with, call 12345 or submit the request online through the citizen interaction section of the city website.",
+      "zh": "政府信息公开申请可以在“上海市人民政府”门户网站的“依申请公开”页面在线提交（选择相应的市政府部门或区人民政府），也可以按照各机关《政府信息公开指南》的说明，邮寄或当面提交《政府信息公开申请表》。申请时需提供姓名、联系方式和有效身份证件，并尽量写明所需信息的名称、文号或特征。要求上门查看、处理问题的，可拨打12345，或在市政府网站“政民互动”栏目在线提交。"
+    },
+    "url": "https://xxgk.sh.gov.cn/zwgk_interface/pages/zwgkfront/publicApplyDefault.html",
+    "deadline_days": 20,
+    "deadline_text": { "en": "20 working days", "zh": "20个工作日" },
+    "source": "https://www.gov.cn/zhengce/content/2019-04/15/content_5382991.htm"
+  },
+  "urgent": {
+    "phone": "119",
+    "what": {
+      "en": "If a building looks about to collapse or people are trapped, get out and call 119 (fire and rescue); call 110 if police are needed on site. For an urgent housing repair where there is no immediate danger of collapse, call the property service hotline 962121, or 12345.",
+      "zh": "房屋看起来随时可能倒塌或有人员被困时，请立即撤离并拨打119（消防救援）；需要警察到场的，可拨打110。尚无倒塌危险但需要房屋应急维修的，可拨打962121物业服务热线，或拨打12345。"
+    },
+    "source": "https://english.shanghai.gov.cn/en-EmergencyNumbers/20240104/8eec5a3d2b864187af8f383cc6b94ae5.html"
+  },
+  "context": {
+    "en": "Shanghai has a dedicated local law, the Regulations of Shanghai Municipality on the Prevention and Control of Land Subsidence (in force since 1 July 2013), and the Bureau of Planning and Natural Resources has monitored subsidence across the city for many years through a network of levelling lines, layered benchmarks and groundwater wells. The official target is to keep the citywide average within 6 millimetres of subsidence a year: in its geology plan for 2021 to 2025 the bureau states that this was met from 2016 to 2020 and that uneven settlement eased, and a plan issued in 2024 keeps the same limit through 2030. The city bans groundwater pumping wherever tap water reaches, apart from reserves for war readiness and emergencies, and keeps the capacity to recharge at least 23 million cubic metres of groundwater a year. The same documents single out uneven local settlement around deep excavations and along major works such as metro lines as the main thing to control.",
+    "zh": "上海有专门的地方性法规《上海市地面沉降防治管理条例》（2013年7月1日起施行），市规划和自然资源局依托由水准测量线路、分层标和地下水监测井组成的监测网络，对全市地面沉降进行长期监测。官方控制目标是全市平均地面沉降量控制在每年6毫米以内：市规划和自然资源局在2021年至2025年的城市地质规划中称，“十三五”期间（2016年至2020年）这一目标已经实现，不均匀沉降有所缓解；2024年印发的城市地质安全风险防控实施方案要求到2030年继续控制在每年6毫米以内。本市在自来水管网到达区域禁止开采地下水（战备、应急备用等特殊情形除外），并保持每年不低于2300万立方米的地下水人工回灌能力。上述文件同时把深基坑降排水和轨道交通等重大工程沿线的局部不均匀沉降列为防控重点。",
+    "sources": [
+      "https://www.shanghai.gov.cn/newshanghai2018/zfgb/201414/ZFGB1414.pdf",
+      "https://ghzyj.sh.gov.cn/zcwj/dzkc/20221026/26eac79c8ad84ed7b03073a17637eff1.html",
+      "https://ghzyj.sh.gov.cn/zcwj/dzkc/20240906/523efc1d4eba4fd491a1e81a2e507fb7.html",
+      "https://ghzyj.sh.gov.cn/cmsres/4b/4bb04c6e1b2448d9a85202e5d7dce534/3771ba832eb5d885766bc50a047a96a2.pdf",
+      "https://ghzyj.sh.gov.cn/jggk/20200110/0032-137790.html"
+    ]
+  },
+  "organising": {
+    "telegram_usable": false,
+    "note": {
+      "en": "Telegram cannot be reached on a normal connection in mainland China: it has been blocked since July 2015, and in open network measurements between 1 August and 14 November 2026 about 97% of Telegram tests run from inside China failed. It is therefore not a practical way to reach neighbours. Residents normally talk in WeChat groups (owners' groups, building groups) and act through the owners' assembly, the owners' committee and the residents' committee; the city housing bureau is charged with guiding and supervising owners' committees. Points to keep in mind: under the Provisions on the Administration of Internet Group Information Services, group users are verified by real identity and the creator and administrators of a group are responsible for managing it, so share only what you can back up (measurements, dated photos, official replies), not unverified claims or other people's personal data. When several households raise the same problem, use 12345, the owners' committee, the residents' committee and written petitions first; for visits in person the Regulations on Petition Work require the group to choose representatives, no more than five.",
+      "zh": "Telegram在中国大陆无法正常访问：自2015年7月起被屏蔽，2026年8月1日至11月14日的公开网络测量显示，从中国境内发起的Telegram连通测试约97%失败，因此不适合用来联络邻居。居民通常通过微信群（业主群、楼组群）沟通，并依托业主大会、业主委员会和居民委员会议事；市房屋管理局负有指导监督业主委员会组建和运作的职责。需要注意：按照《互联网群组信息服务管理规定》，群组用户须经真实身份信息认证，群组建立者和管理者应当履行群组管理责任，所以群里只发有依据的内容（测量数据、带日期的照片、官方答复），不传播未经核实的说法或他人个人信息。多户居民反映同一问题时，优先通过12345、业主委员会、居民委员会和书面信访等渠道；采用走访形式的，《信访工作条例》规定应当推选代表，代表人数不得超过5人。"
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=CN&test_name=telegram&since=2026-08-01&until=2026-11-14&axis_x=measurement_start_day&time_grain=month",
+      "https://hongkongfp.com/2015/07/13/china-blocks-telegram-messenger-blamed-for-aiding-human-rights-lawyers/",
+      "https://www.cac.gov.cn/2017-09/07/c_1121623889.htm",
+      "https://www.gjxfj.gov.cn/2022-04/08/c_1310549186.htm",
+      "https://fgj.sh.gov.cn/jggk/20190127/0013-a489f711912d4345816f94563add6ab2.html"
+    ]
+  },
+  "groups": []
+}

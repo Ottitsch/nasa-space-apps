@@ -4,7 +4,7 @@ import { LIMITS, YEAR } from './config.js';
 
 const NODATA = -32768;
 const R = 6378137;
-const mercY = lat => R * Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
+export const mercY = lat => R * Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
 
 /** Fetch a file that may or may not already have been gunzipped by the server. */
 async function fetchBytes(url) {

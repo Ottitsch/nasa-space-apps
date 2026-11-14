@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Take action: Sinking Ground</title>
+  <meta name="description" content="A one page satellite report for your spot, a ready written letter to the office responsible, and a way to find your neighbours.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23070b12'/%3E%3Cpath d='M6 12c4 0 5 9 10 9s6-9 10-9' fill='none' stroke='%235fd4e8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="vendor/maplibre-gl.css">
+  <link rel="stylesheet" href="css/act.css">
+</head>
+<body>
+  <header class="bar screen">
+    <a id="back" class="back" href="index.html"><span aria-hidden="true">←</span> <span data-t="app.back">Back to the map</span></a>
+    <nav class="steps" aria-label="Steps">
+      <a href="#s1"><b>1</b> <span data-t="steps.1">Get the proof</span></a>
+      <a href="#s2"><b>2</b> <span data-t="steps.2">Send it</span></a>
+      <a href="#s3"><b>3</b> <span data-t="steps.3">Find the others</span></a>
+    </nav>
+    <label class="lang"><span class="sr" data-t="lang.label">Language</span><select id="lang"></select></label>
+  </header>
+
+  <p id="status" class="status screen" role="status" data-t="loading">Loading the measurements…</p>
+
+  <main id="main" hidden>
+    <!-- 1 -->
+    <section id="s1">
+      <div class="intro screen">
+        <h1><b>1</b> <span data-t="s1.title">Get the proof</span></h1>
+        <p data-t="s1.lead"></p>
+      </div>
+      <div class="tools screen">
+        <div class="tool"><span data-t="tools.radius">Neighbourhood</span>
+          <div class="seg" id="radius" role="group"></div></div>
+        <div class="tool"><span data-t="tools.year">Picture shows</span>
+          <div class="seg" id="year" role="group"></div></div>
+        <button id="locate" class="btn ghost" type="button" data-t="tools.locate">Use my location</button>
+      </div>
+
+      <article class="sheet" id="sheet">
+        <header class="sh-head">
+          <div>
+            <p class="kicker" data-t="sheet.kicker">Ground motion report</p>
+            <h2 id="sh-place"></h2>
+            <p class="meta" id="sh-meta"></p>
+          </div>
+          <div class="brand">Sinking Ground<small id="sh-url"></small></div>
+        </header>
+
+        <div class="verdict" id="sh-verdict"></div>
+
+        <div class="cols">
+          <figure class="pic">
+            <div class="pic-box"><img id="pic" alt=""><span id="pic-wait" data-t="map.loading">Drawing the map…</span></div>
+            <ul class="legend" id="sh-legend"></ul>
+            <figcaption id="sh-caption"></figcaption>
+            <p class="hint screen" data-t="tools.hint"></p>
+          </figure>
+          <div>
+            <dl class="facts" id="sh-facts"></dl>
+            <div class="chart" id="sh-measured"></div>
+            <div class="chart" id="sh-timeline"></div>
+          </div>
+        </div>
+
+        <section class="hood" id="sh-hood"></section>
+
+        <section class="read">
+          <h3 data-t="read.title">How to read this</h3>
+          <ul>
+            <li data-t="read.1"></li><li id="sh-read2"></li><li data-t="read.3"></li><li data-t="read.4"></li>
+          </ul>
+        </section>
+        <p class="source" id="sh-source"></p>
+      </article>
+
+      <div class="actions screen">
+        <button id="pdf" class="btn" type="button" data-t="act.pdf">Download PDF</button>
+        <button id="print" class="btn ghost" type="button" data-t="act.print">Print or save as PDF</button>
+        <button id="copy" class="btn ghost" type="button" data-t="act.copy">Copy link</button>
+        <a id="share-tg" class="btn ghost" target="_blank" rel="noopener" data-t="act.share.tg">Share on Telegram</a>
+        <a id="share-wa" class="btn ghost" target="_blank" rel="noopener" data-t="act.share.wa">Share on WhatsApp</a>
+        <span class="fine" data-t="act.linknote"></span>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="s2" class="screen">
+      <div class="intro">
+        <h1><b>2</b> <span data-t="s2.title">Send it to someone who must answer</span></h1>
+        <p data-t="s2.lead"></p>
+      </div>
+      <div class="grid2">
+        <div class="stack">
+          <fieldset class="card">
+            <legend data-t="s2.ask">What do you want to ask for?</legend>
+            <div id="asks" class="choices"></div>
+          </fieldset>
+          <div class="card">
+            <h3 data-t="s2.to">Who to send it to</h3>
+            <p class="fine" id="city-summary"></p>
+            <div id="bodies"></div>
+            <p class="fine" id="bodies-note"></p>
+          </div>
+          <div class="card" id="right-card" hidden>
+            <h3 data-t="s2.right.title">Why they have to answer</h3>
+            <div id="right"></div>
+          </div>
+          <div class="card warn">
+            <h3 data-t="s2.urgent.title">If a building looks about to fail</h3>
+            <p id="urgent"></p>
+          </div>
+          <div class="card" id="context-card" hidden>
+            <h3 data-t="s2.context.title">What is already known here</h3>
+            <p id="context"></p>
+          </div>
+        </div>
+        <div class="stack">
+          <fieldset class="card">
+            <legend data-t="s2.you">About you (optional)</legend>
+            <p class="fine" data-t="s2.you.note"></p>
+            <label><span data-t="s2.you.name">Your name</span><input id="you-name" autocomplete="name"></label>
+            <label><span data-t="s2.you.address">Your address</span><input id="you-address" autocomplete="street-address"></label>
+            <label><span data-t="s2.you.contact">How to reach you</span><input id="you-contact" autocomplete="email"></label>
+            <p class="lbl" data-t="s2.seen">What have you seen yourself?</p>
+            <div id="seen" class="checks"></div>
+          </fieldset>
+          <div class="card">
+            <div class="row">
+              <h3 data-t="s2.letter">Your letter</h3>
+              <label class="inline"><span data-t="s2.letter.lang">Letter language</span> <select id="letter-lang"></select></label>
+            </div>
+            <p class="fine" data-t="s2.letter.note"></p>
+            <textarea id="letter" rows="22" spellcheck="true"></textarea>
+            <div class="actions">
+              <button id="l-copy" class="btn" type="button" data-t="s2.copy">Copy letter</button>
+              <a id="l-email" class="btn ghost" data-t="s2.email">Open in email</a>
+              <button id="l-pdf" class="btn ghost" type="button" data-t="s2.pdf">Download letter as PDF</button>
+              <button id="l-print" class="btn ghost" type="button" data-t="s2.print">Print letter</button>
+              <button id="l-download" class="btn ghost" type="button" data-t="s2.download">Download as text</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3 data-t="s2.tip.title">Make it count</h3>
+            <ul class="plain"><li data-t="s2.tip.1"></li><li data-t="s2.tip.2"></li><li data-t="s2.tip.3"></li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="s3" class="screen">
+      <div class="intro">
+        <h1><b>3</b> <span data-t="s3.title">Find the others</span></h1>
+        <p id="s3-lead"></p>
+      </div>
+      <div class="grid2">
+        <div class="stack">
+          <div class="card accent">
+            <h3 data-t="s3.group.title">Join your neighbours</h3>
+            <div id="groups"></div>
+            <p class="fine" id="organising"></p>
+            <p class="fine" data-t="s3.group.careful"></p>
+          </div>
+          <div class="card">
+            <h3 data-t="s3.share.title">Pass it on</h3>
+            <p data-t="s3.share.lead"></p>
+            <div class="actions">
+              <a id="share-tg2" class="btn" target="_blank" rel="noopener" data-t="act.share.tg">Share on Telegram</a>
+              <a id="share-wa2" class="btn ghost" target="_blank" rel="noopener" data-t="act.share.wa">Share on WhatsApp</a>
+              <button id="copy2" class="btn ghost" type="button" data-t="act.copy">Copy link</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3 data-t="s3.kit.title">How a few neighbours become a group</h3>
+            <p data-t="s3.kit.lead"></p>
+            <ol class="kit" id="kit"></ol>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="card" id="cases-card" hidden>
+            <h3 data-t="s3.cases.title">It has been stopped before</h3>
+            <div id="cases"></div>
+          </div>
+          <div class="card" id="asks-card" hidden>
+            <h3 data-t="s3.asks.title">What to ask for</h3>
+            <ol class="plain" id="policy-asks"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <pre id="letter-print" class="letter-print"></pre>
+  <div id="qmap" aria-hidden="true"></div>
+  <div id="toast" class="toast screen" hidden></div>
+
+  <script src="vendor/pmtiles.js"></script>
+  <script type="module" src="js/act.js"></script>
+</body>
+</html>

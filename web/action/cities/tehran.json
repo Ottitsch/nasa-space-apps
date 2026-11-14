@@ -1,0 +1,174 @@
+{
+  "id": "tehran",
+  "checked": "2026-11-14",
+  "languages": ["fa"],
+  "place_name": {
+    "en": "Tehran",
+    "fa": "تهران"
+  },
+  "country_name": {
+    "en": "Iran",
+    "fa": "ایران"
+  },
+  "summary": {
+    "en": "In Tehran city a cracking or dangerous building is first the municipality's job: under clause 14 of Article 55 of the Municipality Law your district municipality must have it examined and order the danger removed, while the city's crisis management organisation (TDMMO) coordinates the work on subsidence. In Eslamshahr, Shahriar and the other towns of the province the same duty lies with the town's own municipality, backed by the county governor's office and the province's crisis management office. Wells and groundwater pumping are licensed and supervised by the Tehran Regional Water Company (Ministry of Energy), and the sinking itself is measured by the National Cartographic Center and studied by the Geological Survey of Iran.",
+    "fa": "در شهر تهران رسیدگی به ساختمان ترک‌خورده یا خطرناک در گام نخست با شهرداری است: طبق بند ۱۴ ماده ۵۵ قانون شهرداری، شهرداری منطقه باید پس از بازدید مأمور فنی خود دستور رفع خطر بدهد و سازمان پیشگیری و مدیریت بحران شهر تهران کارهای مربوط به فرونشست را هماهنگ می‌کند. در اسلامشهر، شهریار و دیگر شهرهای استان همین وظیفه بر عهده شهرداری همان شهر است و فرمانداری شهرستان و اداره کل مدیریت بحران استانداری تهران پشتیبان آن هستند. صدور پروانه چاه و نظارت بر برداشت آب زیرزمینی با شرکت آب منطقه‌ای تهران (وابسته به وزارت نیرو) است و فرونشست را سازمان نقشه‌برداری کشور اندازه‌گیری و سازمان زمین‌شناسی و اکتشافات معدنی کشور بررسی می‌کند."
+  },
+  "bodies": [
+    {
+      "id": "tehran-districts",
+      "name": "شهرداری منطقه شما، شهرداری تهران",
+      "name_en": "Your district municipality, Tehran Municipality",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Under the Municipality Law (Article 55, clause 14) the municipality must have a dangerous building or wall examined and the danger removed, so call 137 at any hour to request a site visit and send your letter to your own district municipality, which you can find in the list of the 22 districts on the city portal.",
+        "fa": "طبق بند ۱۴ ماده ۵۵ قانون شهرداری، رفع خطر از بناها و دیوارهای شکسته و خطرناک وظیفه شهرداری است؛ برای درخواست بازدید در هر ساعت از شبانه‌روز با ۱۳۷ تماس بگیرید و نامه خود را به شهرداری منطقه خودتان بدهید که آن را در فهرست مناطق ۲۲‌گانه در درگاه شهرداری تهران می‌یابید."
+      },
+      "website": "https://www.tehran.ir/",
+      "contact_url": "https://www.tehran.ir/%D8%B4%D9%87%D8%B1%D8%AF%D8%A7%D8%B1%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86/%D9%85%D9%86%D8%A7%D8%B7%D9%82",
+      "email": null,
+      "phone": "137",
+      "postal": null,
+      "source": "https://137.tehran.ir/Default.aspx?tabid=137"
+    },
+    {
+      "id": "tdmmo",
+      "name": "سازمان پیشگیری و مدیریت بحران شهر تهران",
+      "name_en": "Tehran Disaster Mitigation and Management Organization (TDMMO)",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The city's crisis management body, which was put in charge of the Tehran subsidence working group and assesses hazards across the city; write to it to report ground cracks or sinking in your neighbourhood and to ask that the area be assessed.",
+        "fa": "نهاد مدیریت بحران شهر تهران که مسئولیت کارگروه فرونشست تهران به آن سپرده شده است و مخاطرات شهر را ارزیابی می‌کند؛ برای گزارش ترک‌خوردگی یا نشست زمین در محله خود و درخواست ارزیابی محدوده به این سازمان نامه بنویسید."
+      },
+      "website": "https://tdmmo.tehran.ir/",
+      "contact_url": "https://tdmmo.tehran.ir/Default.aspx?tabid=1588",
+      "email": "info.tdmmo@tehran.ir",
+      "phone": "021 44244040",
+      "postal": "تهران، انتهای بزرگراه جلال آل احمد، نرسیده به بزرگراه آیت‌الله اشرفی اصفهانی، نبش خیابان نهم، سازمان پیشگیری و مدیریت بحران شهر تهران، کد پستی ۱۴۶۳۶۱۳۱۱۱",
+      "source": "https://tdmmo.tehran.ir/Default.aspx?tabid=1588"
+    },
+    {
+      "id": "tehran-province-crisis",
+      "name": "اداره کل مدیریت بحران استانداری تهران",
+      "name_en": "Crisis Management Directorate General, Tehran Governorate",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "For Eslamshahr, Shahriar, Nasimshahr and the other towns outside Tehran city, where the town's own municipality is responsible for dangerous buildings and the county governor heads crisis management; this provincial office coordinates them, so write to it and send a copy to your municipality and to your county governor's office, whose contacts are on the governorate portal.",
+        "fa": "ویژه اسلامشهر، شهریار، نسیم‌شهر و دیگر شهرهای بیرون از شهر تهران که در آن‌ها رفع خطر از ساختمان‌های خطرناک با شهرداری همان شهر و ریاست مدیریت بحران شهرستان با فرماندار است؛ این اداره کل کار آن‌ها را هماهنگ می‌کند، پس به این اداره نامه بنویسید و رونوشت آن را به شهرداری و فرمانداری شهرستان خود بدهید. نشانی فرمانداری‌ها در درگاه استانداری تهران آمده است."
+      },
+      "website": "https://ostan-th.ir/",
+      "contact_url": "https://ostan-th.ir/Page/356/%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D8%AA%D9%85%D8%A7%D8%B3-%D9%81%D8%B1%D9%85%D8%A7%D9%86%D8%AF%D8%A7%D8%B1%DB%8C-%D9%87%D8%A7%DB%8C-%D8%B4%D9%87%D8%B1%D8%B3%D8%AA%D8%A7%D9%86-%D9%87%D8%A7%DB%8C-%D8%A7%D8%B3%D8%AA%D8%A7%D9%86-%D8%AA%D9%87%D8%B1%D8%A7%D9%86.html",
+      "email": "bohran.ostan_th@iran.ir",
+      "phone": "021 84691631",
+      "postal": "تهران، میدان آرژانتین، ابتدای آفریقای شمالی، بلوار دادمان، استانداری تهران، اداره کل مدیریت بحران",
+      "source": "https://ostan-th.ir/Page/39/-%D8%A7%D8%AF%D8%A7%D8%B1%D9%87-%DA%A9%D9%84-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D8%A8%D8%AD%D8%B1%D8%A7%D9%86.html"
+    },
+    {
+      "id": "thrw",
+      "name": "شرکت آب منطقه‌ای تهران",
+      "name_en": "Tehran Regional Water Company",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The Ministry of Energy company that licenses wells, monitors groundwater and seals unauthorised wells across Tehran province, including Shahriar and Eslamshahr; write to it to ask what is being done about pumping near you or to report a well you believe is unauthorised.",
+        "fa": "شرکت وابسته به وزارت نیرو که در استان تهران، از جمله شهریار و اسلامشهر، پروانه چاه صادر می‌کند، بر آب‌های زیرزمینی نظارت دارد و چاه‌های غیرمجاز را مسدود می‌کند؛ برای پرسش درباره برداشت آب در نزدیکی محل زندگی خود یا گزارش چاهی که گمان می‌کنید غیرمجاز است به این شرکت نامه بنویسید."
+      },
+      "website": "https://www.thrw.ir/",
+      "contact_url": "https://www.thrw.ir/SC.php?type=static&id=2",
+      "email": "info@thrw.ir",
+      "phone": "021 81751",
+      "postal": "تهران، بلوار کشاورز، خیابان حجاب، شرکت آب منطقه‌ای تهران، کد پستی ۱۴۱۵۶۱۵۴۴۱",
+      "source": "https://www.thrw.ir/SC.php?type=static&id=2"
+    },
+    {
+      "id": "ncc",
+      "name": "سازمان نقشه‌برداری کشور",
+      "name_en": "National Cartographic Center of Iran (NCC)",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The national mapping agency, which measures subsidence with satellite radar, GNSS stations and precise levelling and publishes subsidence maps, including the Tehran subsidence atlas; write to it to ask for the latest measured rate at your location.",
+        "fa": "نهاد ملی نقشه‌برداری که فرونشست را با تداخل‌سنجی راداری، ایستگاه‌های GNSS و ترازیابی دقیق اندازه می‌گیرد و نقشه‌های فرونشست، از جمله اطلس فرونشست تهران، را منتشر می‌کند؛ برای دریافت آخرین نرخ اندازه‌گیری‌شده در محل خود به این سازمان نامه بنویسید."
+      },
+      "website": "https://www.ncc.gov.ir/",
+      "contact_url": "https://www.ncc.gov.ir/confagiiw.html",
+      "email": "info@ncc.gov.ir",
+      "phone": "021 66071001",
+      "postal": "تهران، میدان آزادی، بلوار معراج، سازمان نقشه‌برداری کشور، کد پستی ۱۳۸۷۸۳۵۸۶۱",
+      "source": "https://www.ncc.gov.ir/confagiiw.html"
+    },
+    {
+      "id": "iranfoia",
+      "name": "سامانه انتشار و دسترسی آزاد به اطلاعات",
+      "name_en": "National portal for publication of and free access to information",
+      "level": "national",
+      "handles": ["information"],
+      "role": {
+        "en": "The national portal for formal information requests under the Law on Publication of and Free Access to Information; use it to ask any of the offices above for records such as inspection reports, well permits near you or subsidence measurements for your area.",
+        "fa": "درگاه ملی ثبت درخواست رسمی اطلاعات بر پایه قانون انتشار و دسترسی آزاد به اطلاعات؛ از این راه می‌توانید از هر یک از نهادهای بالا اسنادی مانند گزارش بازدید، پروانه چاه‌های نزدیک محل زندگی خود یا اندازه‌گیری‌های فرونشست محدوده‌تان را بخواهید."
+      },
+      "website": "https://iranfoia.ir/",
+      "contact_url": "https://iranfoia.ir/web/guest/help",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://iranfoia.ir/web/guest/home"
+    }
+  ],
+  "right_to_answer": {
+    "name": "قانون انتشار و دسترسی آزاد به اطلاعات",
+    "name_en": "Law on Publication of and Free Access to Information",
+    "what": {
+      "en": "Every Iranian has the right to ask for information held by public institutions. Under Article 8 the institution must reply as quickly as possible and in any case within 10 days of receiving the request (the executive regulation counts these as working days). If it refuses or does not reply, you can complain through the same portal to the Commission for Publication of and Free Access to Information.",
+      "fa": "هر ایرانی حق دارد اطلاعات موجود در مؤسسات عمومی را درخواست کند. طبق ماده ۸ این قانون، مؤسسه باید در سریع‌ترین زمان ممکن پاسخ دهد و مدت پاسخ در هر صورت نمی‌تواند از ده روز پس از دریافت درخواست بیشتر شود (آیین‌نامه اجرایی این مهلت را ده روز کاری دانسته است). اگر مؤسسه درخواست را رد کند یا پاسخ ندهد، می‌توانید در همان سامانه به کمیسیون انتشار و دسترسی آزاد به اطلاعات شکایت کنید."
+    },
+    "how": {
+      "en": "Register on the national portal iranfoia.ir with your national ID number and mobile phone, choose the institution you are asking (for example the municipality, the regional water company or the National Cartographic Center) and write your request; the reply arrives in your account on the portal or by email. If the institution is not listed there, hand or post the written request to its secretariat and ask for the registration number and date.",
+      "fa": "در سامانه iranfoia.ir با کد ملی و شماره تلفن همراه خود ثبت‌نام کنید، مؤسسه مورد نظر (برای نمونه شهرداری، شرکت آب منطقه‌ای یا سازمان نقشه‌برداری کشور) را برگزینید و درخواست خود را بنویسید؛ پاسخ در کارپوشه شما در همان سامانه قرار می‌گیرد یا با ایمیل فرستاده می‌شود. اگر نام مؤسسه در سامانه نبود، درخواست کتبی را به دبیرخانه همان مؤسسه تحویل دهید یا پست کنید و شماره و تاریخ ثبت نامه را بگیرید."
+    },
+    "url": "https://iranfoia.ir/",
+    "deadline_days": 10,
+    "deadline_text": {
+      "en": "10 working days",
+      "fa": "۱۰ روز کاری"
+    },
+    "source": "https://iranfoia.ir/web/guest/-5"
+  },
+  "urgent": {
+    "phone": "125",
+    "what": {
+      "en": "125 is the Tehran Fire and Safety Services Organization, whose crews rescue people trapped under rubble and make a collapsing site safe. Get everyone out first, call from outside and give the full address: main street, side street, alley and number. If a building is unsafe but not in immediate danger, call the municipality on 137.",
+      "fa": "۱۲۵ شماره سازمان آتش‌نشانی و خدمات ایمنی شهرداری تهران است که نیروهایش افراد گرفتار زیر آوار را نجات می‌دهند و محل ریزش را ایمن می‌کنند. نخست همه را از ساختمان بیرون ببرید، از بیرون تماس بگیرید و نشانی را کامل بگویید: خیابان اصلی، خیابان فرعی، کوچه و پلاک. اگر ساختمان ناایمن است ولی خطر فوری ندارد، با سامانه ۱۳۷ شهرداری تماس بگیرید."
+    },
+    "source": "http://125.tehran.ir/Default.aspx?tabid=94"
+  },
+  "context": {
+    "en": "Sinking on the south west Tehran plain has been measured officially since the 1990s and is attributed mainly to falling groundwater. The Geological Survey of Iran puts the subsidence zone at about 415 km², mostly in Eslamshahr and Shahriar counties, and precise levelling by the National Cartographic Center showed up to 171 cm of settlement there between 1995 and 2003. The Center's Tehran subsidence atlas (2019) reports about 2,014 km² affected at up to 19.9 cm a year, and a satellite radar study covering 2003 to 2017 found more than 25 cm a year in the western Tehran plain. Tehran's crisis management organisation lists monitoring of groundwater and subsidence, sealing unauthorised wells and artificial recharge of the aquifer among the planned measures.",
+    "fa": "فرونشست جنوب غرب دشت تهران از دهه ۱۳۷۰ به طور رسمی اندازه‌گیری شده و عامل اصلی آن افت سطح آب زیرزمینی دانسته می‌شود. سازمان زمین‌شناسی و اکتشافات معدنی کشور محدوده فرونشست را حدود ۴۱۵ کیلومتر مربع و بیشتر در شهرستان‌های اسلامشهر و شهریار برآورد کرده و ترازیابی دقیق سازمان نقشه‌برداری کشور در فاصله سال‌های ۱۳۷۴ تا ۱۳۸۲ بیشینه نشستی برابر با ۱۷۱ سانتی‌متر را در این محدوده نشان داده است. بر پایه اطلس فرونشست تهران (سازمان نقشه‌برداری کشور، ۱۳۹۸) حدود ۲۰۱۴ کیلومتر مربع از اراضی تحت تأثیر فرونشست است و نرخ آن تا ۱۹٫۹ سانتی‌متر در سال می‌رسد و یک پژوهش تداخل‌سنجی راداری برای سال‌های ۲۰۰۳ تا ۲۰۱۷ نرخ بیش از ۲۵ سانتی‌متر در سال را در غرب دشت تهران به دست آورده است. سازمان پیشگیری و مدیریت بحران شهر تهران پایش سطح آب زیرزمینی و فرونشست، مسدود کردن چاه‌های غیرمجاز و تغذیه مصنوعی آبخوان را از اقدام‌های پیش‌بینی‌شده برشمرده است.",
+    "sources": [
+      "https://tdmmo.tehran.ir/Default.aspx?tabid=1220",
+      "https://gsi.ir/fa/reports/1824/%DA%AF%D8%B2%D8%A7%D8%B1%D8%B4-%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%A2%D8%AE%D8%B1%DB%8C%D9%86-%D9%88%D8%B6%D8%B9%DB%8C%D8%AA-%D9%85%D8%AE%D8%A7%D8%B7%D8%B1%D8%A7%D8%AA-%D9%86%D8%A7%D8%B4%DB%8C-%D8%A7%D8%B2-%D9%81%D8%B1%D9%88%D9%86%D8%B4%D8%B3%D8%AA-%D8%B2%D9%85%DB%8C%D9%86-%D8%AF%D8%B1-%D8%AC%D9%86%D9%88%D8%A8-%D8%A8%D8%A7%D8%AE%D8%AA%D8%B1-%D8%AF%D8%B4%D8%AA-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D8%A8%D9%87%D9%85%D9%86-%DB%B1%DB%B3%DB%B9%DB%B0-%DA%AF%D8%B1%D9%88%D9%87-%D8%A2%D8%A8-%D8%B2%D9%85%DB%8C%D9%86-%D8%B4%D9%86%D8%A7%D8%B3%DB%8C",
+      "https://www.ncc.gov.ir/fa/gallery/2826/1/%D8%A7%D8%B7%D9%84%D8%B3-%D9%86%D9%82%D8%B4%D9%87-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D9%85%DA%A9%D8%A7%D9%86%DB%8C-%D8%A7%D8%B3%D8%AA%D8%A7%D9%86-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%85%D9%84%DB%8C-%DA%AF%D8%B1%D8%AF%D8%B4%DA%AF%D8%B1%DB%8C-%D9%81%D8%B1%D9%88%D9%86%D8%B4%D8%B3%D8%AA-%D9%85%D8%B9%D8%B1%D9%81%DB%8C",
+      "https://www.ncc.gov.ir/fa/news/1461/%D8%A7%D8%B7%D9%84%D8%B3-%D9%87%D8%A7-%D9%86%D9%82%D8%B4%D9%87-%D9%87%D8%A7%DB%8C-%D9%81%D8%B1%D9%88%D9%86%D8%B4%D8%B3%D8%AA",
+      "https://doi.org/10.1016/j.rse.2018.11.003"
+    ]
+  },
+  "organising": {
+    "telegram_usable": false,
+    "note": {
+      "en": "Telegram has been blocked in Iran since May 2018 and was still blocked in autumn 2026. It opens only through a circumvention tool (VPN), and a directive of the Supreme Council of Cyberspace issued in February 2024 forbids using such tools without a legal permit. WhatsApp was also reported as filtered in 2026. Many people still reach these apps through a VPN, but a group that every neighbour can join without one has to be on a domestic messenger such as Bale, Eitaa or Rubika, which are run inside Iran under Iranian regulations. Between January and May 2026 internet access was cut nationwide for long periods, so keep a list of your neighbours' phone numbers as well. On any messenger, post only what you would be comfortable seeing made public, and keep your evidence report and copies of your letters outside the group too.",
+      "fa": "تلگرام از اردیبهشت ۱۳۹۷ در ایران فیلتر است و در پاییز ۱۴۰۵ همچنان فیلتر بود. این پیام‌رسان تنها با فیلترشکن باز می‌شود و طبق مصوبه شورای عالی فضای مجازی که در اسفند ۱۴۰۲ ابلاغ شد، استفاده از فیلترشکن بدون مجوز قانونی ممنوع است. واتس‌اپ نیز در سال ۱۴۰۵ فیلتر گزارش شده است. بسیاری از مردم همچنان با فیلترشکن از این برنامه‌ها استفاده می‌کنند، ولی گروهی که همه همسایه‌ها بتوانند بدون فیلترشکن در آن عضو شوند باید در یکی از پیام‌رسان‌های داخلی مانند بله، ایتا یا روبیکا ساخته شود که در داخل کشور و طبق مقررات ایران کار می‌کنند. از دی ۱۴۰۴ تا خرداد ۱۴۰۵ اینترنت کشور بارها و برای مدت‌های طولانی قطع بود، پس فهرستی از شماره تلفن همسایه‌ها نیز داشته باشید. در هر پیام‌رسانی فقط چیزی را بنویسید که انتشار عمومی آن برایتان مشکلی نداشته باشد و گزارش شواهد و رونوشت نامه‌ها را بیرون از گروه نیز نگه دارید."
+    },
+    "sources": [
+      "https://filter.watch/english/2026/11/06/network-monitoring-october-2026-filtering-the-internet-through-pricing/",
+      "https://parsi.euronews.com/2026/09/17/iran-removed-from-global-speedtest-rankings-internet-expensive-slow-unstable",
+      "https://www.aljazeera.com/news/2024/2/24/iran-unveils-plan-for-tighter-internet-rules-to-promote-local-platforms",
+      "https://www.apr.org/2026-05-28/iranians-are-back-online-after-a-monthslong-shutdown-but-face-heavy-restrictions",
+      "https://www.iranintl.com/en/202511019424"
+    ]
+  },
+  "groups": []
+}

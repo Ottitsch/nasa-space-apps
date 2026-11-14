@@ -311,21 +311,113 @@ pipeline/            Python: NISAR products to map data
 web/                 the static site
   index.html
   css/style.css
+  act.html           take action: report, letter, find the others
+  action/            city files, translations and policy examples for that page
+  js/act.js          the take action page
+  js/pdf.js          PDF downloads made in the browser
   js/app.js          map layers, panes, controls
   js/basemap.js      the map style: imagery or night lights, borders, names
   js/data.js         reading the per place grids
   js/timeline.js     the time bar
   js/config.js       colours, limits, formatting
   data/              output of the pipeline (index.json and two files per place)
-  vendor/            MapLibre GL JS, PMTiles and the Figtree typeface
+  vendor/            MapLibre GL JS, PMTiles, html2canvas and the Figtree typeface
 ```
 
-## Next steps
+## Take action
 
-The idea is to go from seeing the problem to acting on it: help people contact
-the authority responsible for their area, and find others nearby facing the
-same thing. That is not built yet. The app already announces what a person is
-looking at, so that feature can plug in without touching the map code:
+Seeing the problem is step zero. `web/act.html` turns a spot on the map into
+something a person can use. It opens from the place panel or from the popup
+after clicking a building.
+
+| Step | What the person gets |
+| --- | --- |
+| 1. Get the proof | A one page report for their spot: the measured sinking, when the ground passes each damage limit, a picture of the buildings around them by risk class, counts of buildings within 250 or 500 m, and the honest limits of the data. It downloads as a one page PDF (or prints on one A4 page) and has a link to share. |
+| 2. Send it | A ready written letter, filled in with those numbers, asking for an inspection or for answers about groundwater pumping. It names the office responsible and the law that obliges a reply. Copy, email, print, or download as PDF or text. |
+| 3. Find the others | A link to the city's group, ways to pass the report on, a short guide to turning a few neighbours into a group, and four cities that stopped their sinking with what they did. |
+
+Nothing the person types (name, address) leaves their device.
+
+The report and the letter use the same damage classes as the map, so they also
+count sinking from before NISAR (see above). The page takes the map's setting
+from the link (`&earlier=2015`, `&earlier=none`), and both the report and the
+letter say that this part is an estimate, not a measurement.
+
+The PDFs are made in the browser, with no server: the page is drawn to an
+image and wrapped in a PDF file (`web/js/pdf.js`). That keeps every script
+looking exactly as the browser draws it, at the cost that the text in the PDF
+is a picture and cannot be selected or searched. The address of the live
+report stays clickable.
+
+![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
+
+### Cities with a full local guide
+
+For the ten places where the most built up land is projected to pass the
+cracking limit, each has its own file naming the offices responsible, how to
+reach them, the law that obliges a reply and its deadline, and the emergency
+number. Every other place gets the report, a general letter and general
+guidance on who is usually responsible.
+
+| City | Page and letter language | Telegram reachable there |
+| --- | --- | --- |
+| Mexico City, Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| Toluca, Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| Tehran, Iran | Persian | no, blocked |
+| Mashhad, Iran | Persian | no, blocked |
+| Quetta, Pakistan | Urdu, English | no, blocked |
+| Delhi, India | English, Hindi | yes |
+| Bandung, Indonesia | Indonesian | yes (neighbours mostly use WhatsApp) |
+| Istanbul, Türkiye | Turkish | yes |
+| Abidjan, Côte d'Ivoire | French | yes (neighbours mostly use WhatsApp) |
+| Shanghai, China | Chinese | no, blocked |
+
+Each city is one file, `web/action/cities/<place id>.json`, described in
+`web/action/README.md`. Each contact carries the official page it comes from
+and the date it was gathered.
+
+**Before promoting the page in a city, have someone who lives there check its
+file and its translation.** The contacts were gathered by research from a
+desk in November 2026. Many government sites refused connections from the
+research environment, so a good share of the phone numbers and addresses were
+read from search results of the official site, not from the live page. The
+translations were written by a language model and have not been read by
+native speakers. Fixing or adding a city is a change to one JSON file, with
+no code. `python3 web/action/check.py` checks every city file and translation.
+
+### Groups
+
+The idea is one group per city where neighbours organise. When a group exists,
+add it to that city's file and the page shows a join button:
+
+```json
+"groups": [{ "platform": "telegram", "url": "https://t.me/your_group", "label": "Sinking Ground Mexico City" }]
+```
+
+Until then the page says there is no group yet and invites the reader to start
+one. `platform` is free text, so a WhatsApp or WeChat group works the same
+way. That matters: Telegram is blocked in four of the ten cities (see the
+table), and where it does work most neighbourhood groups run on WhatsApp.
+Each city file's `organising` note says what applies there and what to be
+careful about, and the page hides the Telegram share button where Telegram
+does not open.
+
+### Languages
+
+The page and the letters exist in English, Spanish, French, Turkish,
+Indonesian, Persian, Urdu, Hindi and Chinese. Every sentence lives in
+`web/action/i18n/<language>.json`; `en.json` is the source. A language listed
+in `web/action/i18n/index.json` appears in the language menu. The page opens in
+the city's own language and writes the letter in it, with numbers and dates in
+the local format (the Persian page uses the Solar Hijri calendar). The
+examples of cities that stopped their sinking are in `web/action/cases.json`,
+each with its sources, with translations in `web/action/i18n/cases.<language>.json`.
+The map itself is in English only.
+
+### For other features
+
+The map announces what a person is looking at, so further features can plug in
+without touching the map code:
 
 ```js
 document.addEventListener('sinkingground:place', e => { /* e.detail: id, name, country, detected */ });
@@ -333,10 +425,17 @@ document.addEventListener('sinkingground:inspect', e => { /* e.detail: place, ln
 document.addEventListener('sinkingground:time', e => { /* e.detail: time, projected */ });
 ```
 
-Other useful directions: rerun the pipeline as passes accumulate, add places,
-mosaic neighbouring radar frames for places that straddle two, and use the
-weather model layers shipped inside the products for a better atmosphere
-correction.
+## Next steps
+
+* Have local people check each city file and translation.
+* Create the city groups and add their links, on a platform that opens in
+  each country.
+* Translate the map itself.
+* Collect crack reports from residents on the map (this needs a server and
+  moderation, so it is not built).
+* Rerun the pipeline as radar passes accumulate, add places, mosaic
+  neighbouring radar frames for places that straddle two, and use the weather
+  model layers shipped inside the products for a better atmosphere correction.
 
 ## Credits
 

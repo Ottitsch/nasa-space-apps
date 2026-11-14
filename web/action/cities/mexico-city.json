@@ -1,0 +1,189 @@
+{
+  "id": "mexico-city",
+  "checked": "2026-11-14",
+  "languages": [
+    "es"
+  ],
+  "place_name": {
+    "en": "Mexico City",
+    "es": "Ciudad de México"
+  },
+  "country_name": {
+    "en": "Mexico",
+    "es": "México"
+  },
+  "summary": {
+    "en": "Inside Mexico City, the city's civil protection secretariat (SGIRPC) and the civil protection unit of each alcaldía check cracked buildings and ground, and the water secretariat SEGIAGUA, which replaced SACMEX, runs the city's wells. In the State of Mexico municipalities of the metro area (Nezahualcóyotl, Ecatepec, Valle de Chalco and others), the municipal civil protection office and the state coordination do that job, and the state water commission CAEM supplies bulk water to the municipalities. Across the whole valley, the national water commission CONAGUA decides who may pump groundwater and how much.",
+    "es": "Dentro de la Ciudad de México, la Secretaría de Gestión Integral de Riesgos y Protección Civil (SGIRPC) y la unidad de protección civil de cada alcaldía revisan inmuebles y suelo con grietas, y la Secretaría de Gestión Integral del Agua (SEGIAGUA), que sustituyó al SACMEX, opera los pozos de la ciudad. En los municipios mexiquenses de la zona metropolitana (Nezahualcóyotl, Ecatepec, Valle de Chalco y otros), esa tarea corresponde a la protección civil municipal y a la coordinación estatal, y la Comisión del Agua del Estado de México (CAEM) suministra agua en bloque a los municipios. En todo el valle, la Comisión Nacional del Agua (CONAGUA) decide quién puede extraer agua subterránea y cuánta."
+  },
+  "bodies": [
+    {
+      "id": "sgirpc",
+      "name": "Secretaría de Gestión Integral de Riesgos y Protección Civil de la Ciudad de México",
+      "name_en": "Mexico City Secretariat for Integrated Risk Management and Civil Protection (SGIRPC)",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses inside Mexico City. It assesses buildings and ground at risk, publishes the city's Atlas of Risks and issues technical opinions on the risk of a property; the secretariat or the alcaldía can also ask the city's building safety institute (ISC) for a structural safety report.",
+        "es": "Para domicilios dentro de la Ciudad de México. Evalúa inmuebles y suelo en riesgo, publica el Atlas de Riesgos de la ciudad y emite opiniones técnicas sobre el riesgo de un inmueble; la Secretaría o la alcaldía pueden pedir además un dictamen de seguridad estructural al Instituto para la Seguridad de las Construcciones (ISC)."
+      },
+      "website": "https://www.proteccioncivil.cdmx.gob.mx/",
+      "contact_url": "https://www.proteccioncivil.cdmx.gob.mx/contacto",
+      "email": null,
+      "phone": "55 1519 1864",
+      "postal": "Avenida Patriotismo 711, Colonia San Juan, Alcaldía Benito Juárez, C.P. 03730, Ciudad de México",
+      "source": "https://www.proteccioncivil.cdmx.gob.mx/contacto"
+    },
+    {
+      "id": "alcaldias",
+      "name": "Unidades de protección civil de las 16 alcaldías (directorio)",
+      "name_en": "Civil protection units of the 16 alcaldías (directory)",
+      "level": "district",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses inside Mexico City. Each alcaldía (borough) has its own civil protection unit, usually the first to visit a house or street that is cracking. This official page lists them; confirm the details on the alcaldía's own website before going.",
+        "es": "Para domicilios dentro de la Ciudad de México. Cada alcaldía tiene su propia unidad de protección civil, que suele ser la primera en acudir a revisar una casa o una calle con grietas. Esta página oficial las enlista; conviene confirmar los datos en el sitio de la alcaldía antes de acudir."
+      },
+      "website": "https://www.proteccioncivil.cdmx.gob.mx/secretaria/unidades-de-proteccion-civil-por-alcaldia",
+      "contact_url": "https://www.proteccioncivil.cdmx.gob.mx/secretaria/unidades-de-proteccion-civil-por-alcaldia",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.proteccioncivil.cdmx.gob.mx/secretaria/unidades-de-proteccion-civil-por-alcaldia"
+    },
+    {
+      "id": "pc-edomex",
+      "name": "Coordinación General de Protección Civil y Gestión Integral del Riesgo del Estado de México",
+      "name_en": "State of Mexico General Coordination of Civil Protection and Integrated Risk Management",
+      "level": "state",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in the State of Mexico (Nezahualcóyotl, Ecatepec, Valle de Chalco and the other municipalities). It coordinates civil protection across the state, compiles the state Atlas of Risks and works with the civil protection office of each municipality, which is normally the one that visits. Write to it when the municipality does not answer, or to ask which municipal office is yours.",
+        "es": "Para domicilios en el Estado de México (Nezahualcóyotl, Ecatepec, Valle de Chalco y los demás municipios). Coordina la protección civil en todo el estado, integra el Atlas de Riesgos estatal y trabaja con la protección civil de cada municipio, que normalmente es la que acude a revisar. Conviene escribirle cuando el municipio no responde o para saber qué oficina municipal corresponde."
+      },
+      "website": "https://cgproteccioncivil.edomex.gob.mx/",
+      "contact_url": "https://cgproteccioncivil.edomex.gob.mx/contactanos",
+      "email": "pcivil.usei@edomex.gob.mx",
+      "phone": "722 215 0115",
+      "postal": "Vialidad Adolfo López Mateos s/n, Colonia Las Culturas, C.P. 51350, Zinacantepec, Estado de México",
+      "source": "https://cgproteccioncivil.edomex.gob.mx/contactanos"
+    },
+    {
+      "id": "segiagua",
+      "name": "Secretaría de Gestión Integral del Agua de la Ciudad de México (SEGIAGUA)",
+      "name_en": "Mexico City Secretariat for Integrated Water Management (SEGIAGUA, formerly SACMEX)",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses inside Mexico City. Since late 2024 it has replaced the Mexico City Water System (SACMEX). It operates the city's wells and water network, so it is the body to ask how much groundwater is pumped in your area and what is planned to reduce it.",
+        "es": "Para domicilios dentro de la Ciudad de México. Desde finales de 2024 sustituye al Sistema de Aguas de la Ciudad de México (SACMEX). Opera los pozos y la red de agua de la ciudad, por lo que es la dependencia a la que se pregunta cuánta agua subterránea se extrae en la zona y qué se planea para reducirla."
+      },
+      "website": "https://www.segiagua.cdmx.gob.mx/",
+      "contact_url": "https://segiagua.cdmx.gob.mx/atencion-ciudadana",
+      "email": null,
+      "phone": "55 9017 4603",
+      "postal": "Calle Río de la Plata 48, Colonia Cuauhtémoc, Alcaldía Cuauhtémoc, C.P. 06500, Ciudad de México",
+      "source": "https://segiagua.cdmx.gob.mx/secretaria/estructura/1"
+    },
+    {
+      "id": "conagua",
+      "name": "Comisión Nacional del Agua (CONAGUA), Organismo de Cuenca Aguas del Valle de México",
+      "name_en": "National Water Commission (CONAGUA), Valley of Mexico Basin Agency",
+      "level": "national",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For the whole metro area, in Mexico City and the State of Mexico alike. CONAGUA is the federal authority that grants and supervises the permits to pump groundwater and publishes the water balance of each aquifer. This is its regional office for the Valley of Mexico.",
+        "es": "Para toda la zona metropolitana, tanto en la Ciudad de México como en el Estado de México. La CONAGUA es la autoridad federal que otorga y vigila las concesiones para extraer agua subterránea y publica el balance de agua de cada acuífero. Esta es su oficina regional para el Valle de México."
+      },
+      "website": "https://www.gob.mx/conagua",
+      "contact_url": "https://www.gob.mx/conagua",
+      "email": null,
+      "phone": "55 5804 4300",
+      "postal": "Río Churubusco 650, esquina Tezontle, Colonia Carlos A. Zapata Vela, C.P. 08040, Ciudad de México",
+      "source": "https://files.conagua.gob.mx/datospersonales/documentos/3_ProcedimientoQuejas_DP_2024.pdf"
+    },
+    {
+      "id": "caem",
+      "name": "Comisión del Agua del Estado de México (CAEM)",
+      "name_en": "State of Mexico Water Commission (CAEM)",
+      "level": "state",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses in the State of Mexico. This state commission, part of the state Water Secretariat, supplies bulk water to the municipalities and their water utilities. Ask it where the water for your municipality comes from and how much of it is pumped from the ground.",
+        "es": "Para domicilios en el Estado de México. Esta comisión estatal, que depende de la Secretaría del Agua, suministra agua en bloque a los municipios y a sus organismos operadores. Se le puede preguntar de dónde viene el agua del municipio y cuánta se extrae del subsuelo."
+      },
+      "website": "https://caem.edomex.gob.mx/",
+      "contact_url": "https://caem.edomex.gob.mx/contactanos",
+      "email": "caem@edomex.gob.mx",
+      "phone": "55 2629 8003",
+      "postal": "Félix Guzmán No. 7, Colonia El Parque, C.P. 53398, Naucalpan, Estado de México",
+      "source": "https://caem.edomex.gob.mx/contactanos"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley General de Transparencia y Acceso a la Información Pública",
+    "name_en": "Article 8 of the Constitution (right of petition) and the General Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
+    "what": {
+      "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: at most 20 working days under the General Law, which can be extended by up to 10 more. Mexico City bodies have 9 working days, extendable by 7, under the city's own transparency law of July 2026.",
+      "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: como máximo 20 días hábiles según la Ley General, ampliables hasta por 10 más. Las dependencias de la Ciudad de México tienen 9 días hábiles, ampliables por 7, según la ley local de transparencia de julio de 2026."
+    },
+    "how": {
+      "en": "Send or hand in the letter and keep the stamped copy or acknowledgement of receipt (acuse). To make the questions a formal information request, file them free of charge on the Plataforma Nacional de Transparencia, choosing the body you are writing to, or send them to that body's Unidad de Transparencia by email, by post or in person. If no reply comes in time, you can file an appeal (recurso de revisión) within 15 working days on the same platform.",
+      "es": "Hay que enviar o entregar el escrito y conservar el acuse de recibo. Para que las preguntas cuenten como solicitud formal de información, se presentan sin costo en la Plataforma Nacional de Transparencia, eligiendo la dependencia a la que se escribe, o ante la Unidad de Transparencia de esa dependencia por correo electrónico, por correo postal o en persona. Si no hay respuesta en el plazo, se puede presentar un recurso de revisión dentro de los 15 días hábiles siguientes en la misma plataforma."
+    },
+    "url": "https://www.plataformadetransparencia.org.mx/",
+    "deadline_days": 20,
+    "deadline_text": {
+      "en": "20 working days",
+      "es": "20 días hábiles"
+    },
+    "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTAIP.pdf"
+  },
+  "urgent": {
+    "phone": "911",
+    "what": {
+      "en": "Leave the building and call 911, the national emergency number, which sends firefighters, civil protection and police in Mexico City and in the State of Mexico. Inside Mexico City the civil protection secretariat also takes emergency calls on 55 5683 2222.",
+      "es": "Hay que salir del inmueble y llamar al 911, el número nacional de emergencias, que envía a bomberos, protección civil y policía tanto en la Ciudad de México como en el Estado de México. Dentro de la Ciudad de México, la Secretaría de Gestión Integral de Riesgos y Protección Civil atiende además emergencias en el 55 5683 2222."
+    },
+    "source": "https://www.gob.mx/911"
+  },
+  "context": {
+    "en": "The ground over the old lakebed is sinking because groundwater is pumped out and the clay compacts. UNAM's Institute of Geophysics, which tracks it with GPS stations and satellite radar, reported in May 2026 rates of up to 42 cm a year in Nezahualcóyotl, about 31 in Valle de Chalco, 27 in Tláhuac, 26 in Iztapalapa, 20 in Venustiano Carranza and 18 in Iztacalco. The national statistics institute INEGI mapped 962 km² of sinking ground across Mexico City and the State of Mexico, and the first NISAR results, published by NASA in April 2026, show parts of the city going down more than 2 cm a month. Mexico City's official Atlas of Risks has a subsidence layer and a subsidence hazard rating for each census area.",
+    "es": "El suelo del antiguo lago se hunde porque se extrae agua subterránea y las arcillas se compactan. El Instituto de Geofísica de la UNAM, que lo mide con estaciones GPS y radar satelital, informó en mayo de 2026 de velocidades de hasta 42 cm por año en Nezahualcóyotl, unos 31 en Valle de Chalco, 27 en Tláhuac, 26 en Iztapalapa, 20 en Venustiano Carranza y 18 en Iztacalco. El INEGI cartografió 962 km² de terreno que se hunde entre la Ciudad de México y el Estado de México, y los primeros resultados del satélite NISAR, publicados por la NASA en abril de 2026, muestran zonas que bajan más de 2 cm al mes. El Atlas de Riesgos de la Ciudad de México incluye una capa de hundimiento y un indicador de peligro por subsidencia para cada área censal (AGEB).",
+    "sources": [
+      "https://geogaceta.geofisica.unam.mx/index.php/2026/05/18/el-hundimiento-del-suelo-en-la-zona-metropolitana-de-la-cdmx-alcanza-hasta-42-centimetros-por-ano/",
+      "https://www.inegi.org.mx/contenidos/productos/prod_serv/contenidos/espanol/bvinegi/productos/nueva_estruc/889463904441.pdf",
+      "https://www.jpl.nasa.gov/news/us-indian-space-mission-maps-extreme-subsidence-in-mexico-city/",
+      "https://www.atlas.cdmx.gob.mx/pdf/Indicadores/Indicador%20de%20peligro%20por%20subsidencia%20a%20nivel%20AGEB%202023.pdf",
+      "https://www.atlas.cdmx.gob.mx/"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Mexico without restrictions, but few neighbours have it: in a 2026 survey of internet users, 91% had a WhatsApp account and 30% had Telegram, so street and building groups nearly always run on WhatsApp. In a WhatsApp group every member can see the phone numbers of all the others, so keep the group to people you can place and do not post ID documents or property deeds there. Be wary of anyone in a chat who offers to arrange an inspection or a permit for money: ask the authority itself for the visit and ask any inspector for official identification.",
+      "es": "Telegram funciona en México sin restricciones, pero pocos vecinos lo tienen: en una encuesta de 2026 entre usuarios de internet, 91% tenía cuenta de WhatsApp y 30% de Telegram, así que los grupos de calle o de edificio casi siempre están en WhatsApp. En un grupo de WhatsApp todos los integrantes ven el número de teléfono de los demás, por lo que conviene limitarlo a personas conocidas y no publicar ahí identificaciones ni escrituras. Hay que desconfiar de quien ofrezca en un chat gestionar una inspección o un permiso a cambio de dinero: la visita se pide directamente a la autoridad y a cualquier inspector se le puede pedir su identificación oficial."
+    },
+    "sources": [
+      "https://irp.cdn-website.com/81280eda/files/uploaded/Estudio-Habitos-de-los-Usuarios-de-Internet-2026-Version-publica.pdf",
+      "https://freedomhouse.org/country/mexico/freedom-net/2025"
+    ]
+  },
+  "groups": []
+}

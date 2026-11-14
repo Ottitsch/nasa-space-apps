@@ -302,6 +302,19 @@ function clearBuildings() {
 
 // ---------------------------------------------------------- click to inspect
 
+/** Address of the take action page: report, letter and neighbours for one spot. */
+function actUrl(id, lng, lat) {
+  return `act.html#place=${id}` + (lng == null ? '' : `&lat=${lat.toFixed(5)}&lng=${lng.toFixed(5)}`)
+    + (state.earlier === EARLIER_DEFAULT ? '' : `&earlier=${state.earlier}`);
+}
+
+/** Point the panel's take action button at a place, or at one spot in it. */
+let actSpot = null;
+function setActLink(id, lng, lat) {
+  actSpot = [id, lng, lat];
+  $('place-act').href = actUrl(id, lng, lat);
+}
+
 const END = Date.UTC(END_YEAR, 11, 31);
 
 /** The year uneven sinking is assumed to go back to, or null: first radar pass. */
@@ -360,7 +373,10 @@ function inspect(e) {
       <div class="note">${since == null ? 'Counted' : 'Sinking is counted'} from the first radar pass on ${fmtDate(m.t0)}.${since == null ? ''
         : ` The damage limits also count earlier uneven sinking, assumed at today's rate since ${since}.`} One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
   }
+  state.spot = [lng, lat];
+  html += `<a class="pop-act" href="${actUrl(m.id, lng, lat)}">Take action for this spot</a>`;
   popup.setLngLat(e.lngLat).setHTML(html + '</div>').addTo(map);
+  setActLink(m.id, lng, lat);
   emit('inspect', {
     place: m.id, lng, lat, valid: !!valid, detected: !!sig, riskClass: cls,
     rate_mm_per_year: valid ? place.rate[i] : null, sunk_mm: sunk, time: state.time, projected: proj,
@@ -535,6 +551,7 @@ function showPanel(m) {
   $('st-rec').textContent = `${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}`;
   $('place-driver').textContent = m.driver ? `Main cause reported for this area: ${m.driver.toLowerCase()}.` : '';
   $('place-hot').hidden = !m.detected;
+  setActLink(m.id);
   $('place').querySelector('.scroll').scrollTop = 0;
   for (const b of $('places').querySelectorAll('button')) b.setAttribute('aria-current', String(b.dataset.id === m.id));
 }
@@ -651,6 +668,7 @@ function setEarlier(id) {
   state.earlier = EARLIER.some(e => e.id === id) ? id : EARLIER_DEFAULT;
   $('earlier').value = state.earlier;
   applyEarlier();
+  if (actSpot) setActLink(...actSpot);   // the report must use the same setting
   popup.remove();
   drawOverlay(); updateBuildings(); updatePanel();
 }

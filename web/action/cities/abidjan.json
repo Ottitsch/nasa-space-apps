@@ -1,0 +1,163 @@
+{
+  "id": "abidjan",
+  "checked": "2026-11-14",
+  "languages": ["fr"],
+  "place_name": { "en": "Abidjan", "fr": "Abidjan" },
+  "country_name": { "en": "Côte d'Ivoire", "fr": "Côte d'Ivoire" },
+  "summary": {
+    "en": "In Abidjan the mayor of your commune is the first authority for a building that threatens to collapse, backed by the Ministry of Urbanism, Housing and Living Environment (the former Ministry of Construction), which runs urban control and a call centre (1378). Drinking water has long been pumped mainly from the aquifer under the city: the private operator SODECI runs the service under contract with the State, and the State office ONEP, under the Ministry of Hydraulics, Sanitation and Public Cleanliness, is charged with monitoring the resource. We found no public body that publishes measurements of ground subsidence for Abidjan, so the access to information law is the way to ask what is known.",
+    "fr": "À Abidjan, le maire de votre commune est la première autorité à saisir pour un bâtiment qui menace ruine, avec l'appui du Ministère de l'Urbanisme, du Logement et du Cadre de Vie (l'ancien ministère de la Construction), qui assure le contrôle urbain et tient un centre d'appel (1378). L'eau potable est depuis longtemps pompée surtout dans la nappe située sous la ville : la SODECI, opérateur privé, exploite le service sous contrat avec l'État, et l'ONEP, office public placé sous la tutelle du Ministère de l'Hydraulique, de l'Assainissement et de la Salubrité, est chargé de surveiller la ressource. Nous n'avons trouvé aucun organisme public qui publie des mesures de l'affaissement du sol à Abidjan : la loi sur l'accès à l'information est donc le moyen de demander ce qui est connu."
+  },
+  "bodies": [
+    {
+      "id": "mairies",
+      "name": "Mairies des communes du District Autonome d'Abidjan",
+      "name_en": "Town halls of the communes of the Abidjan Autonomous District",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Under the construction code (article 338) the mayor can have any building checked and order repairs, demolition or, when danger is imminent, evacuation, and anyone who knows that a building is unsafe must report it to the mayor, so write first to the town hall of your commune. According to OpenStreetMap the zones on our map lie in Abobo (west of N'Dotré, near the limits of Anyama and Yopougon), Cocody (M'Pouto) and Port-Bouët (Anani, east of Gonzagueville); the government directory linked here is incomplete and still shows phone numbers in the old 8 digit format.",
+        "fr": "Selon le Code de la construction et de l'habitat (article 338), le maire peut faire visiter tout bâtiment, prescrire sa réparation ou sa démolition et, en cas de péril imminent, ordonner l'évacuation ; toute personne qui a connaissance d'un immeuble dangereux doit le lui signaler : écrivez donc d'abord à la mairie de votre commune. D'après OpenStreetMap, les zones de notre carte se trouvent à Abobo (à l'ouest de N'Dotré, près des limites d'Anyama et de Yopougon), à Cocody (M'Pouto) et à Port-Bouët (Anani, à l'est de Gonzagueville) ; l'annuaire officiel indiqué ici est incomplet et affiche encore des numéros de téléphone à 8 chiffres, l'ancien format."
+      },
+      "website": "https://annuaire.gouv.ci/",
+      "contact_url": "https://annuaire.gouv.ci/accueil/liste_institution/mairies",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.construction.gouv.ci/uploads/publications/17854239895.pdf"
+    },
+    {
+      "id": "mulcv",
+      "name": "Ministère de l'Urbanisme, du Logement et du Cadre de Vie",
+      "name_en": "Ministry of Urbanism, Housing and Living Environment",
+      "level": "national",
+      "handles": ["inspection", "information"],
+      "role": {
+        "en": "The national ministry in charge of construction policing (until January 2026 it was called the Ministry of Construction, Housing and Urbanism): its urban control teams inspect buildings reported as dangerous, and its call centre (1378) takes reports of any construction that shows signs of weakness.",
+        "fr": "Ministère chargé de la police de la construction (il s'appelait Ministère de la Construction, du Logement et de l'Urbanisme jusqu'en janvier 2026) : ses équipes de contrôle urbain inspectent les bâtiments signalés comme dangereux, et son centre d'appel (1378) reçoit les signalements de toute construction qui présente des signes de fragilité."
+      },
+      "website": "https://www.construction.gouv.ci/",
+      "contact_url": "https://www.construction.gouv.ci/ecrire-au-ministere",
+      "email": null,
+      "phone": "1378 / 05 46 95 44 44 / 01 40 22 78 78",
+      "postal": "Cité Administrative, Tour A, 17e étage, Plateau, Abidjan",
+      "source": "https://www.construction.gouv.ci/accueil"
+    },
+    {
+      "id": "onpc",
+      "name": "Office National de la Protection Civile (ONPC)",
+      "name_en": "National Office for Civil Protection",
+      "level": "national",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Public body under the Ministry of the Interior and Security that carries out civil protection policy: prevention of risks, relief plans and the coordination of emergency relief. Write to it when cracks or sinking ground threaten several homes or a place open to the public.",
+        "fr": "Établissement public placé sous la tutelle du Ministère de l'Intérieur et de la Sécurité, chargé de la prévention des risques civils, des plans de secours et de la coordination des secours d'urgence. Vous pouvez lui écrire lorsque des fissures ou un affaissement du sol menacent plusieurs habitations ou un lieu ouvert au public."
+      },
+      "website": "https://www.onpc-ci.org/",
+      "contact_url": "https://www.onpc-ci.org/contacts",
+      "email": "protectioncivile@onpc-ci.org",
+      "phone": "+225 27 22 47 87 30 / +225 27 22 47 87 31",
+      "postal": "Cocody, Lycée Technique Batafoué, Lot 98 Ilot 06, 04 BP 2813 Abidjan 04",
+      "source": "https://www.onpc-ci.org/contacts"
+    },
+    {
+      "id": "district-abidjan",
+      "name": "District Autonome d'Abidjan",
+      "name_en": "Abidjan Autonomous District",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The District covers all the communes of Abidjan. The law gives it, among other things, environmental protection, spatial planning and the fight against the harmful effects of urbanisation, and it has a directorate for prevention and civil protection, so send it a copy when the problem goes beyond the limits of one commune.",
+        "fr": "Le District regroupe les communes d'Abidjan. La loi lui confie notamment la protection de l'environnement, la planification de l'aménagement du territoire et la lutte contre les effets néfastes de l'urbanisation, et il dispose d'une Direction de la Prévention et de la Protection Civile : vous pouvez lui adresser une copie lorsque le problème dépasse les limites d'une seule commune."
+      },
+      "website": "https://www.abidjan.district.ci/",
+      "contact_url": "https://www.abidjan.district.ci/index2.php?page=con",
+      "email": null,
+      "phone": null,
+      "postal": "Hôtel de ville, Abidjan Plateau, BP V24 Abidjan",
+      "source": "https://annuaire.gouv.ci/accueil/liste_institution/mairies"
+    },
+    {
+      "id": "onep",
+      "name": "Office National de l'Eau Potable (ONEP)",
+      "name_en": "National Office for Drinking Water",
+      "level": "national",
+      "handles": ["groundwater", "information"],
+      "role": {
+        "en": "State office under the Ministry of Hydraulics, Sanitation and Public Cleanliness. Its stated missions include controlling, protecting and monitoring the water resources used for drinking water and following up the operators, so ask it how much is pumped from the boreholes near you and whether the level of the aquifer and of the ground is monitored.",
+        "fr": "Office public placé sous la tutelle du Ministère de l'Hydraulique, de l'Assainissement et de la Salubrité. Ses missions comprennent le contrôle, la protection et la surveillance des ressources en eau servant à la production d'eau potable, ainsi que le suivi des opérateurs : vous pouvez lui demander quels volumes sont pompés dans les forages proches de chez vous et si le niveau de la nappe et celui du sol sont suivis."
+      },
+      "website": "https://onepci.net/",
+      "contact_url": "https://onepci.net/nous-contacter/",
+      "email": "onepci@onepci.net",
+      "phone": "(+225) 27 22 52 47 16 / 17",
+      "postal": "Cocody, II Plateaux Vallon, Rue J93, Abidjan",
+      "source": "https://onepci.net/nous-contacter/"
+    },
+    {
+      "id": "sodeci",
+      "name": "Société de Distribution d'Eau de Côte d'Ivoire (SODECI)",
+      "name_en": "Côte d'Ivoire Water Distribution Company",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "Private company that runs the public drinking water service in the cities, Abidjan included, under a lease contract with the State. Its customer line (175, free call) and a letter to its head office are the way to report a leak, a burst main or a pumping site next to ground that is sinking.",
+        "fr": "Société privée qui exploite le service public de l'eau potable en ville, y compris à Abidjan, dans le cadre d'un contrat d'affermage signé avec l'État. Son centre de relation client (175, appel gratuit) et un courrier adressé au siège permettent de signaler une fuite, une casse de conduite ou un site de pompage voisin d'un terrain qui s'affaisse."
+      },
+      "website": "https://sodeci.ci/",
+      "contact_url": "https://sodeci.ci/nous-contacter",
+      "email": "relationclient@sodeci.ci",
+      "phone": "175 / (+225) 27 21 23 30 00",
+      "postal": "1, Avenue Christiani, Treichville, 01 BP 1843 Abidjan 01",
+      "source": "https://sodeci.ci/nous-contacter"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Loi n° 2013-867 du 23 décembre 2013 relative à l'accès à l'information d'intérêt public",
+    "name_en": "Law No. 2013-867 of 23 December 2013 on access to information of public interest",
+    "what": {
+      "en": "Any person can ask a public body for information or documents it holds. The body must answer in writing within 30 days at most (15 days for professional journalists and researchers). No answer within that time counts as a refusal, which you can contest before the hierarchical superior or before the Commission on Access to Information of Public Interest and Public Documents (CAIDP).",
+      "fr": "Toute personne peut demander à un organisme public une information ou un document qu'il détient. L'organisme doit répondre par écrit dans un délai maximum de 30 jours (15 jours pour les journalistes professionnels et les chercheurs). L'absence de réponse dans ce délai vaut refus, et ce refus peut être contesté devant le supérieur hiérarchique ou devant la Commission d'Accès à l'Information d'intérêt public et aux Documents publics (CAIDP)."
+    },
+    "how": {
+      "en": "Send your written request to the body concerned (ministry, town hall, ONEP and so on), for the attention of its information officer, and keep proof of the date it was filed; the CAIDP publishes the list of information officers. If there is no answer after 30 days, or if the answer is a refusal, refer the case to the CAIDP by letter or email to its President (06 BP 2542 Abidjan 06, phone +225 27 22 50 17 14, infos@caidp.ci) or online with the form 'Saisir la CAIDP', attaching your request letter.",
+      "fr": "Adressez votre demande écrite à l'organisme concerné (ministère, mairie, ONEP, etc.), à l'attention de son responsable de l'information, et conservez une preuve de la date de dépôt ; la CAIDP publie la liste des responsables de l'information. En l'absence de réponse au bout de 30 jours, ou en cas de refus, saisissez la CAIDP par courrier ou par courriel adressé à sa Présidente (06 BP 2542 Abidjan 06, téléphone +225 27 22 50 17 14, infos@caidp.ci) ou en ligne au moyen du formulaire « Saisir la CAIDP », en joignant votre lettre de demande."
+    },
+    "url": "https://www.caidp.ci/saisir",
+    "deadline_days": 30,
+    "deadline_text": { "en": "30 days", "fr": "30 jours" },
+    "source": "https://www.caidp.ci/saisir"
+  },
+  "urgent": {
+    "phone": "180",
+    "what": {
+      "en": "If a building looks about to fall, get everyone out and call the fire brigade (Groupement des Sapeurs-Pompiers Militaires) on 180. Then tell the town hall, because the mayor can order an evacuation when danger is imminent, and report the building to the call centre of the urbanism ministry on 1378.",
+      "fr": "Si un bâtiment paraît sur le point de s'effondrer, faites sortir tout le monde et appelez les pompiers (Groupement des Sapeurs-Pompiers Militaires) au 180. Prévenez ensuite la mairie, car le maire peut ordonner l'évacuation en cas de péril imminent, et signalez le bâtiment au centre d'appel du ministère chargé de l'urbanisme, au 1378."
+    },
+    "source": "https://annuaire.gouv.ci/accueil/liste_institution/pompiers"
+  },
+  "context": {
+    "en": "We found no official programme that monitors ground subsidence in Abidjan and no officially published rates (checked on 14 November 2026). The city has long drawn most of its drinking water from the aquifer beneath it, known as the nappe d'Abidjan, which university researchers described in 2014 as threatened by overexploitation and pollution; the State has since added treatment plants on surface water, for example on the Aghien lagoon. Among its stated missions, the State office ONEP must control and monitor the water resources used for drinking water. Abidjan is also one of 48 large coastal cities whose ground movement from 2014 to 2020 was measured by satellite radar in a study published in Nature Sustainability in 2022.",
+    "fr": "Nous n'avons trouvé ni programme officiel de suivi de l'affaissement du sol à Abidjan, ni taux officiellement publiés (vérification du 14 novembre 2026). La ville tire depuis longtemps l'essentiel de son eau potable de la nappe située sous elle, dite nappe d'Abidjan, que des chercheurs universitaires décrivaient en 2014 comme menacée par la surexploitation et la pollution ; l'État a depuis ajouté des usines de traitement d'eau de surface, par exemple sur la lagune Aghien. Parmi ses missions, l'ONEP doit contrôler et surveiller les ressources en eau servant à la production d'eau potable. Abidjan figure aussi parmi les 48 grandes villes côtières dont les mouvements du sol entre 2014 et 2020 ont été mesurés par radar satellitaire dans une étude publiée en 2022 dans la revue Nature Sustainability.",
+    "sources": [
+      "https://iahs.info/uploads/dms/16600.47-256-262-363-53-Paper-152-Auguste-KOUASSI.pdf",
+      "https://www.economie-ivoirienne.ci/activites-sectorielles/eau-potable.html",
+      "https://onepci.net/nos-missions/",
+      "https://doi.org/10.1038/s41893-022-00947-z"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram is reachable in Côte d'Ivoire: in open network measurements between 1 August and 14 November 2026, 443 of 448 Telegram tests run in the country succeeded. In practice neighbours mostly organise through WhatsApp groups and Facebook (about 7.5 million Facebook users in early 2025), together with neighbourhood or village chiefs, residents' associations and building managers; public bodies use WhatsApp too. Three points call for care. A march or gathering on the public road must be declared beforehand, and organising an undeclared or banned gathering is punishable by one to three years in prison under the 2019 penal code. Laws adopted in 2022 tightened the rules on false information online, so share only what you can show: measurements, dated photos, official replies. A chat group needs no registration, but a formal association comes under the rules on civil society organisations issued in June 2024, which allow the government to dissolve a group it considers a threat to public order.",
+      "fr": "Telegram est accessible en Côte d'Ivoire : dans les mesures ouvertes du réseau réalisées entre le 1er août et le 14 novembre 2026, 443 tests de Telegram sur 448 effectués dans le pays ont réussi. Dans la pratique, les voisins s'organisent surtout par des groupes WhatsApp et par Facebook (environ 7,5 millions d'utilisateurs de Facebook début 2025), avec les chefs de quartier ou de village, les associations de résidents et les syndics ; les organismes publics utilisent eux aussi WhatsApp. Trois points appellent à la prudence. Une marche ou un rassemblement sur la voie publique doit être déclaré à l'avance, et l'organisation d'un rassemblement non déclaré ou interdit est punie d'un à trois ans de prison par le code pénal de 2019. Des lois adoptées en 2022 ont renforcé les règles sur les fausses informations en ligne : ne partagez donc que ce que vous pouvez montrer, à savoir des mesures, des photos datées et des réponses officielles. Un groupe de discussion n'a pas besoin d'être déclaré, mais une association formelle relève des règles sur les organisations de la société civile prises en juin 2024, qui permettent au gouvernement de dissoudre un groupe qu'il juge menaçant pour l'ordre public."
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=CI&test_name=telegram&since=2026-08-01&until=2026-11-14&axis_x=measurement_start_day&time_grain=month",
+      "https://datareportal.com/reports/digital-2025-cote-divoire",
+      "https://freedomhouse.org/country/cote-divoire/freedom-world/2024",
+      "https://freedomhouse.org/country/cote-divoire/freedom-world/2025"
+    ]
+  },
+  "groups": []
+}

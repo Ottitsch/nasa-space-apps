@@ -1,0 +1,162 @@
+{
+  "id": "bandung",
+  "checked": "2026-11-14",
+  "languages": ["id"],
+  "place_name": { "en": "Bandung", "id": "Bandung" },
+  "country_name": { "en": "Indonesia", "id": "Indonesia" },
+  "summary": {
+    "en": "Greater Bandung is run by three local governments, so the first door depends on where you live: the sinking zones on the map lie in Margahayu (Bandung Regency) and in Buahbatu and Babakan Ciparay (Bandung City), while Cimahi has its own city offices. Each has a disaster management agency (BPBD) that assesses damaged houses and unstable ground, backed by the West Java provincial BPBD. Groundwater is overseen by the provincial Energy and Mineral Resources Office and by the national Geological Agency, which also studies the sinking.",
+    "id": "Bandung Raya dikelola oleh tiga pemerintah daerah, sehingga pintu pertama bergantung pada tempat tinggal Anda: zona penurunan tanah pada peta berada di Kecamatan Margahayu (Kabupaten Bandung) serta di Kecamatan Buahbatu dan Babakan Ciparay (Kota Bandung), sedangkan Kota Cimahi memiliki perangkat daerah sendiri. Setiap daerah memiliki Badan Penanggulangan Bencana Daerah (BPBD) yang mengkaji rumah rusak dan tanah yang tidak stabil, didukung oleh BPBD Provinsi Jawa Barat. Urusan air tanah ditangani oleh Dinas Energi dan Sumber Daya Mineral Provinsi Jawa Barat dan oleh Badan Geologi Kementerian ESDM, yang juga meneliti penurunan muka tanah."
+  },
+  "bodies": [
+    {
+      "id": "bpbd-kab-bandung",
+      "name": "Badan Penanggulangan Bencana Daerah (BPBD) Kabupaten Bandung",
+      "name_en": "Bandung Regency Disaster Management Agency (BPBD)",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Handles disaster management in Bandung Regency, which includes the Margahayu zone south west of Bandung City, and assesses damaged houses and unstable ground. Write to ask for an on site check of cracks or sinking ground where you live.",
+        "id": "Menangani penanggulangan bencana di Kabupaten Bandung, termasuk zona Margahayu di barat daya Kota Bandung, serta mengkaji kerusakan rumah dan tanah yang tidak stabil. Kirim surat kepada BPBD untuk meminta pemeriksaan retakan atau penurunan tanah di lokasi Anda."
+      },
+      "website": "https://bpbd.bandungkab.go.id",
+      "contact_url": "https://bpbd.bandungkab.go.id/",
+      "email": "bpbd@bandungkab.go.id",
+      "phone": "+62 851 6290 1129",
+      "postal": "Komplek Perkantoran Pemerintahan Kabupaten Bandung, Jl. Raya Soreang KM 17, Soreang 40911",
+      "source": "https://bpbd.bandungkab.go.id/"
+    },
+    {
+      "id": "bpbd-kota-bandung",
+      "name": "Badan Penanggulangan Bencana Daerah (BPBD) Kota Bandung",
+      "name_en": "Bandung City Disaster Management Agency (BPBD)",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The city's own disaster agency, newly formed in 2025, for the Buahbatu and Babakan Ciparay zones and the rest of Bandung City. Ask it for an on site check of cracking buildings or ground. We could not confirm its office address or phone on an official page, so use the directory of city offices on the Bandung City website, or send your letter through SP4N LAPOR.",
+        "id": "Badan penanggulangan bencana Pemerintah Kota Bandung yang baru dibentuk pada 2025, untuk zona Buahbatu dan Babakan Ciparay serta seluruh wilayah kota. Mintalah pemeriksaan di lokasi atas bangunan atau tanah yang retak. Alamat dan nomor telepon kantornya belum dapat kami pastikan dari laman resmi, jadi gunakan direktori perangkat daerah di situs Pemerintah Kota Bandung atau kirim surat Anda melalui SP4N LAPOR."
+      },
+      "website": "https://www.bandung.go.id",
+      "contact_url": "https://www.bandung.go.id/city-directory",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://ppid.bandung.go.id/ppid-pembantu"
+    },
+    {
+      "id": "bpbd-jabar",
+      "name": "Badan Penanggulangan Bencana Daerah (BPBD) Provinsi Jawa Barat",
+      "name_en": "West Java Provincial Disaster Management Agency (BPBD)",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Coordinates disaster management across West Java and supports the city and regency agencies. Write to it when the sinking crosses city borders or when a local office does not respond. Residents of Cimahi can ask for their report to be passed to BPBD Kota Cimahi.",
+        "id": "Mengoordinasikan penanggulangan bencana di seluruh Jawa Barat dan mendukung BPBD kabupaten dan kota. Kirim surat kepada BPBD Provinsi bila penurunan tanah melintasi batas daerah atau bila kantor setempat tidak menanggapi. Warga Kota Cimahi dapat meminta agar laporannya diteruskan kepada BPBD Kota Cimahi."
+      },
+      "website": "https://bpbd.jabarprov.go.id",
+      "contact_url": "https://bpbd.jabarprov.go.id",
+      "email": "bpbd@jabarprov.go.id",
+      "phone": "(022) 7313267",
+      "postal": "Jl. Soekarno Hatta No. 629, Sukapura, Kec. Kiaracondong, Kota Bandung, Jawa Barat 40286",
+      "source": "https://bpbd.jabarprov.go.id/daftar-informasi"
+    },
+    {
+      "id": "esdm-jabar",
+      "name": "Dinas Energi dan Sumber Daya Mineral (ESDM) Provinsi Jawa Barat",
+      "name_en": "West Java Provincial Energy and Mineral Resources Office",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The provincial office for groundwater: it keeps data on wells and supervises groundwater use in West Java through its branch offices. Write to ask which wells are licensed near you, how much they may pump, and how pumping is supervised in your area.",
+        "id": "Dinas provinsi yang membidangi air tanah: mendata sumur dan mengawasi pemakaian air tanah di Jawa Barat melalui cabang dinasnya. Kirim surat untuk menanyakan sumur berizin di sekitar Anda, batas pengambilan airnya, dan cara pengawasannya di wilayah Anda."
+      },
+      "website": "https://esdm.jabarprov.go.id",
+      "contact_url": "https://esdm.jabarprov.go.id/hubungi-kami/",
+      "email": "admin.esdm@jabarprov.go.id",
+      "phone": "(022) 7562049",
+      "postal": "Jl. Soekarno Hatta No. 576, Bandung 40286",
+      "source": "https://esdm.jabarprov.go.id/hubungi-kami/"
+    },
+    {
+      "id": "badan-geologi",
+      "name": "Badan Geologi, Kementerian Energi dan Sumber Daya Mineral (Pusat Air Tanah dan Geologi Tata Lingkungan)",
+      "name_en": "Geological Agency, Ministry of Energy and Mineral Resources (Centre for Groundwater and Environmental Geology)",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The national geological survey, based in Bandung. Its groundwater centre (PATGTL) handles the groundwater permits that fall under the central government and studies land subsidence. Write to ask for its subsidence and groundwater level measurements for your area.",
+        "id": "Lembaga geologi nasional yang berkantor di Bandung. Pusat Air Tanah dan Geologi Tata Lingkungan (PATGTL) menangani perizinan air tanah yang menjadi kewenangan pemerintah pusat dan meneliti penurunan muka tanah. Kirim surat untuk meminta data pengukuran penurunan muka tanah dan muka air tanah di wilayah Anda."
+      },
+      "website": "https://geologi.esdm.go.id",
+      "contact_url": "https://geologi.esdm.go.id/profil/lokasi-kontak",
+      "email": "geologi@esdm.go.id",
+      "phone": "+62 22 7215297",
+      "postal": "Jl. Diponegoro No. 57, Cihaur Geulis, Kec. Cibeunying Kaler, Kota Bandung, Jawa Barat 40122",
+      "source": "https://geologi.esdm.go.id/profil/lokasi-kontak"
+    },
+    {
+      "id": "ppid-jabar",
+      "name": "Pejabat Pengelola Informasi dan Dokumentasi (PPID) Pemerintah Provinsi Jawa Barat",
+      "name_en": "Information and Documentation Officer (PPID), West Java Provincial Government",
+      "level": "state",
+      "handles": ["information"],
+      "role": {
+        "en": "Takes formal public information requests addressed to provincial bodies such as BPBD and the Energy and Mineral Resources Office. City and regency bodies have their own PPID: Bandung City (ppid.bandung.go.id), Bandung Regency (ppid.bandungkab.go.id) and Cimahi (ppid.cimahikota.go.id). For the Geological Agency use ppid.esdm.go.id.",
+        "id": "Menerima permohonan informasi publik resmi yang ditujukan kepada perangkat daerah provinsi, seperti BPBD dan Dinas ESDM. Pemerintah kota dan kabupaten memiliki PPID sendiri: Kota Bandung (ppid.bandung.go.id), Kabupaten Bandung (ppid.bandungkab.go.id), dan Kota Cimahi (ppid.cimahikota.go.id). Untuk Badan Geologi gunakan ppid.esdm.go.id."
+      },
+      "website": "https://ppid.jabarprov.go.id",
+      "contact_url": "https://ppid.jabarprov.go.id",
+      "email": null,
+      "phone": "(022) 2502898",
+      "postal": "Sekretariat PPID Provinsi Jawa Barat, Jl. Tamansari No. 55, Lebak Siliwangi, Kec. Coblong, Kota Bandung, Jawa Barat 40132",
+      "source": "https://dispora.jabarprov.go.id/layanan"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Undang-Undang Nomor 14 Tahun 2008 tentang Keterbukaan Informasi Publik (UU KIP)",
+    "name_en": "Law No. 14 of 2008 on Public Information Disclosure",
+    "what": {
+      "en": "Every public body must answer a written request for public information, through its information officer (PPID), within 10 working days. It may extend this once by up to 7 working days if it gives the reason in writing. If the request is refused, ignored or answered poorly, you can file an objection with the officer's superior and then take the dispute to the Information Commission.",
+      "id": "Setiap badan publik wajib menjawab permohonan informasi publik secara tertulis, melalui Pejabat Pengelola Informasi dan Dokumentasi (PPID), paling lambat 10 hari kerja. Badan publik dapat memperpanjang waktu itu satu kali, paling lama 7 hari kerja, dengan alasan tertulis. Jika permohonan ditolak, tidak ditanggapi, atau jawabannya tidak memuaskan, Anda dapat mengajukan keberatan kepada atasan PPID, lalu membawa sengketanya ke Komisi Informasi."
+    },
+    "how": {
+      "en": "Send the request to the PPID of the body you are writing to, online or on paper, with proof of identity, and keep the registration number. Provincial bodies: ppid.jabarprov.go.id. Bandung City: ppid-simonik.bandung.go.id. Bandung Regency: ppid.bandungkab.go.id. Cimahi: ppid.cimahikota.go.id. Geological Agency: ppid.esdm.go.id. For a complaint or a request for action rather than for documents, use SP4N LAPOR (lapor.go.id), the national complaint channel that forwards your report to the responsible office.",
+      "id": "Kirim permohonan kepada PPID badan publik yang Anda tuju, secara daring atau tertulis, dengan menyertakan identitas diri, dan simpan nomor registrasinya. Perangkat daerah provinsi: ppid.jabarprov.go.id. Kota Bandung: ppid-simonik.bandung.go.id. Kabupaten Bandung: ppid.bandungkab.go.id. Kota Cimahi: ppid.cimahikota.go.id. Badan Geologi: ppid.esdm.go.id. Untuk pengaduan atau permintaan tindakan, bukan permintaan dokumen, gunakan SP4N LAPOR (lapor.go.id), kanal pengaduan nasional yang meneruskan laporan Anda kepada instansi yang berwenang."
+    },
+    "url": "https://ppid.jabarprov.go.id",
+    "deadline_days": 10,
+    "deadline_text": { "en": "10 working days", "id": "10 hari kerja" },
+    "source": "https://ppid-simonik.bandung.go.id/faq"
+  },
+  "urgent": {
+    "phone": "112",
+    "what": {
+      "en": "If a building looks about to fail, get everyone out and call 112. In Bandung City the 112 line is free, open 24 hours and passes the call to the city offices and volunteers that respond to fires, accidents and disasters. Cimahi runs its own 112 call centre. For Bandung Regency we could not confirm that 112 is in service, so also call BPBD Kabupaten Bandung on +62 851 6290 1129, which answers emergencies 24 hours a day.",
+      "id": "Jika bangunan tampak akan runtuh, segera keluarkan semua orang dan hubungi 112. Di Kota Bandung layanan 112 bebas pulsa, aktif 24 jam, dan meneruskan panggilan kepada perangkat daerah serta relawan yang menangani kebakaran, kecelakaan, dan bencana. Kota Cimahi memiliki pusat panggilan 112 sendiri. Untuk Kabupaten Bandung kami belum dapat memastikan bahwa layanan 112 aktif, jadi hubungi juga BPBD Kabupaten Bandung di +62 851 6290 1129, yang melayani keadaan darurat 24 jam setiap hari."
+    },
+    "source": "https://diskominfo.bandung.go.id/berita/12"
+  },
+  "context": {
+    "en": "The Bandung basin is one of the most studied sinking areas in Indonesia. In December 2025 the head of the Geological Agency's groundwater centre said Bandung City and the wider Bandung Raya area are sinking by more than 5 cm a year, and named soft old lake sediments, the weight of buildings and heavy groundwater pumping as causes, with groundwater use the one that can still be controlled. A 2025 paper in the journal Riset Geologi dan Pertambangan (BRIN) reports GPS rates of 1.1 to 16.9 cm a year, and a 2025 modelling study estimates up to 6.9 m of total sinking between 1950 and 2020. In 2019 the Ministry of Energy and Mineral Resources said the old lake deposits from Cicalengka and Rancaekek to Dayeuhkolot are prone to subsidence.",
+    "id": "Cekungan Bandung termasuk kawasan penurunan muka tanah yang paling banyak diteliti di Indonesia. Pada Desember 2025 Kepala Pusat Air Tanah dan Geologi Tata Lingkungan Badan Geologi menyatakan bahwa Kota Bandung dan kawasan Bandung Raya turun lebih dari 5 cm per tahun akibat endapan danau purba yang lunak, beban bangunan, dan pengambilan air tanah yang berlebihan, dan bahwa pemakaian air tanah adalah faktor yang masih dapat dikendalikan. Sebuah makalah tahun 2025 di jurnal Riset Geologi dan Pertambangan (BRIN) mencatat laju 1,1 sampai 16,9 cm per tahun dari pengukuran GPS, dan sebuah studi pemodelan tahun 2025 memperkirakan penurunan total hingga 6,9 m antara 1950 dan 2020. Pada 2019 Kementerian ESDM menyatakan bahwa endapan danau purba dari Cicalengka dan Rancaekek sampai Dayeuhkolot rawan mengalami penurunan muka tanah.",
+    "sources": [
+      "https://www.jawapos.com/berita-daerah/2512220001/badan-geologi-catat-penurunan-muka-tanah-di-jakarta-bandung-semarang-dan-surabaya-5-sentimeter-per-tahun",
+      "https://esdm.go.id/id/media-center/arsip-berita/badan-geologi-daerah-endapan-danau-purba-bandung-rawan-penurunan-muka-tanah",
+      "https://jrisetgeotam.brin.go.id/index.php/jrisgeotam/article/view/1363",
+      "https://www.sciencedirect.com/science/article/pii/S2214581824004786"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Indonesia without a VPN. Neighbourhood groups, including RT and RW groups, normally run on WhatsApp, which a We Are Social report says nine in ten Indonesians use each month, so a WhatsApp group reaches more neighbours and Telegram suits a larger public channel. In September 2026 the Ministry of Communication and Digital Affairs listed Telegram among services with a high risk profile for children, which brings stricter child protection duties, and in November 2025 it warned that platforms ignoring takedown requests could have their access cut, so agree on a second way to reach each other. In any group, share what the data shows and where it comes from, and avoid posting neighbours' personal data or unproven accusations: the Electronic Information and Transactions Law (UU ITE) carries penalties for defamation and false news.",
+      "id": "Telegram dapat diakses di Indonesia tanpa VPN. Grup warga, termasuk grup RT dan RW, umumnya memakai WhatsApp; menurut laporan We Are Social, sembilan dari sepuluh orang Indonesia memakainya setiap bulan. Karena itu grup WhatsApp menjangkau lebih banyak tetangga, sedangkan Telegram cocok untuk kanal publik yang lebih besar. Pada September 2026 Kementerian Komunikasi dan Digital memasukkan Telegram ke dalam daftar layanan dengan profil risiko tinggi bagi anak, yang berarti kewajiban pelindungan anak yang lebih ketat, dan pada November 2025 kementerian itu mengingatkan bahwa platform yang mengabaikan permintaan penurunan konten dapat diputus aksesnya. Sebaiknya sepakati juga cara kedua untuk saling menghubungi. Di grup mana pun, bagikan apa yang ditunjukkan data beserta sumbernya, dan hindari menyebarkan data pribadi tetangga atau tuduhan tanpa bukti, karena UU Informasi dan Transaksi Elektronik (UU ITE) memuat sanksi atas pencemaran nama baik dan berita bohong."
+    },
+    "sources": [
+      "https://wearesocial.com/id/blog/2025/11/digital-2026-top-digital-and-social-media-trends-in-indonesia/",
+      "https://katadata.co.id/digital/teknologi/6aa9345be45f6/daftar-lengkap-plf-kategori-risiko-tinggi-pp-tunas-ada-youtube-dan-telegram",
+      "https://inet.detik.com/law-and-policy/d-8219016/konten-negatif-tak-turun-whatsapp-telegram-discord-bisa-diblokir"
+    ]
+  },
+  "groups": []
+}

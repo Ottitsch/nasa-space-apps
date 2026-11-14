@@ -1,0 +1,187 @@
+{
+  "id": "toluca",
+  "checked": "2026-11-14",
+  "languages": [
+    "es"
+  ],
+  "place_name": {
+    "en": "Toluca",
+    "es": "Toluca"
+  },
+  "country_name": {
+    "en": "Mexico",
+    "es": "México"
+  },
+  "summary": {
+    "en": "In the municipality of Toluca, the municipal civil protection and fire department checks cracked buildings and ground, and the municipal utility Agua y Saneamiento de Toluca runs the water service. Neighbouring municipalities such as Metepec, San Mateo Atenco and Lerma have their own offices, with the State of Mexico civil protection coordination above them all. The national water commission CONAGUA decides who may pump from the Toluca Valley aquifer, where there is no volume left for new permits.",
+    "es": "En el municipio de Toluca, la Coordinación de Protección Civil y Bomberos revisa inmuebles y suelo con grietas, y el organismo municipal Agua y Saneamiento de Toluca presta el servicio de agua. Los municipios vecinos, como Metepec, San Mateo Atenco y Lerma, tienen sus propias oficinas, y por encima de todos está la Coordinación General de Protección Civil del Estado de México. La Comisión Nacional del Agua (CONAGUA) decide quién puede extraer agua del acuífero del Valle de Toluca, donde ya no hay volumen disponible para nuevas concesiones."
+  },
+  "bodies": [
+    {
+      "id": "pc-toluca",
+      "name": "Coordinación de Protección Civil y Bomberos de Toluca",
+      "name_en": "Toluca Civil Protection and Fire Department",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in the municipality of Toluca. It prepares the municipal Atlas of Risks, which covers subsidence and ground cracking, and it is the office that the atlas tells residents to inform when a building shows damage.",
+        "es": "Para domicilios en el municipio de Toluca. Elabora el Atlas de Riesgos municipal, que incluye hundimientos y agrietamientos del terreno, y es la oficina a la que el propio atlas pide avisar cuando una edificación presenta daños."
+      },
+      "website": "https://www2.toluca.gob.mx/",
+      "contact_url": "https://www2.toluca.gob.mx/",
+      "email": null,
+      "phone": "722 212 0909",
+      "postal": "Estación Central de Bomberos, Paseo Fidel Velázquez esquina Calle 28 de Octubre, Colonia Vértice, Toluca, Estado de México",
+      "source": "https://www2.toluca.gob.mx/wp-content/uploads/2026/02/ATLAS-DE-RIESGO-DE-TOLUCA-2025-2027-1.pdf"
+    },
+    {
+      "id": "pc-edomex",
+      "name": "Coordinación General de Protección Civil y Gestión Integral del Riesgo del Estado de México",
+      "name_en": "State of Mexico General Coordination of Civil Protection and Integrated Risk Management",
+      "level": "state",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For any municipality in the valley, including Metepec, San Mateo Atenco, Lerma and Zinacantepec. It coordinates civil protection across the state, compiles the state Atlas of Risks and works with the civil protection office of each municipality, which is normally the one that visits. Write to it when the municipality does not answer, or to ask which municipal office is yours.",
+        "es": "Para cualquier municipio del valle, incluidos Metepec, San Mateo Atenco, Lerma y Zinacantepec. Coordina la protección civil en todo el estado, integra el Atlas de Riesgos estatal y trabaja con la protección civil de cada municipio, que normalmente es la que acude a revisar. Conviene escribirle cuando el municipio no responde o para saber qué oficina municipal corresponde."
+      },
+      "website": "https://cgproteccioncivil.edomex.gob.mx/",
+      "contact_url": "https://cgproteccioncivil.edomex.gob.mx/contactanos",
+      "email": "pcivil.usei@edomex.gob.mx",
+      "phone": "722 215 0115",
+      "postal": "Vialidad Adolfo López Mateos s/n, Colonia Las Culturas, C.P. 51350, Zinacantepec, Estado de México",
+      "source": "https://cgproteccioncivil.edomex.gob.mx/contactanos"
+    },
+    {
+      "id": "conagua",
+      "name": "Comisión Nacional del Agua (CONAGUA), Dirección Local Estado de México",
+      "name_en": "National Water Commission (CONAGUA), State of Mexico Local Office",
+      "level": "national",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "CONAGUA is the federal authority that grants and supervises the permits to pump groundwater, and its own balance for the Toluca Valley aquifer shows more water taken out than flows back in. Its office for the State of Mexico is in Metepec, next to Toluca.",
+        "es": "La CONAGUA es la autoridad federal que otorga y vigila las concesiones para extraer agua subterránea, y su propio balance del acuífero del Valle de Toluca muestra que se extrae más agua de la que se recarga. Su oficina para el Estado de México está en Metepec, junto a Toluca."
+      },
+      "website": "https://www.gob.mx/conagua",
+      "contact_url": "https://www.gob.mx/conagua",
+      "email": null,
+      "phone": "722 197 9130",
+      "postal": "Av. Estado de México No. 2301 Ote., Colonia Llano Grande, C.P. 52148, Metepec, Estado de México",
+      "source": "https://files.conagua.gob.mx/datospersonales/documentos/3_ProcedimientoQuejas_DP_2024.pdf"
+    },
+    {
+      "id": "ayst",
+      "name": "Organismo Agua y Saneamiento de Toluca",
+      "name_en": "Toluca Water and Sanitation Utility",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses in the municipality of Toluca only. This municipal utility runs the city's water service, so it is the body to ask which wells supply your neighbourhood and how much they pump.",
+        "es": "Solo para domicilios en el municipio de Toluca. Este organismo municipal presta el servicio de agua de la ciudad, por lo que se le puede preguntar qué pozos abastecen a la colonia y cuánta agua extraen."
+      },
+      "website": "https://www.ayst.gob.mx/",
+      "contact_url": "https://www.ayst.gob.mx/form-reporte-ciudadano/",
+      "email": null,
+      "phone": "722 275 5700",
+      "postal": "Av. Primero de Mayo No. 1707 Ote., Colonia Zona Industrial, C.P. 50071, Toluca de Lerdo, Estado de México",
+      "source": "https://www.ayst.gob.mx/portal2/"
+    },
+    {
+      "id": "caem",
+      "name": "Comisión del Agua del Estado de México (CAEM)",
+      "name_en": "State of Mexico Water Commission (CAEM)",
+      "level": "state",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For any municipality in the valley. This state commission, part of the state Water Secretariat, supplies bulk water to the municipalities and their water utilities. Ask it where the water for your municipality comes from and how much of it is pumped from the ground.",
+        "es": "Para cualquier municipio del valle. Esta comisión estatal, que depende de la Secretaría del Agua, suministra agua en bloque a los municipios y a sus organismos operadores. Se le puede preguntar de dónde viene el agua del municipio y cuánta se extrae del subsuelo."
+      },
+      "website": "https://caem.edomex.gob.mx/",
+      "contact_url": "https://caem.edomex.gob.mx/contactanos",
+      "email": "caem@edomex.gob.mx",
+      "phone": "55 2629 8003",
+      "postal": "Félix Guzmán No. 7, Colonia El Parque, C.P. 53398, Naucalpan, Estado de México",
+      "source": "https://caem.edomex.gob.mx/contactanos"
+    },
+    {
+      "id": "saimex",
+      "name": "Sistema de Acceso a la Información Mexiquense (SAIMEX)",
+      "name_en": "State of Mexico Access to Information System (SAIMEX)",
+      "level": "state",
+      "handles": [
+        "information"
+      ],
+      "role": {
+        "en": "Official portal for formal information requests to any State of Mexico body or municipality. Use it to reach the town hall or the water utility of Metepec, San Mateo Atenco, Lerma or any other municipality that is not listed here. It stays in use while the state changes its transparency authority.",
+        "es": "Portal oficial para presentar solicitudes formales de información a cualquier dependencia estatal o municipio del Estado de México. Sirve para dirigirse al ayuntamiento o al organismo de agua de Metepec, San Mateo Atenco, Lerma o cualquier otro municipio que no aparezca en esta lista. Sigue en uso mientras el estado cambia de autoridad de transparencia."
+      },
+      "website": "https://www.saimex.org.mx/",
+      "contact_url": "https://www.saimex.org.mx/saimex/ciudadano/login.page",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.infoem.org.mx/doc/oct021d.pdf"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley General de Transparencia y Acceso a la Información Pública",
+    "name_en": "Article 8 of the Constitution (right of petition) and the General Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
+    "what": {
+      "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: the General Law gives every authority in the country at most 20 working days, which can be extended by up to 10 more. The State of Mexico issued a new transparency law on 1 October 2026 that closes the state institute Infoem and hands its role to a new body, Transparencia Mexiquense; requests are still received and answered during the change, but appeals may be slow until the new body is working.",
+      "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: la Ley General da a toda autoridad del país como máximo 20 días hábiles, ampliables hasta por 10 más. El Estado de México expidió el 1 de octubre de 2026 una nueva ley de transparencia que extingue el Infoem y pasa sus funciones a un nuevo órgano, Transparencia Mexiquense; durante el cambio las solicitudes se siguen recibiendo y contestando, pero los recursos pueden tardar hasta que el nuevo órgano funcione."
+    },
+    "how": {
+      "en": "Send or hand in the letter and keep the stamped copy or acknowledgement of receipt (acuse). To make the questions a formal information request to a state or municipal body, file them free of charge on SAIMEX, choosing the body you are writing to, or send them to that body's Unidad de Transparencia by email, by post or in person. For CONAGUA, which is federal, use the Plataforma Nacional de Transparencia (plataformadetransparencia.org.mx).",
+      "es": "Hay que enviar o entregar el escrito y conservar el acuse de recibo. Para que las preguntas cuenten como solicitud formal de información a una dependencia estatal o municipal, se presentan sin costo en el SAIMEX, eligiendo la dependencia a la que se escribe, o ante la Unidad de Transparencia de esa dependencia por correo electrónico, por correo postal o en persona. Para la CONAGUA, que es federal, se usa la Plataforma Nacional de Transparencia (plataformadetransparencia.org.mx)."
+    },
+    "url": "https://www.saimex.org.mx/",
+    "deadline_days": 20,
+    "deadline_text": {
+      "en": "20 working days",
+      "es": "20 días hábiles"
+    },
+    "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTAIP.pdf"
+  },
+  "urgent": {
+    "phone": "911",
+    "what": {
+      "en": "Leave the building and call 911, which works in every municipality of the valley. In Toluca the calls are answered by the C5 centre, which sends municipal civil protection, firefighters and police. Toluca's civil protection and fire department also has its own emergency line, 722 217 8323.",
+      "es": "Hay que salir del inmueble y llamar al 911, que funciona en todos los municipios del valle. En Toluca las llamadas las atiende el C5, que envía a protección civil municipal, bomberos y policía. La Coordinación de Protección Civil y Bomberos de Toluca tiene además su propia línea de emergencias, 722 217 8323."
+    },
+    "source": "https://www2.toluca.gob.mx/wp-content/uploads/2026/02/ATLAS-DE-RIESGO-DE-TOLUCA-2025-2027-1.pdf"
+  },
+  "context": {
+    "en": "CONAGUA classes the Toluca Valley aquifer as overexploited: its 2024 balance puts extraction at about 412 million m³ a year against a recharge of about 337 million, leaves no volume for new permits, and says the overpumping has caused regional sinking as the clay layers compact. The national statistics institute INEGI measured the sinking with satellite radar for 2015 to 2018 and found up to 7.1 cm a year over an area of 281 km², strongest east of the city of Toluca in Santa María Totoltepec, San Mateo Otzacatipan, parts of Metepec, Lerma and San Mateo Atenco. Toluca's municipal Atlas of Risks, published in January 2026, has a section on subsidence and ground cracking and asks residents to tell civil protection when a building shows damage.",
+    "es": "La CONAGUA clasifica el acuífero del Valle de Toluca como sobreexplotado: su balance de 2024 estima una extracción de unos 412 millones de m³ al año frente a una recarga de unos 337 millones, no deja volumen para nuevas concesiones y reconoce que la sobreexplotación ha provocado un hundimiento regional por la compactación de las arcillas. El INEGI midió el hundimiento con radar satelital para 2015 a 2018 y encontró hasta 7.1 cm por año en una superficie de 281 km², con los valores más altos al oriente de la ciudad de Toluca, en Santa María Totoltepec, San Mateo Otzacatipan, partes de Metepec, Lerma y San Mateo Atenco. El Atlas de Riesgos municipal de Toluca, publicado en enero de 2026, incluye un apartado sobre hundimientos y agrietamientos y pide avisar a Protección Civil cuando una edificación presenta daños.",
+    "sources": [
+      "https://sigagis.conagua.gob.mx/gas1/Edos_Acuiferos_18/edomex/DR_1501.pdf",
+      "https://www.inegi.org.mx/contenidos/productos/prod_serv/contenidos/espanol/bvinegi/productos/nueva_estruc/889463904441.pdf",
+      "https://www2.toluca.gob.mx/wp-content/uploads/2026/02/ATLAS-DE-RIESGO-DE-TOLUCA-2025-2027-1.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Mexico without restrictions, but few neighbours have it: in a 2026 survey of internet users, 91% had a WhatsApp account and 30% had Telegram, so street and neighbourhood groups nearly always run on WhatsApp. In a WhatsApp group every member can see the phone numbers of all the others, so keep the group to people you can place and do not post ID documents or property deeds there. Be wary of anyone in a chat who offers to arrange an inspection or a permit for money: ask the authority itself for the visit and ask any inspector for official identification.",
+      "es": "Telegram funciona en México sin restricciones, pero pocos vecinos lo tienen: en una encuesta de 2026 entre usuarios de internet, 91% tenía cuenta de WhatsApp y 30% de Telegram, así que los grupos de calle o de colonia casi siempre están en WhatsApp. En un grupo de WhatsApp todos los integrantes ven el número de teléfono de los demás, por lo que conviene limitarlo a personas conocidas y no publicar ahí identificaciones ni escrituras. Hay que desconfiar de quien ofrezca en un chat gestionar una inspección o un permiso a cambio de dinero: la visita se pide directamente a la autoridad y a cualquier inspector se le puede pedir su identificación oficial."
+    },
+    "sources": [
+      "https://irp.cdn-website.com/81280eda/files/uploaded/Estudio-Habitos-de-los-Usuarios-de-Internet-2026-Version-publica.pdf",
+      "https://freedomhouse.org/country/mexico/freedom-net/2025"
+    ]
+  },
+  "groups": []
+}

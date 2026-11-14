@@ -1,0 +1,161 @@
+{
+  "id": "delhi",
+  "checked": "2026-11-14",
+  "languages": ["en", "hi"],
+  "place_name": { "en": "Delhi NCR", "hi": "दिल्ली एनसीआर" },
+  "country_name": { "en": "India", "hi": "भारत" },
+  "summary": {
+    "en": "The two sinking zones fall under different governments. Kapashera and Bijwasan are in Delhi: the Municipal Corporation of Delhi (Najafgarh Zone) deals with unsafe buildings, the District Magistrate of South West Delhi leads disaster management, and permission to pump groundwater goes through the Delhi Jal Board and a district advisory committee chaired by the same District Magistrate. The eastern zone is centred on Khora (Khoda) Colony, just across the Delhi border in Ghaziabad district, Uttar Pradesh: there the municipal body is the Nagar Palika Parishad Khoda Makanpur, the District Magistrate of Ghaziabad heads the district administration, and groundwater is regulated under the state's 2019 groundwater law. If you live on the Noida side of that zone (Sector 62 and around), your authority is the Noida Authority in Gautam Buddha Nagar district; if you live across the border in Gurugram, Haryana, other authorities apply and this page does not cover them.",
+    "hi": "ज़मीन धंसने वाले दोनों इलाके अलग अलग सरकारों के अधीन हैं। कापसहेड़ा और बिजवासन दिल्ली में हैं: यहाँ असुरक्षित इमारतों का मामला दिल्ली नगर निगम (नजफगढ़ ज़ोन) देखता है, आपदा प्रबंधन की अगुवाई दक्षिण पश्चिम दिल्ली के जिला मजिस्ट्रेट करते हैं, और भूजल निकालने की अनुमति दिल्ली जल बोर्ड तथा उसी जिला मजिस्ट्रेट की अध्यक्षता वाली जिला सलाहकार समिति के माध्यम से मिलती है। पूर्वी इलाके का केंद्र खोड़ा कॉलोनी है, जो दिल्ली की सीमा के ठीक पार उत्तर प्रदेश के गाज़ियाबाद जिले में है: वहाँ नगर निकाय नगर पालिका परिषद खोड़ा मकनपुर है, जिला प्रशासन के प्रमुख गाज़ियाबाद के जिलाधिकारी हैं, और भूजल का नियमन राज्य के 2019 के भूगर्भ जल कानून के तहत होता है। यदि आप उस इलाके के नोएडा वाले हिस्से (सेक्टर 62 और आसपास) में रहते हैं, तो आपका प्राधिकरण गौतम बुद्ध नगर जिले का नोएडा प्राधिकरण है; यदि आप सीमा पार हरियाणा के गुरुग्राम में रहते हैं, तो वहाँ दूसरे प्राधिकरण लागू होते हैं और यह पृष्ठ उन्हें शामिल नहीं करता।"
+  },
+  "bodies": [
+    {
+      "id": "mcd-najafgarh",
+      "name": "दिल्ली नगर निगम, नजफगढ़ ज़ोन",
+      "name_en": "Municipal Corporation of Delhi (MCD), Najafgarh Zone",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "For Kapashera, Bijwasan and Samalkha, which the Municipal Corporation lists under its Najafgarh Zone. Its Building Department deals with unsafe and dangerous buildings, so this is the office to ask for an inspection of a cracked building or lane. Complaints can be logged with the 155305 call centre or the MCD 311 app. The address shown is the headquarters, and the linked zone directory shows which zone each locality belongs to.",
+        "hi": "कापसहेड़ा, बिजवासन और समालखा के लिए, जिन्हें दिल्ली नगर निगम ने अपने नजफगढ़ ज़ोन में दर्ज किया है। निगम का भवन विभाग असुरक्षित और खतरनाक इमारतों के मामले देखता है, इसलिए दरार वाली इमारत या गली के निरीक्षण का अनुरोध इसी कार्यालय से करें। शिकायत 155305 कॉल सेंटर या MCD 311 ऐप पर दर्ज कराई जा सकती है। यहाँ दिया गया पता मुख्यालय का है, और दी गई ज़ोन सूची से पता चलता है कि कौन सा इलाका किस ज़ोन में आता है।"
+      },
+      "website": "https://mcdonline.nic.in/portal",
+      "contact_url": "https://mcdonline.nic.in/portal/zones",
+      "email": null,
+      "phone": "155305",
+      "postal": "Dr. S.P.M. Civic Centre, Minto Road, New Delhi 110002",
+      "source": "https://mcdonline.nic.in/portal/contactUs"
+    },
+    {
+      "id": "djb",
+      "name": "दिल्ली जल बोर्ड",
+      "name_en": "Delhi Jal Board (DJB)",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "For Kapashera and Bijwasan. Delhi's water utility operates its own tube wells and receives the applications for permission to extract groundwater, and its helpline 1916 also takes complaints about illegal boring. Ask it how much groundwater is pumped in your area, what it measures and what it plans to reduce the pumping.",
+        "hi": "कापसहेड़ा और बिजवासन के लिए। दिल्ली की जल आपूर्ति संस्था अपने नलकूप चलाती है और भूजल निकालने की अनुमति के आवेदन लेती है; इसकी हेल्पलाइन 1916 पर अवैध बोरिंग की शिकायत भी दर्ज होती है। इससे पूछें कि आपके इलाके में कितना भूजल निकाला जा रहा है, वह क्या मापती है और निकासी घटाने की उसकी क्या योजना है।"
+      },
+      "website": "https://delhijalboard.delhi.gov.in/",
+      "contact_url": "https://delhijalboard.delhi.gov.in/jalboard/contact-us",
+      "email": "grievances-djb@delhi.gov.in",
+      "phone": "1916",
+      "postal": "Delhi Jal Board, Varunalaya Phase II, Jhandewalan, Karol Bagh, New Delhi 110005",
+      "source": "https://delhijalboard.delhi.gov.in/jalboard/contact-us"
+    },
+    {
+      "id": "dm-south-west-delhi",
+      "name": "जिला मजिस्ट्रेट, दक्षिण पश्चिम दिल्ली",
+      "name_en": "District Magistrate and District Disaster Management Authority, South West Delhi",
+      "level": "district",
+      "handles": ["inspection", "groundwater"],
+      "role": {
+        "en": "For Kapashera and Bijwasan, which are in the Bijwasan sub division of this district; the office itself is in Kapashera. The District Magistrate chairs the District Disaster Management Authority, and also chairs the advisory committee that examines every application to extract groundwater before permission is given. Write here when cracks affect several buildings, or to ask what the committee has decided for your area.",
+        "hi": "कापसहेड़ा और बिजवासन के लिए, जो इस जिले के बिजवासन उपमंडल में आते हैं; कार्यालय स्वयं कापसहेड़ा में है। जिला मजिस्ट्रेट जिला आपदा प्रबंधन प्राधिकरण के अध्यक्ष हैं, और उस सलाहकार समिति के भी अध्यक्ष हैं जो भूजल निकालने के हर आवेदन की जाँच अनुमति दिए जाने से पहले करती है। जब दरारें कई इमारतों में दिखें, या यह जानना हो कि समिति ने आपके इलाके के बारे में क्या तय किया है, तो यहाँ लिखें।"
+      },
+      "website": "https://dmsouthwest.delhi.gov.in/",
+      "contact_url": "https://dmsouthwest.delhi.gov.in/contact-us/",
+      "email": "dcsw@nic.in",
+      "phone": "+91 11 25069484",
+      "postal": "DC Office South West, Old Tax Terminal Building, Kapashera, Delhi 110037",
+      "source": "https://dmsouthwest.delhi.gov.in/contact-us/"
+    },
+    {
+      "id": "cgwb",
+      "name": "केंद्रीय भूमि जल बोर्ड",
+      "name_en": "Central Ground Water Board (CGWB), Ministry of Jal Shakti",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "For both zones. The national agency that monitors groundwater levels across India; a representative of its New Delhi office sits on Delhi's groundwater advisory committees. Ask it for the groundwater level records for your area and whether it has assessed land subsidence there. Its website did not open when we checked, so no contact details are given here: send the request through the central government's RTI portal, linked here as the contact page.",
+        "hi": "दोनों इलाकों के लिए। यह देश भर में भूजल स्तर की निगरानी करने वाली राष्ट्रीय संस्था है; इसके नई दिल्ली कार्यालय का एक प्रतिनिधि दिल्ली की भूजल सलाहकार समितियों में बैठता है। इससे अपने इलाके के भूजल स्तर के आँकड़े माँगें और पूछें कि क्या उसने वहाँ भू धंसाव का आकलन किया है। जाँच के समय इसकी वेबसाइट नहीं खुली, इसलिए यहाँ संपर्क विवरण नहीं दिए गए हैं: अनुरोध केंद्र सरकार के आरटीआई पोर्टल से भेजें, जिसका लिंक यहाँ संपर्क पृष्ठ के रूप में दिया गया है।"
+      },
+      "website": "https://cgwb.gov.in/",
+      "contact_url": "https://rtionline.gov.in/",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://delhijalboard.delhi.gov.in/sites/default/files/Jalboard/universal-tab/sop.pdf"
+    },
+    {
+      "id": "dm-ghaziabad",
+      "name": "जिलाधिकारी, गाज़ियाबाद",
+      "name_en": "District Magistrate, Ghaziabad, Uttar Pradesh",
+      "level": "district",
+      "handles": ["inspection", "groundwater"],
+      "role": {
+        "en": "For Khora (Khoda) Colony and the rest of the eastern zone that lies in Ghaziabad district, Uttar Pradesh. The District Magistrate heads the district administration, which runs the district control room for emergencies. This is also the senior office to ask about the Uttar Pradesh Ground Water (Management and Regulation) Act 2019, under which the state Ground Water Department registers wells and issues no objection certificates (upgwdonline.in).",
+        "hi": "खोड़ा कॉलोनी और पूर्वी इलाके के उस हिस्से के लिए जो उत्तर प्रदेश के गाज़ियाबाद जिले में आता है। जिलाधिकारी जिला प्रशासन के प्रमुख हैं, और जिला प्रशासन ही आपात स्थिति के लिए जिला नियंत्रण कक्ष चलाता है। उत्तर प्रदेश भूगर्भ जल (प्रबंधन और विनियमन) अधिनियम 2019 के बारे में भी इसी वरिष्ठ कार्यालय से पूछें; इस कानून के तहत राज्य का भूगर्भ जल विभाग कुओं और नलकूपों का पंजीकरण करता है और अनापत्ति प्रमाण पत्र जारी करता है (upgwdonline.in)।"
+      },
+      "website": "https://ghaziabad.nic.in/",
+      "contact_url": "https://ghaziabad.nic.in/en/about-district/whos-who/",
+      "email": "dmgha@nic.in",
+      "phone": "+91 120 2824416",
+      "postal": "District Magistrate Office, Collectorate, Rajnagar, Ghaziabad 201001, Uttar Pradesh",
+      "source": "https://ghaziabad.nic.in/en/contact-us/"
+    },
+    {
+      "id": "khoda-makanpur-npp",
+      "name": "नगर पालिका परिषद, खोड़ा मकनपुर",
+      "name_en": "Khoda Makanpur Municipal Council, Ghaziabad district (with the district directory of municipal bodies)",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The municipal council for Khora (Khoda) Colony, and the local office to ask for an inspection of a cracked building, lane or drain there. The website link is the Ghaziabad district directory of municipal bodies, which also lists Ghaziabad Nagar Nigam and the other councils. The directory gives no office phone or email for this council; the district's list of key officers, also linked, shows the current number of its Executive Officer. Hand in or post your letter and keep a stamped copy.",
+        "hi": "खोड़ा कॉलोनी की नगर पालिका परिषद, और वहाँ दरार वाली इमारत, गली या नाली के निरीक्षण के लिए स्थानीय कार्यालय। वेबसाइट वाला लिंक गाज़ियाबाद जिले की नगर निकायों की सूची का है, जिसमें गाज़ियाबाद नगर निगम और अन्य परिषदें भी दर्ज हैं। सूची में इस परिषद के कार्यालय का फ़ोन या ईमेल नहीं है; जिले के प्रमुख अधिकारियों की सूची, जिसका लिंक भी दिया गया है, में इसके अधिशासी अधिकारी का मौजूदा नंबर मिलता है। अपना पत्र कार्यालय में जमा करें या डाक से भेजें, और मुहर लगी प्रति अपने पास रखें।"
+      },
+      "website": "https://ghaziabad.nic.in/en/public-utility-category/municipality/",
+      "contact_url": "https://ghaziabad.nic.in/en/list-of-key-officers-of-district-ghaziabad/",
+      "email": null,
+      "phone": null,
+      "postal": "Nagar Palika Parishad Khoda Makanpur, H.No 355, Gali Number 7, Prashant Garden, Block A, Khora Colony, Ghaziabad, Uttar Pradesh 201309",
+      "source": "https://ghaziabad.nic.in/en/public-utility-category/municipality/page/2/"
+    }
+  ],
+  "right_to_answer": {
+    "name": "सूचना का अधिकार अधिनियम, 2005",
+    "name_en": "Right to Information Act, 2005",
+    "what": {
+      "en": "Every government office and public authority in India, whether it belongs to the central government, Delhi or Uttar Pradesh, must answer a written request for information within 30 days of receiving it, and within 48 hours when the information concerns a person's life or liberty. If no reply comes in that time, or the reply is unsatisfactory, you can file a first appeal within 30 days with a senior officer of the same authority, and after that go to the Information Commission.",
+      "hi": "भारत का हर सरकारी कार्यालय और लोक प्राधिकरण, चाहे वह केंद्र सरकार का हो, दिल्ली का हो या उत्तर प्रदेश का, सूचना के लिखित अनुरोध का उत्तर अनुरोध मिलने के 30 दिन के भीतर देने के लिए बाध्य है, और यदि सूचना किसी व्यक्ति के जीवन या स्वतंत्रता से जुड़ी हो तो 48 घंटे के भीतर। यदि इस अवधि में उत्तर न मिले या उत्तर संतोषजनक न हो, तो आप 30 दिन के भीतर उसी प्राधिकरण के वरिष्ठ अधिकारी के पास प्रथम अपील कर सकते हैं, और उसके बाद सूचना आयोग जा सकते हैं।"
+    },
+    "how": {
+      "en": "Address the request to the Public Information Officer of the office you are asking, pay the application fee of 10 rupees, and keep the registration number. File online on the portal of the government that runs the office: the Delhi portal (rtionline.delhi.gov.in) for the Municipal Corporation of Delhi, the Delhi Jal Board and the district offices; the Uttar Pradesh portal (rtionline.up.gov.in) for Uttar Pradesh government offices such as those in Ghaziabad and Noida; and the central portal (rtionline.gov.in) for the Central Ground Water Board. The central portal returns requests meant for state bodies, so choose with care. You can also send the request on paper by post or hand it in at the office.",
+      "hi": "जिस कार्यालय से सूचना चाहिए उसके लोक सूचना अधिकारी (जन सूचना अधिकारी) के नाम आवेदन करें, 10 रुपये का आवेदन शुल्क दें, और पंजीकरण संख्या संभाल कर रखें। आवेदन उसी सरकार के पोर्टल पर ऑनलाइन करें जिसके अधीन वह कार्यालय है: दिल्ली नगर निगम, दिल्ली जल बोर्ड और जिला कार्यालयों के लिए दिल्ली का पोर्टल (rtionline.delhi.gov.in); गाज़ियाबाद और नोएडा जैसे उत्तर प्रदेश सरकार के कार्यालयों के लिए उत्तर प्रदेश का पोर्टल (rtionline.up.gov.in); और केंद्रीय भूमि जल बोर्ड के लिए केंद्र का पोर्टल (rtionline.gov.in)। केंद्र का पोर्टल राज्य सरकारों के कार्यालयों के लिए भेजे गए आवेदन लौटा देता है, इसलिए पोर्टल ध्यान से चुनें। आप आवेदन काग़ज़ पर डाक से भी भेज सकते हैं या कार्यालय में जमा कर सकते हैं।"
+    },
+    "url": "https://rtionline.delhi.gov.in/",
+    "deadline_days": 30,
+    "deadline_text": { "en": "30 days", "hi": "30 दिन" },
+    "source": "https://cic.gov.in/sites/default/files/RTI_English.pdf"
+  },
+  "urgent": {
+    "phone": "112",
+    "what": {
+      "en": "Get everyone out first, then call 112, the emergency number answered round the clock in both Delhi and Uttar Pradesh, and say that a building is about to collapse. You can also call the fire and rescue service on 101, and in Delhi the district disaster helpline on 1077. Do not go back inside until an engineer has checked the building.",
+      "hi": "पहले सभी को इमारत से बाहर निकालें, फिर 112 पर कॉल करें, जो दिल्ली और उत्तर प्रदेश दोनों में चौबीसों घंटे चलने वाला आपातकालीन नंबर है, और बताएँ कि इमारत गिरने वाली है। आप दमकल और बचाव सेवा को 101 पर, और दिल्ली में जिला आपदा हेल्पलाइन को 1077 पर भी कॉल कर सकते हैं। जब तक कोई इंजीनियर इमारत की जाँच न कर ले, अंदर वापस न जाएँ।"
+    },
+    "source": "https://delhipolice.gov.in/"
+  },
+  "context": {
+    "en": "A study of satellite radar data from 2014 to 2020, published in Scientific Reports in 2022, found the ground around Kapashera sinking by more than 11 centimetres a year, named Bijwasan among the areas at risk, and linked the sinking to over extraction of groundwater from the alluvial deposits; in Dwarka, where pumping was regulated and rainwater harvested, the ground had started to rise. A 2025 study in Nature Sustainability again named Bijwasan, Faridabad and Ghaziabad as sinking hotspots of the Delhi region, with rates of up to about 51 millimetres a year. Under a Delhi government notification of 2010, groundwater may be extracted only with official permission, and applications are examined by district advisory committees. We could not open the Central Ground Water Board's website to check for official subsidence figures, and we found no official programme that monitors the sinking in these two zones.",
+    "hi": "2014 से 2020 के सैटेलाइट रडार आँकड़ों पर आधारित एक अध्ययन, जो 2022 में साइंटिफिक रिपोर्ट्स पत्रिका में छपा, के अनुसार कापसहेड़ा के आसपास ज़मीन हर साल 11 सेंटीमीटर से अधिक धंस रही थी। अध्ययन ने बिजवासन को भी जोखिम वाले इलाकों में गिना और धंसाव का कारण जलोढ़ परतों से भूजल का अत्यधिक दोहन बताया; द्वारका में, जहाँ भूजल निकासी पर नियंत्रण और वर्षा जल संचयन हुआ, ज़मीन फिर से उठने लगी थी। 2025 में नेचर सस्टेनेबिलिटी पत्रिका में छपे एक अध्ययन ने भी बिजवासन, फ़रीदाबाद और गाज़ियाबाद को दिल्ली क्षेत्र के धंसाव वाले प्रमुख इलाकों में गिना, जहाँ दर लगभग 51 मिलीमीटर प्रति वर्ष तक है। दिल्ली सरकार की 2010 की एक अधिसूचना के तहत भूजल केवल सरकारी अनुमति से निकाला जा सकता है, और आवेदनों की जाँच जिला सलाहकार समितियाँ करती हैं। हम केंद्रीय भूमि जल बोर्ड की वेबसाइट नहीं खोल सके, इसलिए धंसाव के सरकारी आँकड़ों की जाँच नहीं हो पाई; इन दोनों इलाकों में धंसाव की निगरानी का कोई सरकारी कार्यक्रम हमें नहीं मिला।",
+    "sources": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC8758763/",
+      "https://www.nature.com/articles/s41893-025-01663-0",
+      "https://newsreel.asia/articles/ground-water-subsidence-india-cities-study",
+      "https://delhijalboard.delhi.gov.in/sites/default/files/Jalboard/universal-tab/sop.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in India today, but that is not guaranteed: measurements by the OONI project show it failing on almost every Indian network from 16 to 22 June 2026 and working normally since. Residents' welfare associations and lane or tower groups nearly always use WhatsApp, so expect to need a WhatsApp group as well. In a WhatsApp group every member can see the phone numbers of all the others, so add only people you can place and keep identity documents and property papers out of the chat. Share the measured figures together with their source, and do not forward unverified warnings that a particular building is about to collapse.",
+      "hi": "टेलीग्राम आज भारत में चलता है, पर इसकी गारंटी नहीं है: OONI परियोजना के मापन के अनुसार 16 से 22 जून 2026 तक यह भारत के लगभग हर नेटवर्क पर बंद रहा और उसके बाद से सामान्य रूप से चल रहा है। रेज़िडेंट वेलफ़ेयर एसोसिएशन (RWA) और गली या टावर के समूह लगभग हमेशा व्हाट्सऐप पर चलते हैं, इसलिए व्हाट्सऐप समूह की भी ज़रूरत पड़ेगी। व्हाट्सऐप समूह में हर सदस्य बाकी सभी के फ़ोन नंबर देख सकता है, इसलिए केवल उन्हीं लोगों को जोड़ें जिन्हें आप जानते हैं, और पहचान पत्र या संपत्ति के काग़ज़ात चैट में न डालें। मापे गए आँकड़े उनके स्रोत के साथ साझा करें, और किसी ख़ास इमारत के गिरने की अपुष्ट चेतावनियाँ आगे न भेजें।"
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=IN&since=2026-06-08&until=2026-07-01&time_grain=day&axis_x=measurement_start_day&test_name=telegram",
+      "https://explorer.ooni.org/chart/mat?probe_cc=IN&since=2026-08-01&until=2026-11-14&time_grain=month&axis_x=measurement_start_day&test_name=telegram"
+    ]
+  },
+  "groups": []
+}

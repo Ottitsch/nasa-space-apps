@@ -1,0 +1,164 @@
+{
+  "id": "quetta",
+  "checked": "2026-11-14",
+  "languages": ["ur", "en"],
+  "place_name": { "en": "Quetta", "ur": "کوئٹہ" },
+  "country_name": { "en": "Pakistan", "ur": "پاکستان" },
+  "summary": {
+    "en": "Inside the city, the Metropolitan Corporation Quetta approves building plans and enforces the building rules, and the Provincial Disaster Management Authority (PDMA) coordinates the response when ground or buildings become unsafe; outside the municipal limits the office to approach is the district administration under the Deputy Commissioner. The city depends almost entirely on groundwater, pumped by the tube wells of the Quetta Water and Sanitation Authority (WASA) and of private owners. Permits to pump are decided by the District Water Committee, which answers to the Provincial Water Board served by the Irrigation Department. We found no agency that publishes regular measurements of the sinking, so the body to ask is the Geological Survey of Pakistan, whose head office is in Quetta.",
+    "ur": "شہر کے اندر عمارتوں کے نقشوں کی منظوری اور تعمیراتی قواعد پر عمل درآمد میٹروپولیٹن کارپوریشن کوئٹہ کی ذمہ داری ہے، اور جب زمین یا عمارتیں غیر محفوظ ہو جائیں تو صوبائی ڈیزاسٹر مینجمنٹ اتھارٹی (پی ڈی ایم اے) امدادی کارروائی کو مربوط کرتی ہے؛ بلدیاتی حدود سے باہر کے علاقوں کے لیے ڈپٹی کمشنر کے ماتحت ضلعی انتظامیہ سے رجوع کیا جائے۔ شہر کا تقریباً سارا پانی زیر زمین سے آتا ہے، جسے کوئٹہ واٹر اینڈ سینی ٹیشن اتھارٹی (واسا) اور نجی مالکان کے ٹیوب ویل نکالتے ہیں۔ پانی نکالنے کے اجازت ناموں کا فیصلہ ضلعی واٹر کمیٹی کرتی ہے، جو صوبائی واٹر بورڈ کے ماتحت ہے اور اس بورڈ کا انتظامی کام محکمہ آبپاشی سنبھالتا ہے۔ ہمیں کوئی ایسا سرکاری ادارہ نہیں ملا جو زمین دھنسنے کی باقاعدہ پیمائش شائع کرتا ہو، اس لیے اس بارے میں جیولوجیکل سروے آف پاکستان سے پوچھا جائے، جس کا صدر دفتر کوئٹہ میں ہے۔"
+  },
+  "bodies": [
+    {
+      "id": "mcq",
+      "name": "میٹروپولیٹن کارپوریشن کوئٹہ (بلڈنگ برانچ)",
+      "name_en": "Metropolitan Corporation Quetta (MCQ), Building Branch",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "For addresses inside the city limits. Its Building Branch issues building permissions, approves construction plans and checks compliance with the building rules, so it is the first office to ask for an inspection of a cracked building or street. It has an online complaint portal and a toll free complaint helpline, 0800 09999. Inside the housing schemes of the Quetta Development Authority, building control lies with that authority (qda.gob.pk).",
+        "ur": "شہری حدود کے اندر کے پتوں کے لیے۔ اس کی بلڈنگ برانچ عمارت کی تعمیر کے اجازت نامے (این او سی) جاری کرتی ہے، نقشے منظور کرتی ہے اور تعمیراتی قواعد کی پابندی کی نگرانی کرتی ہے، اس لیے دراڑوں والی عمارت یا گلی کے معائنے کی درخواست سب سے پہلے اسی دفتر کو دی جائے۔ کارپوریشن کا آن لائن شکایات پورٹل اور مفت شکایات ہیلپ لائن 0800 09999 بھی موجود ہے۔ کوئٹہ ڈویلپمنٹ اتھارٹی کی رہائشی اسکیموں کے اندر عمارتوں کی نگرانی اسی اتھارٹی (qda.gob.pk) کے پاس ہے۔"
+      },
+      "website": "https://mcq.gob.pk/",
+      "contact_url": "https://complains.mcq.gob.pk/",
+      "email": "administrator@mcq.gob.pk",
+      "phone": "+92 81 9201685",
+      "postal": "Anscomb Road, Quetta, Pakistan",
+      "source": "https://mcq.gob.pk/"
+    },
+    {
+      "id": "pdma-balochistan",
+      "name": "صوبائی ڈیزاسٹر مینجمنٹ اتھارٹی (پی ڈی ایم اے) بلوچستان",
+      "name_en": "Provincial Disaster Management Authority (PDMA) Balochistan",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The provincial disaster authority. Its Provincial Emergency Operations Centre links the provincial departments with the district administrations in an emergency, so write to it when sinking ground or cracking buildings put a whole street or neighbourhood at risk. The phone number given is its control room.",
+        "ur": "صوبے میں آفات سے نمٹنے کا ادارہ۔ اس کا صوبائی ایمرجنسی آپریشنز سینٹر ہنگامی حالت میں صوبائی محکموں اور ضلعی انتظامیہ کے درمیان رابطے کا کام کرتا ہے، اس لیے جب زمین دھنسنے یا عمارتوں میں دراڑیں پڑنے سے پوری گلی یا محلہ خطرے میں ہو تو اسی کو لکھا جائے۔ دیا گیا فون نمبر اس کے کنٹرول روم کا ہے۔"
+      },
+      "website": "https://pdma.gob.pk/",
+      "contact_url": "https://pdma.gob.pk/contact-us/",
+      "email": "dgpdmagob@gmail.com",
+      "phone": "+92 81 9241133",
+      "postal": "Airport Road, Shaikh Manda, Quetta, Balochistan 87300",
+      "source": "https://pdma.gob.pk/contact-us/"
+    },
+    {
+      "id": "irrigation-balochistan",
+      "name": "محکمہ آبپاشی بلوچستان (صوبائی واٹر بورڈ)",
+      "name_en": "Balochistan Irrigation Department (Provincial Water Board)",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The 1978 groundwater law puts a Provincial Water Board in charge of groundwater policy, the registration of wells, the safe limit for each basin and the supervision of the district water committees that issue permits. The Secretary of the Irrigation Department is a member of the Board and an engineer of the department is the secretary of each district committee, so this is the department to ask what limits apply to pumping in the Quetta valley and how they are enforced.",
+        "ur": "1978 کے زیر زمین پانی کے قانون کے تحت صوبائی واٹر بورڈ زیر زمین پانی کی پالیسی، کنوؤں اور ٹیوب ویلوں کی رجسٹریشن، ہر طاس (بیسن) سے پانی نکالنے کی محفوظ حد اور اجازت نامے دینے والی ضلعی واٹر کمیٹیوں کی نگرانی کا ذمہ دار ہے۔ سیکرٹری آبپاشی اس بورڈ کے رکن ہیں اور محکمے کا ایک انجینئر ہر ضلعی کمیٹی کا سیکرٹری ہوتا ہے، اس لیے اسی محکمے سے پوچھا جائے کہ وادی کوئٹہ میں پانی نکالنے پر کون سی حدیں لاگو ہیں اور ان پر عمل کیسے کرایا جاتا ہے۔"
+      },
+      "website": "https://irrigation.balochistan.gov.pk/",
+      "contact_url": "https://irrigation.balochistan.gov.pk/about-us/",
+      "email": null,
+      "phone": "+92 81 9201074",
+      "postal": "Civil Secretariat, Zarghoon Road, Quetta, Balochistan",
+      "source": "https://irrigation.balochistan.gov.pk/"
+    },
+    {
+      "id": "wasa-quetta",
+      "name": "کوئٹہ واٹر اینڈ سینی ٹیشن اتھارٹی (واسا)",
+      "name_en": "Quetta Water and Sanitation Authority (WASA)",
+      "level": "city",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "Runs the city's public water supply; its managing director said in January 2026 that it has 544 tube wells, of which 387 work. Its founding law also charges it to monitor and control underground water in Quetta District and to license its abstraction, so ask it how much it pumps near you and what it measures. We could not find a working official website or published contact details for WASA. The link given is the Public Health Engineering Department, whose Secretary chairs the progress reviews of WASA.",
+        "ur": "شہر میں پانی کی سرکاری فراہمی اسی ادارے کے ذمے ہے؛ اس کے منیجنگ ڈائریکٹر نے جنوری 2026 میں بتایا کہ ادارے کے 544 ٹیوب ویل ہیں جن میں سے 387 چل رہے ہیں۔ اس کے قانون کے مطابق ضلع کوئٹہ میں زیر زمین پانی کی نگرانی اور کنٹرول، اور پانی نکالنے کے لائسنس جاری کرنا بھی اسی کا کام ہے، اس لیے اس سے پوچھا جائے کہ وہ آپ کے علاقے میں کتنا پانی نکالتا ہے اور کیا پیمائش کرتا ہے۔ ہمیں واسا کی کوئی فعال سرکاری ویب سائٹ یا شائع شدہ رابطہ نہیں ملا۔ یہاں دیا گیا لنک محکمہ پبلک ہیلتھ انجینئرنگ کا ہے، جس کے سیکرٹری واسا کی کارکردگی کے جائزہ اجلاسوں کی صدارت کرتے ہیں۔"
+      },
+      "website": null,
+      "contact_url": "https://phe.balochistan.gov.pk/",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://pabalochistan.gov.pk/storage/4207/2021-04-01_08_11_37_65b53.pdf"
+    },
+    {
+      "id": "gsp",
+      "name": "جیولوجیکل سروے آف پاکستان، صدر دفتر کوئٹہ",
+      "name_en": "Geological Survey of Pakistan (GSP), Head Office Quetta",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "Pakistan's national geological survey, with its head office in Quetta. Ask it whether the sinking and the ground fissures in the Quetta valley are being surveyed and mapped, and request any measurements it holds. As a federal body it answers information requests under the federal Right of Access to Information Act 2017.",
+        "ur": "پاکستان کا قومی ارضیاتی ادارہ، جس کا صدر دفتر کوئٹہ میں ہے۔ اس سے پوچھا جائے کہ کیا وادی کوئٹہ میں زمین دھنسنے اور زمین میں پڑنے والے شگافوں کا سروے اور نقشہ بندی ہو رہی ہے، اور اس کے پاس موجود پیمائشیں طلب کی جائیں۔ وفاقی ادارہ ہونے کی وجہ سے یہ معلومات کی درخواستوں کا جواب وفاقی قانون رائٹ آف ایکسیس ٹو انفارمیشن ایکٹ 2017 کے تحت دیتا ہے۔"
+      },
+      "website": "https://gsp.gov.pk/",
+      "contact_url": "https://gsp.gov.pk/contact-us/",
+      "email": "gsp_qta@gsp.gov.pk",
+      "phone": "+92 81 9211032",
+      "postal": "P.O. Box No. 15, Sariab Road, Quetta",
+      "source": "https://gsp.gov.pk/contact-us/"
+    },
+    {
+      "id": "dc-quetta",
+      "name": "ڈپٹی کمشنر کوئٹہ (ضلعی انتظامیہ)",
+      "name_en": "Deputy Commissioner Quetta (District Administration)",
+      "level": "district",
+      "handles": ["inspection", "groundwater"],
+      "role": {
+        "en": "Head of the district administration, and the office to write to for places outside the municipal limits. The Deputy Commissioner also sits on the District Water Committee, which under the 1978 groundwater law decides applications to extract groundwater in designated basins and can stop unauthorised extraction.",
+        "ur": "ضلعی انتظامیہ کے سربراہ، اور بلدیاتی حدود سے باہر کے علاقوں کے لیے اسی دفتر کو لکھا جائے۔ ڈپٹی کمشنر ضلعی واٹر کمیٹی کے رکن بھی ہیں، جو 1978 کے زیر زمین پانی کے قانون کے تحت مقررہ طاس (بیسن) میں زیر زمین پانی نکالنے کی درخواستوں کا فیصلہ کرتی ہے اور بغیر اجازت پانی نکالنے کو روک سکتی ہے۔"
+      },
+      "website": "https://quetta.balochistan.gov.pk/",
+      "contact_url": "https://quetta.balochistan.gov.pk/district-quetta/contacts/",
+      "email": null,
+      "phone": "+92 81 9201406",
+      "postal": "Anscomb Road, Quetta, Balochistan",
+      "source": "https://quetta.balochistan.gov.pk/district-quetta/contacts/"
+    }
+  ],
+  "right_to_answer": {
+    "name": "بلوچستان رائٹ ٹو انفارمیشن ایکٹ 2021",
+    "name_en": "Balochistan Right to Information Act, 2021",
+    "what": {
+      "en": "Every public body of the Balochistan government must answer a citizen's written request for information as soon as possible and in any case within 15 working days. The limit can be extended once by up to 15 more working days, and information needed to protect someone's life or liberty must be given within two working days. Filing a request is free. If the body refuses or stays silent, you can complain free of charge to the Balochistan Information Commission, which must decide within 60 days.",
+      "ur": "حکومت بلوچستان کا ہر سرکاری ادارہ اس بات کا پابند ہے کہ شہری کی معلومات کی تحریری درخواست کا جواب جلد از جلد اور ہر صورت میں 15 ایام کار (کام کے دنوں) کے اندر دے۔ یہ مدت ایک بار زیادہ سے زیادہ مزید 15 ایام کار تک بڑھائی جا سکتی ہے، اور کسی کی جان یا آزادی کے تحفظ کے لیے درکار معلومات دو ایام کار میں دینا لازم ہے۔ درخواست دینے کی کوئی فیس نہیں۔ اگر ادارہ انکار کرے یا جواب نہ دے تو آپ بلوچستان انفارمیشن کمیشن میں مفت شکایت کر سکتے ہیں، جسے 60 دن کے اندر فیصلہ کرنا ہوتا ہے۔"
+    },
+    "how": {
+      "en": "There is no online portal for these requests yet. Write to the Public Information Officer of the body you are asking (for example the Metropolitan Corporation, WASA or the Irrigation Department), hand the request in or send it by registered post, and keep a dated copy or receipt. If no reply comes in time, you can ask the head of that body for an internal review within 60 days, or complain to the Balochistan Information Commission. The Commission began work in August 2025 from a temporary office in the Directorate General of Public Relations building in Quetta; a review published in June 2026 pointed to delays in getting it fully running. The Geological Survey of Pakistan is a federal body: it falls under the federal Right of Access to Information Act 2017, which gives 10 working days for a reply, with appeals to the Pakistan Information Commission (rti.gov.pk). Separately, a complaint about any government office can be lodged on the Pakistan Citizen's Portal app (citizenportal.gov.pk), and the Metropolitan Corporation Quetta has its own complaint portal.",
+      "ur": "ان درخواستوں کے لیے ابھی کوئی آن لائن پورٹل موجود نہیں۔ جس ادارے سے معلومات درکار ہوں (مثلاً میٹروپولیٹن کارپوریشن، واسا یا محکمہ آبپاشی) اس کے پبلک انفارمیشن آفیسر کے نام درخواست لکھیں، دستی جمع کرائیں یا رجسٹرڈ ڈاک سے بھیجیں، اور تاریخ والی نقل یا رسید سنبھال کر رکھیں۔ مقررہ مدت میں جواب نہ ملے تو آپ 60 دن کے اندر اس ادارے کے سربراہ سے اندرونی نظرثانی کی درخواست کر سکتے ہیں، یا بلوچستان انفارمیشن کمیشن میں شکایت کر سکتے ہیں۔ کمیشن نے اگست 2025 میں کوئٹہ میں نظامت اعلیٰ تعلقات عامہ (ڈی جی پی آر) کی عمارت میں قائم عارضی دفتر سے کام شروع کیا؛ جون 2026 میں شائع ہونے والے ایک جائزے میں اسے پوری طرح فعال کرنے میں تاخیر کی نشاندہی کی گئی۔ جیولوجیکل سروے آف پاکستان وفاقی ادارہ ہے: اس پر وفاقی قانون رائٹ آف ایکسیس ٹو انفارمیشن ایکٹ 2017 لاگو ہوتا ہے، جس میں جواب کی مدت 10 ایام کار ہے اور اپیل پاکستان انفارمیشن کمیشن (rti.gov.pk) میں کی جاتی ہے۔ اس کے علاوہ کسی بھی سرکاری دفتر کے بارے میں شکایت پاکستان سٹیزن پورٹل ایپ (citizenportal.gov.pk) پر درج کرائی جا سکتی ہے، اور میٹروپولیٹن کارپوریشن کوئٹہ کا اپنا شکایات پورٹل بھی ہے۔"
+    },
+    "url": null,
+    "deadline_days": 15,
+    "deadline_text": { "en": "15 working days", "ur": "کام کے 15 دن" },
+    "source": "https://pabalochistan.gov.pk/storage/4201/2021-03-29_13_06_13_d8817.pdf"
+  },
+  "urgent": {
+    "phone": "1122",
+    "what": {
+      "en": "Get everyone out first, then call Rescue 1122 from outside and give the full address. The police emergency number is 15, and the PDMA control room in Quetta is on 081 9241133. Do not go back inside until an engineer has checked the building.",
+      "ur": "پہلے سب لوگوں کو عمارت سے باہر نکالیں، پھر باہر سے ریسکیو 1122 پر کال کریں اور پورا پتہ بتائیں۔ پولیس کا ہنگامی نمبر 15 ہے، اور کوئٹہ میں پی ڈی ایم اے کے کنٹرول روم کا نمبر 081 9241133 ہے۔ جب تک کوئی انجینئر عمارت کا معائنہ نہ کر لے، اندر واپس نہ جائیں۔"
+    },
+    "source": "https://home.balochistan.gov.pk/"
+  },
+  "context": {
+    "en": "Studies that combine GPS and satellite radar found that a permanent GPS station in central Quetta sank about 2 metres between 2008 and 2023, and that the fastest rate rose from about 12 centimetres a year to about 16 centimetres a year after 2016. The researchers also recorded fissures in the ground and link the sinking to falling groundwater in clay rich sediments. The provincial Agriculture Department, quoted by the newspaper Dawn in January 2026, put the fall in groundwater levels at two to five metres a year and counted more than 30,000 illegal tube wells. On paper, pumping is regulated by the Balochistan Ground Water Rights Administration Ordinance 1978, but we found no official programme that monitors the sinking itself.",
+    "ur": "جی پی ایس اور سیٹلائٹ ریڈار پر مبنی تحقیقی مطالعات کے مطابق وسطی کوئٹہ میں نصب مستقل جی پی ایس اسٹیشن پر 2008 سے 2023 کے درمیان زمین تقریباً 2 میٹر دھنسی، اور دھنسنے کی سب سے تیز رفتار 2016 کے بعد تقریباً 12 سینٹی میٹر سالانہ سے بڑھ کر تقریباً 16 سینٹی میٹر سالانہ ہو گئی۔ محققین نے زمین میں شگاف بھی ریکارڈ کیے اور اس کی وجہ چکنی مٹی والی تہوں میں زیر زمین پانی کی سطح کا گرنا بتائی۔ روزنامہ ڈان نے جنوری 2026 میں صوبائی محکمہ زراعت کے حوالے سے بتایا کہ زیر زمین پانی کی سطح ہر سال دو سے پانچ میٹر گر رہی ہے اور غیر قانونی ٹیوب ویلوں کی تعداد 30 ہزار سے زیادہ ہے۔ کاغذ پر پانی نکالنے کا نظم بلوچستان گراؤنڈ واٹر رائٹس ایڈمنسٹریشن آرڈیننس 1978 کے تحت چلتا ہے، لیکن ہمیں زمین دھنسنے کی نگرانی کا کوئی سرکاری پروگرام نہیں ملا۔",
+    "sources": [
+      "https://doi.org/10.3390/rs16091521",
+      "https://doi.org/10.1007/s11069-025-07226-y",
+      "https://piahs.copernicus.org/articles/382/595/2020/",
+      "https://www.dawn.com/news/1964668",
+      "https://balochistan.gov.pk/wp-content/uploads/2024/10/The-Balochistan-Ground-water-Rights-Adminstration-ordinance-1978.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": false,
+    "note": {
+      "en": "Telegram is blocked in Pakistan. The measurement project OONI has recorded the block on most Pakistani networks since December 2023, and its tests in the first half of November 2026 still failed almost everywhere, so Telegram opens only through a VPN and is not a practical place for a neighbourhood group. Neighbourhood groups normally run on WhatsApp; remember that every member of a WhatsApp group can see the phone numbers of all the others. Mobile internet in Quetta is suspended from time to time on security grounds, for example for 24 hours on 31 October 2025, so also keep a list of phone numbers and agree on a place to meet. Share the measured figures together with their source, and do not forward unverified claims that a particular building is about to collapse.",
+      "ur": "پاکستان میں ٹیلی گرام بند ہے۔ انٹرنیٹ کی بندشوں کی پیمائش کرنے والے منصوبے اونی (OONI) کے مطابق دسمبر 2023 سے پاکستان کے بیشتر نیٹ ورکس پر ٹیلی گرام بلاک ہے، اور نومبر 2026 کے پہلے نصف میں بھی اس کے تقریباً تمام ٹیسٹ ناکام رہے۔ اس لیے ٹیلی گرام صرف وی پی این کے ذریعے کھلتا ہے اور محلے کے گروپ کے لیے عملی نہیں۔ محلوں کے گروپ عام طور پر واٹس ایپ پر چلتے ہیں؛ یاد رکھیں کہ واٹس ایپ گروپ کا ہر رکن باقی سب ارکان کے فون نمبر دیکھ سکتا ہے۔ کوئٹہ میں سکیورٹی وجوہات کی بنا پر موبائل انٹرنیٹ وقتاً فوقتاً معطل کیا جاتا ہے، مثلاً 31 اکتوبر 2025 کو 24 گھنٹے کے لیے، اس لیے فون نمبروں کی فہرست بھی اپنے پاس رکھیں اور ملنے کی جگہ پہلے سے طے کر لیں۔ پیمائش کے اعداد و شمار ان کے ماخذ کے ساتھ شیئر کریں، اور کسی خاص عمارت کے گرنے کے بارے میں غیر مصدقہ دعوے آگے نہ بھیجیں۔"
+    },
+    "sources": [
+      "https://explorer.ooni.org/findings/324516225200",
+      "https://explorer.ooni.org/chart/mat?probe_cc=PK&since=2026-08-01&until=2026-11-14&time_grain=month&axis_x=measurement_start_day&test_name=telegram",
+      "https://www.dawn.com/news/1952343",
+      "https://www.dawn.com/news/1971023"
+    ]
+  },
+  "groups": []
+}
