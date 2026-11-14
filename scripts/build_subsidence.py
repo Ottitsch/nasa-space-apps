@@ -6,9 +6,11 @@ Pipeline (no AWS needed, runs from any machine with an Earthdata login):
   2. Chain the pairs into a time series (ref N -> sec N+1 -> ...).
   3. Read only the AOI of each pair over HTTPS (GDAL /vsicurl, ~/.netrc login),
      mask low-coherence pixels, block-average to a coarser grid.
-  4. Remove each pair's planar ramp, convert phase -> vertical mm,
+  4. Subtract the ionosphere and wet-troposphere screens (the latter at terrain
+     height from the public Copernicus DEM) per pair, but only where they lower
+     the noise; remove each pair's planar ramp; convert phase -> vertical mm;
      accumulate over the chain.
-  5. Write web/public/data/subsidence/{meta.json,cube.bin} for the web app.
+  5. Write cube.bin / trend.bin / meta.json for the web app.
 
 Prerequisites: `brew install gdal` (with Python bindings) and a ~/.netrc entry
 for urs.earthdata.nasa.gov.
@@ -145,11 +147,13 @@ def _warp(gdal, url, path, aoi, fine, resample="near", band=None):
 
 def read_pair(args):
     """Worker: fetch phase/coherence/components/ionosphere for one pair (cached on disk)."""
-    pair, aoi, fine, cache = args
+    pair, aoi, fine, cache, res, dem_file = args
     cache = Path(cache)
     f = cache / f"{pair['name']}.npz"
     fi = cache / f"{pair['name']}.iono.npz"
-    if f.exists() and fi.exists():
+    fw = cache / f"{pair['name']}.wet.npz"
+    need_wet = dem_file is not None and not fw.exists()
+    if f.exists() and fi.exists() and not need_wet:
         return pair["name"], "cached"
     gdal = _setup_gdal(str(cache / "cookies.txt"))
     last = None
@@ -163,27 +167,17 @@ def read_pair(args):
             if not fi.exists():
                 iono = _warp(gdal, pair["url"], UNW + "ionospherePhaseScreen", aoi, fine)
                 np.savez_compressed(fi, iono=iono.astype("float32"))
+            if need_wet:
+                np.savez_compressed(fw, wet=read_wet(gdal, pair["url"], aoi, res, np.load(dem_file)))
             return pair["name"], "ok"
         except Exception as exc:  # network hiccups happen
             last = exc
     return pair["name"], f"FAILED: {last}"
 
 
-def read_incidence(pair, aoi, res, cache):
-    """Incidence angle (degrees, at 0 m height) on the coarse grid, from one pair.
-
-    The radarGrid cube has its own UTM coordinate arrays, so sample it by hand.
-    """
-    gdal = _setup_gdal(str(Path(cache) / "cookies.txt"))
+def _grid_index(aoi, res, epsg, x, y):
+    """Row/col indices into a radarGrid cube (UTM x/y arrays) for every output cell."""
     from osgeo import osr
-
-    root = gdal.OpenEx(f"/vsicurl/{pair['url']}", gdal.OF_MULTIDIM_RASTER).GetRootGroup()
-    g = root.OpenGroupFromFullname("/science/LSAR/GUNW/metadata/radarGrid")
-    x = g.OpenMDArray("xCoordinates").ReadAsArray()
-    y = g.OpenMDArray("yCoordinates").ReadAsArray()
-    h = g.OpenMDArray("heightAboveEllipsoid").ReadAsArray()
-    epsg = int(g.OpenMDArray("projection").ReadAsArray())
-    cube = g.OpenMDArray("incidenceAngle").ReadAsArray()[int(np.argmin(np.abs(h)))]
 
     w, s, e, n = aoi
     cols, rows = round((e - w) / res), round((n - s) / res)
@@ -195,11 +189,71 @@ def read_incidence(pair, aoi, res, cache):
     dst.ImportFromEPSG(epsg)
     src.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
     dst.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
-    pts = osr.CoordinateTransformation(src, dst).TransformPoints(np.column_stack([LON.ravel(), LAT.ravel()]).tolist())
-    E, N = np.array(pts)[:, 0].reshape(LON.shape), np.array(pts)[:, 1].reshape(LON.shape)
+    pts = np.array(osr.CoordinateTransformation(src, dst).TransformPoints(np.column_stack([LON.ravel(), LAT.ravel()]).tolist()))
+    E, N = pts[:, 0].reshape(LON.shape), pts[:, 1].reshape(LON.shape)
     ci = np.clip(np.round((E - x[0]) / (x[1] - x[0])).astype(int), 0, len(x) - 1)
     ri = np.clip(np.round((N - y[0]) / (y[1] - y[0])).astype(int), 0, len(y) - 1)
+    return ri, ci
+
+
+def _radar_grid(gdal, url):
+    root = gdal.OpenEx(f"/vsicurl/{url}", gdal.OF_MULTIDIM_RASTER).GetRootGroup()
+    g = root.OpenGroupFromFullname("/science/LSAR/GUNW/metadata/radarGrid")
+    return (g, g.OpenMDArray("xCoordinates").ReadAsArray(), g.OpenMDArray("yCoordinates").ReadAsArray(),
+            g.OpenMDArray("heightAboveEllipsoid").ReadAsArray(), int(g.OpenMDArray("projection").ReadAsArray()))
+
+
+def read_incidence(pair, aoi, res, cache):
+    """Incidence angle (degrees, at 0 m height) on the coarse grid, from one pair.
+
+    The radarGrid cube has its own UTM coordinate arrays, so sample it by hand.
+    """
+    gdal = _setup_gdal(str(Path(cache) / "cookies.txt"))
+    g, x, y, h, epsg = _radar_grid(gdal, pair["url"])
+    cube = g.OpenMDArray("incidenceAngle").ReadAsArray()[int(np.argmin(np.abs(h)))]
+    ri, ci = _grid_index(aoi, res, epsg, x, y)
     return cube[ri, ci]
+
+
+DEM_URL = ("/vsicurl/https://copernicus-dem-90m.s3.amazonaws.com/"
+           "Copernicus_DSM_COG_30_N{la:02d}_00_W{lo:03d}_00_DEM/Copernicus_DSM_COG_30_N{la:02d}_00_W{lo:03d}_00_DEM.tif")
+GEOID_OFFSET_M = -32.0  # DEM is above the geoid; ellipsoid height is roughly 32 m lower in California
+
+
+def load_dem(aoi, res, cache):
+    """Terrain height (m) on the coarse grid from the public Copernicus 90 m DEM (cached)."""
+    f = Path(cache) / f"dem_{res}_{'_'.join(map(str, aoi))}.npy"
+    if f.exists():
+        return np.load(f)
+    import math
+
+    gdal = _setup_gdal(str(Path(cache) / "cookies.txt"))
+    w, s, e, n = aoi
+    tiles = [DEM_URL.format(la=la, lo=-lo) for la in range(math.floor(s), math.ceil(n))
+             for lo in range(math.floor(w), math.ceil(e))]
+    vrt = gdal.BuildVRT("", tiles)
+    ds = gdal.Warp("", vrt, format="MEM", outputBounds=aoi, xRes=res, yRes=res, resampleAlg="average", dstSRS="EPSG:4326")
+    dem = ds.GetRasterBand(1).ReadAsArray().astype("float32")
+    np.save(f, dem)
+    return dem
+
+
+def read_wet(gdal, url, aoi, res, dem):
+    """Wet-troposphere phase screen (rad) at terrain height on the coarse grid.
+
+    Only the AOI window of the lowest levels (up to ~4.5 km) is read from the cube.
+    """
+    g, x, y, h, epsg = _radar_grid(gdal, url)
+    ri, ci = _grid_index(aoi, res, epsg, x, y)
+    r0, r1, c0, c1 = ri.min(), ri.max() + 1, ci.min(), ci.max() + 1
+    nk = int(np.searchsorted(h, 4500)) + 1
+    arr = g.OpenMDArray("wetTroposphericPhaseScreen")
+    cube = arr.ReadAsArray(array_start_idx=[0, int(r0), int(c0)], count=[nk, int(r1 - r0), int(c1 - c0)])
+    hh = np.clip(dem + GEOID_OFFSET_M, h[0], h[nk - 1] - 1e-3)
+    k = np.clip(np.floor((hh - h[0]) / (h[1] - h[0])).astype(int), 0, nk - 2)
+    fr = (hh - h[k]) / (h[1] - h[0])
+    rr, cc = ri - r0, ci - c0
+    return ((1 - fr) * cube[k, rr, cc] + fr * cube[k + 1, rr, cc]).astype("float32")
 
 
 # ---------------------------------------------------------------- processing
@@ -315,6 +369,10 @@ def main():
     p.add_argument("--iono", choices=["auto", "always", "never"], default="auto",
                    help="subtract the smoothed ionosphere screen: auto = per pair, only if it lowers the noise")
     p.add_argument("--iono-sigma", type=float, default=8, help="ionosphere smoothing (cells)")
+    p.add_argument("--tropo", choices=["auto", "never"], default="auto",
+                   help="subtract the wet-troposphere screen at terrain height, per pair, only if it clearly lowers the noise")
+    p.add_argument("--min-gain", type=float, default=0.03, help="relative noise reduction needed to apply the troposphere correction")
+    p.add_argument("--trend-smooth", type=float, default=4, help="extra smoothing of the trend/rate map (cells)")
     p.add_argument("--smooth", type=float, default=2, help="spatial Gaussian smoothing of the result (cells, 0 = off)")
     p.add_argument("--trim", type=float, default=0.15, help="share trimmed at each end when estimating the trend")
     p.add_argument("--label", help="name shown in the app (default: derived from track/direction/frame)")
@@ -342,7 +400,13 @@ def main():
         steps = steps[: a.max_pairs]
     log(f"{len(steps)} pairs in chain: {steps[0]['ref']} -> {steps[-1]['sec']}")
 
-    jobs = [(s, aoi, a.fine, str(cache)) for s in steps]
+    dem_file = None
+    if a.tropo != "never":
+        dem = load_dem(aoi, a.res, cache)
+        dem_file = str(cache / "dem_current.npy")
+        np.save(dem_file, dem)
+        log(f"terrain height {dem.min():.0f}-{dem.max():.0f} m (median {np.median(dem):.0f} m)")
+    jobs = [(s, aoi, a.fine, str(cache), a.res, dem_file) for s in steps]
     t0 = time.time()
     with ProcessPoolExecutor(max_workers=a.workers) as ex:
         for i, (name, status) in enumerate(ex.map(read_pair, jobs), 1):
@@ -364,6 +428,17 @@ def main():
             if use:
                 ph[i] = cand
             log(f"iono {st['ref']}->{st['sec']}: noise {before:.2f} -> {after:.2f} rad, {'applied' if use else 'skipped'}")
+    tropo_used = []
+    if a.tropo != "never":
+        for i, st in enumerate(steps):
+            wet = np.load(cache / f"{st['name']}.wet.npz")["wet"]
+            cand = ph[i] - wet
+            before, after = spread(ph[i]), spread(cand)
+            use = after < before * (1 - a.min_gain)
+            tropo_used.append(bool(use))
+            if use:
+                ph[i] = cand
+            log(f"tropo {st['ref']}->{st['sec']}: noise {before:.2f} -> {after:.2f} rad, {'applied' if use else 'skipped'}")
     if not a.keep_ramp:
         ph = remove_ramp(ph)
     if a.ref:
@@ -390,7 +465,7 @@ def main():
     # Robust linear trend: trimmed mean of per-pair rates (mm/yr), so a single bad pair cannot dominate.
     day = lambda d: datetime.strptime(d, "%Y%m%d")
     span_yr = np.array([(day(st["sec"]) - day(st["ref"])).days for st in steps]) / 365.25
-    rate = trimmed_mean(inc_mm / span_yr[:, None, None], a.trim)
+    rate = gaussian_blur(trimmed_mean(inc_mm / span_yr[:, None, None], a.trim), a.trend_smooth, keep_mask=True)
     t_yr = np.array([0.0] + [(day(st["sec"]) - day(steps[0]["ref"])).days / 365.25 for st in steps])
     trend = (rate[None] * t_yr[:, None, None]).astype("float32")
     trend[:, ~ok] = np.nan
@@ -419,8 +494,9 @@ def main():
             vertical_assumption="line-of-sight motion divided by cos(incidence angle)",
             ramp_removed=not a.keep_ramp,
             ionosphere_screen=dict(mode=a.iono, sigma_cells=a.iono_sigma, applied_pairs=sum(iono_used)),
-            spatial_smoothing_cells=a.smooth, trend_trim=a.trim,
-            not_applied=["troposphere", "solid earth tides"],
+            troposphere_wet_screen=dict(mode=a.tropo, min_gain=a.min_gain, applied_pairs=sum(tropo_used)),
+            spatial_smoothing_cells=a.smooth, trend_smoothing_cells=a.trend_smooth, trend_trim=a.trim,
+            not_applied=["hydrostatic troposphere", "solid earth tides"],
         ),
     )
     (out / "meta.json").write_text(json.dumps(meta, indent=1))

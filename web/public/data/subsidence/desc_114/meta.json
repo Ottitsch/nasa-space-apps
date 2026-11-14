@@ -37,9 +37,9 @@
  ],
  "trend_file": "trend.bin",
  "rate_mm_per_year": {
-  "p5": -98.3,
-  "median": -1.5,
-  "p95": 180.5
+  "p5": -118.6,
+  "median": 3.6,
+  "p95": 193.5
  },
  "scale_mm": 0.1,
  "nodata": -32768,
@@ -196,10 +196,16 @@
    "sigma_cells": 8,
    "applied_pairs": 19
   },
+  "troposphere_wet_screen": {
+   "mode": "auto",
+   "min_gain": 0.03,
+   "applied_pairs": 6
+  },
   "spatial_smoothing_cells": 2,
+  "trend_smoothing_cells": 4,
   "trend_trim": 0.15,
   "not_applied": [
-   "troposphere",
+   "hydrostatic troposphere",
    "solid earth tides"
   ]
  }
