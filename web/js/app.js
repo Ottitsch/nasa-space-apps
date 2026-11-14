@@ -126,11 +126,22 @@ function addLayers() {
     paint: {
       'circle-radius': ['get', 'r'],
       'circle-color': ['case', detected, ['get', 'color'], '#ffffff'],
-      'circle-opacity': ['case', detected, 0.86, 0.22],
+      'circle-opacity': ['case', detected, 0.86, 0.14],
       'circle-stroke-color': '#ffffff',
-      'circle-stroke-opacity': ['case', detected, 1, 0.8],
-      'circle-stroke-width': ['case', detected, 1.6, 1.1],
+      'circle-stroke-opacity': ['case', detected, 1, 0.9],
+      'circle-stroke-width': ['case', detected, 1.6, 1.4],
     },
+  });
+  // measured places with nothing detected yet: a ring and a quieter name.
+  // Added below the other labels so those win where they overlap.
+  map.addLayer({
+    id: 'places-label-quiet', type: 'symbol', source: 'places', maxzoom: 9.5, filter: ['!', detected],
+    layout: {
+      'text-field': ['get', 'name'], 'text-font': ['Noto Sans Regular'], 'text-size': 11,
+      'text-variable-anchor': ['top', 'bottom', 'left', 'right'], 'text-radial-offset': ['get', 'ro'],
+      'text-justify': 'auto',
+    },
+    paint: { 'text-color': 'rgba(255,255,255,0.78)', 'text-halo-color': 'rgba(8,12,18,0.85)', 'text-halo-width': 1.4, 'text-halo-blur': 0.5 },
   });
   map.addLayer({
     id: 'places-label', type: 'symbol', source: 'places', maxzoom: 9.5, filter: detected,
@@ -151,7 +162,7 @@ function addLayers() {
     hover.setLngLat([p.lon, p.lat]).setHTML(
       `<div class="pop hover"><h4>${p.name}</h4>${p.detected
         ? `<div>Fastest zone sinking ${fmtRate(p.hotRate)}</div>`
-        : `<div>No sinking detected above ${p.threshold_mm_yr} mm per year</div>`}</div>`).addTo(map);
+        : `<div>Measured for ${p.months} months. Nothing sinking faster than ${fmtRate(p.threshold_mm_yr)} yet</div>`}</div>`).addTo(map);
   });
   map.on('click', inspect);
   map.on('idle', scanBuildings);
@@ -168,7 +179,7 @@ function placesGeoJSON() {
     type: 'FeatureCollection',
     features: state.index.places.filter(p => p !== state.meta).map(p => {
       const sunk = hotSunk(p, t);
-      const r = p.detected ? 5 + 21 * sinkU(sunk) : 3.2;
+      const r = p.detected ? 5 + 21 * sinkU(sunk) : 4.2;
       return {
         type: 'Feature', geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
         properties: {
@@ -447,9 +458,17 @@ function drawChart() {
   svg.style.display = '';
   const W = 300, H = 96, T = 14, Bm = 4, ih = H - T - Bm;
   const end = Date.UTC(END_YEAR, 11, 31);
-  const max = hotSunk(m, end);
+  const max = hotSunk(m, end), now = hotSunk(m, m.t1);
   const X = ms => timeline.frac(ms) * W;
-  const Y = mm => T + ih * (1 - Math.sqrt(Math.max(0, mm) / max));
+  // The time bar gives the measured months a share of the width far larger
+  // than their share of the years to 2050. The height axis gets the same
+  // share below the amount sunk so far, so the line keeps one slope for one
+  // rate and the projection carries straight on from the measured record.
+  const f = timeline.frac(m.t1);
+  const u = now > 0.5 && max > now
+    ? mm => (mm <= now ? (f * Math.max(0, mm)) / now : f + ((1 - f) * (mm - now)) / (max - now))
+    : mm => Math.max(0, mm) / max;
+  const Y = mm => T + ih * (1 - u(mm));
   const meas = m.dates.map((d, k) => [X(m.t0 + m.t_years[k] * YEAR), Y(-m.hot_series_mm[k])]);
   const proj = [];
   for (let k = 0; k <= 40; k++) { const ms = m.t1 + (k / 40) * (end - m.t1); proj.push([X(ms), Y(hotSunk(m, ms))]); }
@@ -464,9 +483,12 @@ function drawChart() {
     <line x1="${xNow}" x2="${xNow}" y1="${T - 2}" y2="${H - Bm}" stroke="rgba(255,255,255,0.3)"/>
     <text x="${xNow - 6}" y="9" text-anchor="end">Measured</text>
     <text x="${xNow + 6}" y="9">Projected</text>
+    <text x="${xNow - 8}" y="${Y(now) - 8}" text-anchor="end" style="fill:#ffffff">${fmtSunk(now)}</text>
     <text x="${W - 9}" y="${H - Bm - 6}" text-anchor="end" style="fill:#ffb340">${fmtSunk(max)} by ${END_YEAR}</text>
     <line id="chart-x" y1="${T - 2}" y2="${H - Bm}" stroke="#0a84ff" stroke-width="2"/>
     <circle id="chart-dot" r="4.5" fill="#0a84ff" stroke="#ffffff" stroke-width="1.5"/>`;
+  svg.setAttribute('aria-label', `Sinking of the fastest zone: ${fmtSunk(now)} measured from ${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}, `
+    + `${fmtSunk(max)} by ${END_YEAR} if the same rate continues. The measured months are drawn larger on both axes.`);
   svg._X = X; svg._Y = Y;
 }
 
