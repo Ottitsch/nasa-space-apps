@@ -159,7 +159,7 @@ Checks made while building it:
 | Folder | What | Size |
 | --- | --- | --- |
 | `web/data` | what the map loads: one small index and two files per place | 16 MB |
-| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | about 1 GB |
+| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 1.2 GB |
 
 Both are in the repository. `data/nisar` is the downloaded radar data in a
 compact form (see `data/nisar/README.md`), so nothing has to be fetched again
