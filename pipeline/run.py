@@ -89,6 +89,21 @@ def choose_stacks(bbox, stacks, max_tracks=2):
             if r[0][3] != first_dir and r[1] >= 0.9 and r[3] >= 0.75 * ranked[0][3]:
                 chosen.append(r)
                 break
+    if max_tracks > 1 and len(chosen) == 1 and ranked[0][1] < 0.9:
+        # One track covers only part of the place (Tehran's covers two thirds).
+        # Add the one that fills most of the rest, often the next frame along
+        # the same track; the two are merged where they overlap.
+        first = [stacks[ranked[0][0]][0].polygon]
+        base = S.union_coverage(bbox, first)
+        best, gain = None, 0.15
+        for r in S.rank_stacks(bbox, stacks, min_coverage=0.3):
+            if r[0] == ranked[0][0] or r[3] < 0.75 * ranked[0][3]:
+                continue
+            g = S.union_coverage(bbox, first + [stacks[r[0]][0].polygon]) - base
+            if g > gain:
+                best, gain = r, g
+        if best:
+            chosen.append(best)
     return chosen
 
 

@@ -88,8 +88,8 @@ not a verdict on any single building.
 ### Sinking from before NISAR
 
 NISAR has watched these places since late 2025, most of them only since June
-2026. Counted from the first radar pass alone, Tehran, sinking 23 cm per year,
-has sunk 7.6 cm, and no ground reaches even the first damage limit (1/500) for
+2026. Counted from the first radar pass alone, Tehran, sinking 26 cm per year,
+has sunk 8.5 cm, and no ground reaches even the first damage limit (1/500) for
 years. But the ground NISAR sees sinking was sinking long before it launched.
 
 So the map also counts the years before NISAR, and the assumption for it comes
@@ -106,7 +106,7 @@ and the app says so wherever it is used.
   measured since its first radar pass.
 * The big number and the popup always say how much of the total NISAR
   measured, and the chart notes the estimated amount it starts from. With the
-  default, Tehran reads 6.2 m since 2000, of which 7.6 cm measured.
+  default, Tehran reads 6.9 m since 2000, of which 8.5 cm measured.
 * The take action report and letter keep to measured amounts, since they are
   evidence for an authority. Their damage limits use the same setting as the
   map and say so.
@@ -123,7 +123,7 @@ assumed since 2000:
 | Place | Cracking possible | Cracking likely | Structural damage likely |
 | --- | --- | --- | --- |
 | Mexico City, Mexico | 51.6 km² | 24.8 km² | 1.4 km² |
-| Tehran Plain, Iran | 14.9 km² | 5.3 km² | 0.5 km² |
+| Tehran Plain, Iran | 22.1 km² | 8.6 km² | 0.5 km² |
 | Mashhad, Iran | 17.0 km² | 1.8 km² | 0.0 km² |
 | Quetta, Pakistan | 11.7 km² | 4.8 km² | 0.0 km² |
 | Toluca, Mexico | 1.3 km² | 1.5 km² | 0.5 km² |
@@ -151,7 +151,7 @@ radar pixels smooth out the sharp steps where buildings crack first (see What
 this cannot tell you). Most tilt measured so far is gentle: it passes 1/500
 over the coming decades rather than by today, so drag the time bar to 2050 to
 see it. Mashhad, for example, goes from 19 km² of built up land past the
-limits today to 62 km² by 2050, Tehran from 21 to 49 km².
+limits today to 62 km² by 2050, Tehran from 31 to 69 km².
 
 ## What the data shows so far
 
@@ -161,7 +161,7 @@ detected sinking in 41 of them:
 | Place | Fastest zone | Area sinking | Record | Smallest detectable rate |
 | --- | --- | --- | --- | --- |
 | Mexico City, Mexico | 26 cm per year | 402 km² | 11 months | 1.9 cm per year |
-| Tehran Plain, Iran | 23 cm per year | 102 km² | 4 months (early) | 3.3 cm per year |
+| Tehran Plain, Iran | 26 cm per year | 122 km² | 4 months (early) | 3.5 cm per year |
 | Quetta, Pakistan | 19 cm per year | 56 km² | 4 months (early) | 4.7 cm per year |
 | Mashhad, Iran | 18 cm per year | 154 km² | 4 months (early) | 3.9 cm per year |
 | Toluca, Mexico | 17 cm per year | 8 km² | 11 months | 2.8 cm per year |
@@ -256,7 +256,10 @@ loads. For each place in `pipeline/places.json` it does this:
    (geocoded unwrapped interferograms) over the place, and pick the track
    that covers it. A track that covers the whole place wins, unless another
    covers at least 90 percent of it with a record half as long again: the
-   record length sets the smallest sinking that can be detected. `search.py`
+   record length sets the smallest sinking that can be detected. When the
+   best track covers less than 90 percent, the track that fills most of the
+   rest is added and the two are merged (Tehran's plain needs two frames).
+   `search.py`, `run.py`
 2. **Read only what is needed.** Each product is a 2 GB HDF5 file. We open it
    remotely, ask HDF5 where the chunks covering the place live, and download
    just those byte ranges: about 25 MB and 8 seconds per file. `fetch.py`

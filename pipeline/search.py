@@ -133,6 +133,18 @@ def search(bbox) -> dict[str, list[Granule]]:
     return dict(stacks)
 
 
+def union_coverage(bbox, polys, n=30) -> float:
+    """Fraction of the box covered by any of several footprints."""
+    w, s, e, nn = bbox
+    hits = 0
+    for i in range(n):
+        for j in range(n):
+            lat = s + (nn - s) * (i + 0.5) / n
+            lon = w + (e - w) * (j + 0.5) / n
+            hits += any(_inside(lat, lon, p) for p in polys)
+    return hits / (n * n)
+
+
 def rank_stacks(bbox, stacks, min_coverage=0.6):
     """Score each stack by how much of the box it covers and how long it runs.
     Returns [(stack_id, coverage, n_pairs, span_days)] best first.
