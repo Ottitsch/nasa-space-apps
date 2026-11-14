@@ -70,7 +70,7 @@ const LUT = sinkLUT();
 // risk class colours packed for the canvas (little endian ABGR)
 const RISK_PX = RISK.map((r, i) => {
   const v = parseInt(r.color.slice(1), 16);
-  const a = [0, 120, 215, 230, 240][i];
+  const a = [0, 105, 220, 232, 242][i];
   return ((a << 24) | ((v & 255) << 16) | (((v >> 8) & 255) << 8) | (v >> 16)) >>> 0;
 });
 let image = null, pixels = null;
@@ -82,7 +82,8 @@ function addLayers() {
       'sky-color': '#0a1220', 'horizon-color': '#1b2c48', 'fog-color': '#0a1220',
       'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0],
     });
-  } catch (e) { /* sky is decoration only */ }
+    map.setLight({ anchor: 'viewport', intensity: 0.22, color: '#ffffff', position: [1.3, 200, 35] });
+  } catch (e) { /* sky and light are decoration only */ }
 
   const layers = map.getStyle().layers;
   const firstSymbol = layers.find(l => l.type === 'symbol')?.id;
@@ -109,7 +110,7 @@ function addLayers() {
       id: 'bldg', type: 'fill-extrusion', source: BLDG.source, 'source-layer': BLDG.sourceLayer, minzoom: BLDG_MIN_ZOOM,
       paint: {
         'fill-extrusion-color': ['match', ['coalesce', ['feature-state', 'risk'], 0],
-          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#39424f'],
+          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#3d4654'],
         // heights are not in the data: one modest height for every building
         'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], BLDG_MIN_ZOOM, 0, 15, 7],
         'fill-extrusion-opacity': 0.93,

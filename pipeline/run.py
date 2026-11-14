@@ -158,7 +158,7 @@ def run_place(place, cache, out, workers=5, max_tracks=2, fetch_only=False, log=
         valid = prim["valid"] | sec["valid"]
 
     slope = prim["slope"]
-    det = P.detect(vel, valid, slope, span_years=float(t[-1]))
+    det = P.detect(vel, valid, slope, span_years=float(t[-1]), steady=P.sustained(cum, t, vel))
     vel = vel - det["median"]
     cum = cum - (det["median"] * t)[:, None, None]
     sig = det["significant"]

@@ -9,9 +9,9 @@ export const YEAR = 365.25 * DAY;
 export const LIMITS = { cracking: 1 / 500, damage: 1 / 300, structural: 1 / 150 };
 
 export const RISK = [
-  { label: 'No sinking detected', short: 'Not detected', color: '#465163' },
-  { label: 'Sinking evenly', short: 'Sinking evenly', color: '#e6cf6e' },
-  { label: 'Cracking possible (past 1/500)', short: 'Cracking possible', color: '#ff9f40' },
+  { label: 'No sinking detected', short: 'Not detected', color: '#4a5568' },
+  { label: 'Sinking evenly', short: 'Sinking evenly', color: '#4d9ac4' },
+  { label: 'Cracking possible (past 1/500)', short: 'Cracking possible', color: '#ffb23e' },
   { label: 'Cracking likely (past 1/300)', short: 'Cracking likely', color: '#ff5a3c' },
   { label: 'Structural damage likely (past 1/150)', short: 'Structural damage likely', color: '#ff2e88' },
 ];

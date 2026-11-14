@@ -31,6 +31,10 @@ the rate, how far that spot has sunk, and when it passes the damage limits.
 A view can be shared by its address, for example
 `#place=mexico-city&t=2040-01-01`.
 
+To put it online, publish the `web` folder on any static host (GitHub Pages,
+Netlify, an S3 bucket). The map tiles, building outlines and night lights are
+loaded from public servers, so the visitor needs an internet connection.
+
 ## What you see
 
 | Thing on screen | Meaning |
@@ -53,8 +57,8 @@ grows every year the ground keeps sinking unevenly.
 | Class | Rule | Colour |
 | --- | --- | --- |
 | No sinking detected | below the detection threshold | grey |
-| Sinking evenly | sinking detected, distortion below 1/500 | yellow |
-| Cracking possible | distortion past 1/500 | orange |
+| Sinking evenly | sinking detected, distortion below 1/500 | blue |
+| Cracking possible | distortion past 1/500 | amber |
 | Cracking likely | distortion past 1/300 | red |
 | Structural damage likely | distortion past 1/150 | pink |
 
@@ -89,6 +93,9 @@ loads. For each place in `pipeline/places.json` it does this:
    three times the map noise and beyond a seasonal allowance of 2 cm divided
    by the record length, on gentle terrain, in patches of at least a quarter
    of a square kilometre. Short records therefore have to clear a higher bar.
+   The sinking also has to be sustained: each third of the record must show
+   at least 30 percent of its share, which removes one off episodes such as
+   a frozen winter.
 8. **Measure uneven sinking** as the slope of the rate map (angular distortion
    per year), kept only where it is clearly above the noise.
 9. **Export** a Web Mercator grid per place at 80 m: rate, distortion rate,
@@ -106,6 +113,8 @@ Checks made while building it:
   São Paulo, marsh around New Orleans and rice fields around Semarang all
   showed up as fast "sinking" while the built up land beside them read zero.
   They no longer do. That is why those rules exist.
+* New York appeared to sink 6 cm in its first winter and then not at all.
+  The sustained sinking rule removes that kind of episode.
 
 ### Rebuild or add places
 
@@ -171,6 +180,7 @@ pipeline/            Python: NISAR products to map data
   dem.py             Copernicus elevation
   landcover.py       ESA WorldCover
   export.py          grids and files for the web app
+  quicklook.py       small PNG previews for checking results by eye
 web/                 the static site
   index.html
   css/style.css

@@ -297,7 +297,6 @@ def process_stack(items, dem=None, landcover=None, use_iono=False, atmo_px=50, s
     if miss.any():
         fill = np.nan_to_num(v0.ravel()[pix])[None, :] * span[:, None]
         Ug = np.where(miss, fill, Ug)
-    del U
 
     cum_g, t = invert_network(pairs, dates, Ug)
     nd = len(dates)
@@ -360,7 +359,31 @@ def process_stack(items, dem=None, landcover=None, use_iono=False, atmo_px=50, s
     )
 
 
-def detect(velocity, valid, slope=None, span_years=1.0, pixel_m=80.0, seasonal_m=0.02):
+def sustained(cum, t, velocity, share=0.3):
+    """True where sinking keeps going through the whole record.
+
+    A single episode (frozen or snow covered ground in one winter, a flood, a
+    construction site) can drag the fitted rate down even though nothing moves
+    before or after it. Real compaction keeps going. The record is cut into
+    three parts of equal length (two when it has fewer than 12 dates), and in
+    every part the ground must have sunk at least `share` of what the fitted
+    rate predicts for that part.
+    """
+    t = np.asarray(t, float)
+    parts = 3 if len(t) >= 12 else 2
+    edges = [int(np.argmin(np.abs(t - t[-1] * j / parts))) for j in range(parts + 1)]
+    ok = np.isfinite(velocity) & (velocity < 0)
+    for a, b in zip(edges[:-1], edges[1:]):
+        if b <= a:
+            continue
+        moved = cum[b] - cum[a]
+        expected = velocity * (t[b] - t[a])
+        with np.errstate(invalid="ignore"):
+            ok &= moved <= share * expected
+    return ok
+
+
+def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.0, seasonal_m=0.02):
     """Find ground that is clearly sinking and measure how unevenly it sinks.
 
     Returns dict(sigma, threshold, significant, beta_rate, beta_floor, median).
@@ -370,6 +393,9 @@ def detect(velocity, valid, slope=None, span_years=1.0, pixel_m=80.0, seasonal_m
       beta_rate    angular distortion rate (1/yr): how fast neighbouring ground
                    is tilting relative to each other. Uniform sinking does not
                    crack buildings; uneven sinking does.
+
+    steady: optional mask from sustained(); sinking that is not sustained
+    through the record is not counted.
 
     The threshold is the largest of: three times the map noise; 5 mm per year;
     and seasonal_m divided by the record length. The last term is there because
@@ -382,6 +408,8 @@ def detect(velocity, valid, slope=None, span_years=1.0, pixel_m=80.0, seasonal_m
     sig = (velocity - med < -thr) & valid
     if slope is not None:
         sig &= slope < 8.0
+    if steady is not None:
+        sig &= steady
     min_px = 40 if span_years >= 0.7 else 100    # 0.25 km2, or 0.64 km2 for short records
     lab, nlab = ndi.label(sig)
     if nlab:
