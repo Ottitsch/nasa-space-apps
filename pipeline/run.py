@@ -173,6 +173,11 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
         if res["valid"].mean() < 0.03 or not np.isfinite(res["sigma"]):
             log("    almost no ground with a stable radar signal, skipping this track")
             continue
+        if res["sigma"] > 0.06:
+            # three times this noise is a detection bar of 18 cm per year or
+            # more: nothing short of a mine pit would show
+            log(f"    too noisy ({res['sigma'] * 1000:.0f} mm/yr), skipping this track")
+            continue
         warp = E.Warper(grid, mg)
         valid = warp(res["valid"])
         vel = np.where(valid, warp(res["velocity"]), np.nan)
