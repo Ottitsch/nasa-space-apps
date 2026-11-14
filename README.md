@@ -24,24 +24,30 @@ python3 -m http.server 8000 --directory web
 
 Then open http://localhost:8000.
 
-Pick a place on the globe or in the list, drag the time bar, and zoom in to
-street level to see individual buildings. Click anywhere inside a place to read
-the rate, how far that spot has sunk, and when it passes the damage limits.
+Pick a place on the globe or in the list (the search button, top right), drag
+the time bar, and zoom in to street level to see individual buildings. Click
+anywhere inside a place to read the rate, how far that spot has sunk, and when
+it passes the damage limits. The pane at the top left switches between ground
+sinking and damage risk, and between satellite imagery and a dark map with city
+lights.
 
 A view can be shared by its address, for example
-`#place=mexico-city&t=2040-01-01`.
+`#place=mexico-city&t=2040-01-01` (add `&base=night` for the dark map).
 
 To put it online, publish the `web` folder on any static host (GitHub Pages,
-Netlify, an S3 bucket). The map tiles, building outlines and night lights are
-loaded from public servers, so the visitor needs an internet connection.
+Netlify, an S3 bucket). The imagery, map tiles, building outlines and night
+lights are loaded from public servers, so the visitor needs an internet
+connection. The close up imagery (Sentinel-2 cloudless by EOX) is licensed for
+non commercial use; swap the tile address in `web/js/basemap.js` if you need
+something else.
 
 ## What you see
 
 | Thing on screen | Meaning |
 | --- | --- |
-| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. Hollow grey means nothing detected yet. |
-| Time bar, solid part | Measured by NISAR. One step per radar pass, 12 days apart. |
-| Time bar, dashed part | Projection to 2050 that assumes the measured rate simply continues. A scenario, not a forecast. |
+| Bubbles on the globe | One per place. Size and colour show how far the fastest zone has sunk at the date on the time bar. A small faint dot means nothing detected yet. |
+| Time bar, white ticks | Measured by NISAR. One tick per radar pass, 12 days apart. |
+| Time bar, orange ticks | Projection to 2050, one tick per year, that assumes the measured rate simply continues. A scenario, not a forecast. |
 | Blue layer | How far the ground has sunk since the first radar pass (log scale, 1 cm to 10 m). |
 | Damage risk layer | The same ground coloured by risk class instead. |
 | Buildings | Coloured by the risk class of the ground under them at the chosen date. |
@@ -241,12 +247,13 @@ pipeline/            Python: NISAR products to map data
 web/                 the static site
   index.html
   css/style.css
-  js/app.js          map, layers, panels
+  js/app.js          map layers, panes, controls
+  js/basemap.js      the map style: imagery or night lights, borders, names
   js/data.js         reading the per place grids
   js/timeline.js     the time bar
   js/config.js       colours, limits, formatting
   data/              output of the pipeline (index.json and two files per place)
-  vendor/            MapLibre GL JS and PMTiles
+  vendor/            MapLibre GL JS, PMTiles and the Figtree typeface
 ```
 
 ## Next steps
@@ -273,8 +280,14 @@ correction.
   Satellite Facility DAAC.
 * Elevation: Copernicus DEM GLO 90, ESA.
 * Land cover: ESA WorldCover 2021.
-* Night lights on the globe: NASA GIBS, VIIRS Black Marble.
+* Imagery on the globe: NASA GIBS, Blue Marble and VIIRS Black Marble (night
+  lights).
+* Close up imagery: Sentinel-2 cloudless by EOX IT Services GmbH
+  (https://cloudless.eox.at, contains modified Copernicus Sentinel data 2024),
+  CC BY-NC-SA 4.0.
 * Buildings: Google Open Buildings, Microsoft Building Footprints and
   OpenStreetMap, merged by VIDA (source.coop).
-* Base map: OpenFreeMap, OpenMapTiles, OpenStreetMap contributors.
-* Map library: MapLibre GL JS. Tile archive reader: PMTiles.
+* Borders, roads and names: OpenFreeMap, OpenMapTiles, OpenStreetMap
+  contributors.
+* Map library: MapLibre GL JS. Tile archive reader: PMTiles. Typeface: Figtree
+  (SIL Open Font License).
