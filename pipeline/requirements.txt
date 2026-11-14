@@ -1,0 +1,8 @@
+numpy>=2.0
+scipy>=1.13
+h5py>=3.11
+fsspec>=2024.6
+aiohttp>=3.9
+requests>=2.31
+pyproj>=3.6
+rasterio>=1.3

@@ -1,0 +1,12 @@
+# pipeline download cache and python leftovers
+.cache/
+__pycache__/
+*.pyc
+.venv/
+
+# local instructions and editor files
+CLAUDE.local.md
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
