@@ -1,0 +1,33 @@
+name: check
+
+# Checks the site and the take action files on pull requests to main and on
+# main itself.
+#
+# Publishing is done by Cloudflare Pages, which is connected to this repository
+# and runs the site check as its build command. That is why no deploy token or
+# secret is stored here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      # Fetching only these folders skips the 1.2 GB of radar windows in
+      # data/nisar.
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            web
+            scripts
+
+      - run: node scripts/check-site.mjs
+
+      - run: python3 web/action/check.py
