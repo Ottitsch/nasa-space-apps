@@ -37,9 +37,9 @@
  ],
  "trend_file": "trend.bin",
  "rate_mm_per_year": {
-  "p5": -118.6,
-  "median": 3.6,
-  "p95": 193.5
+  "p5": -120.6,
+  "median": -0.1,
+  "p95": 145.1
  },
  "scale_mm": 0.1,
  "nodata": -32768,
@@ -201,6 +201,9 @@
    "min_gain": 0.03,
    "applied_pairs": 6
   },
+  "height_term": false,
+  "despike_sigma": 5,
+  "max_step_mm": 100,
   "spatial_smoothing_cells": 2,
   "trend_smoothing_cells": 4,
   "trend_trim": 0.15,

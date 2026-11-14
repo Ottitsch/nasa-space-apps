@@ -4,6 +4,9 @@
 Subsiding sites should show clearly lower rates than stable sites. This is a
 qualitative check, not a calibration: the coordinates below are approximate and
 come from general knowledge of Central Valley subsidence, not from a dataset.
+InSAR only measures motion relative to a reference, so a constant offset (the
+"stable" sites reading positive) is expected and is not an error by itself; what
+matters is the gap between subsiding and stable sites.
 
 Usage: python3 scripts/check_known_sites.py web/public/data/subsidence/asc_034 [more folders]
 """

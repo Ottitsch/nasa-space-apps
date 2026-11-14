@@ -193,7 +193,7 @@ export default function App() {
           {meta &&
             `NISAR L2 GUNW, ${meta.label}, ${meta.source.pairs.length} pairs, ` +
             `${formatDate(meta.dates[0])} – ${formatDate(meta.dates[meta.dates.length - 1])}. ` +
-            `Experimental: troposphere not corrected.`}
+            `Experimental. Motion is relative: zero is the area's typical level, not an absolute reference.`}
           {source.kind === "synthetic" && "Synthetic demo data (no NISAR cube found — run scripts/build_subsidence.py)."}
         </p>
       </header>

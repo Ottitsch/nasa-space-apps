@@ -31,3 +31,4 @@ body { font-family: system-ui, sans-serif; background: #0b1220; color: #e6edf7; 
 .toggle { display: flex; border: 1px solid #2a3858; border-radius: 6px; overflow: hidden; }
 .toggle button { padding: 5px 10px; background: #16213a; color: #e6edf7; border: 0; cursor: pointer; font-size: 0.8rem; }
 .toggle button.on { background: #2563eb; }
+.maplibregl-popup-content { color: #0b1220; font-size: 0.85rem; }

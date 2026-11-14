@@ -41,9 +41,9 @@
  ],
  "trend_file": "trend.bin",
  "rate_mm_per_year": {
-  "p5": -99.8,
-  "median": 10.6,
-  "p95": 121.2
+  "p5": -100.8,
+  "median": 11.9,
+  "p95": 100.8
  },
  "scale_mm": 0.1,
  "nodata": -32768,
@@ -355,6 +355,9 @@
    "min_gain": 0.03,
    "applied_pairs": 17
   },
+  "height_term": false,
+  "despike_sigma": 5,
+  "max_step_mm": 100,
   "spatial_smoothing_cells": 2,
   "trend_smoothing_cells": 4,
   "trend_trim": 0.15,
@@ -364,7 +367,11 @@
   ]
  },
  "combination": {
-  "rate_correlation": 0.341,
-  "method": "mean of both tracks at common 12-day dates"
+  "rate_correlation": 0.512,
+  "method": "inverse-variance weighted mean of both tracks at common 12-day dates",
+  "weights": {
+   "ascending": 0.652,
+   "descending": 0.348
+  }
  }
 }
