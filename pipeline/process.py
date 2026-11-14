@@ -383,16 +383,52 @@ def sustained(cum, t, velocity, share=0.3):
     return ok
 
 
+def _patch_sizes(mask):
+    """Connected patches of a mask: (labels, number of pixels in each patch)."""
+    lab, n = ndi.label(mask)
+    sizes = ndi.sum(mask, lab, index=np.arange(1, n + 1)) if n else np.zeros(0)
+    return lab, sizes
+
+
+def _keep_patches(mask, min_px):
+    """The mask without its patches smaller than min_px pixels."""
+    lab, sizes = _patch_sizes(mask)
+    return np.isin(lab, 1 + np.where(sizes >= min_px)[0])
+
+
+def chance_patch_px(chance, area_ratio, least=8):
+    """Smallest patch (in pixels) that chance is expected to produce less than once.
+
+    chance: ground that is not sinking and passes the distortion floor anyway.
+    One pixel in a hundred does, by construction, and they come in patches.
+    area_ratio: the area searched for uneven sinking divided by the area of
+    that quiet ground. The answer is the patch size that quiet ground reaches
+    fewer than 1 / area_ratio times, and never less than `least` pixels
+    (0.05 km2, the smallest area the map reports).
+    """
+    _, sizes = _patch_sizes(chance)
+    allowed = int(np.ceil(1.0 / max(area_ratio, 1e-9))) - 1
+    if allowed >= len(sizes):
+        return least
+    return max(least, int(np.sort(sizes)[::-1][allowed]) + 1)
+
+
 def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.0, seasonal_m=0.02):
     """Find ground that is clearly sinking and measure how unevenly it sinks.
 
-    Returns dict(sigma, threshold, significant, beta_rate, beta_floor, median).
+    Returns dict(sigma, threshold, significant, beta_rate, beta_floor,
+    beta_min_px, median).
       significant  sinking faster than the detection threshold, on gentle
                    terrain, in patches of at least a quarter of a km2 (0.64 km2
                    when the record is shorter than about eight months)
       beta_rate    angular distortion rate (1/yr): how fast neighbouring ground
                    is tilting relative to each other. Uniform sinking does not
-                   crack buildings; uneven sinking does.
+                   crack buildings; uneven sinking does. Zero unless it stands
+                   clear of the noise: steeper than 99 percent of the ground
+                   that is not sinking (beta_floor), in a patch larger than
+                   that ground would show even once by chance (beta_min_px).
+                   The map multiplies this rate by decades, so a few noisy
+                   pixels must not get through.
 
     steady: optional mask from sustained(); sinking that is not sustained
     through the record is not counted.
@@ -411,16 +447,17 @@ def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.
     if steady is not None:
         sig &= steady
     min_px = 40 if span_years >= 0.7 else 100    # 0.25 km2, or 0.64 km2 for short records
-    lab, nlab = ndi.label(sig)
-    if nlab:
-        sizes = ndi.sum(sig, lab, index=np.arange(1, nlab + 1))
-        sig = np.isin(lab, 1 + np.where(sizes >= min_px)[0])
+    sig = _keep_patches(sig, min_px)
 
     gy, gx = np.gradient(smooth(velocity, 1.0, valid), pixel_m)
     beta = np.hypot(gx, gy)
     quiet = valid & ~ndi.binary_dilation(sig, iterations=8) & np.isfinite(beta)
-    beta_floor = float(np.nanpercentile(beta[quiet], 99)) if quiet.sum() > 500 else 0.0
     near = ndi.binary_dilation(sig, iterations=5) & valid & np.isfinite(beta)
-    beta_rate = np.where(near & (beta > beta_floor), beta, 0).astype(np.float32)
+    beta_floor, beta_min_px = 0.0, 8
+    if quiet.sum() > 500:      # enough quiet ground to tell what noise looks like
+        beta_floor = float(np.nanpercentile(beta[quiet], 99))
+        beta_min_px = chance_patch_px(quiet & (beta > beta_floor), near.sum() / quiet.sum())
+    uneven = _keep_patches(near & (beta > beta_floor), beta_min_px)
+    beta_rate = np.where(uneven, beta, 0).astype(np.float32)
     return dict(sigma=sigma, threshold=thr, significant=sig, beta_rate=beta_rate,
-                beta_floor=beta_floor, median=med)
+                beta_floor=beta_floor, beta_min_px=beta_min_px, median=med)
