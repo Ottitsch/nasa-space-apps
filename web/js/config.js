@@ -8,6 +8,21 @@ export const YEAR = 365.25 * DAY;
 // (Skempton and MacDonald 1956, Bjerrum 1963). Screening levels, not verdicts.
 export const LIMITS = { cracking: 1 / 500, damage: 1 / 300, structural: 1 / 150 };
 
+// Uneven sinking from before NISAR.
+// The radar has watched since late 2025. That is far too short for any ground
+// to pass a damage limit, while the ground it sees sinking was sinking long
+// before. So the damage classes also count earlier strain, by assuming the
+// distortion rate NISAR measures now was already going on since a given year.
+// It is the assumption the projection makes ("the measured rate continues")
+// applied backwards: 2000 mirrors the 2050 end of the time bar. `since: null`
+// counts from the first radar pass only.
+export const EARLIER = [
+  { id: 'none', since: null, label: 'not counted' },
+  { id: '2015', since: 2015, label: 'assumed since 2015' },
+  { id: '2000', since: 2000, label: 'assumed since 2000' },
+];
+export const EARLIER_DEFAULT = '2000';
+
 export const RISK = [
   { label: 'No sinking detected', short: 'Not detected', color: '#4a5568' },
   { label: 'Sinking evenly', short: 'Sinking evenly', color: '#4d9ac4' },

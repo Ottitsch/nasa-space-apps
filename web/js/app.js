@@ -4,7 +4,7 @@
 
 import * as maplibregl from '../vendor/maplibre-gl.mjs';
 import {
-  END_YEAR, LIMITS, RISK, SINK_DECADES, SINK_MIN_MM, YEAR,
+  EARLIER, EARLIER_DEFAULT, END_YEAR, LIMITS, RISK, SINK_DECADES, SINK_MIN_MM, YEAR,
   fmtDate, fmtMonth, fmtRate, fmtSunk, rampCSS, sinkCSS, sinkLUT, sinkU,
 } from './config.js';
 import { hotSunk, loadFrames, loadIndex, loadPlace } from './data.js';
@@ -24,6 +24,7 @@ const narrow = () => window.innerWidth <= 860;
 
 const state = {
   mode: 'sink',     // 'sink': how far the ground has sunk, 'risk': damage risk classes
+  earlier: EARLIER_DEFAULT,   // uneven sinking from before NISAR: an id from EARLIER
   index: null,
   meta: null,       // selected place (index entry)
   place: null,      // its loaded PlaceData
@@ -215,10 +216,11 @@ function drawOverlay() {
   if (!place || !map.getSource('sink')) return;
   const y = place.years(state.time);
   const { n, rate, alpha } = place;
-  if (y <= 0) {
+  if (state.mode === 'risk') {
+    const ys = place.strainYears(state.time);
+    for (let i = 0; i < n; i++) pixels[i] = alpha[i] > 128 ? RISK_PX[place.classAt(i, ys)] : 0;
+  } else if (y <= 0) {
     pixels.fill(0);
-  } else if (state.mode === 'risk') {
-    for (let i = 0; i < n; i++) pixels[i] = alpha[i] > 128 ? RISK_PX[place.classAt(i, y)] : 0;
   } else {
     const { a, b, w } = place.blend(y);
     const half = SINK_MIN_MM / 2, k = 255 / SINK_DECADES;
@@ -279,7 +281,7 @@ function scanBuildings() {
 function updateBuildings() {
   const place = state.place;
   if (!place || !B.ids.length) return;
-  const y = place.years(state.time);
+  const y = place.strainYears(state.time);
   const counts = [0, 0, 0, 0, 0];
   for (const id of B.ids) {
     const c = place.classAt(B.where.get(id), y);
@@ -305,11 +307,27 @@ function clearBuildings() {
 
 const END = Date.UTC(END_YEAR, 11, 31);
 
-/** When a limit is passed, given how many years after the first radar pass. */
+/** The year uneven sinking is assumed to go back to, or null: first radar pass. */
+const earlierSince = () => EARLIER.find(e => e.id === state.earlier).since;
+
+/** Apply the setting to the loaded place. Earlier sinking is only assumed where
+ *  sinking is detected over at least 1 km2. The small spots in other places can
+ *  be earthworks or landfill, which have not been sinking like that for decades. */
+function applyEarlier() {
+  const place = state.place;
+  place?.setEarlier(place.meta.detected ? earlierSince() : null);
+  const since = place?.earlier ?? null;
+  $('legend-note').hidden = since == null;
+  $('legend-note').textContent = since == null ? ''
+    : `Damage classes count earlier uneven sinking too, assumed at today's rate since ${since}.`;
+}
+
+/** When a limit is passed, given how many years of uneven sinking it takes. */
 function whenText(place, yrs) {
   if (!isFinite(yrs)) return 'not at this rate';
-  const ms = place.meta.t0 + yrs * YEAR;
+  const ms = place.strainT0 + yrs * YEAR;
   if (ms > END) return `after ${END_YEAR}`;
+  if (ms < place.meta.t0) return 'passed before NISAR began';   // only with earlier sinking counted
   return (ms <= state.time ? 'passed ' : 'around ') + fmtMonth(ms);
 }
 
@@ -324,26 +342,32 @@ function inspect(e) {
   if (i < 0) return;
   const m = place.meta, y = place.years(state.time);
   const valid = place.flags[i] & 1, sig = place.flags[i] & 2;
-  const cls = place.classAt(i, y);
+  const cls = place.classAt(i, place.strainYears(state.time));
   const sunk = place.sunkAt(i, y);
+  const since = place.earlier;
   const proj = state.time > m.t1;
   let html = `<div class="pop"><span class="chip" style="background:${RISK[cls].color}">${RISK[cls].label}</span>`;
   if (!valid) {
     html += `<div class="note">No reliable radar signal here. Water, farmland, vegetation and steep ground are left out.</div>`;
-  } else if (!sig) {
+  } else if (!sig && !place.beta[i]) {
     html += `<div class="row"><span>Sinking rate</span><span>below ${m.threshold_mm_yr} mm per year</span></div>
       <div class="note">Nothing detected here so far. Slower sinking than the limit above cannot be ruled out.</div>`;
   } else {
-    html += `<div class="row"><span>Sinking rate</span><span>${fmtRate(place.rate[i])}</span></div>
-      <div class="row"><span>${proj ? 'Would have sunk by ' + fmtMonth(state.time) : 'Sunk by ' + fmtDate(state.time)}</span><span>${fmtSunk(sunk)}</span></div>
+    html += (sig
+      ? `<div class="row"><span>Sinking rate</span><span>${fmtRate(place.rate[i])}</span></div>
+      <div class="row"><span>${proj ? 'Would have sunk by ' + fmtMonth(state.time) : 'Sunk by ' + fmtDate(state.time)}</span><span>${fmtSunk(sunk)}</span></div>`
+      : `<div class="row"><span>Sinking rate</span><span>below ${m.threshold_mm_yr} mm per year</span></div>
+      <div class="row"><span>Position</span><span>rim of a sinking zone</span></div>`) + `
       <div class="row"><span>Cracking limit (1/500)</span><span>${limitText(place, i, LIMITS.cracking)}</span></div>
       <div class="row"><span>Structural limit (1/150)</span><span>${limitText(place, i, LIMITS.structural)}</span></div>
-      <div class="note">Counted from the first radar pass on ${fmtDate(m.t0)}. One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
+      <div class="note">${since == null ? 'Counted' : 'Sinking is counted'} from the first radar pass on ${fmtDate(m.t0)}.${since == null ? ''
+        : ` The damage limits also count earlier uneven sinking, assumed at today's rate since ${since}.`} One radar pixel is 80 m wide: a screening estimate, not a building inspection.</div>`;
   }
   popup.setLngLat(e.lngLat).setHTML(html + '</div>').addTo(map);
   emit('inspect', {
     place: m.id, lng, lat, valid: !!valid, detected: !!sig, riskClass: cls,
     rate_mm_per_year: valid ? place.rate[i] : null, sunk_mm: sunk, time: state.time, projected: proj,
+    earlierSince: since,
   });
 }
 
@@ -431,11 +455,10 @@ function updatePanel() {
   }
   const place = state.place;
   if (place && m.detected) {
-    const a = place.areaByClass(place.years(t), 5);
+    const a = place.areaByClass(place.strainYears(t), 5);
     $('strain').hidden = false;
     $('strain-bars').innerHTML = [2, 3, 4].map((i, k) => {
-      const yrs = place.yearsToFirstPass(STRAIN_LIMITS[k]);
-      const when = isFinite(yrs) && m.t0 + yrs * YEAR <= END ? 'first ' + whenText(place, yrs) : whenText(place, yrs);
+      const when = whenText(place, place.yearsToFirstPass(STRAIN_LIMITS[k])).replace(/^(passed|around) /, 'first $1 ');
       return `<li><i class="sw" style="background:${RISK[i].color}"></i><span>${RISK[i].short}</span><span class="v">${fmtArea(a[i])}</span>
         <span class="when">${when}</span></li>`;
     }).join('');
@@ -450,20 +473,26 @@ const fmtArea = v => (v >= 100 ? Math.round(v) : v.toFixed(1)) + ' km²';
 const pastLimits = a => a[2] + a[3] + a[4];
 const endArea = new WeakMap();    // built up land past the limits at the end of the time bar
 
-/** Why the rows read what they read. Uneven sinking only counts from the first
- *  radar pass, so through the measured period the honest answer is "none yet". */
+/** What the rows rest on. With earlier sinking counted they are an estimate,
+ *  and say so. Without it they count from the first radar pass, which no
+ *  record is long enough for yet, so the honest answer is "none so far". */
 function strainNote(place, a) {
-  const since = `the first radar pass on ${fmtDate(place.meta.t0)}`;
+  const m = place.meta, since = place.earlier;
   const first = place.yearsToFirstPass(LIMITS.cracking);
   if (!isFinite(first)) {
     return 'Uneven sinking does not stand clear of the noise on built up land here yet. Longer records lower the noise.';
   }
-  if (pastLimits(a) >= 0.05) return `Counted from ${since}. Strain from earlier sinking is not included.`;
-  if (place.meta.t0 + first * YEAR > END) {
-    return `Uneven sinking is counted from ${since}. What is measured here so far is too gentle to pass a limit before ${END_YEAR}.`;
+  if (since != null) {
+    return `Estimate. The radar has watched this place since ${fmtDate(m.t0)}. These areas assume the uneven sinking it measures now was already going on at the same rate since ${since}.`
+      + (m.early ? ` With only ${m.months} months of passes that rate is still rough.` : '');
   }
-  if (!endArea.has(place)) endArea.set(place, pastLimits(place.areaByClass(place.years(END), 5)));
-  return `Uneven sinking is counted from ${since}, so no ground has had time to pass a limit yet. `
+  const pass = `the first radar pass on ${fmtDate(m.t0)}`;
+  if (pastLimits(a) >= 0.05) return `Counted from ${pass}. Strain from earlier sinking is not included.`;
+  if (m.t0 + first * YEAR > END) {
+    return `Uneven sinking is counted from ${pass}. What is measured here so far is too gentle to pass a limit before ${END_YEAR}.`;
+  }
+  if (!endArea.has(place)) endArea.set(place, pastLimits(place.areaByClass((END - m.t0) / YEAR, 5)));
+  return `Uneven sinking is counted from ${pass}, so no ground has had time to pass a limit yet. `
     + `If the measured rate continues, ${fmtArea(endArea.get(place))} of built up land is past the cracking limit by ${END_YEAR}.`;
 }
 
@@ -495,6 +524,7 @@ async function selectPlace(id, opts = {}) {
   clearBuildings();
   removeOverlay();
   state.meta = m; state.place = null;
+  applyEarlier();
   stopSpin();
   showPanel(m);
   timeline.setRange(m.t0, m.t1);
@@ -512,6 +542,7 @@ async function selectPlace(id, opts = {}) {
     const place = await loadPlace(m);
     if (token !== state.loadToken) return;
     state.place = place;
+    applyEarlier();
     addOverlay(place);
     drawOverlay(); updatePanel(); scanBuildings();
     toast('');
@@ -532,6 +563,7 @@ function deselect() {
   popup.remove();
   clearBuildings(); removeOverlay();
   state.meta = null; state.place = null;
+  applyEarlier();
   $('place').hidden = true;
   document.body.classList.remove('has-place');
   for (const b of $('places').querySelectorAll('button')) b.removeAttribute('aria-current');
@@ -587,6 +619,16 @@ function setMode(mode) {
   drawOverlay();
 }
 
+// ------------------------------------------- sinking from before NISAR
+
+function setEarlier(id) {
+  state.earlier = EARLIER.some(e => e.id === id) ? id : EARLIER_DEFAULT;
+  $('earlier').value = state.earlier;
+  applyEarlier();
+  popup.remove();
+  drawOverlay(); updateBuildings(); updatePanel();
+}
+
 // --------------------------------------------------------------------- time
 
 let frame = 0;
@@ -615,13 +657,14 @@ function writeHash() {
     const parts = [];
     if (state.meta) parts.push('place=' + state.meta.id);
     parts.push('t=' + new Date(state.time).toISOString().slice(0, 10));
+    if (state.earlier !== EARLIER_DEFAULT) parts.push('earlier=' + state.earlier);
     history.replaceState(null, '', '#' + parts.join('&'));
   }, 250);
 }
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   const t = Date.parse(q.get('t') || '');
-  return { place: q.get('place'), time: isNaN(t) ? null : t };
+  return { place: q.get('place'), time: isNaN(t) ? null : t, earlier: q.get('earlier') };
 }
 
 // --------------------------------------------------------------------- boot
@@ -633,6 +676,8 @@ function staticUI() {
   $('mode-sink').addEventListener('click', () => setMode('sink'));
   $('mode-risk').addEventListener('click', () => setMode('risk'));
   $('place-close').addEventListener('click', deselect);
+  $('earlier').innerHTML = EARLIER.map(e => `<option value="${e.id}">${e.label}</option>`).join('');
+  $('earlier').addEventListener('change', e => { setEarlier(e.target.value); writeHash(); });
   $('place-hot').addEventListener('click', () => {
     const hot = state.place?.hot;
     if (hot) map.flyTo({ center: hot, zoom: 15.2, pitch: 55, bearing: -18, duration: 3200, essential: true });
@@ -652,12 +697,13 @@ async function boot() {
   $('about-meta').textContent = `Data built ${state.index.generated} from ${state.index.places.length} places. ${state.index.source}.`;
   buildList();
   const h = readHash();
+  setEarlier(h.earlier);
   globalRange();
   if (h.time) timeline.setTime(h.time);
   await mapReady;
   map.setPadding(globePad());
   addLayers();
-  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode };
+  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode, setEarlier };
   if (h.place && byId(h.place)) {
     await selectPlace(h.place);
     if (h.time) timeline.setTime(h.time);
