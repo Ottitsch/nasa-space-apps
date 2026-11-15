@@ -125,6 +125,7 @@ assumed since 2000:
 | Mexico City, Mexico | 51.6 km² | 24.8 km² | 1.4 km² |
 | Tehran Plain, Iran | 22.1 km² | 8.6 km² | 0.5 km² |
 | Mashhad, Iran | 17.0 km² | 1.8 km² | 0.0 km² |
+| Cuautitlán Izcalli, Mexico | 13.4 km² | 3.0 km² | 0.2 km² |
 | Quetta, Pakistan | 11.7 km² | 4.8 km² | 0.0 km² |
 | Toluca, Mexico | 1.3 km² | 1.5 km² | 0.5 km² |
 | Kabul, Afghanistan | 1.6 km² | 0.7 km² | 0.0 km² |
@@ -148,6 +149,7 @@ assumed since 2000:
 | Changsha, China | 0.3 km² | 0.0 km² | 0.0 km² |
 | Algiers, Algeria | 0.2 km² | 0.0 km² | 0.0 km² |
 | Ibadan, Nigeria | 0.2 km² | 0.0 km² | 0.0 km² |
+| Tepic, Mexico | 0.2 km² | 0.0 km² | 0.0 km² |
 | Taipei, Taiwan | 0.2 km² | 0.0 km² | 0.0 km² |
 | Istanbul, Türkiye | 0.2 km² | 0.0 km² | 0.0 km² |
 | Fengxiang, China | 0.1 km² | 0.0 km² | 0.0 km² |
@@ -169,13 +171,14 @@ limits today to 62 km² by 2050, Tehran from 31 to 69 km².
 
 ## What the data shows so far
 
-Built on 2026-11-15 from 494 places. At least 1 km² of built up land is
-detected sinking in 75 of them:
+Built on 2026-11-15 from 745 places. At least 1 km² of built up land is
+detected sinking in 79 of them:
 
 | Place | Fastest zone | Area sinking | Record | Smallest detectable rate |
 | --- | --- | --- | --- | --- |
 | Mexico City, Mexico | 26 cm per year | 402 km² | 11 months | 1.9 cm per year |
 | Tehran Plain, Iran | 26 cm per year | 122 km² | 4 months (early) | 3.5 cm per year |
+| Cuautitlán Izcalli, Mexico | 25 cm per year | 160 km² | 11 months | 1.6 cm per year |
 | Guangzhou, China | 23 cm per year | 5 km² | 4 months (early) | 4.2 cm per year |
 | Manaus, Brazil | 20 cm per year | 8 km² | 4 months (early) | 4.6 cm per year |
 | Quetta, Pakistan | 19 cm per year | 56 km² | 4 months (early) | 4.7 cm per year |
@@ -213,6 +216,7 @@ detected sinking in 75 of them:
 | Wuhan, China | 9 cm per year | 3 km² | 4 months (early) | 3.7 cm per year |
 | Lomé, Togo | 9 cm per year | 5 km² | 4 months (early) | 3.0 cm per year |
 | Makkah, Saudi Arabia | 8 cm per year | 7 km² | 4 months (early) | 5.4 cm per year |
+| Tepic, Mexico | 8 cm per year | 2 km² | 4 months (early) | 3.7 cm per year |
 | Varanasi, India | 8 cm per year | 2 km² | 4 months (early) | 5.0 cm per year |
 | Shanghai, China | 8 cm per year | 3 km² | 4 months (early) | 6.9 cm per year |
 | Nairobi, Kenya | 8 cm per year | 2 km² | 4 months (early) | 3.3 cm per year |
@@ -220,6 +224,7 @@ detected sinking in 75 of them:
 | Daegu, South Korea | 8 cm per year | 2 km² | 4 months (early) | 3.0 cm per year |
 | Taipei, Taiwan | 8 cm per year | 1 km² | 11 months | 1.1 cm per year |
 | Celaya, Mexico | 8 cm per year | 4 km² | 11 months | 2.4 cm per year |
+| Granada, Spain | 7 cm per year | 5 km² | 4 months (early) | 3.0 cm per year |
 | Changzhi, China | 7 cm per year | 3 km² | 4 months (early) | 4.0 cm per year |
 | León, Mexico | 7 cm per year | 11 km² | 4 months (early) | 3.0 cm per year |
 | Pyongyang, North Korea | 7 cm per year | 4 km² | 4 months (early) | 3.1 cm per year |
@@ -227,6 +232,7 @@ detected sinking in 75 of them:
 | Erbil, Iraq | 7 cm per year | 3 km² | 4 months (early) | 3.2 cm per year |
 | Isfahan, Iran | 7 cm per year | 20 km² | 4 months (early) | 3.3 cm per year |
 | Lucknow, India | 6 cm per year | 3 km² | 4 months (early) | 4.3 cm per year |
+| Torreón, Mexico | 6 cm per year | 10 km² | 4 months (early) | 3.7 cm per year |
 | Beijing, China | 6 cm per year | 18 km² | 4 months (early) | 3.0 cm per year |
 | Shiraz, Iran | 6 cm per year | 2 km² | 4 months (early) | 3.8 cm per year |
 | Bangkok, Thailand | 6 cm per year | 6 km² | 4 months (early) | 3.4 cm per year |
@@ -254,20 +260,26 @@ detected sinking in 75 of them:
 measured over a single season, so the yearly figure may change as the record
 grows.
 
-No built up land sinking above the detection limit (yet) in the other 419
+No built up land sinking above the detection limit (yet) in the other 666
 places, among them Houston, New Orleans, New York and Venice, all known to
 sink more slowly than a few months of data can reveal. In some of them,
 Central Valley, Bakersfield, Antelope Valley, Willcox Basin, Las Vegas and
 Cairo among them, sinking is marked on the map under farmland edges, bare
 ground, mines or pits, but not under 1 km² of buildings.
 
-35 places in `places.json` have no map files: too little ground with a stable
+53 places in `places.json` have no map files: too little ground with a stable
 radar signal (Kathmandu, Yangon, Mogadishu), too few usable radar passes (the
-Russian cities, Moscow among them), or too noisy a track (Islamabad, Milan,
-Patna). Four more are held back after review, each with its reason in a
-`hold` field: Shantou, Zhongshan, Jiangmen and Jiangyin, which read 22 to 35
-cm per year on noisy tracks along rivers and fish ponds, far above anything
-reported there.
+Russian cities, Moscow among them, and much of Cuba and eastern Ukraine), or
+too noisy a track (Islamabad, Milan, Patna). Eleven more are held back after
+review, each with its reason in a `hold` field:
+
+* Shantou, Zhongshan, Jiangmen and Jiangyin read 22 to 35 cm per year on
+  noisy tracks along rivers and fish ponds, far above anything reported there.
+* Belfast, Rotterdam, Cardiff (in fact Weston-super-Mare) and Oklahoma City
+  sit on clay or peat that shrinks in a dry summer and swells back in winter.
+  A June to October record reads that as sinking.
+* Turin, Honolulu and Coatzacoalcos rest on single noisy tracks with no known
+  cause for what they show.
 
 ### Why most of the sinking found so far is in Iran and Mexico
 
@@ -282,8 +294,8 @@ is stable. Three things decide where sinking shows up:
 2. **NASA's records are long in only a few regions.** NISAR products start in
    late 2025 over parts of the United States, central Mexico, north west
    India, Japan, Taiwan, Venezuela, the Andes and a few other frames.
-   Everywhere else they start in June 2026. Of the 494 places, 44 have nine to
-   eleven months of passes and 450 have about four.
+   Everywhere else they start in June 2026. Of the 745 places, 77 have nine to
+   eleven months of passes and 668 have about four.
 3. **Few cities sink faster than a few centimetres per year.** The basins of
    Iran, Quetta and the old lake beds of central Mexico are among the fastest
    sinking cities measured anywhere, so they clear the four month bar easily
@@ -296,7 +308,11 @@ others, besides Delhi, Ahmedabad and Chandigarh in India and Coachella Valley,
 Phoenix and Los Angeles in the United States. Among the cities over a
 million people added later the same month it shows in Chennai, Guangzhou,
 Wuhan, Changsha, Medan, Manaus, Abu Dhabi, Jeddah, Algiers, Ibadan, Lomé,
-Maputo, Daegu, Seoul, Damascus, Erbil, Shiraz and others. Every rerun of the pipeline
+Maputo, Daegu, Seoul, Damascus, Erbil, Shiraz and others, and of the North
+American and European cities added after them in Cuautitlán Izcalli (the
+north of the Mexico City valley), Torreón, Tepic and Granada. Elsewhere in
+North America and Europe nothing sinks faster than the four month bar, which
+matches what is known there. Every rerun of the pipeline
 lengthens the records. By about June 2027 every place will have a full year
 of passes and a bar near 2 cm per year.
 
@@ -390,8 +406,8 @@ Checks made while building it:
 
 | Folder | What | Size |
 | --- | --- | --- |
-| `web/data` | what the map loads: one small index and two files per place | 66 MB |
-| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 2.1 GB |
+| `web/data` | what the map loads: one small index and two files per place | 82 MB |
+| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 2.3 GB |
 
 Both are in the repository. `data/nisar` is the downloaded radar data in a
 compact form (see `data/nisar/README.md`), so nothing has to be fetched again
@@ -426,6 +442,15 @@ population. Places that failed are kept in `places.json` but have no map
 files (see What the data shows so far). Places held back after review carry
 a `hold` field with the reason. Of the new places, 35 show sinking under at
 least 1 km² of built up land.
+
+The same month North America and Europe were filled in further, where few
+cities pass a million people counted within their limits (Boston, Seattle and
+Vancouver do not): every city over 250,000 people there, every Canadian city
+over 100,000, and five known sinking spots that are not big cities (the
+Groningen gas field, Ravenna, Prato and Pistoia, Granada, Galveston and Texas
+City). European Russia was left out, as all its cities failed in the first
+batch for too few usable passes. That made 276 more places, 258 of them
+built.
 
 ### Update or add places
 
@@ -468,6 +493,11 @@ threshold, and turns early results into firm ones.
 * **Uneven sinking is measured over about 240 m.** Sharp steps at faults or at
   the edge of fill, where buildings crack first, are smoothed out, so the
   damage classes are a lower bound for the worst spots.
+* **A summer record can mistake shrinking clay for sinking.** Clay and peat
+  shrink in a dry summer and swell back in winter. Most places were measured
+  from June to October, so in temperate cities on such ground a few
+  centimetres of seasonal drop can read as sinking. The places where this is
+  likely are held back (see above); a full year of passes separates the two.
 * **Short records only see fast sinking.** Most places have about four months
   of passes so far, which only reveals sinking faster than roughly 3 to 5 cm
   per year. "No sinking detected" there means "nothing that fast", not
