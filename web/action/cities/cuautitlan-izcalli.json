@@ -1,0 +1,188 @@
+{
+  "id": "cuautitlan-izcalli",
+  "checked": "2026-11-15",
+  "languages": [
+    "es"
+  ],
+  "place_name": {
+    "en": "Northern Valley of Mexico (Cuautitlán Izcalli, Ecatepec and neighbours)",
+    "es": "Norte del Valle de México (Cuautitlán Izcalli, Ecatepec y municipios vecinos)"
+  },
+  "country_name": {
+    "en": "Mexico",
+    "es": "México"
+  },
+  "summary": {
+    "en": "Each municipality in this area has its own civil protection and fire department, which checks cracked buildings and ground. Ecatepec and Cuautitlán Izcalli are listed here, and an official state portal lists the town halls of Tultitlán, Coacalco, Tecámac, Tlalnepantla and the rest. Water is supplied by municipal utilities such as SAPASE in Ecatepec and Operagua in Cuautitlán Izcalli, which pump from their own wells, with the State of Mexico water commission (CAEM) and the state civil protection coordination working above them. The national water commission CONAGUA decides who may pump groundwater, and its balance for the Cuautitlán-Pachuca aquifer leaves no volume for new permits.",
+    "es": "Cada municipio de esta zona tiene su propia protección civil y bomberos, que revisa inmuebles y suelo con grietas. Aquí aparecen Ecatepec y Cuautitlán Izcalli, y un portal oficial del estado reúne los ayuntamientos de Tultitlán, Coacalco, Tecámac, Tlalnepantla y los demás. El agua la prestan organismos municipales como el SAPASE en Ecatepec y Operagua en Cuautitlán Izcalli, que extraen de sus propios pozos, y por encima de ellos están la Comisión del Agua del Estado de México (CAEM) y la Coordinación General de Protección Civil del estado. La Comisión Nacional del Agua (CONAGUA) decide quién puede extraer agua subterránea, y su balance del acuífero Cuautitlán-Pachuca no deja volumen para nuevas concesiones."
+  },
+  "bodies": [
+    {
+      "id": "pc-ecatepec",
+      "name": "Dirección de Protección Civil y Bomberos de Ecatepec de Morelos",
+      "name_en": "Ecatepec Civil Protection and Fire Department",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in Ecatepec, where the sinking in this area is fastest. The municipal Atlas of Risks says the flat eastern part of Ecatepec, on the bed of the old Lake Texcoco, sinks unevenly and that many buildings on Avenida Central visibly lean. This is the municipal office for risks to buildings and ground.",
+        "es": "Para domicilios en Ecatepec, donde el hundimiento de esta zona es más rápido. El Atlas de Riesgos municipal señala que la parte plana del oriente de Ecatepec, sobre el antiguo lago de Texcoco, sufre hundimientos diferenciales y que muchas construcciones de la Avenida Central muestran desplomes a simple vista. Es la oficina municipal encargada de los riesgos para inmuebles y suelo."
+      },
+      "website": "https://ecatepec.gob.mx/",
+      "contact_url": "https://ecatepec.gob.mx/directores/",
+      "email": null,
+      "phone": "55 5836 1500 ext. 1904",
+      "postal": null,
+      "source": "https://ecatepec.gob.mx/directores/"
+    },
+    {
+      "id": "pc-izcalli",
+      "name": "Coordinación Municipal de Protección Civil y Bomberos de Cuautitlán Izcalli",
+      "name_en": "Cuautitlán Izcalli Civil Protection and Fire Department",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in Cuautitlán Izcalli. This municipal office inspects risks and issues safety opinions (dictámenes) on buildings and sites, so it is the office to ask to check a cracked house or street.",
+        "es": "Para domicilios en Cuautitlán Izcalli. Esta oficina municipal revisa riesgos y emite dictámenes de seguridad sobre inmuebles y predios, por lo que es a la que se pide revisar una casa o una calle con grietas."
+      },
+      "website": "https://cuautitlanizcalli.gob.mx/",
+      "contact_url": "https://cuautitlanizcalli.gob.mx/",
+      "email": "proteccioncivil.bomberos@cizcalli.gob.mx",
+      "phone": "55 5864 2500 ext. 7334",
+      "postal": "Av. Transformación esquina Luis Pasteur, Parque Industrial Cuamatla, C.P. 54730, Cuautitlán Izcalli, Estado de México",
+      "source": "https://cuautitlanizcalli.gob.mx/wp-content/uploads/2025/02/EMISION-DE-DICTAMENES.pdf"
+    },
+    {
+      "id": "municipios",
+      "name": "Portal de Información Municipal, Subsecretaría de Desarrollo Municipal del Estado de México (directorio de ayuntamientos)",
+      "name_en": "State of Mexico Municipal Information Portal (directory of the town halls)",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in Tultitlán, Coacalco, Tecámac, Tlalnepantla, Tultepec, Atizapán, Cuautitlán and the other municipalities. Each one has its own civil protection office, normally the first to visit a cracked house or street. This official state portal gives the address, phone and website of every town hall; confirm the details on the municipality's own website before going.",
+        "es": "Para domicilios en Tultitlán, Coacalco, Tecámac, Tlalnepantla, Tultepec, Atizapán, Cuautitlán y los demás municipios. Cada uno tiene su propia protección civil, que suele ser la primera en acudir a revisar una casa o una calle con grietas. Este portal oficial del estado da la dirección, el teléfono y la página web de cada ayuntamiento; conviene confirmar los datos en el sitio del municipio antes de acudir."
+      },
+      "website": "https://ssdm.edomex.gob.mx/informacion_basica_municipal",
+      "contact_url": "https://ssdm.edomex.gob.mx/sitios_web",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://ssdm.edomex.gob.mx/informacion_basica_municipal"
+    },
+    {
+      "id": "conagua",
+      "name": "Comisión Nacional del Agua (CONAGUA), Organismo de Cuenca Aguas del Valle de México",
+      "name_en": "National Water Commission (CONAGUA), Valley of Mexico Basin Agency",
+      "level": "national",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For the whole area. CONAGUA is the federal authority that grants and supervises the permits to pump groundwater. Its 2024 balance for the Cuautitlán-Pachuca aquifer, under Cuautitlán Izcalli, Tultitlán, Coacalco, Tecámac and neighbours, shows permits for about 587 million m³ a year against a recharge of about 357 million. This is its regional office for the Valley of Mexico.",
+        "es": "Para toda la zona. La CONAGUA es la autoridad federal que otorga y vigila las concesiones para extraer agua subterránea. Su balance de 2024 del acuífero Cuautitlán-Pachuca, bajo Cuautitlán Izcalli, Tultitlán, Coacalco, Tecámac y municipios vecinos, registra concesiones por unos 587 millones de m³ al año frente a una recarga de unos 357 millones. Esta es su oficina regional para el Valle de México."
+      },
+      "website": "https://www.gob.mx/conagua",
+      "contact_url": "https://www.gob.mx/conagua",
+      "email": null,
+      "phone": "55 5804 4300",
+      "postal": "Río Churubusco 650, esquina Tezontle, Colonia Carlos A. Zapata Vela, C.P. 08040, Ciudad de México",
+      "source": "https://files.conagua.gob.mx/datospersonales/documentos/3_ProcedimientoQuejas_DP_2024.pdf"
+    },
+    {
+      "id": "sapase",
+      "name": "Sistema de Agua Potable, Alcantarillado y Saneamiento de Ecatepec (SAPASE)",
+      "name_en": "Ecatepec Water and Sanitation Utility (SAPASE)",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses in Ecatepec only. This municipal utility runs Ecatepec's water service and its wells, so it is the body to ask which wells supply your neighbourhood and how much they pump.",
+        "es": "Solo para domicilios en Ecatepec. Este organismo municipal presta el servicio de agua de Ecatepec y opera sus pozos, por lo que se le puede preguntar qué pozos abastecen a la colonia y cuánta agua extraen."
+      },
+      "website": "https://sapase.gob.mx/",
+      "contact_url": "https://sapase.gob.mx/",
+      "email": null,
+      "phone": "55 5779 9100",
+      "postal": "Calle Palma No. 38, Colonia La Mora, San Cristóbal Centro, C.P. 55030, Ecatepec de Morelos, Estado de México",
+      "source": "https://sapase.gob.mx/"
+    },
+    {
+      "id": "operagua",
+      "name": "Operagua Izcalli, O.P.D.M.",
+      "name_en": "Cuautitlán Izcalli Water Utility (Operagua)",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses in Cuautitlán Izcalli only. This municipal utility runs the water service and the municipality's deep wells, which supply it together with water from the Cutzamala system. Ask it which wells supply your neighbourhood and how much they pump.",
+        "es": "Solo para domicilios en Cuautitlán Izcalli. Este organismo municipal presta el servicio de agua y opera los pozos profundos del municipio, que lo abastecen junto con el agua del Sistema Cutzamala. Se le puede preguntar qué pozos abastecen a la colonia y cuánta agua extraen."
+      },
+      "website": "https://www.operaguaci.gob.mx/",
+      "contact_url": "https://www.operaguaci.gob.mx/",
+      "email": "hola@operaguaci.gob.mx",
+      "phone": "55 5864 0430",
+      "postal": "Av. La Super L 7A y 7B, Centro Urbano Poniente, C.P. 54700, Cuautitlán Izcalli, Estado de México",
+      "source": "https://www.operaguaci.gob.mx/"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley General de Transparencia y Acceso a la Información Pública",
+    "name_en": "Article 8 of the Constitution (right of petition) and the General Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
+    "what": {
+      "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: the General Law gives every authority in the country at most 20 working days, which can be extended by up to 10 more. In August 2026 the State of Mexico passed a reform that closes its transparency institute Infoem and hands its role to a new body, Transparencia Mexiquense; appeals may be slow while the change settles.",
+      "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: la Ley General da a toda autoridad del país como máximo 20 días hábiles, ampliables hasta por 10 más. En agosto de 2026 el Estado de México aprobó una reforma que extingue el Infoem y pasa sus funciones a un nuevo órgano, Transparencia Mexiquense; los recursos pueden tardar mientras se completa el cambio."
+    },
+    "how": {
+      "en": "Send or hand in the letter and keep the stamped copy or acknowledgement of receipt (acuse). To make the questions a formal information request to a municipality, its water utility or a state body, file them free of charge on SAIMEX, which was still taking requests in November 2026, choosing the body you are writing to, or send them to that body's Unidad de Transparencia. For CONAGUA, which is federal, use the Plataforma Nacional de Transparencia (plataformadetransparencia.org.mx). If no answer comes in time, you can appeal (recurso de revisión) within 15 working days.",
+      "es": "Hay que enviar o entregar el escrito y conservar el acuse de recibo. Para que las preguntas cuenten como solicitud formal de información a un municipio, a su organismo de agua o a una dependencia estatal, se presentan sin costo en el SAIMEX, que seguía recibiendo solicitudes en noviembre de 2026, eligiendo la dependencia a la que se escribe, o ante la Unidad de Transparencia de esa dependencia. Para la CONAGUA, que es federal, se usa la Plataforma Nacional de Transparencia (plataformadetransparencia.org.mx). Si no hay respuesta en el plazo, se puede presentar un recurso de revisión dentro de los 15 días hábiles siguientes."
+    },
+    "url": "https://www.saimex.org.mx/",
+    "deadline_days": 20,
+    "deadline_text": {
+      "en": "20 working days",
+      "es": "20 días hábiles"
+    },
+    "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTAIP.pdf"
+  },
+  "urgent": {
+    "phone": "911",
+    "what": {
+      "en": "Leave the building and call 911, the national emergency number, which works in every municipality of the area; ask for firefighters or civil protection. In Cuautitlán Izcalli the municipal fire and civil protection line is also 55 2620 1909.",
+      "es": "Hay que salir del inmueble y llamar al 911, el número nacional de emergencias, que funciona en todos los municipios de la zona, y pedir bomberos o protección civil. En Cuautitlán Izcalli, la línea municipal de Bomberos y Protección Civil es además el 55 2620 1909."
+    },
+    "source": "https://www.gob.mx/911"
+  },
+  "context": {
+    "en": "With satellite radar, the national statistics institute INEGI found a sinking zone of about 214 km² across Cuautitlán Izcalli, Cuautitlán, Tultitlán, Coacalco, Tultepec, Tecámac, Zumpango, Ecatepec and neighbours, going down up to 8.4 cm a year in 2019 to 2020, while part of Ecatepec belongs to the much faster sinking zone of Mexico City. CONAGUA's 2024 balance for the Cuautitlán-Pachuca aquifer counts permits for about 587 million m³ a year against a recharge of about 357 million, so the difference comes out of storage that does not renew. Ecatepec's municipal Atlas of Risks says the flat eastern part of the municipality, on the bed of the old Lake Texcoco, sinks unevenly because the aquifer is overpumped and the lake clays compact: many buildings on Avenida Central visibly lean, and some drains now slope the wrong way, which makes floods worse.",
+    "es": "Con radar satelital, el INEGI detectó una zona de hundimiento de unos 214 km² entre Cuautitlán Izcalli, Cuautitlán, Tultitlán, Coacalco, Tultepec, Tecámac, Zumpango, Ecatepec y municipios vecinos, que bajaba hasta 8.4 cm por año en 2019 y 2020, mientras que una parte de Ecatepec pertenece a la zona de hundimiento de la Ciudad de México, mucho más rápida. El balance de 2024 de la CONAGUA para el acuífero Cuautitlán-Pachuca registra concesiones por unos 587 millones de m³ al año frente a una recarga de unos 357 millones, por lo que la diferencia sale de un almacenamiento que no se renueva. El Atlas de Riesgos de Ecatepec señala que la parte plana del oriente del municipio, sobre el antiguo lago de Texcoco, sufre hundimientos diferenciales por la sobreexplotación del acuífero y la consolidación de las arcillas: muchas construcciones de la Avenida Central muestran desplomes a simple vista y algunos tramos de drenaje quedaron con contrapendiente, lo que agrava las inundaciones.",
+    "sources": [
+      "https://www.inegi.org.mx/contenidos/productos/prod_serv/contenidos/espanol/bvinegi/productos/nueva_estruc/889463904441.pdf",
+      "https://sigagis.conagua.gob.mx/gas1/Edos_Acuiferos_18/edomex/DR_1508.pdf",
+      "https://ecatepec.gob.mx/wp-content/uploads/2025/06/Atlas_de_Riesgos_de_ECATEPEC_2024_final_REVISADO1.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Mexico without restrictions, but few neighbours have it: in a 2026 survey of internet users, 91% had a WhatsApp account and 30% had Telegram, so street and neighbourhood groups nearly always run on WhatsApp. In a WhatsApp group every member can see the phone numbers of all the others, so keep the group to people you can place and do not post ID documents or property deeds there. Water is a tense subject here: in October 2025 a state operation against illegal water selling led to road blockades in Cuautitlán Izcalli, so if the group suspects an illegal well or water trade, report it to the authorities and do not confront the people involved. Be wary of anyone in a chat who offers to arrange an inspection or a permit for money, and ask any inspector for official identification.",
+      "es": "Telegram funciona en México sin restricciones, pero pocos vecinos lo tienen: en una encuesta de 2026 entre usuarios de internet, 91% tenía cuenta de WhatsApp y 30% de Telegram, así que los grupos de calle o de colonia casi siempre están en WhatsApp. En un grupo de WhatsApp todos los integrantes ven el número de teléfono de los demás, por lo que conviene limitarlo a personas conocidas y no publicar ahí identificaciones ni escrituras. El agua es un tema tenso en la zona: en octubre de 2025 un operativo estatal contra la venta ilegal de agua provocó cierres de vialidades en Cuautitlán Izcalli, así que si el grupo sospecha de un pozo o una venta de agua ilegal, conviene denunciarlo ante las autoridades y no confrontar a las personas involucradas. Hay que desconfiar de quien ofrezca en un chat gestionar una inspección o un permiso a cambio de dinero, y a cualquier inspector se le puede pedir su identificación oficial."
+    },
+    "sources": [
+      "https://irp.cdn-website.com/81280eda/files/uploaded/Estudio-Habitos-de-los-Usuarios-de-Internet-2026-Version-publica.pdf",
+      "https://freedomhouse.org/country/mexico/freedom-net/2025",
+      "https://cuautitlanizcalli.gob.mx/wp-content/uploads/2025/10/CGCS_271025_349_CAUDAL.pdf"
+    ]
+  },
+  "groups": []
+}

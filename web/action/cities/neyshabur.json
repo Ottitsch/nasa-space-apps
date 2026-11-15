@@ -1,0 +1,173 @@
+{
+  "id": "neyshabur",
+  "checked": "2026-11-15",
+  "languages": ["fa"],
+  "place_name": {
+    "en": "Neyshabur",
+    "fa": "نیشابور"
+  },
+  "country_name": {
+    "en": "Iran",
+    "fa": "ایران"
+  },
+  "summary": {
+    "en": "In Neyshabur a cracking or dangerous building is first the municipality's job: under clause 14 of Article 55 of the Municipality Law it must have the building examined and order the danger removed, and requests are registered through the municipality's 137 centre. In the villages and small towns of the plain outside the city, the village administration or local municipality answers first, with the Neyshabur county governorate and the province's crisis management office above them. Wells and groundwater pumping on the plain are licensed and supervised by the Neyshabur office of the Khorasan Razavi Regional Water Company (Ministry of Energy), and the sinking is studied by the Geological Survey of Iran's North East office in Mashhad and mapped by the National Cartographic Center.",
+    "fa": "در نیشابور رسیدگی به ساختمان ترک‌خورده یا خطرناک در گام نخست با شهرداری است: طبق بند ۱۴ ماده ۵۵ قانون شهرداری، شهرداری باید پس از بازدید مأمور فنی خود دستور رفع خطر بدهد و درخواست‌ها از راه مرکز ۱۳۷ شهرداری نیشابور ثبت می‌شود. در روستاها و شهرهای کوچک دشت که بیرون از محدوده شهر نیشابور هستند، نخست دهیاری یا شهرداری محل و سپس فرمانداری ویژه نیشابور و اداره کل مدیریت بحران استانداری خراسان رضوی پاسخ‌گو هستند. صدور پروانه چاه و نظارت بر برداشت آب زیرزمینی در دشت با امور منابع آب نیشابور، وابسته به شرکت آب منطقه‌ای خراسان رضوی (وزارت نیرو)، است و فرونشست را اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق در مشهد بررسی می‌کند و سازمان نقشه‌برداری کشور نقشه آن را تهیه کرده است."
+  },
+  "bodies": [
+    {
+      "id": "neyshabur-municipality",
+      "name": "شهرداری نیشابور",
+      "name_en": "Neyshabur Municipality",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Under the Municipality Law (Article 55, clause 14) the municipality must have a dangerous building or wall examined and the danger removed, and in Neyshabur its engineering and construction supervision office carries out such orders; call 137 or send a report with photos through the municipality's 137 app (Monam) to request a site visit, and send your letter to the central office at Imam Khomeini Square.",
+        "fa": "طبق بند ۱۴ ماده ۵۵ قانون شهرداری، رفع خطر از بناها و دیوارهای شکسته و خطرناک وظیفه شهرداری است و در نیشابور اداره مهندسی و نظارت بر ساخت‌وسازهای شهرداری این دستورها را اجرا می‌کند؛ برای درخواست بازدید با ۱۳۷ تماس بگیرید یا گزارش خود را همراه با عکس از راه اپلیکیشن شهروندی ۱۳۷ (مونام) بفرستید و نامه خود را به ستاد مرکزی شهرداری در میدان امام خمینی بدهید."
+      },
+      "website": "https://www.neyshabur.ir/",
+      "contact_url": "https://neyshabur.ir/home/contact",
+      "email": "info@neyshabur.ir",
+      "phone": "051 42222001",
+      "postal": "نیشابور، خیابان امام خمینی، میدان امام خمینی، ستاد مرکزی شهرداری نیشابور، کد پستی ۹۳۱۳۷۶۳۵۴۷",
+      "source": "https://neyshabur.ir/home/contact"
+    },
+    {
+      "id": "khrw-neyshabur",
+      "name": "امور منابع آب نیشابور، شرکت آب منطقه‌ای خراسان رضوی",
+      "name_en": "Neyshabur Water Resources Affairs, Khorasan Razavi Regional Water Company",
+      "level": "district",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The Neyshabur office of the Ministry of Energy company that licenses wells and supervises groundwater pumping on the Neyshabur plain, where most of the water pumped goes to farming; write to it to ask what is being done about pumping near you or to report a well you believe is unauthorised.",
+        "fa": "دفتر شهرستان نیشابور در شرکت وابسته به وزارت نیرو که در دشت نیشابور پروانه چاه صادر می‌کند و بر برداشت آب زیرزمینی نظارت دارد، و بیشتر این برداشت برای کشاورزی است؛ برای پرسش درباره برداشت آب در نزدیکی محل زندگی خود یا گزارش چاهی که گمان می‌کنید غیرمجاز است به این امور نامه بنویسید."
+      },
+      "website": "https://www.khrw.ir/",
+      "contact_url": "https://www.khrw.ir/st/263",
+      "email": "khojastehpoor.ab@khrw.ir",
+      "phone": "051 42628301",
+      "postal": "نیشابور، بلوار جانبازان، گمنام غربی، روبروی خیابان کیهان، امور منابع آب نیشابور",
+      "source": "https://www.khrw.ir/st/263"
+    },
+    {
+      "id": "neyshabur-governorate",
+      "name": "فرمانداری ویژه شهرستان نیشابور",
+      "name_en": "Neyshabur County Governorate",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The county governor heads crisis management in Neyshabur county; write to the governorate when cracks or sinking appear in a village or small town on the plain outside the city and the village administration (dehyari) or local municipality has not acted, or when the problem is bigger than one municipality can handle.",
+        "fa": "ریاست مدیریت بحران شهرستان نیشابور با فرماندار است؛ هرگاه ترک‌خوردگی یا نشست زمین در روستا یا شهر کوچکی از دشت و بیرون از محدوده شهر نیشابور دیده شد و دهیاری یا شهرداری محل اقدامی نکرد، یا هرگاه مشکل از توان یک شهرداری بیشتر بود، به فرمانداری نامه بنویسید."
+      },
+      "website": "https://neyshabur.khorasan.ir/",
+      "contact_url": "https://neyshabur.khorasan.ir/",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://ostandari.khorasan.ir/RContent/2WA9LHZ6-%D9%81%D8%B1%D9%85%D8%A7%D9%86%D8%AF%D8%A7%D8%B1%DB%8C-%D9%87%D8%A7.aspx"
+    },
+    {
+      "id": "gsi-northeast",
+      "name": "اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق",
+      "name_en": "Geological Survey of Iran, North East Regional Directorate (Mashhad)",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The Mashhad office of the Geological Survey of Iran, which has reported on subsidence on the Neyshabur plain, for example at the village of Ardemeh and along the Neyshabur to Sabzevar railway, and monitors it; write to it to ask what its surveys show for your area and whether the ground under your street has been examined.",
+        "fa": "دفتر سازمان زمین‌شناسی و اکتشافات معدنی کشور در مشهد که درباره فرونشست دشت نیشابور، برای نمونه در روستای اردمه و در مسیر راه‌آهن نیشابور به سبزوار، گزارش منتشر کرده و آن را پایش می‌کند؛ برای پرسش از نتیجه بررسی‌ها در محدوده خود و اینکه آیا زمین زیر خیابان شما بررسی شده است به این اداره کل نامه بنویسید."
+      },
+      "website": "https://www.gsinet.ir/",
+      "contact_url": "https://www.gsinet.ir/AboutUs/default.aspx",
+      "email": "info@gsinet.ir",
+      "phone": "051 38218146",
+      "postal": "مشهد، میدان حر، بلوار سرافرازان، انتهای سرافرازان ۱۸، اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق",
+      "source": "https://www.gsinet.ir/"
+    },
+    {
+      "id": "razavi-khorasan-crisis",
+      "name": "اداره کل مدیریت بحران استانداری خراسان رضوی",
+      "name_en": "Crisis Management Directorate General, Razavi Khorasan Governorate",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The governorate office that coordinates crisis management across the counties of Razavi Khorasan, including Neyshabur; write to it if the county does not act, or when sinking threatens roads, the railway or several villages at once.",
+        "fa": "اداره کل استانداری که مدیریت بحران شهرستان‌های خراسان رضوی، از جمله نیشابور، را هماهنگ می‌کند؛ اگر شهرستان اقدامی نکرد یا فرونشست جاده‌ها، راه‌آهن یا چند روستا را با هم تهدید کرد به این اداره کل نامه بنویسید."
+      },
+      "website": "https://havades.khorasan.ir/",
+      "contact_url": "https://ostandari.khorasan.ir/RContent/2WA9LYZC-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7-%D8%A8%D8%A7-%D9%85%D8%A7.aspx",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://havades.khorasan.ir/"
+    },
+    {
+      "id": "iranfoia",
+      "name": "سامانه انتشار و دسترسی آزاد به اطلاعات",
+      "name_en": "National portal for publication of and free access to information",
+      "level": "national",
+      "handles": ["information"],
+      "role": {
+        "en": "The national portal for formal information requests under the Law on Publication of and Free Access to Information; use it to ask any of the offices above for records such as inspection reports, well permits near you or subsidence measurements for your area.",
+        "fa": "درگاه ملی ثبت درخواست رسمی اطلاعات بر پایه قانون انتشار و دسترسی آزاد به اطلاعات؛ از این راه می‌توانید از هر یک از نهادهای بالا اسنادی مانند گزارش بازدید، پروانه چاه‌های نزدیک محل زندگی خود یا اندازه‌گیری‌های فرونشست محدوده‌تان را بخواهید."
+      },
+      "website": "https://iranfoia.ir/",
+      "contact_url": "https://iranfoia.ir/web/guest/help",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://iranfoia.ir/web/guest/home"
+    }
+  ],
+  "right_to_answer": {
+    "name": "قانون انتشار و دسترسی آزاد به اطلاعات",
+    "name_en": "Law on Publication of and Free Access to Information",
+    "what": {
+      "en": "Every Iranian has the right to ask for information held by public institutions. Under Article 8 the institution must reply as quickly as possible and in any case within 10 days of receiving the request (the executive regulation counts these as working days). If it refuses or does not reply, you can complain through the same portal to the Commission for Publication of and Free Access to Information.",
+      "fa": "هر ایرانی حق دارد اطلاعات موجود در مؤسسات عمومی را درخواست کند. طبق ماده ۸ این قانون، مؤسسه باید در سریع‌ترین زمان ممکن پاسخ دهد و مدت پاسخ در هر صورت نمی‌تواند از ده روز پس از دریافت درخواست بیشتر شود (آیین‌نامه اجرایی این مهلت را ده روز کاری دانسته است). اگر مؤسسه درخواست را رد کند یا پاسخ ندهد، می‌توانید در همان سامانه به کمیسیون انتشار و دسترسی آزاد به اطلاعات شکایت کنید."
+    },
+    "how": {
+      "en": "Register on the national portal iranfoia.ir with your national ID number and mobile phone, choose the institution you are asking (for example the municipality, the regional water company or the Geological Survey) and write your request; the reply arrives in your account on the portal or by email. If the institution is not listed there, hand or post the written request to its secretariat and ask for the registration number and date.",
+      "fa": "در سامانه iranfoia.ir با کد ملی و شماره تلفن همراه خود ثبت‌نام کنید، مؤسسه مورد نظر (برای نمونه شهرداری، شرکت آب منطقه‌ای یا سازمان زمین‌شناسی و اکتشافات معدنی کشور) را برگزینید و درخواست خود را بنویسید؛ پاسخ در کارپوشه شما در همان سامانه قرار می‌گیرد یا با ایمیل فرستاده می‌شود. اگر نام مؤسسه در سامانه نبود، درخواست کتبی را به دبیرخانه همان مؤسسه تحویل دهید یا پست کنید و شماره و تاریخ ثبت نامه را بگیرید."
+    },
+    "url": "https://iranfoia.ir/",
+    "deadline_days": 10,
+    "deadline_text": {
+      "en": "10 working days",
+      "fa": "۱۰ روز کاری"
+    },
+    "source": "https://iranfoia.ir/web/guest/-5"
+  },
+  "urgent": {
+    "phone": "125",
+    "what": {
+      "en": "125 is the Neyshabur fire service, listed by the municipality among the city's emergency numbers. Get everyone out first, call from outside and give the full address. If someone is hurt, call 115 for an ambulance. If a building is unsafe but not in immediate danger, call the municipality on 137.",
+      "fa": "۱۲۵ شماره آتش‌نشانی نیشابور است که شهرداری آن را در فهرست شماره‌های ضروری شهر آورده است. نخست همه را از ساختمان بیرون ببرید، از بیرون تماس بگیرید و نشانی را کامل بگویید. اگر کسی آسیب دیده است با اورژانس ۱۱۵ تماس بگیرید. اگر ساختمان ناایمن است ولی خطر فوری ندارد، با مرکز ۱۳۷ شهرداری تماس بگیرید."
+    },
+    "source": "https://neyshabur.ir/home/singleArticle/6634/%D8%B4%D9%85%D8%A7%D8%B1%D9%87%20%D8%AA%D9%85%D8%A7%D8%B3%20%D9%87%D8%A7%DB%8C%20%D8%B6%D8%B1%D9%88%D8%B1%DB%8C"
+  },
+  "context": {
+    "en": "The Neyshabur plain is one of the most studied sinking areas in Iran, and the sinking is put down to heavy groundwater pumping: groundwater meets more than 90 percent of the plain's irrigation needs. A study in Geophysical Journal International (2009) measured the ground going down by up to 19 cm a year in radar images from the mid 2000s, and a 2026 study in the Journal of Hydrology: Regional Studies found up to 16 cm a year between 2014 and 2022, fastest in the north of the plain where fine clay and silt layers are concentrated. The Geological Survey of Iran's North East office has reported on subsidence at the village of Ardemeh and along the Neyshabur to Sabzevar railway and in 2019 started a project to monitor six critical plains of the province including Neyshabur, and the National Cartographic Center published a subsidence map of Neyshabur in 2018. The early result on this map, about 14 cm a year at its fastest point inside the city, is in the same range.",
+    "fa": "دشت نیشابور از پرمطالعه‌ترین مناطق فرونشست در ایران است و عامل آن برداشت بی‌رویه آب زیرزمینی دانسته می‌شود: بیش از ۹۰ درصد آب مورد نیاز کشاورزی این دشت از آب زیرزمینی تأمین می‌شود. پژوهشی در نشریه Geophysical Journal International (۲۰۰۹) با تصاویر راداری میانه دهه ۲۰۰۰ میلادی نشست زمین تا ۱۹ سانتی‌متر در سال را اندازه گرفت و پژوهشی در نشریه Journal of Hydrology: Regional Studies (۲۰۲۶) در سال‌های ۲۰۱۴ تا ۲۰۲۲ نرخ تا ۱۶ سانتی‌متر در سال را نشان داد که بیشترین آن در شمال دشت است، جایی که لایه‌های ریزدانه رس و سیلت بیشتر است. اداره کل زمین‌شناسی و اکتشافات معدنی منطقه شمال شرق درباره فرونشست در روستای اردمه و در مسیر راه‌آهن نیشابور به سبزوار گزارش منتشر کرده و در سال ۱۳۹۸ طرح پایش فرونشست شش دشت بحرانی استان، از جمله نیشابور، را آغاز کرده است و سازمان نقشه‌برداری کشور در سال ۱۳۹۷ نقشه فرونشست نیشابور را منتشر کرده است. نتیجه اولیه همین نقشه، حدود ۱۴ سانتی‌متر در سال در سریع‌ترین نقطه داخل شهر، در همین محدوده است.",
+    "sources": [
+      "https://doi.org/10.1111/j.1365-246X.2009.04135.x",
+      "https://doi.org/10.1016/j.ejrh.2026.103777",
+      "https://www.gsinet.ir/Pages/%D9%87%D8%A7%D8%AF%DB%8C-%D8%B4%D8%B1%DB%8C%D9%81%DB%8C-1753.aspx",
+      "https://www.ncc.gov.ir/fa/news/1491/%D9%86%D9%82%D8%B4%D9%87-%D9%87%D8%A7%DB%8C-%D9%81%D8%B1%D9%88%D9%86%D8%B4%D8%B3%D8%AA"
+    ]
+  },
+  "organising": {
+    "telegram_usable": false,
+    "note": {
+      "en": "Telegram has been blocked in Iran since May 2018 and was still blocked in autumn 2026. It opens only through a circumvention tool (VPN), and a directive of the Supreme Council of Cyberspace issued in February 2024 forbids using such tools without a legal permit. WhatsApp was also reported as filtered in 2026. Many people still reach these apps through a VPN, but a group that every neighbour can join without one has to be on a domestic messenger such as Bale, Eitaa or Rubika, which are run inside Iran under Iranian regulations. Between January and May 2026 internet access was cut nationwide for long periods, so keep a list of your neighbours' phone numbers as well. On any messenger, post only what you would be comfortable seeing made public, and keep your evidence report and copies of your letters outside the group too. On the Neyshabur plain many families live from farm wells, so keep the group to facts about cracks and measurements, and report a well you believe is unauthorised to the water affairs office in a letter rather than naming people in the group.",
+      "fa": "تلگرام از اردیبهشت ۱۳۹۷ در ایران فیلتر است و در پاییز ۱۴۰۵ همچنان فیلتر بود. این پیام‌رسان تنها با فیلترشکن باز می‌شود و طبق مصوبه شورای عالی فضای مجازی که در اسفند ۱۴۰۲ ابلاغ شد، استفاده از فیلترشکن بدون مجوز قانونی ممنوع است. واتس‌اپ نیز در سال ۱۴۰۵ فیلتر گزارش شده است. بسیاری از مردم همچنان با فیلترشکن از این برنامه‌ها استفاده می‌کنند، ولی گروهی که همه همسایه‌ها بتوانند بدون فیلترشکن در آن عضو شوند باید در یکی از پیام‌رسان‌های داخلی مانند بله، ایتا یا روبیکا ساخته شود که در داخل کشور و طبق مقررات ایران کار می‌کنند. از دی ۱۴۰۴ تا خرداد ۱۴۰۵ اینترنت کشور بارها و برای مدت‌های طولانی قطع بود، پس فهرستی از شماره تلفن همسایه‌ها نیز داشته باشید. در هر پیام‌رسانی فقط چیزی را بنویسید که انتشار عمومی آن برایتان مشکلی نداشته باشد و گزارش شواهد و رونوشت نامه‌ها را بیرون از گروه نیز نگه دارید. در دشت نیشابور زندگی بسیاری از خانواده‌ها به چاه‌های کشاورزی وابسته است، پس در گروه به واقعیت‌ها درباره ترک‌ها و اندازه‌گیری‌ها بسنده کنید و چاهی را که گمان می‌کنید غیرمجاز است با نامه به امور منابع آب گزارش دهید، نه با نام بردن از افراد در گروه."
+    },
+    "sources": [
+      "https://filter.watch/english/2026/11/06/network-monitoring-october-2026-filtering-the-internet-through-pricing/",
+      "https://parsi.euronews.com/2026/09/17/iran-removed-from-global-speedtest-rankings-internet-expensive-slow-unstable",
+      "https://www.aljazeera.com/news/2024/2/24/iran-unveils-plan-for-tighter-internet-rules-to-promote-local-platforms",
+      "https://www.apr.org/2026-05-28/iranians-are-back-online-after-a-monthslong-shutdown-but-face-heavy-restrictions",
+      "https://www.iranintl.com/en/202511019424"
+    ]
+  },
+  "groups": []
+}
