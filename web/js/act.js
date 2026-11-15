@@ -598,7 +598,6 @@ function renderOthers() {
     ? groups.map(g => `<a class="btn group-btn" href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.label || t('s3.group.join', { place }))}</a>`).join('')
     : `<p>${esc(t('s3.group.none', { place }))}</p>`;
   $('organising').textContent = pick(c?.organising?.note, lang);
-  $('org-link').href = `organise.html#${encodeURIComponent(S.meta.id)}`;
   $('kit').innerHTML = [1, 2, 3, 4, 5].map(k => `<li><b>${esc(t(`s3.kit.${k}.t`))}</b><span>${esc(t('s3.kit.' + k))}</span></li>`).join('');
   const cs = S.cases, over = caseDicts[lang];
   const ct = (k, f) => over?.cases?.[k.id]?.[f] || pick(k[f], 'en');

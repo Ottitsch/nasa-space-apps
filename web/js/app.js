@@ -326,7 +326,6 @@ let actSpot = null;
 function setActLink(id, lng, lat) {
   actSpot = [id, lng, lat];
   $('place-act').href = actUrl(id, lng, lat);
-  $('place-org').href = `organise.html#${encodeURIComponent(id)}`;
 }
 
 const END = Date.UTC(END_YEAR, 11, 31);

@@ -157,7 +157,5 @@
       "https://explorer.ooni.org/chart/mat?probe_cc=IN&since=2026-08-01&until=2026-11-14&time_grain=month&axis_x=measurement_start_day&test_name=telegram"
     ]
   },
-  "platforms": ["whatsapp", "telegram"],
-  "group_name": {"en": "Sinking Ground Delhi", "hi": "धंसती ज़मीन दिल्ली"},
   "groups": []
 }

@@ -68,8 +68,6 @@ Always include `en`, plus every language listed in `languages`.
     "note": { "en": "Is Telegram reachable here, what neighbourhood groups normally use, and anything people should be careful about.", "es": "..." },
     "sources": ["https://..."]
   },
-  "platforms": ["whatsapp", "telegram"],
-  "group_name": { "en": "Sinking Ground Mexico City", "es": "Hundimiento Ciudad de México" },
   "groups": []
 }
 ```
@@ -95,32 +93,9 @@ Field notes:
   to information law (it then backs the groundwater letter only, which is a
   request for information). List `inspection` too only when the mechanism
   also obliges a reply to a request for action, such as a right of petition.
-* `platforms`: the apps neighbourhood groups use here, most used first. One or
-  more of whatsapp, telegram, wechat, bale, rubika, eitaa, element, signal,
-  viber, facebook, email. `organise.html` tells people to start the group on
-  the first one and lists the others.
-* `group_name`: the name to give a new group, in English and every language in
-  `languages`. Shown with a copy button on `organise.html`.
 * `groups`: filled in by the project owners once a group exists, for example
   `[{ "platform": "telegram", "url": "https://t.me/...", "label": "Sinking Ground Mexico City" }]`.
 * `checked`: the day the contacts were last confirmed on the official pages.
 
 Contacts go stale. Anyone who knows a city can correct its file in a pull
 request; the pages pick the change up without any code change.
-
-## Adding a group
-
-When someone starts a group for a city (they can send the link through the
-"send the link" button on `organise.html`, which opens a GitHub issue), and
-whoever runs it agrees to list it:
-
-```bash
-python3 web/action/add_group.py chennai whatsapp https://chat.whatsapp.com/...
-```
-
-It adds the link to the city file. Run `python3 web/action/check.py` and commit.
-The group then shows with a Join button on `organise.html` and in step 3 of the
-take action page. `cities/index.json` lists every city file for
-`organise.html`; the checker makes sure it stays complete. Links that every
-city shares (the Element space for organisers, the email list) go in
-`community.json`.

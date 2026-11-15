@@ -159,7 +159,5 @@
       "https://freedomhouse.org/country/cote-divoire/freedom-world/2025"
     ]
   },
-  "platforms": ["whatsapp", "telegram"],
-  "group_name": {"en": "Sinking Ground Abidjan", "fr": "Sol qui s'affaisse Abidjan"},
   "groups": []
 }
