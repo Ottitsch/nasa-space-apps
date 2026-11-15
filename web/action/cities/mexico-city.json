@@ -185,5 +185,7 @@
       "https://freedomhouse.org/country/mexico/freedom-net/2025"
     ]
   },
+  "platforms": ["whatsapp", "telegram"],
+  "group_name": {"en": "Sinking Ground Mexico City", "es": "Hundimiento Ciudad de México"},
   "groups": []
 }

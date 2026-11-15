@@ -157,5 +157,7 @@
       "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5237&MevzuatTur=1&MevzuatTertip=5"
     ]
   },
+  "platforms": ["whatsapp", "telegram"],
+  "group_name": {"en": "Sinking Ground Istanbul", "tr": "İstanbul Zemin Çökmesi"},
   "groups": []
 }

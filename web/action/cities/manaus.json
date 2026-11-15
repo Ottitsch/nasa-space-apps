@@ -166,5 +166,7 @@
       "https://freedomhouse.org/country/brazil/freedom-net/2026"
     ]
   },
+  "platforms": ["whatsapp", "telegram"],
+  "group_name": {"en": "Sinking Ground Manaus Zona Norte"},
   "groups": []
 }

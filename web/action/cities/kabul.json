@@ -134,5 +134,7 @@
       "https://english.aawsat.com/node/1964721"
     ]
   },
+  "platforms": ["whatsapp"],
+  "group_name": {"en": "Beni Hesar neighbours", "fa": "همسایه‌های بینی‌حصار"},
   "groups": []
 }

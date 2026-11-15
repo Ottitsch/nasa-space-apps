@@ -161,5 +161,7 @@
       "https://fgj.sh.gov.cn/jggk/20190127/0013-a489f711912d4345816f94563add6ab2.html"
     ]
   },
+  "platforms": ["wechat"],
+  "group_name": {"en": "Sinking Ground Shanghai", "zh": "上海地面沉降"},
   "groups": []
 }

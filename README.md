@@ -628,8 +628,10 @@ web/                 the static site
   index.html
   css/style.css
   act.html           take action: report, letter, find the others
+  organise.html      the group for every city, and which app works where
   action/            city files, translations and policy examples for that page
   js/act.js          the take action page
+  js/organise.js     the organise page
   js/pdf.js          PDF downloads made in the browser
   js/app.js          map layers, panes, controls
   js/basemap.js      the map style: imagery or night lights, borders, names
@@ -713,6 +715,22 @@ read from search results of the official site, not from the live page. The
 translations were written by a language model and have not been read by
 native speakers. Fixing or adding a city is a change to one JSON file, with
 no code. `python3 web/action/check.py` checks every city file and translation.
+
+### Organise page
+
+`web/organise.html` is the place to organise per city: one card for every city
+with a local guide, sorted by how fast it sinks, each showing the app
+neighbourhood groups there actually use, a Join button for every group listed
+in its city file, and until then a group name to copy and four steps to start
+one. It also shows which messaging app works in which country (OONI
+measurements, August to November 2026): no single app reaches every city, as
+China blocks all the foreign ones and Iran most of them, so each city uses what
+works on the ground (WhatsApp in most, Bale or Rubika in Iran, WeChat in
+Shanghai), with Element for organisers across cities and an email list as the
+one channel that reaches everywhere. The map's place panel and step 3 of the
+take action page link to it. Add a group with
+`python3 web/action/add_group.py <city> <app> <invite link>` (see
+`web/action/README.md`).
 
 ### Groups
 

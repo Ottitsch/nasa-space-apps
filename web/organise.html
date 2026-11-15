@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organise: Sinking Ground</title>
+  <meta name="description" content="A place to organise with your neighbours in every city where the ground is sinking: the group for your city, on the app people there actually use.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23070b12'/%3E%3Cpath d='M6 12c4 0 5 9 10 9s6-9 10-9' fill='none' stroke='%235fd4e8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/act.css">
+  <link rel="stylesheet" href="css/organise.css">
+</head>
+<body>
+  <header class="bar">
+    <a class="back" href="index.html"><span aria-hidden="true">←</span> Back to the map</a>
+    <nav class="steps" aria-label="Sections">
+      <a href="#cities"><b>1</b> Your city</a>
+      <a href="#apps"><b>2</b> Which app works where</a>
+      <a href="#everywhere"><b>3</b> Everywhere else</a>
+    </nav>
+  </header>
+
+  <p id="status" class="status" role="status">Loading the cities…</p>
+
+  <main id="main" hidden>
+    <section id="cities">
+      <div class="intro">
+        <h1><b>1</b> Organise where you live</h1>
+        <p>One complaint is easy to file away. Fifty neighbours holding the same dated
+          satellite report are not. Every city below has a place for neighbours to meet,
+          on the app people there already use, with the offices to write to and the law
+          that obliges them to answer.</p>
+      </div>
+      <div class="tools org-tools">
+        <label class="tool"><span>Find your city</span><input id="find" type="search" placeholder="City or country" autocomplete="off"></label>
+        <p id="counts" class="fine"></p>
+      </div>
+      <div id="list" class="org-list"></div>
+      <p id="nomatch" class="fine" hidden>No city with a local guide matches that. See <a href="#everywhere">everywhere else</a>.</p>
+    </section>
+
+    <section id="apps">
+      <div class="intro">
+        <h1><b>2</b> Which app works where</h1>
+        <p>No single messaging app reaches every city. China blocks all the foreign ones and
+          Iran most of them. Each city above uses what works on the ground there. This is
+          what the open measurements show.</p>
+      </div>
+      <div class="table-wrap"><table id="matrix" class="org-matrix"></table></div>
+      <p class="fine" id="matrix-note"></p>
+    </section>
+
+    <section id="everywhere">
+      <div class="intro">
+        <h1><b>3</b> Everywhere else</h1>
+        <p>Your city is not listed? Every place on the map has its own take action page: a
+          report for your spot to share, a letter to send, and a short guide to turning a
+          few neighbours into a group. Start one, send us the link, and it appears here.</p>
+      </div>
+      <div id="project" class="org-project"></div>
+    </section>
+  </main>
+
+  <script type="module" src="js/organise.js"></script>
+</body>
+</html>

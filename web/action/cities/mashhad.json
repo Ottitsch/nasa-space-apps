@@ -170,5 +170,7 @@
       "https://www.iranintl.com/en/202511019424"
     ]
   },
+  "platforms": ["bale", "rubika", "element"],
+  "group_name": {"en": "Sinking Ground Mashhad", "fa": "فرونشست مشهد"},
   "groups": []
 }

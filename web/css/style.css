@@ -417,6 +417,7 @@ dialog .x { top: 16px; right: 16px; }
 .act ol { margin: 0 0 12px; padding-left: 18px; display: grid; gap: 3px; font-size: 13px; color: var(--text-2); }
 .act ol b { color: var(--text); }
 .act .fine { margin-top: 8px; }
+.act .org-link { display: block; margin-top: 10px; text-align: center; font-size: 13px; font-weight: 600; color: #ffb340; }
 .btn.solid { display: flex; align-items: center; justify-content: center; text-decoration: none; background: #ff9f0a; color: #1a1004; }
 .btn.solid:hover { background: #ffb340; }
 .pop-act { display: block; margin-top: 10px; padding: 8px 10px; border-radius: 10px; background: #ff9f0a; color: #1a1004; font-weight: 700; text-align: center; text-decoration: none; }

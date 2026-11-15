@@ -160,5 +160,7 @@
       "https://www.dawn.com/news/1971023"
     ]
   },
+  "platforms": ["whatsapp"],
+  "group_name": {"en": "Sinking Ground Quetta", "ur": "دھنستی زمین کوئٹہ"},
   "groups": []
 }
