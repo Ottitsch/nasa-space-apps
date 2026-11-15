@@ -134,6 +134,47 @@ def resample_in_time(sec, t_abs):
     return out - out[0][None]
 
 
+# A stack whose rate map is noisier than this (metres per year) says nothing
+# useful yet: three times the noise would already be a detection limit of
+# 18 cm per year. It is skipped until more passes bring the noise down.
+MAX_NOISE = 0.06
+
+
+def track_agreement(prim, sec, sig):
+    """How well two viewing directions agree where both see the ground.
+
+    The two tracks are processed independently (different orbits, different
+    days, different atmosphere), so their difference is an honest measure of
+    how far to trust the map. Returns None when they share too little ground.
+      typical_diff_mm_yr   median absolute difference of the two rate maps
+      sinking_diff_mm_yr   the same inside the detected sinking (None if none)
+      sinking_rate_mm_yr   median rate there in each direction [primary, secondary]
+      shared_fraction      share of the mapped ground both directions cover
+    """
+    both = prim["valid"] & sec["valid"]
+    if both.sum() < 500:
+        return None
+    diff = prim["velocity"] - sec["velocity"]
+    out = dict(
+        typical_diff_mm_yr=round(float(np.median(np.abs(diff[both]))) * 1000, 1),
+        shared_fraction=round(float(both.sum() / max((prim["valid"] | sec["valid"]).sum(), 1)), 2),
+        sinking_diff_mm_yr=None, sinking_rate_mm_yr=None,
+    )
+    hot = both & sig
+    if hot.sum() >= 40:
+        out["sinking_diff_mm_yr"] = round(float(np.median(np.abs(diff[hot]))) * 1000, 1)
+        out["sinking_rate_mm_yr"] = [round(float(np.median(l["velocity"][hot])) * 1000, 1) for l in (prim, sec)]
+    return out
+
+
+def touches_edge(sig, margin=3):
+    """True when detected sinking reaches the rim of the box: it may well go on
+    outside the area that was measured."""
+    rim = np.zeros_like(sig)
+    rim[:margin], rim[-margin:], rim[:, :margin], rim[:, -margin:] = True, True, True, True
+    return bool((sig & rim).any())
+
+
 def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False, offline=False,
               log=print):
     t_start = time.time()
@@ -172,6 +213,9 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
             continue
         if res["valid"].mean() < 0.03 or not np.isfinite(res["sigma"]):
             log("    almost no ground with a stable radar signal, skipping this track")
+            continue
+        if res["sigma"] > MAX_NOISE:
+            log(f"    too noisy so far ({res['sigma'] * 1000:.0f} mm/yr), skipping this track")
             continue
         warp = E.Warper(grid, mg)
         valid = warp(res["valid"])
@@ -218,6 +262,7 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
     sig = det["significant"]
 
     built = prim["built"]
+    agreement = track_agreement(prim, layers[1], sig) if len(layers) > 1 else None
     sizes = E.write_place(Path(out) / pid, vel, det["beta_rate"], valid, sig, built, cum, t)
 
     # headline numbers
@@ -240,6 +285,8 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
         max_distortion_per_yr=round(float(det["beta_rate"].max()), 7),
         hot_series_mm=series,
         valid_fraction=round(float(valid.mean()), 3),
+        agreement=agreement,                    # None: one direction only, not cross checked
+        reaches_edge=touches_edge(sig),
         bytes=sizes,
     )
     log(f"  done in {time.time() - t_start:.0f}s: noise {entry['noise_mm_yr']} mm/yr, "
@@ -248,10 +295,17 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
     return entry
 
 
+KEEP = ("gnss",)
+
+
 def update_index(out, entry):
     """Merge one place into web/data/index.json (kept sorted by name)."""
     path = Path(out) / "index.json"
     index = json.loads(path.read_text()) if path.exists() else {"places": []}
+    old = next((p for p in index["places"] if p["id"] == entry["id"]), {})
+    for key in KEEP:                         # written by other steps (pipeline.gnss)
+        if key in old and key not in entry:
+            entry[key] = old[key]
     index["places"] = [p for p in index["places"] if p["id"] != entry["id"]] + [entry]
     index["places"].sort(key=lambda p: p["name"])
     index["generated"] = date.today().isoformat()

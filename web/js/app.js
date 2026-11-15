@@ -481,7 +481,7 @@ function updatePanel() {
   $('place-big').classList.toggle('text', !m.detected);
   if (!m.detected) {
     $('place-big').textContent = 'No sinking detected';
-    $('place-big-label').textContent = `Nothing faster than ${m.threshold_mm_yr} mm per year over a wide area in ${m.months} months of radar passes. Slower sinking may show up as more passes arrive.`
+    $('place-big-label').textContent = `Nothing faster than ${m.threshold_mm_yr} mm per year over a wide area in ${m.months} months of radar passes. Slower sinking may show up as more passes arrive. Only the area inside the dashed outline was measured.`
       + (m.sinking_area_km2 > 0 ? ` A few small spots (${m.sinking_area_km2} km² in total) are marked on the map; these can be earthworks, landfill or noise.` : '');
   } else if (t <= m.t0) {
     $('place-big').textContent = '0 cm';
@@ -541,6 +541,26 @@ function strainNote(place, a) {
     + `If the measured rate continues, ${fmtArea(endArea.get(place))} of built up land is past the cracking limit by ${END_YEAR}.`;
 }
 
+const mmYr = v => `${Math.abs(v) < 10 ? Math.abs(v).toFixed(1) : Math.round(Math.abs(v))} mm/yr`;
+
+/** The independent checks on a place: the two viewing directions against each
+ *  other, GNSS stations against the map, and what zero is measured from. */
+function showTrust(m) {
+  const a = m.agreement, g = m.gnss;
+  $('tr-agree').textContent = a ? `${mmYr(a.typical_diff_mm_yr)} apart`
+    : m.tracks.length > 1 ? 'not compared yet' : 'one only, not cross checked';
+  $('tr-gnss').textContent = g
+    ? `${g.stations.length} ${g.stations.length > 1 ? 'stations' : 'station'}, ${mmYr(g.typical_diff_mm_yr)} apart`
+    : 'none on mapped ground';
+  const note = ['Rates are measured against the typical ground inside the dashed outline that is not moving, not against sea level.'];
+  if (a?.sinking_rate_mm_yr) {
+    note.push(`Inside the sinking area one direction reads ${fmtRate(a.sinking_rate_mm_yr[0])} and the other ${fmtRate(a.sinking_rate_mm_yr[1])}.`);
+  }
+  if (g) note.push(`A GNSS station averages over its whole record (often ten years or more); the map covers ${m.months} months, so they differ where sinking changed speed.`);
+  if (m.detected && m.reaches_edge) note.push('The sinking reaches the edge of the outline and may continue beyond it.');
+  $('tr-note').textContent = note.join(' ');
+}
+
 function showPanel(m) {
   setPanel('place');
   $('place-name').textContent = m.name;
@@ -553,6 +573,7 @@ function showPanel(m) {
   $('st-span').textContent = `${m.dates.length} dates, ${m.tracks.length} ${m.tracks.length > 1 ? 'directions' : 'direction'}`;
   $('st-rec').textContent = `${fmtMonth(m.t0)} to ${fmtMonth(m.t1)}`;
   $('place-driver').textContent = m.driver ? `Main cause reported for this area: ${m.driver.toLowerCase()}.` : '';
+  showTrust(m);
   $('place-hot').hidden = !m.detected;
   setActLink(m.id);
   $('place').querySelector('.scroll').scrollTop = 0;

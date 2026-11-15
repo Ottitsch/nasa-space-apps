@@ -136,6 +136,15 @@
         <div><dt>Radar passes used</dt><dd id="st-span"></dd></div>
       </dl>
 
+      <section id="trust">
+        <h3>How this was checked</h3>
+        <dl class="rows card">
+          <div><dt>Two directions</dt><dd id="tr-agree"></dd></div>
+          <div><dt>GNSS stations</dt><dd id="tr-gnss"></dd></div>
+        </dl>
+        <p class="fine" id="tr-note"></p>
+      </section>
+
       <section id="strain">
         <h3>Built up land past damage limits</h3>
         <ul class="rows card" id="strain-bars"></ul>
@@ -203,6 +212,7 @@
     <p><strong>Measured and projected.</strong> Everything up to the latest radar pass is measured. Everything after it is a projection that assumes the ground keeps sinking at the rate measured so far. That is a scenario, not a forecast: rates change when pumping, rainfall or regulation change.</p>
     <p><strong>Why buildings are coloured.</strong> A building that sinks evenly with its whole neighbourhood is usually fine structurally, though flooding and drainage get worse. Damage comes from uneven sinking, where one side of a street drops faster than the other. We measure that as angular distortion: the difference in sinking between neighbouring ground divided by the distance between them. Engineering practice uses rough limits of 1/500 (cracking becomes possible), 1/300 (cracking likely) and 1/150 (structural damage likely). Buildings change colour on the date the ground beneath them passes each limit.</p>
     <p><strong>Sinking from before NISAR.</strong> The radar has only watched since late 2025. That is far too short for any ground to pass a limit, while the ground it sees sinking was sinking long before. So the damage classes also count earlier strain, by assuming the uneven sinking measured now was already going on at the same rate since 2000. It is the assumption the projection makes, applied backwards, and it is an estimate, not a measurement. In the place panel, under Sinking before NISAR, you can change it to 2015 or switch it off. How far the ground has sunk is always counted from the first radar pass.</p>
+    <p><strong>How it is checked.</strong> Radar measures motion relative to other ground, not to sea level. Here zero is the typical ground inside each place's dashed outline that is not moving, so a rate of zero means "moves like its surroundings". Two independent checks are shown for each place. Where the satellite sees the place from two directions, the two are processed separately and compared: the smaller their difference, the more the map can be trusted. Where permanent GNSS stations stand on mapped ground, their long term vertical rate (Nevada Geodetic Laboratory) is compared with the map at the same spot. A station averages over many years and the map over months, so they differ where sinking has changed speed. Only the area inside the outline is measured: sinking just outside it is not seen.</p>
     <p><strong>What this cannot tell you.</strong> Each radar pixel is 80 m wide, so this is a screening map of neighbourhoods, not an inspection of a single building. Distortion that built up before NISAR started watching is assumed, not measured: where sinking began after 2000 or used to be slower the damage classes overstate, and where it used to be faster they understate. Places with only a few months of passes have a higher detection limit, and slow sinking there stays invisible for now. Farmland, vegetation and wetland are left blank because moisture there fools the radar. Motion is read as vertical. Building outlines are machine drawn from aerial imagery, so some are missing or misshapen, and their heights are not known (all are drawn the same height).</p>
     <p><strong>Data.</strong> NISAR Level 2 geocoded unwrapped interferograms (GUNW), NASA and ISRO, from the Alaska Satellite Facility. Elevation from the Copernicus DEM. Land cover from ESA WorldCover. Blue Marble and night lights from NASA GIBS. Close up imagery is Sentinel-2 cloudless by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024). Building outlines from Google Open Buildings, Microsoft Building Footprints and OpenStreetMap, merged by VIDA. Borders, roads and names from OpenFreeMap, OpenMapTiles and OpenStreetMap contributors.</p>
     <p class="fine" id="about-meta"></p>

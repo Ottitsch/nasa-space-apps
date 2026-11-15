@@ -26,6 +26,10 @@ python3 -m http.server 8000 --directory web
 
 Then open http://localhost:8000.
 
+Three colour themes (Bone & ink, Slate & sage, Monochrome) can be picked under
+Theme in the Show panel; the choice is remembered and also applies to the
+report and letter pages.
+
 Pick a place on the globe or in the list (the search button, top right), drag
 the time bar, and zoom in to street level to see individual buildings. Click
 anywhere inside a place to read the rate, how far that spot has sunk, and when
@@ -133,8 +137,8 @@ under any setting.
 
 ## What the data shows so far
 
-Built on 2026-11-14 from 64 places. Sinking is detected over at least
-1 km² in 15 of them:
+Built on 2026-11-15 from 82 places. Sinking is detected over at least
+1 km² in 16 of them:
 
 | Place | Fastest zone | Area sinking | Record | Smallest detectable rate |
 | --- | --- | --- | --- | --- |
@@ -153,16 +157,25 @@ Built on 2026-11-14 from 64 places. Sinking is detected over at least
 | Celaya, Mexico | 8 cm per year | 5 km² | 11 months | 2.4 cm per year |
 | Isfahan, Iran | 8 cm per year | 1 km² | 4 months (early) | 6.1 cm per year |
 | Ahmedabad, India | 4 cm per year | 5 km² | 11 months | 2.2 cm per year |
+| Los Angeles, United States | 3 cm per year | 1 km² | 11 months | 2.2 cm per year |
 
 "Early" means only about four months of radar passes. Those rates were
 measured over a single season, so the yearly figure may change as the record
 grows.
 
-No sinking above the detection limit (yet) in the other 49 places, among
+No sinking above the detection limit (yet) in the other 66 places, among
 them Jakarta, Houston, New Orleans, New York and Venice, all known to sink more
 slowly than a few months of data can reveal. Five places in `places.json`
 (Willcox Basin, Larissa, Konya Basin, Kathmandu, Yangon) are skipped for now
-because too little built up ground gave a stable radar signal.
+because too little built up ground gave a stable radar signal, and one
+(Jeddah) because its only radar track is still too noisy (map noise above
+6 cm per year) to say anything.
+
+How far to trust the table: 12 of the 16 places are seen from two directions
+that read similar rates inside the sinking area (see Independent checks).
+Celaya, Istanbul, Shanghai and Tehran Plain are seen from one direction only
+and are not cross checked. In Los Angeles the two directions disagree (1 and
+3 cm per year), so treat that row as weak.
 
 ![The globe in 2035 if current rates continue](docs/globe-2035.png)
 
@@ -222,11 +235,52 @@ Checks made while building it:
 * New York appeared to sink 6 cm in its first winter and then not at all.
   The sustained sinking rule removes that kind of episode.
 
+### Independent checks
+
+Recognising a famous sinking city on the map proves little. Two checks that do
+not depend on anyone's expectations are computed for every place and shown in
+its panel under "How this was checked":
+
+* **Two viewing directions.** Where NISAR sees a place on both an ascending and
+  a descending track, the two are processed separately (different orbits, days
+  and atmosphere) and their rate maps compared. `agreement` in
+  `web/data/index.json` holds the typical difference, and inside detected
+  sinking the rate each direction reads. Places seen from one direction only
+  are marked as not cross checked.
+* **GNSS ground stations.** `python -m pipeline.gnss` compares the map with the
+  long term vertical rate of every permanent GNSS station that stands on mapped
+  ground (MIDAS velocities, Nevada Geodetic Laboratory, open data). A station
+  averages over many years and the map over months, so the two differ where
+  sinking has changed speed: read it as a sanity check, not a calibration.
+
+Radar motion is relative. Zero is the typical ground inside a place's box that
+is not moving, so rates are "relative to the surroundings", not to sea level.
+Only the box is measured: `reaches_edge` flags detected sinking that runs into
+the rim of the box and probably continues outside it.
+
+Results on 2026-11-15:
+
+* 59 of the 82 places are seen from two directions. Their rate maps differ by
+  12.7 mm per year in the median place. That is the honest pixel level
+  uncertainty of a few months of data, and it is why only sinking well above
+  it is reported.
+* 329 GNSS stations stand on mapped ground in 51 places. The map and the
+  station differ by 5.8 mm per year in the median and by less than 23 mm per
+  year for nine stations in ten. The fastest station, MMX1 in Mexico City,
+  sinks 265 mm per year and the map reads 230 at that spot.
+* The comparison also shows a weakness. Where a whole basin sinks gently and
+  evenly (Bogotá: four stations at 28 to 46 mm per year, the map reads 3 to 8;
+  parts of Houston; the station in Celaya), the map reads close to zero. The
+  processing takes "typical ground in the box" as zero and removes whatever is
+  smooth over several kilometres as atmosphere, so sinking that is broad and
+  even is partly removed with it. The map finds sinking that stands out from
+  its surroundings, not a slow drop of the whole box.
+
 ### Where the data lives
 
 | Folder | What | Size |
 | --- | --- | --- |
-| `web/data` | what the map loads: one small index and two files per place | 16 MB |
+| `web/data` | what the map loads: one small index and two files per place | 19 MB |
 | `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 1.2 GB |
 
 Both are in the repository. `data/nisar` is the downloaded radar data in a
@@ -246,8 +300,11 @@ python3 -m venv .venv
 
 ### Update or add places
 
-Fetching new radar passes needs a free Earthdata Login token
-(https://urs.earthdata.nasa.gov, Generate Token). Never commit it.
+Fetching new radar passes needs a free Earthdata Login
+(https://urs.earthdata.nasa.gov). Either generate a token there and export it
+as below, or keep your login in `~/.netrc`
+(`machine urs.earthdata.nasa.gov login <user> password <password>`, file mode
+600). Never commit either.
 
 ```bash
 export EARTHDATA_TOKEN=paste_your_token_here
@@ -290,6 +347,16 @@ threshold, and turns early results into firm ones.
   rainfall and regulation.
 * **Farmland, grass, forest and wetland are blank** by design, including
   places where the ground under them truly is sinking.
+* **The damage limits are borrowed from a finer scale.** In foundation
+  engineering, angular distortion is measured between neighbouring columns of
+  one building, a few metres apart, with the tilt of the whole building taken
+  out. The map measures the slope of the sinking rate between 80 m pixels. That
+  smooths away sharp local differences and includes whole building tilt, so it
+  is a related quantity, not the same one.
+* **Rates are relative and only the box is measured.** Zero is the typical
+  ground in the box that is not moving. Sinking outside the box is not seen,
+  and broad even sinking of most of the box is understated (the GNSS
+  comparison above shows it for Bogotá).
 * **Motion is read as vertical.** Sideways motion on slopes is not separated.
 * **NISAR products used here are provisional** releases.
 * **Building outlines are machine drawn** from aerial imagery. Some are missing
@@ -312,6 +379,7 @@ pipeline/            Python: NISAR products to map data
   landcover.py       ESA WorldCover
   export.py          grids and files for the web app
   quicklook.py       small PNG previews for checking results by eye
+  gnss.py            compare the map with GNSS ground stations
 web/                 the static site
   index.html
   css/style.css
@@ -441,20 +509,77 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
   neighbouring radar frames for places that straddle two, and use the weather
   model layers shipped inside the products for a better atmosphere correction.
 
-## Credits
+## Sources
 
-* Ground motion: NISAR L2 GUNW, NASA and ISRO, distributed by the Alaska
-  Satellite Facility DAAC.
-* Elevation: Copernicus DEM GLO 90, ESA.
-* Land cover: ESA WorldCover 2021.
-* Imagery on the globe: NASA GIBS, Blue Marble and VIIRS Black Marble (night
-  lights).
-* Close up imagery: Sentinel-2 cloudless by EOX IT Services GmbH
-  (https://cloudless.eox.at, contains modified Copernicus Sentinel data 2024),
-  CC BY-NC-SA 4.0.
-* Buildings: Google Open Buildings, Microsoft Building Footprints and
-  OpenStreetMap, merged by VIDA (source.coop).
-* Borders, roads and names: OpenFreeMap, OpenMapTiles, OpenStreetMap
-  contributors.
-* Map library: MapLibre GL JS. Tile archive reader: PMTiles. Typeface: Figtree
-  (SIL Open Font License).
+Everything the project uses, where it comes from, and what it was used for.
+
+### Measurement data
+
+| Source | Used for |
+| --- | --- |
+| **NISAR L2 GUNW** (geocoded unwrapped interferograms, provisional and validated releases), NASA and ISRO, distributed by the Alaska Satellite Facility DAAC, https://nisar.asf.earthdatacloud.nasa.gov | The ground motion itself: unwrapped phase, coherence, connected components, ionosphere screen, incidence angle. Every rate, area and date on the map comes from these files. The products used are listed one by one in `data/nisar/manifest.json`. |
+| **NASA Common Metadata Repository (CMR)**, https://cmr.earthdata.nasa.gov | Finding which NISAR products cover a place (`pipeline/search.py`). |
+| **Copernicus DEM GLO 90**, ESA, https://copernicus-dem-90m.s3.amazonaws.com | Elevation: the term that removes layered atmosphere, and the terrain slope limit in detection (`pipeline/dem.py`). |
+| **ESA WorldCover 2021** (v200, CC BY 4.0), https://esa-worldcover.s3.eu-central-1.amazonaws.com | Land cover: only built up and bare ground is analysed, water and wetland are masked, built up area is counted (`pipeline/landcover.py`). |
+| **MIDAS GNSS station velocities (IGS14)**, Nevada Geodetic Laboratory, https://geodesy.unr.edu/velocities/midas.IGS14.txt. Method: Blewitt, Kreemer, Hammond and Gazeaux (2016), "MIDAS robust trend estimator for accurate GPS station velocities without step detection", J. Geophys. Res. Solid Earth, doi:10.1002/2015JB012552 | Independent check of the map against ground stations (`pipeline/gnss.py`). Not used to make or adjust the map. |
+
+### Map display
+
+| Source | Used for |
+| --- | --- |
+| **NASA GIBS**: Blue Marble Shaded Relief and Bathymetry, VIIRS Black Marble, https://gibs.earthdata.nasa.gov | Imagery on the globe (day and night base maps). |
+| **Sentinel-2 cloudless 2024** by EOX IT Services GmbH, https://cloudless.eox.at (contains modified Copernicus Sentinel data 2024), CC BY-NC-SA 4.0 | Close up satellite imagery. |
+| **OpenFreeMap**, **OpenMapTiles**, **OpenStreetMap contributors**, https://openfreemap.org, https://www.openmaptiles.org, https://www.openstreetmap.org/copyright | Borders, roads, place names, map fonts, and the light base map of the report page. |
+| **Google Open Buildings, Microsoft Building Footprints and OpenStreetMap**, merged by VIDA, https://data.source.coop/vida/google-microsoft-osm-open-buildings | Building outlines that are coloured by risk class and counted in the report. |
+
+### Methods and reference values
+
+| Source | Used for |
+| --- | --- |
+| Skempton and MacDonald (1956), "The allowable settlements of buildings", Proc. Institution of Civil Engineers; Bjerrum (1963), "Allowable settlements of structures", Proc. European Conf. on Soil Mechanics and Foundation Engineering | The damage limits 1/500, 1/300 and 1/150 on angular distortion. The values were checked against a textbook summary (https://eng.libretexts.org/Bookshelves/Civil_Engineering/Fundamentals_of_Foundation_Engineering_and_their_Applications_2e/04%3A_SETTLEMENT_OF_SHALLOW_FOUNDATIONS/4.03%3A_Tolerable_settlement), not against the original papers. |
+| NISAR Data User Guide, Alaska Satellite Facility, https://nisar-docs.asf.alaska.edu (pages on data access, GUNW products, direct S3 access and GDAL) | How to find, authenticate for and read the products; the layout and units of the GUNW files. |
+| Published NASA and JPL map of Mexico City and earlier studies (as stated under "Checks made while building it") | Plausibility check of the Mexico City rate by the original authors of the pipeline. No citation was recorded in the repository. |
+
+### Text about places
+
+| Source | Used for |
+| --- | --- |
+| `pipeline/places.json`, field `driver` | The "main cause reported" line in a place's panel. For most places this text was written from general knowledge and **has no recorded source**. Treat it as a hint, not a finding. |
+| DGGV, "Analysis of surface displacements caused by mine flooding for the project FloodRisk", https://www.dggv.de/e-publikationen/analysis-of-surface-displacements-caused-by-mine-flooding-for-the-project-floodrisk-with-sar-interferometry/ | Driver text for the Ruhr area (last mines closed in 2018, mine water rising). |
+| Enerdata, "Netherlands stops production at Groningen gas field", https://www.enerdata.net/publications/daily-energy-news/netherlands-stops-production-groningen-gas-field.html | Driver text for Groningen (production ended on 1 October 2023). |
+| Geological Quarterly (Polish Geological Institute), subsidence map of the Upper Silesian Coal Basin, https://gq.pgi.gov.pl/article/view/33866 | Driver text for Katowice (active coal mining). |
+| Chaussard, Wdowinski, Cabral-Cano and Amelung (2014), "Land subsidence in central Mexico detected by ALOS InSAR time-series", Remote Sensing of Environment 140, https://faculty.fiu.edu/~swdowins/publications/Chaussard-et-al-RSE-2014.pdf | Driver text for Guadalajara (groundwater pumping). Read through a summary, not the full paper. |
+| `web/action/cities/*.json` (each entry carries its own `source` link and a `checked` date) | Offices, contact details, laws and deadlines named in the letters. |
+| `web/action/cases.json` (each case carries its `sources`) | The examples of what residents achieved elsewhere. |
+
+The reply deadlines in the city files were checked a second time on
+2026-11-15 against these pages. All eight agree. Two notes: for Iran the law
+says 10 days without saying working or calendar days, and for Côte d'Ivoire one
+news report quotes 15 days where the others say 30.
+
+| Law | Checked against |
+| --- | --- |
+| India, Right to Information Act 2005 (30 days) | https://humanrightsinitiative.org/programs/ai/rti/india/officials_guide/time_limits.htm |
+| Mexico, Ley General de Transparencia y Acceso a la Información Pública (20 days) | https://mley.mx/LGTAIP/ |
+| Indonesia, Law 14 of 2008 (10 working days) | https://jdih.kemenkeu.go.id/api/download/FullText/2008/14TAHUN2008UU.htm |
+| Türkiye, Law 4982 (15 working days) | https://www.freedominfo.org/regions/europe/turkey |
+| Pakistan, Balochistan Right to Information Act 2021 (15 working days) | https://cpdi-pakistan.org/process-and-specimen-of-filing-information-request-and-complaint-under-rti-laws |
+| Iran, Law on Publication of and Free Access to Information (10 days) | https://www.rti-rating.org/wp-content/uploads/2018/09/Iran.FOI-law-and-regulations.English.pdf |
+| Côte d'Ivoire, Law 2013-867 (30 days) | https://www.fratmat.info/article/2375060/culture/anne-marie-konan-payne-presidente-de-la-caidp-le-journalisme-dinvestigation-est-un-maillon-important-dans-la-societe |
+| China, Regulations on Open Government Information 2019 (20 working days) | https://www.chinalawtranslate.com/open-government-information-regulations-of-the-p-r-c-2019/ |
+
+### Software
+
+| Source | Used for |
+| --- | --- |
+| MapLibre GL JS, PMTiles, html2canvas (licences in `web/vendor`) | Drawing the map, reading the building archive, drawing the PDF report and letter. |
+| Figtree typeface (SIL Open Font License, `web/vendor`) | Text in the app. |
+| numpy, scipy, h5py, pyproj, rasterio, requests, fsspec, aiohttp (`pipeline/requirements.txt`) | The processing pipeline. |
+
+### Not from a dataset
+
+The colour themes, the wording of the app, the 2050 projection (the measured
+rate simply continued) and the assumption that uneven sinking began in 2000
+are choices made by the authors, not data. The list of places was chosen from
+general knowledge of where sinking is reported; whether a place shows sinking
+on the map comes only from the NISAR data.
