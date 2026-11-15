@@ -12,24 +12,6 @@ how sure the data is.
 
 **Video:** https://youtu.be/pespec9YN6g
 
-[![Watch the video: NISAR Explorers](https://img.youtube.com/vi/pespec9YN6g/maxresdefault.jpg)](https://youtu.be/pespec9YN6g)
-
-## Run it
-
-It is a static site with no build step:
-
-```bash
-python3 -m http.server 8000 --directory web
-```
-
-Then open http://localhost:8000. Pick a place on the globe or in the list (the
-search button, top right), drag the time bar, and zoom in to street level to
-see individual buildings. Click anywhere inside a place to read the rate, how
-far that spot has sunk, and when it passes the damage limits.
-
-A view can be shared by its address, for example
-`#place=mexico-city&t=2040-01-01`.
-
 ## What you see
 
 ![Mexico City in 2050 if current rates continue](docs/mexico-city-2050.png)
@@ -128,42 +110,6 @@ loads. For each place in `pipeline/places.json`:
 Mexico City comes out at 26 cm per year over its fastest zone, in line with
 the map NASA and JPL published in 2026, and its two viewing directions agree
 to within about 1.5 cm per year.
-
-## Rebuild and update
-
-The radar windows the map is built from are in `data/nisar` (2.3 GB, see
-`data/nisar/README.md`), so the map data in `web/data` can be rebuilt with no
-download and no login:
-
-```bash
-python3 -m venv .venv
-.venv/bin/pip install -r pipeline/requirements.txt
-.venv/bin/python -m pipeline.run --all --offline
-```
-
-Fetching new radar passes needs a free Earthdata Login token
-(https://urs.earthdata.nasa.gov, Generate Token). Never commit it.
-
-```bash
-export EARTHDATA_TOKEN=paste_your_token_here
-.venv/bin/python -m pipeline.run --place mexico-city
-```
-
-Use `--all` for every place. To add a place, add an entry to
-`pipeline/places.json` (centre and box size in km) and run it. To serve the
-site locally and measure addresses on request, run
-`.venv/bin/python -m pipeline.serve`.
-
-## Publish
-
-Every push to `main` is published by the Cloudflare Pages project
-`sinking-ground`, once `node scripts/check-site.mjs` passes. Any static host
-can serve the `web` folder.
-
-Building areas on request and adding groups on the live site need two secrets:
-`EARTHDATA_TOKEN` in the repository's Actions secrets, and a fine grained
-GitHub token for this repository (Actions: read and write, Contents: read) as
-`AREA_GITHUB_TOKEN` in the Cloudflare Pages project.
 
 ## Take action
 
