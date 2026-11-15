@@ -66,8 +66,6 @@ about 3 to 5 cm per year, and 668 of the 745 places have no more than that.
 By about June 2027 every place will have a full year and a bar near 2 cm per
 year.
 
-![The globe in 2035 if current rates continue](docs/globe-2035.png)
-
 ## How the data is made
 
 The `pipeline` folder turns raw NISAR products into the small files the map
