@@ -10,7 +10,7 @@
 .org-detail { color: #333; font-size: 14px; margin-top: 4px; }
 .org-status { font-weight: 700; }
 .org-status.open { color: #1b7f3a; }
-.org-status.none { color: var(--accent); }
+.org-status.none { color: #a65a00; }
 .org-why { font-size: 15px; }
 .org-why a { white-space: nowrap; }
 .org-join { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -35,8 +35,8 @@
 .org-matrix td::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-inline-end: 7px; vertical-align: 0; }
 .org-matrix td.ok::before { background: #1b7f3a; }
 .org-matrix td.part::before { background: #e0a100; }
-.org-matrix td.no { color: var(--accent); font-weight: 700; }
-.org-matrix td.no::before { background: var(--accent); }
+.org-matrix td.no { color: #c62828; font-weight: 700; }
+.org-matrix td.no::before { background: #c62828; }
 .org-matrix td.nodata { color: var(--muted); }
 .org-matrix td.nodata::before { border: 1px solid var(--muted); width: 7px; height: 7px; }
 #matrix-note { margin-top: 12px; max-width: 760px; }
