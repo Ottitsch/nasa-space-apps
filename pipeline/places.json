@@ -67,5 +67,6 @@
   {"id": "cangzhou", "name": "Cangzhou", "country": "China", "lat": 38.30, "lon": 116.85, "size_km": 64, "driver": "Groundwater pumping"},
   {"id": "dongying", "name": "Yellow River Delta (Dongying)", "country": "China", "lat": 37.75, "lon": 118.85, "size_km": 64, "driver": "Brine and groundwater extraction, delta compaction"},
   {"id": "tokyo", "name": "Tokyo", "country": "Japan", "lat": 35.68, "lon": 139.77, "size_km": 64},
-  {"id": "perth", "name": "Perth", "country": "Australia", "lat": -31.95, "lon": 115.86, "size_km": 48, "driver": "Groundwater pumping"}
+  {"id": "perth", "name": "Perth", "country": "Australia", "lat": -31.95, "lon": 115.86, "size_km": 48, "driver": "Groundwater pumping"},
+  {"id": "vienna", "name": "Vienna", "country": "Austria", "lat": 48.21, "lon": 16.37, "size_km": 56}
 ]

@@ -5,8 +5,9 @@ We open it remotely, ask HDF5 where the chunks covering a city live, download
 exactly those byte ranges in parallel, and decode them. That is 10 to 30 MB
 and a few seconds per file instead of the whole thing.
 
-Authentication: the files need an Earthdata Login bearer token. Either set
-EARTHDATA_TOKEN in the environment, or run somewhere that injects the header
+Authentication: the files need an Earthdata Login. Either set EARTHDATA_TOKEN
+in the environment (a bearer token), or keep an Earthdata entry for
+urs.earthdata.nasa.gov in ~/.netrc, or run somewhere that injects the header
 for nisar.asf.earthdatacloud.nasa.gov (the hosted Claude environment does).
 """
 from __future__ import annotations
@@ -51,12 +52,17 @@ class RangeFile(io.RawIOBase):
         token = os.environ.get("EARTHDATA_TOKEN")
         if token:
             headers["Authorization"] = f"Bearer {token}"
-        r = self.session.get(self.url, headers=headers, allow_redirects=False, timeout=60)
-        if r.status_code in (301, 302, 303, 307, 308):
-            self.signed = r.headers["Location"]
-            r = self.session.get(self.signed, headers={"Range": "bytes=0-0"}, timeout=60)
+            r = self.session.get(self.url, headers=headers, allow_redirects=False, timeout=60)
+            if r.status_code in (301, 302, 303, 307, 308):
+                self.signed = r.headers["Location"]
+                r = self.session.get(self.signed, headers={"Range": "bytes=0-0"}, timeout=60)
+            else:
+                self.signed = self.url
         else:
-            self.signed = self.url
+            # No token: follow the login redirects with the Earthdata entry in ~/.netrc
+            # (requests reads it for urs.earthdata.nasa.gov) and keep the signed URL we land on.
+            r = self.session.get(self.url, headers=headers, timeout=60)
+            self.signed = r.url
         if r.status_code == 401 or "urs.earthdata.nasa.gov" in (self.signed or ""):
             raise PermissionError(
                 "Earthdata Login rejected the request. Set EARTHDATA_TOKEN to a valid "
