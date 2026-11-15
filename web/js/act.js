@@ -5,6 +5,7 @@
 
 import * as maplibregl from '../vendor/maplibre-gl.mjs';
 import { EARLIER, EARLIER_DEFAULT, END_YEAR, LIMITS, RISK, YEAR } from './config.js';
+import { theme, themeSelect } from './theme.js';
 import { loadFrames, loadIndex, loadPlace, mercY } from './data.js';
 import { build, draw, paginate, save } from './pdf.js';
 
@@ -16,6 +17,8 @@ const RADII = [250, 500];
 const RTL = new Set(['fa', 'ur', 'ar', 'he']);
 const SEEN = ['cracks', 'doors', 'tilt', 'ground', 'pipes'];
 const MAP_PX = 900;
+/** The chart's fill: the theme's line colour at low opacity. */
+const chartFill = () => { const h = parseInt(theme().chart.slice(1), 16); return `rgba(${h >> 16},${(h >> 8) & 255},${h & 255},0.14)`; };
 // risk colours on paper: "not detected" is a quiet grey
 const PAPER = ['#c3c9d2', RISK[1].color, RISK[2].color, RISK[3].color, RISK[4].color];
 const END = Date.UTC(END_YEAR, 11, 31);
@@ -205,14 +208,14 @@ function measuredSVG() {
   const pts = s.map((v, k) => `${X(k).toFixed(1)},${Y(v).toFixed(1)}`);
   const last = s[s.length - 1];
   return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.measured'))}">
-    <line x1="${l}" x2="${W - r}" y1="${top}" y2="${top}" stroke="#9aa5b4" stroke-dasharray="2 3"/>
-    <polygon points="${l},${top} ${pts.join(' ')} ${W - r},${top}" fill="rgba(30,130,220,0.12)"/>
-    <polyline points="${pts.join(' ')}" fill="none" stroke="#1e82dc" stroke-width="2"/>
-    ${s.map((v, k) => `<circle cx="${X(k).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="2.2" fill="#1e82dc"/>`).join('')}
-    <text x="${W - r + 5}" y="${top + 4}" font-size="10" fill="#5a6779">0</text>
-    <text x="${W - r + 5}" y="${Math.max(top + 16, Y(last) + 4)}" font-size="10.5" font-weight="700" fill="#17202e">${esc(iso(sunk(L, last)))}</text>
-    <text x="${l}" y="${H - 4}" font-size="10" fill="#5a6779">${esc(iso(day(L, m.t0)))}</text>
-    <text x="${W - r}" y="${H - 4}" font-size="10" fill="#5a6779" text-anchor="end">${esc(iso(day(L, m.t1)))}</text>
+    <line x1="${l}" x2="${W - r}" y1="${top}" y2="${top}" stroke="#a7a7a2" stroke-dasharray="2 3"/>
+    <polygon points="${l},${top} ${pts.join(' ')} ${W - r},${top}" fill="${chartFill()}"/>
+    <polyline points="${pts.join(' ')}" fill="none" stroke="${theme().chart}" stroke-width="2"/>
+    ${s.map((v, k) => `<circle cx="${X(k).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="2.2" fill="${theme().chart}"/>`).join('')}
+    <text x="${W - r + 5}" y="${top + 4}" font-size="10" fill="#5b6168">0</text>
+    <text x="${W - r + 5}" y="${Math.max(top + 16, Y(last) + 4)}" font-size="10.5" font-weight="700" fill="#1a1d22">${esc(iso(sunk(L, last)))}</text>
+    <text x="${l}" y="${H - 4}" font-size="10" fill="#5b6168">${esc(iso(day(L, m.t0)))}</text>
+    <text x="${W - r}" y="${H - 4}" font-size="10" fill="#5b6168" text-anchor="end">${esc(iso(day(L, m.t1)))}</text>
   </svg>`;
 }
 
@@ -228,13 +231,13 @@ function timelineSVG() {
   }
   const ticks = [2030, 2040, 2050].map(yy => {
     const x = X(Date.UTC(yy, 0, 1));
-    return `<line x1="${x}" x2="${x}" y1="${y + h}" y2="${y + h + 4}" stroke="#5a6779"/><text x="${x}" y="${H - 4}" font-size="10" fill="#5a6779" text-anchor="${yy === 2050 ? 'end' : 'middle'}">${esc(yearText(L, yy))}</text>`;
+    return `<line x1="${x}" x2="${x}" y1="${y + h}" y2="${y + h + 4}" stroke="#5b6168"/><text x="${x}" y="${H - 4}" font-size="10" fill="#5b6168" text-anchor="${yy === 2050 ? 'end' : 'middle'}">${esc(yearText(L, yy))}</text>`;
   }).join('');
   const xn = X(m.t1);
   return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" direction="ltr" style="direction:ltr" role="img" aria-label="${esc(t('chart.timeline'))}">
-    ${out}<rect x="${l}" y="${y}" width="${iw}" height="${h}" fill="none" stroke="#9aa5b4"/>
-    <path d="M${xn} ${y - 1}l-4 -6h8z" fill="#17202e"/>
-    <text x="${xn + 7}" y="${y - 4}" font-size="10" fill="#17202e">${esc(iso(t('chart.today')))}</text>
+    ${out}<rect x="${l}" y="${y}" width="${iw}" height="${h}" fill="none" stroke="#a7a7a2"/>
+    <path d="M${xn} ${y - 1}l-4 -6h8z" fill="#1a1d22"/>
+    <text x="${xn + 7}" y="${y - 4}" font-size="10" fill="#1a1d22">${esc(iso(t('chart.today')))}</text>
     ${ticks}</svg>`;
 }
 
@@ -385,10 +388,10 @@ function initMap() {
       }, before);
     } else { S.buildingsFailed = true; }
     map.addSource('ring', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-    map.addLayer({ id: 'ring', type: 'line', source: 'ring', paint: { 'line-color': '#17202e', 'line-width': 4, 'line-dasharray': [2, 2] } });
+    map.addLayer({ id: 'ring', type: 'line', source: 'ring', paint: { 'line-color': '#1a1d22', 'line-width': 4, 'line-dasharray': [2, 2] } });
     map.addSource('pin', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     map.addLayer({ id: 'pin-halo', type: 'circle', source: 'pin', paint: { 'circle-radius': 22, 'circle-color': '#ffffff', 'circle-opacity': 0.85 } });
-    map.addLayer({ id: 'pin', type: 'circle', source: 'pin', paint: { 'circle-radius': 12, 'circle-color': '#17202e', 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 4 } });
+    map.addLayer({ id: 'pin', type: 'circle', source: 'pin', paint: { 'circle-radius': 12, 'circle-color': '#1a1d22', 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 4 } });
     S.mapReady = true;
     placeMap();
   });
@@ -807,6 +810,7 @@ function wire() {
   });
   window.addEventListener('afterprint', () => document.body.classList.remove('print-letter'));
 
+  themeSelect($('theme'), { onChange: () => location.reload() });   // the report is built from the colours at load
   $('lang').addEventListener('change', async e => {
     await Promise.all([dict(e.target.value), caseDict(e.target.value)]);
     S.ui = ctx(e.target.value);
