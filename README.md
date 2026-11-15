@@ -60,6 +60,16 @@ The address is looked up with OpenStreetMap Nominatim from the browser. Only a
 grid point (0.2 degrees apart, about 22 km) is sent to this site and stored,
 never the address.
 
+## Take action
+
+1. **Get the proof.** A one page report for their spot, as a PDF or a link.
+2. **Send it.** A ready written letter asking for an inspection or for
+   answers about groundwater pumping, naming the office responsible.
+3. **Find the others.** The city's group, a form to add your own, and four
+   cities that stopped their sinking.
+
+![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
+
 ## What the data shows so far
 
 Built on 2026-11-15 from 745 places. At least 1 km² of built up land is
@@ -110,26 +120,6 @@ loads. For each place in `pipeline/places.json`:
 Mexico City comes out at 26 cm per year over its fastest zone, in line with
 the map NASA and JPL published in 2026, and its two viewing directions agree
 to within about 1.5 cm per year.
-
-## Take action
-
-`web/act.html` turns a spot on the map into something a person can use:
-
-1. **Get the proof.** A one page report for their spot, as a PDF or a link.
-2. **Send it.** A ready written letter asking for an inspection or for
-   answers about groundwater pumping, naming the office responsible.
-3. **Find the others.** The city's group, a form to add your own, and four
-   cities that stopped their sinking.
-
-Nothing the person types leaves their device. Eighteen places have a full
-local guide in `web/action/cities` (see `web/action/README.md`), and the page
-exists in nine languages (`web/action/i18n`).
-
-**Before promoting the page in a city, have someone who lives there check its
-file and its translation.** The contacts were gathered by desk research in
-November 2026 and the translations were written by a language model.
-
-![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
 
 ## What this cannot tell you
 
