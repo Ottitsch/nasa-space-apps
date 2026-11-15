@@ -8,8 +8,7 @@ import {
   EARLIER, EARLIER_DEFAULT, END_YEAR, LIMITS, RISK, SINK_DECADES, SINK_MIN_MM, YEAR,
   fmtDate, fmtMonth, fmtRate, fmtSunk, rampCSS, sinkCSS, sinkLUT, sinkU,
 } from './config.js';
-import { ATTRIBUTION, BASES, UNDER_LABELS, baseStyle, recolorBasemap } from './basemap.js';
-import { onTheme, theme, themeSelect } from './theme.js';
+import { ATTRIBUTION, BASES, UNDER_LABELS, baseStyle } from './basemap.js';
 import { hotBefore, hotSunk, loadFrames, loadIndex, loadPlace, placesAt } from './data.js';
 import { areaAt, areaById, areaMeta, askArea, geocode } from './areas.js';
 import { Timeline } from './timeline.js';
@@ -84,16 +83,13 @@ map.on('error', e => console.warn('map:', e.error?.message || e));
 
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
-let LUT = sinkLUT();
+const LUT = sinkLUT();
 // risk class colours packed for the canvas (little endian ABGR)
-const packRisk = () => RISK.map((r, i) => {
+const RISK_PX = RISK.map((r, i) => {
   const v = parseInt(r.color.slice(1), 16);
   const a = [0, 105, 220, 232, 242][i];
   return ((a << 24) | ((v & 255) << 16) | (((v >> 8) & 255) << 8) | (v >> 16)) >>> 0;
 });
-let RISK_PX = packRisk();
-const bldgColor = () => ['match', ['coalesce', ['feature-state', 'risk'], 0],
-  1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#46505f'];
 let image = null, pixels = null;
 
 function addLayers() {
@@ -110,7 +106,8 @@ function addLayers() {
     map.addLayer({
       id: 'bldg', type: 'fill-extrusion', source: BLDG.source, 'source-layer': BLDG.sourceLayer, minzoom: BLDG_MIN_ZOOM,
       paint: {
-        'fill-extrusion-color': bldgColor(),
+        'fill-extrusion-color': ['match', ['coalesce', ['feature-state', 'risk'], 0],
+          1, RISK[1].color, 2, RISK[2].color, 3, RISK[3].color, 4, RISK[4].color, '#46505f'],
         // heights are not in the data: one modest height for every building
         'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], BLDG_MIN_ZOOM, 0, 15, 7],
         'fill-extrusion-opacity': 0.93,
@@ -701,8 +698,7 @@ const placePad = () => (narrow()
 
 function setSpot(spot) {
   addr.spot = spot;
-  // the pin's colour is fixed when it is made, so a theme switch makes a new one
-  if (!addr.marker) addr.marker = new maplibregl.Marker({ color: theme().css['--accent'], anchor: 'bottom' });
+  if (!addr.marker) addr.marker = new maplibregl.Marker({ color: '#e8e2d6', anchor: 'bottom' });   // the accent of css/style.css
   addr.marker.setLngLat([spot.lng, spot.lat]).addTo(map);
 }
 
@@ -1008,17 +1004,11 @@ function readHash() {
 
 // --------------------------------------------------------------------- boot
 
-const TINY = ['Not detected', 'Even sinking', 'Cracks possible', 'Cracks likely', 'Structural damage'];
-/** The colour ramp and the risk classes in the legend: redone when the theme changes. */
-function paintLegend() {
+function staticUI() {
   $('ramp').style.background = rampCSS();
+  const TINY = ['Not detected', 'Even sinking', 'Cracks possible', 'Cracks likely', 'Structural damage'];
   $('swatches').innerHTML = RISK.map((r, i) =>
     `<li style="--c:${r.color};--on:${i === 1 || i === 2 ? '#15181d' : '#fff'}"><span class="long">${r.short}</span><span class="tiny">${TINY[i]}</span></li>`).join('');
-}
-
-function staticUI() {
-  paintLegend();
-  themeSelect($('theme-select'));
   $('attrib').innerHTML = ATTRIBUTION;
   const about = $('about');
   $('title').addEventListener('click', () => about.showModal());
@@ -1106,20 +1096,5 @@ async function boot() {
     startSpin();
   }
 }
-
-// A theme switch repaints everything that has its colours baked in.
-onTheme(() => {
-  LUT = sinkLUT();
-  RISK_PX = packRisk();
-  paintLegend();
-  recolorBasemap(map);
-  if (map.getLayer('bldg')) map.setPaintProperty('bldg', 'fill-extrusion-color', bldgColor());
-  map.getSource('places')?.setData(placesGeoJSON());
-  drawOverlay();
-  popup.remove();   // its swatch was drawn in the old colours
-  if (addr.marker) { addr.marker.remove(); addr.marker = null; if (addr.spot) setSpot(addr.spot); }
-  if (state.meta) { drawChart(); updatePanel(); }
-  if (state.place) updateBuildings();
-});
 
 boot();

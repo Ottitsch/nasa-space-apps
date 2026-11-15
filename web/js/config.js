@@ -1,5 +1,4 @@
 // Shared constants: colours, limits, time range.
-import { onTheme, theme } from './theme.js';
 
 export const END_YEAR = 2050;
 export const DAY = 86400000;
@@ -24,24 +23,28 @@ export const EARLIER = [
 ];
 export const EARLIER_DEFAULT = '2000';
 
-// Colours come from the active theme (js/theme.js), so they follow a switch live.
 export const RISK = [
-  { label: 'No sinking detected', short: 'Not detected', get color() { return theme().risk[0]; } },
-  { label: 'Sinking evenly', short: 'Sinking evenly', get color() { return theme().risk[1]; } },
-  { label: 'Cracking possible (past 1/500)', short: 'Cracking possible', get color() { return theme().risk[2]; } },
-  { label: 'Cracking likely (past 1/300)', short: 'Cracking likely', get color() { return theme().risk[3]; } },
-  { label: 'Structural damage likely (past 1/150)', short: 'Structural damage likely', get color() { return theme().risk[4]; } },
+  { label: 'No sinking detected', short: 'Not detected', color: '#4a5568' },
+  { label: 'Sinking evenly', short: 'Sinking evenly', color: '#6f9fb0' },
+  { label: 'Cracking possible (past 1/500)', short: 'Cracking possible', color: '#d6b25e' },
+  { label: 'Cracking likely (past 1/300)', short: 'Cracking likely', color: '#c4623f' },
+  { label: 'Structural damage likely (past 1/150)', short: 'Structural damage likely', color: '#8e2f4a' },
 ];
 
 // Ground sinking colour ramp: log scale from 1 cm to 10 m.
 export const SINK_MIN_MM = 10;
 export const SINK_DECADES = 3;
-const stops = () => theme().ramp;
-onTheme(() => { sinkLUT.cache = null; });
+const STOPS = [
+  [0.0, 31, 42, 68, 150],
+  [0.3, 63, 111, 143, 190],
+  [0.58, 143, 184, 176, 215],
+  [0.82, 214, 222, 208, 230],
+  [1.0, 233, 228, 212, 240],
+];
 
 /** 256 entry RGBA lookup table for the ramp. */
 export function sinkLUT() {
-  const STOPS = stops(), lut = new Uint8Array(256 * 4);
+  const lut = new Uint8Array(256 * 4);
   for (let i = 0; i < 256; i++) {
     const u = i / 255;
     let k = 0;
@@ -66,7 +69,7 @@ export function sinkCSS(mm) {
 }
 
 export function rampCSS() {
-  return 'linear-gradient(90deg,' + stops().map(s => `rgb(${s[1]},${s[2]},${s[3]}) ${s[0] * 100}%`).join(',') + ')';
+  return 'linear-gradient(90deg,' + STOPS.map(s => `rgb(${s[1]},${s[2]},${s[3]}) ${s[0] * 100}%`).join(',') + ')';
 }
 
 /** "3.2 cm", "48 cm", "5.4 m" from millimetres. */

@@ -1,4 +1,3 @@
-import { theme } from './theme.js';
 // The base map: real imagery with thin white outlines and labels on top, or a
 // dark map with city lights. Both share one style so switching is instant.
 
@@ -41,14 +40,13 @@ const label = (id, sourceLayer, filter, minzoom, maxzoom, layout, paint = {}) =>
 });
 
 export function baseStyle(base = 'satellite') {
-  const bm = theme().basemap;
   const show = id => ({ visibility: BASES[base].includes(id) ? 'visible' : 'none' });
   return {
     version: 8,
     projection: { type: 'globe' },
     glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
     sky: {
-      'sky-color': bm.sky, 'horizon-color': bm.horizon, 'fog-color': bm.sky,
+      'sky-color': '#0b1114', 'horizon-color': '#3c5560', 'fog-color': '#0b1114',
       'atmosphere-blend': z(0, 1, 5, 1, 7, 0),
     },
     light: { anchor: 'viewport', intensity: 0.22, color: '#ffffff', position: [1.3, 200, 35] },
@@ -59,12 +57,12 @@ export function baseStyle(base = 'satellite') {
       sentinel: { type: 'raster', tiles: [SENTINEL], tileSize: 256, minzoom: 5, maxzoom: 14 },
     },
     layers: [
-      { id: 'land', type: 'background', paint: { 'background-color': bm.land } },
+      { id: 'land', type: 'background', paint: { 'background-color': '#0b1013' } },
 
       // night base: dark land, darker water, city lights on the globe
       {
         id: 'night-water', type: 'fill', source: 'omt', 'source-layer': 'water', layout: show('night-water'),
-        paint: { 'fill-color': bm.night },
+        paint: { 'fill-color': '#05080a' },
       },
       {
         id: 'night-lights', type: 'raster', source: 'night-lights', maxzoom: 9, layout: show('night-lights'),
@@ -114,7 +112,7 @@ export function baseStyle(base = 'satellite') {
         { 'text-color': 'rgba(255,255,255,0.82)' }),
       label('label-water', 'water_name', ['match', ['get', 'class'], ['ocean', 'sea'], true, false], 1.5, 8,
         { 'text-size': z(1.5, 10.5, 6, 13), 'text-font': ['Noto Sans Italic'], 'text-letter-spacing': 0.18, 'text-max-width': 6 },
-        { 'text-color': bm.water, 'text-halo-color': 'rgba(8,12,18,0.35)' }),
+        { 'text-color': 'rgba(206,218,218,0.7)', 'text-halo-color': 'rgba(8,12,18,0.35)' }),
       label('label-quarter', 'place', ['match', ['get', 'class'], ['suburb', 'quarter', 'neighbourhood'], true, false], 11.5, 24,
         { 'text-size': z(11.5, 9.5, 15, 11.5), 'text-transform': 'uppercase', 'text-letter-spacing': 0.1, 'text-max-width': 7 },
         { 'text-color': 'rgba(255,255,255,0.8)' }),
@@ -139,13 +137,3 @@ export function baseStyle(base = 'satellite') {
 /** The app puts its own layers (ground overlay, buildings) under this one:
  *  above the imagery, borders and roads, below every name. */
 export const UNDER_LABELS = 'label-road';
-
-/** Re-colour an existing map after a theme switch (the style itself is not rebuilt). */
-export function recolorBasemap(map) {
-  const bm = theme().basemap;
-  map.setSky({ 'sky-color': bm.sky, 'horizon-color': bm.horizon, 'fog-color': bm.sky });
-  const set = (id, prop, value) => { if (map.getLayer(id)) map.setPaintProperty(id, prop, value); };
-  set('land', 'background-color', bm.land);
-  set('night-water', 'fill-color', bm.night);
-  set('label-water', 'text-color', bm.water);
-}
