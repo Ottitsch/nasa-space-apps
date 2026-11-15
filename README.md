@@ -18,9 +18,9 @@ how sure the data is.
 
 ## Your address
 
-Search for any address or coordinates. If the spot is inside a place that is
-already on the map, its measurements open right away. If it is not, the app
-downloads the NISAR radar data for the 56 km area around it from NASA and
+Search for your address or coordinates to see if the ground under your building is sinking!  
+If the spot is inside a place that is already on the map, its measurements open right away.  
+If it is not, the app downloads the NISAR radar data for the 56 km area around it from NASA and  
 measures the sinking there too.
 
 ## Take action
@@ -93,7 +93,7 @@ to within about 1.5 cm per year.
 
 * **It is a screening map.** One radar pixel is 80 m wide. It describes
   neighbourhoods, not a single building's foundations.
-* **Sinking from before NISAR is assumed, not measured.**
+* **Sinking from before NISAR is assumed based on the data, not measured.**
 * **Short records only see fast sinking.** "No sinking detected" means
   "nothing that fast", not "stable".
 * **A summer record can mistake shrinking clay for sinking.** The places
