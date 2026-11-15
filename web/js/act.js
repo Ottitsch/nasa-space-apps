@@ -815,6 +815,16 @@ function wire() {
   });
 }
 
+/** Light the step in view in the side rail, as the map lights the layer that is on. */
+function trackSteps() {
+  const links = [...document.querySelectorAll('.steps a')];
+  const mark = id => links.forEach(a => (a.getAttribute('href') === '#' + id ? a.setAttribute('aria-current', 'step') : a.removeAttribute('aria-current')));
+  // a section counts as the one in view when it crosses a thin band a third of the way down the screen
+  const seen = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && mark(e.target.id)), { rootMargin: '-35% 0px -60% 0px' });
+  for (const id of ['s1', 's2', 's3']) seen.observe($(id));
+  mark('s1');
+}
+
 // --------------------------------------------------------------------- boot
 
 async function json(url) {
@@ -877,6 +887,7 @@ async function boot() {
   $('main').hidden = false;
   renderAll();
   wire();
+  trackSteps();
   writeHash();
   initMap();
   window.takeAction = { S, setSpot };
