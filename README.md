@@ -31,7 +31,7 @@ downloaded from NASA and run through the same pipeline.
 2. **Send it.** A ready written letter asking for an inspection or for
    answers about groundwater pumping, naming the office responsible.
 
-   <img src="docs/letter-mexico-city.png" width="25%" alt="The ready written letter for a spot in Mexico City">
+   <img src="docs/letter-mexico-city.png" width="50%" alt="The office responsible in Mexico City and the letter addressed to it">
 
 3. **Find the others.** Join the city's WhatsApp group, or create your own
    and add it. Telegram, Element, Signal and other apps are supported too, in
