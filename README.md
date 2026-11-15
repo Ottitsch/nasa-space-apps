@@ -16,6 +16,24 @@ how sure the data is.
 
 ![Mexico City in 2050 if current rates continue](docs/mexico-city-2050.png)
 
+## Your address
+
+Type an address or coordinates in the search field. If a place covers it, the
+reading opens at once. If not, the NISAR passes over a 56 km box around it are
+downloaded from NASA and run through the same pipeline.
+
+## Take action
+
+1. **Get the proof.** A one page report for their spot, as a PDF or a link.
+2. **Send it.** A ready written letter asking for an inspection or for
+   answers about groundwater pumping, naming the office responsible.
+3. **Find the others.** The city's group, a form to add your own, and four
+   cities that stopped their sinking.
+
+![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
+
+## How to read the map
+
 * **Bubbles** on the globe are places with sinking detected, sized and
   coloured by how far the fastest zone has sunk. **Rings** are places NISAR
   measures where nothing sinks fast enough to detect yet.
@@ -48,27 +66,6 @@ long before. So by default the map assumes the sinking measured now has gone
 on at the same rate since 2000. It is an estimate, not a measurement, and the
 app says so wherever it is used. The control **Sinking before NISAR** in the
 place panel changes it to since 2015 or not counted.
-
-## Your address
-
-Type an address or coordinates in the search field. If a place covers it, the
-reading opens at once. If not, the NISAR passes over a 56 km box around it are
-downloaded from NASA and run through the same pipeline, which takes about 5 to
-15 minutes. The result is stored in `web/data/areas` like a place.
-
-The address is looked up with OpenStreetMap Nominatim from the browser. Only a
-grid point (0.2 degrees apart, about 22 km) is sent to this site and stored,
-never the address.
-
-## Take action
-
-1. **Get the proof.** A one page report for their spot, as a PDF or a link.
-2. **Send it.** A ready written letter asking for an inspection or for
-   answers about groundwater pumping, naming the office responsible.
-3. **Find the others.** The city's group, a form to add your own, and four
-   cities that stopped their sinking.
-
-![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
 
 ## What the data shows so far
 
