@@ -18,9 +18,10 @@ how sure the data is.
 
 ## Your address
 
-Type an address or coordinates in the search field. If a place covers it, the
-reading opens at once. If not, the NISAR passes over a 56 km box around it are
-downloaded from NASA and run through the same pipeline.
+Search for any address or coordinates. If the spot is inside a place that is
+already on the map, its measurements open right away. If it is not, the app
+downloads the NISAR radar data for the 56 km area around it from NASA and
+measures the sinking there too.
 
 ## Take action
 
