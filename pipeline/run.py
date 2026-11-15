@@ -188,9 +188,10 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
         if res["valid"].mean() < 0.03 or not np.isfinite(res["sigma"]):
             log("    almost no ground with a stable radar signal, skipping this track")
             continue
-        if res["sigma"] > 0.06:
-            # three times this noise is a detection bar of 18 cm per year or
-            # more: nothing short of a mine pit would show
+        if res["sigma"] > 0.04:
+            # three times this noise is a detection bar of 12 cm per year or
+            # more. Such tracks are monsoon or flood seasons over farmland and
+            # river plains; what they call sinking is mostly not ground.
             log(f"    too noisy ({res['sigma'] * 1000:.0f} mm/yr), skipping this track")
             continue
         warp = E.Warper(grid, mg)
@@ -211,6 +212,15 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
     if not layers:
         raise RuntimeError("no usable track")
 
+    # Ground seen by only one of two tracks takes that track's values, but is
+    # judged against the noise of the merged map. A track more than twice as
+    # noisy as the other would slip its noise through as sinking (Varanasi,
+    # in the monsoon), so it is dropped.
+    if len(layers) == 2:
+        best = min(range(2), key=lambda k: layers[k]["sigma"])
+        if layers[1 - best]["sigma"] > 2 * layers[best]["sigma"]:
+            log(f"    dropping {tracks[1 - best]['id']}: more than twice as noisy as {tracks[best]['id']}")
+            layers, tracks = [layers[best]], [tracks[best]]
     prim = layers[0]
     dates, t = prim["dates"], prim["t"]
     if len(layers) == 1:
