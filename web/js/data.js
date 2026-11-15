@@ -23,22 +23,41 @@ export async function loadIndex() {
   const r = await fetch('data/index.json');
   if (!r.ok) throw new Error('could not load data/index.json');
   const index = await r.json();
-  for (const p of index.places) {
-    p.t0 = Date.parse(p.dates[0] + 'T00:00:00Z');
-    p.t1 = Date.parse(p.dates[p.dates.length - 1] + 'T00:00:00Z');
-    p.span = p.t_years[p.t_years.length - 1];
-    p.months = Math.max(1, Math.round(p.span * 12));
-    p.early = p.span < 0.7;                         // under about eight months of passes
-    // a place counts as sinking when at least 1 km2 of built up land is
-    // detected sinking. Smaller patches, and sinking only under bare ground
-    // (pits, mines, fill, farm edges), still show on the map but do not make
-    // the headline.
-    p.detected = (p.builtup_sinking_km2 ?? 0) >= 1 && Array.isArray(p.hot_series_mm);
-    // mean rate of the fastest sinking zone, mm per year (negative)
-    p.hotRate = p.detected ? p.hot_series_mm[p.hot_series_mm.length - 1] / p.span : 0;
-  }
+  index.places.forEach(prepPlace);
   return index;
 }
+
+/** Add what the app works out from an index entry (a place, or an area built
+ *  on request, which has the same fields). */
+export function prepPlace(p) {
+  p.t0 = Date.parse(p.dates[0] + 'T00:00:00Z');
+  p.t1 = Date.parse(p.dates[p.dates.length - 1] + 'T00:00:00Z');
+  p.span = p.t_years[p.t_years.length - 1];
+  p.months = Math.max(1, Math.round(p.span * 12));
+  p.early = p.span < 0.7;                         // under about eight months of passes
+  // a place counts as sinking when at least 1 km2 of built up land is
+  // detected sinking. Smaller patches, and sinking only under bare ground
+  // (pits, mines, fill, farm edges), still show on the map but do not make
+  // the headline.
+  p.detected = (p.builtup_sinking_km2 ?? 0) >= 1 && Array.isArray(p.hot_series_mm);
+  // mean rate of the fastest sinking zone, mm per year (negative)
+  p.hotRate = p.detected ? p.hot_series_mm[p.hot_series_mm.length - 1] / p.span : 0;
+  return p;
+}
+
+/** The places whose data covers a spot, the one whose centre is nearest first. */
+export function placesAt(places, lng, lat) {
+  const inside = places.filter(p => {
+    const [w, s, e, n] = p.bounds;
+    return lng >= w && lng <= e && lat >= s && lat <= n;
+  });
+  const d = p => (p.lat - lat) ** 2 + ((p.lon - lng) * Math.cos((lat * Math.PI) / 180)) ** 2;
+  return inside.sort((a, b) => d(a) - d(b));
+}
+
+/** Where a place's files are: its folder under data/, or for an area the
+ *  address the site gave for it. */
+const base = meta => meta.base || `data/${meta.id}/`;
 
 /** Sinking (mm, positive) of a place's fastest zone at a moment in time. */
 export function hotSunk(p, ms) {
@@ -285,11 +304,11 @@ export class PlaceData {
 }
 
 export async function loadPlace(meta) {
-  const core = await fetchBytes(`data/${meta.id}/core.bin.gz`);
+  const core = await fetchBytes(`${base(meta)}core.bin.gz`);
   if (core.byteLength !== meta.width * meta.height * 5) throw new Error('core file does not match the index');
   return new PlaceData(meta, core);
 }
 
 export function loadFrames(meta) {
-  return fetchBytes(`data/${meta.id}/frames.bin.gz`);
+  return fetchBytes(`${base(meta)}frames.bin.gz`);
 }

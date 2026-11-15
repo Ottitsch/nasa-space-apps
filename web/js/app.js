@@ -9,10 +9,12 @@ import {
   fmtDate, fmtMonth, fmtRate, fmtSunk, rampCSS, sinkCSS, sinkLUT, sinkU,
 } from './config.js';
 import { ATTRIBUTION, BASES, UNDER_LABELS, baseStyle } from './basemap.js';
-import { hotBefore, hotSunk, loadFrames, loadIndex, loadPlace } from './data.js';
+import { hotBefore, hotSunk, loadFrames, loadIndex, loadPlace, placesAt } from './data.js';
+import { areaAt, areaById, areaMeta, askArea, geocode } from './areas.js';
 import { Timeline } from './timeline.js';
 
 const $ = id => document.getElementById(id);
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 // Building outlines: Google Open Buildings + Microsoft + OpenStreetMap, merged
 // by VIDA and served as one PMTiles archive (read with HTTP range requests).
 const BLDG_URL = 'pmtiles://https://data.source.coop/vida/google-microsoft-osm-open-buildings/pmtiles/goog_msft_osm.pmtiles';
@@ -354,7 +356,7 @@ function whenText(place, yrs) {
 
 const limitText = (place, i, limit) => whenText(place, place.yearsToLimit(i, limit));
 
-function inspect(e) {
+function inspect(e, label) {
   if (e.defaultPrevented) return;
   const place = state.place;
   if (!place) return;
@@ -367,7 +369,7 @@ function inspect(e) {
   const sunk = place.sunkAt(i, y);
   const since = place.earlier;
   const proj = state.time > m.t1;
-  let html = `<div class="pop"><div class="cls"><i class="sw" style="background:${RISK[cls].color}"></i>${RISK[cls].label}</div>`;
+  let html = `<div class="pop">${label ? `<div class="pop-addr">${esc(label)}</div>` : ''}<div class="cls"><i class="sw" style="background:${RISK[cls].color}"></i>${RISK[cls].label}</div>`;
   if (!valid) {
     html += `<div class="note">No reliable radar signal here. Water, farmland, vegetation and steep ground are left out.</div>`;
   } else if (!sig && !place.beta[i]) {
@@ -388,6 +390,8 @@ function inspect(e) {
   }
   state.spot = [lng, lat];
   html += `<a class="pop-act" href="${actUrl(m.id, lng, lat)}">Take action for this spot</a>`;
+  // above the pin when it is opened for an address, so the pin stays in sight
+  popup.setOffset(label ? { top: [0, 10], bottom: [0, -46], left: [16, -22], right: [-16, -22] } : 10);
   popup.setLngLat(e.lngLat).setHTML(html + '</div>').addTo(map);
   setActLink(m.id, lng, lat);
   emit('inspect', {
@@ -446,12 +450,19 @@ function buildList() {
     for (const h of heads) h.hidden = !h.nextElementSibling.querySelector('li:not([hidden])');
     list.querySelector('.empty').hidden = rows.some(li => !li.hidden);
   };
-  $('search').addEventListener('input', filter);
+  const offer = () => {
+    const q = $('search').value.trim();
+    $('addr-find').hidden = $('addr-note').hidden = q.length < 2;
+    $('addr-q').textContent = `“${q}”`;
+  };
+  $('search').addEventListener('input', () => { filter(); offer(); });
   $('search').addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
     const first = rows.find(li => !li.hidden);
     if (first) selectPlace(first.firstElementChild.dataset.id);
+    else findAddress($('search').value);
   });
+  $('addr-find').addEventListener('click', () => findAddress($('search').value));
 }
 
 function drawChart() {
@@ -536,6 +547,7 @@ function updatePanel() {
     $('chart-dot')?.setAttribute('cx', x); $('chart-dot')?.setAttribute('cy', y);
   }
   const place = state.place;
+  updateSpot();
   if (place && m.detected) {
     const a = place.areaByClass(place.strainYears(t), 5);
     $('strain').hidden = false;
@@ -580,9 +592,13 @@ function strainNote(place, a) {
 
 function showPanel(m) {
   setPanel('place');
-  $('place-name').textContent = m.name;
-  $('place-sub').innerHTML = `${m.country} · ${m.detected ? 'Sinking detected' : 'No sinking detected'}`
+  const spot = addr.spot?.place === m.id ? addr.spot : null;
+  $('place-name').textContent = m.area && spot?.short ? `Around ${spot.short}` : m.name;
+  $('place-sub').innerHTML = [m.area ? 'Measured for an address' : esc(m.country), m.detected ? 'Sinking detected' : 'No sinking detected']
+    .filter(Boolean).join(' · ')
     + (m.early ? ` · <span class="early">Early result, ${m.months} months of data</span>` : '');
+  $('spot').hidden = !spot;
+  $('place-spot-label').textContent = spot ? spot.label : '';
   $('st-rate').textContent = m.detected ? fmtRate(m.hotRate) : 'none detected';
   $('st-area').textContent = m.detected ? `${m.sinking_area_km2.toLocaleString()} km²` : '0 km²';
   $('st-built').textContent = `${(m.builtup_sinking_km2 ?? 0).toLocaleString()} km²`;
@@ -603,6 +619,8 @@ async function selectPlace(id, opts = {}) {
   if (!m) return;
   const token = ++state.loadToken;
   popup.remove(); hover.remove();
+  // opts.spot: { lng, lat, label, short }, the address it is opened for
+  if (opts.spot) setSpot({ ...opts.spot, place: m.id }); else if (addr.spot?.place !== m.id) unpin();
   clearBuildings();
   removeOverlay();
   state.meta = m; state.place = null;
@@ -613,12 +631,10 @@ async function selectPlace(id, opts = {}) {
   drawChart(); updatePanel(); updateLegend();
   map.getSource('places')?.setData(placesGeoJSON());
   const [w, s, e, n] = m.bounds;
-  if (opts.fly !== false) {
-    map.fitBounds([[w, s], [e, n]], {
-      padding: narrow() ? { top: 300, bottom: 120, left: 12, right: 12 }
-        : { top: 40, bottom: 130, left: window.innerWidth > 1100 ? 200 : 16, right: PANE + 10 },
-      pitch: 0, bearing: 0, duration: 2600, essential: true,
-    });
+  if (opts.fly !== false && opts.spot) {
+    flyToSpot(opts.spot, 2600);
+  } else if (opts.fly !== false) {
+    map.fitBounds([[w, s], [e, n]], { padding: placePad(), pitch: 0, bearing: 0, duration: 2600, essential: true });
   }
   toast(`Loading ${m.name}…`);
   try {
@@ -629,6 +645,7 @@ async function selectPlace(id, opts = {}) {
     addOverlay(place);
     drawOverlay(); updatePanel(); scanBuildings();
     toast('');
+    if (addr.spot?.place === m.id) showSpot();
     emit('place', { id: m.id, name: m.name, country: m.country, detected: m.detected });
     const frames = await loadFrames(m);
     if (token !== state.loadToken) return;
@@ -644,6 +661,7 @@ async function selectPlace(id, opts = {}) {
 function deselect() {
   state.loadToken++;
   popup.remove();
+  unpin();
   clearBuildings(); removeOverlay();
   state.meta = null; state.place = null;
   applyEarlier();
@@ -659,6 +677,182 @@ function deselect() {
 function globalRange() {
   const ps = state.index.places;
   timeline.setRange(Math.min(...ps.map(p => p.t0)), Math.max(...ps.map(p => p.t1)));
+}
+
+// ------------------------------------------------------------ addresses
+// Typed in the search field. A stored place that covers the address opens at
+// it. Elsewhere the area around it is measured on request (see areas.js), and
+// opens at the address once it is ready.
+
+const addr = {
+  marker: null,      // pin on the address
+  spot: null,        // { lng, lat, label, short, place }: the address the open place was opened for
+  token: 0,          // the newest lookup; older ones stop when it changes
+  timer: 0,          // next check on an area being built
+};
+
+/** Room the panes leave for the map around a place. */
+const placePad = () => (narrow()
+  ? { top: 300, bottom: 120, left: 12, right: 12 }
+  : { top: 40, bottom: 130, left: window.innerWidth > 1100 ? 200 : 16, right: PANE + 10 });
+
+function setSpot(spot) {
+  addr.spot = spot;
+  if (!addr.marker) addr.marker = new maplibregl.Marker({ color: '#0a84ff', anchor: 'bottom' });
+  addr.marker.setLngLat([spot.lng, spot.lat]).addTo(map);
+}
+
+function unpin() {
+  addr.spot = null;
+  addr.marker?.remove();
+}
+
+/** Fly to an address. On a wide screen it ends up low in the view, which
+ *  leaves room for its popup above the pin, clear of the time bar. */
+function flyToSpot(spot, duration, zoom = 15) {
+  stopSpin();
+  const padding = narrow() ? placePad() : { ...placePad(), top: Math.round(Math.min(340, window.innerHeight * 0.4)) };
+  map.flyTo({ center: [spot.lng, spot.lat], zoom, pitch: 0, bearing: 0, padding, duration, essential: true });
+}
+
+/** The popup at the address, as if it had been clicked. On a phone the panel
+ *  already says what the popup would, and the popup would hide the map, so it
+ *  only opens there when asked for (force). */
+function showSpot(force = false) {
+  const s = addr.spot;
+  if (!s || state.place?.meta.id !== s.place || (narrow() && !force)) return;
+  inspect({ lngLat: new maplibregl.LngLat(s.lng, s.lat) }, s.label);
+}
+
+/** The ground under the address, at the date on the time bar, at the top of
+ *  the place panel: the same reading as the popup, kept in view. */
+function updateSpot() {
+  const s = addr.spot, place = state.place, ul = $('spot-rows');
+  if (!s || !place || place.meta.id !== s.place) { ul.innerHTML = ''; return; }
+  const i = place.index(s.lng, s.lat), m = place.meta;
+  const row = (k, v) => `<li><span class="k">${k}</span><span class="v">${v}</span></li>`;
+  if (i < 0 || !(place.flags[i] & 1)) {
+    ul.innerHTML = '<li class="txt">No reliable radar signal right at this spot: water, farmland, vegetation and steep ground are left out. Tap the map next to it to read the ground around it.</li>';
+    return;
+  }
+  const cls = place.classAt(i, place.strainYears(state.time)), sig = place.flags[i] & 2;
+  let html = `<li class="cls"><span class="k"><i class="sw" style="background:${RISK[cls].color}"></i><b>${RISK[cls].label}</b></span></li>`;
+  html += row('Sinking rate', sig ? fmtRate(place.rate[i]) : `below ${m.threshold_mm_yr} mm per year`);
+  if (sig || place.beta[i]) {
+    html += row('Cracking limit (1/500)', limitText(place, i, LIMITS.cracking));
+    html += row('Structural limit (1/150)', limitText(place, i, LIMITS.structural));
+  }
+  ul.innerHTML = html;
+}
+
+function addrBox(html) {
+  clearTimeout(addr.timer);
+  $('addr').innerHTML = html;
+  $('addr').hidden = !html;
+}
+
+const spinner = '<span class="spin" aria-hidden="true"></span>';
+
+async function findAddress(text) {
+  const q = text.trim();
+  if (!q) return;
+  const token = ++addr.token;
+  addrBox(`<p class="addr-msg">${spinner}Looking up the address…</p>`);
+  let hits;
+  try {
+    hits = await geocode(q);
+  } catch (err) {
+    console.error(err);
+    if (token === addr.token) addrBox('<p class="addr-msg">The address search did not answer. Try again in a moment.</p>');
+    return;
+  }
+  if (token !== addr.token) return;
+  if (!hits.length) {
+    addrBox(`<p class="addr-msg">No address found for “${esc(q)}”. Add the town and the country, or type coordinates such as 20.94, -101.43.</p>`);
+    return;
+  }
+  // several answers in the same spot are one answer
+  const far = h => Math.hypot(h.lat - hits[0].lat, (h.lon - hits[0].lon) * Math.cos((h.lat * Math.PI) / 180)) > 0.02;
+  if (!hits.some(far)) { goToAddress(hits[0]); return; }
+  addrBox(`<p class="addr-head">Which one?</p><ol class="addr-hits">${hits.map((h, k) =>
+    `<li><button type="button" data-k="${k}">${esc(h.label)}</button></li>`).join('')}</ol>`);
+  for (const b of $('addr').querySelectorAll('button[data-k]')) b.addEventListener('click', () => goToAddress(hits[+b.dataset.k]));
+}
+
+async function goToAddress(hit) {
+  const token = ++addr.token;
+  const spot = { lng: hit.lon, lat: hit.lat, label: hit.label, short: hit.short };
+  const inside = placesAt(state.index.places, spot.lng, spot.lat);
+  const p = inside.find(x => !x.area) || inside[0];      // the reviewed places first
+  if (p) {
+    addrBox('');
+    await selectPlace(p.id, { spot });
+    return;
+  }
+  // nothing stored covers it: the area around it, measured on request. The
+  // list stays open, as that is where the progress shows.
+  if (state.meta) deselect();
+  setPanel('finder');
+  setSpot({ ...spot, place: null });
+  flyToSpot(spot, 2400, 11);
+  followArea(areaAt(spot.lat, spot.lng), spot, token);
+}
+
+/** Keep asking about an area until it is ready or cannot be built. */
+async function followArea(area, spot, token, build = true) {
+  const asked = Date.now();
+  const card = (body, foot = '') => addrBox(`<div class="addr-card"><h4>${esc(spot.short || spot.label)}</h4>${body}${foot}</div>`);
+  const again = (label = 'Try again') => `<button class="btn ghost" type="button" id="addr-again">${label}</button>`;
+  const wire = () => $('addr-again')?.addEventListener('click', () => followArea(area, spot, ++addr.token, true));
+  const tick = async first => {
+    const answer = await askArea(area, first && build);
+    if (token !== addr.token) return;
+    const status = answer.status === 'none' && !build ? 'never' : answer.status;
+    if (status === 'ready') {
+      const meta = registerArea(answer);
+      addrBox('');
+      // open it, unless the person has opened another place in the meantime
+      if (!state.meta) await selectPlace(meta.id, { spot });
+      else toast(`The map around ${spot.short || spot.label} is ready. Look the address up again to open it.`, 8000);
+      return;
+    }
+    if (status === 'building' || (status === 'none' && Date.now() - asked < 120e3)) {
+      // just after a build is asked for it may not be listed yet: "none" then still means building
+      const since = Date.parse(answer.started || '') || asked;
+      const min = Math.max(0, Math.round((Date.now() - since) / 60e3));
+      card(`<p>No place on the map covers this address yet, so the ground around it is being measured now: the NISAR
+        radar passes over the 56 km around it are downloaded from NASA and processed, the same way as for every place
+        on the map. That takes about 5 to 15 minutes.</p>
+        <p class="addr-step">${spinner}<span>${esc(answer.step || 'Waiting for a free machine')}</span><span class="t">${min} min</span></p>`,
+      '<p class="fine">You can look around meanwhile. It opens here by itself when it is ready.</p>');
+      addr.timer = setTimeout(() => tick(false), 10000);
+      return;
+    }
+    if (status === 'never' || status === 'none') {
+      card('<p>No map has been made for the ground around this address yet.</p>', again('Measure it'));
+    } else if (status === 'failed') {
+      const why = {
+        uncovered: 'NISAR images the land every 12 days, but its published products do not cover every area yet. Try again in a few weeks.',
+        unusable: 'Every radar pass adds to the record, so this can change. The area is tried again after 30 days.',
+        held: 'The same ground was checked by hand and held back, because what the radar shows there so far cannot be trusted.',
+      }[answer.code];
+      card(`<p>This area cannot be measured yet. ${esc(answer.reason || '')}</p>`, why ? `<p class="fine">${why}</p>` : again());
+    } else if (status === 'busy') {
+      card(`<p>${esc(answer.reason || 'Too many areas are being measured right now.')} Try again in a few minutes.</p>`, again());
+    } else {
+      card(`<p>${esc(answer.reason || 'Something went wrong.')}</p>`, status === 'unavailable' ? '' : again());
+    }
+    wire();
+  };
+  tick(true);
+}
+
+/** Add a ready area to the places the app knows, so it opens like one. */
+function registerArea(answer) {
+  const meta = areaMeta(answer);
+  const list = state.index.places, k = list.findIndex(p => p.id === meta.id);
+  if (k >= 0) list[k] = meta; else list.push(meta);
+  return meta;
 }
 
 // ------------------------------------------------- slow spin of the globe
@@ -790,6 +984,7 @@ function writeHash() {
   hashTimer = setTimeout(() => {
     const parts = [];
     if (state.meta) parts.push('place=' + state.meta.id);
+    if (state.meta && addr.spot?.place === state.meta.id) parts.push(`at=${addr.spot.lat.toFixed(5)},${addr.spot.lng.toFixed(5)}`);
     parts.push('t=' + new Date(state.time).toISOString().slice(0, 10));
     if (state.earlier !== EARLIER_DEFAULT) parts.push('earlier=' + state.earlier);
     if (state.base !== 'satellite') parts.push('base=' + state.base);
@@ -799,8 +994,10 @@ function writeHash() {
 function readHash() {
   const q = new URLSearchParams(location.hash.slice(1));
   const t = Date.parse(q.get('t') || '');
+  const at = (q.get('at') || '').split(',').map(Number);
   return {
     place: q.get('place'), time: isNaN(t) ? null : t, earlier: q.get('earlier'),
+    at: at.length === 2 && at.every(Number.isFinite) ? { lat: at[0], lng: at[1] } : null,
     base: BASES[q.get('base')] ? q.get('base') : 'satellite',
   };
 }
@@ -826,6 +1023,7 @@ function staticUI() {
   $('base-satellite').addEventListener('click', () => setBase('satellite'));
   $('base-night').addEventListener('click', () => setBase('night'));
   $('place-close').addEventListener('click', deselect);
+  $('place-spot').addEventListener('click', () => { if (addr.spot) { flyToSpot(addr.spot, 1600); showSpot(true); } });
   $('earlier').innerHTML = EARLIER.map(e => `<option value="${e.id}">${e.label}</option>`).join('');
   $('earlier').addEventListener('change', e => { setEarlier(e.target.value); writeHash(); });
   $('place-hot').addEventListener('click', () => {
@@ -877,16 +1075,22 @@ async function boot() {
   globalRange();
   if (h.time) timeline.setTime(h.time);
   // on a wide screen the list of places is open from the start
-  const opens = h.place && byId(h.place);
+  let opens = h.place && byId(h.place);
+  const area = !opens && areaById(h.place);
+  if (area) {
+    const answer = await askArea(area);
+    if (answer.status === 'ready') opens = registerArea(answer);
+  }
   ui.pinned = !narrow();
   if (!opens) setPanel(ui.pinned ? 'finder' : 'none');
   await mapReady;
   map.jumpTo({ ...globeView(), padding: globePad() });
   addLayers();
   updateLegend();
-  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode, setBase, setEarlier };
+  window.sinkingGround = { map, state, timeline, selectPlace, deselect, setMode, setBase, setEarlier, findAddress, goToAddress };
   if (opens) {
-    await selectPlace(h.place);
+    const spot = h.at && placesAt([opens], h.at.lng, h.at.lat).length ? { ...h.at, label: 'Pinned spot' } : null;
+    await selectPlace(opens.id, { spot });
     if (h.time) timeline.setTime(h.time);
   } else {
     startSpin();

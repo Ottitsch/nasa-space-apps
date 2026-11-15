@@ -24,9 +24,12 @@ It is a static site with no build step. To run it locally:
 python3 -m http.server 8000 --directory web
 ```
 
-Then open http://localhost:8000.
+Then open http://localhost:8000. To also measure addresses that no place
+covers, run `.venv/bin/python -m pipeline.serve` instead, after the setup in
+Rebuild from the repository (see Your address).
 
-Pick a place on the globe or in the list (the search button, top right), drag
+Pick a place on the globe or in the list (the search button, top right), or
+type an address there, drag
 the time bar, and zoom in to street level to see individual buildings. Click
 anywhere inside a place to read the rate, how far that spot has sunk, and when
 it passes the damage limits. The pane at the top left switches between ground
@@ -36,7 +39,7 @@ lights.
 A view can be shared by its address, for example
 `#place=mexico-city&t=2040-01-01`. Add `&base=night` for the dark map, and
 `&earlier=2015` or `&earlier=none` to change how sinking from before NISAR is
-counted (see below).
+counted (see below). `&at=19.43519,-99.14117` puts the pin on a spot.
 
 Every push to `main` is published by the Cloudflare Pages project
 `sinking-ground`, which is connected to this repository. Other branches are not
@@ -63,6 +66,7 @@ the tile address in `web/js/basemap.js` if you need something else.
 | Blue layer | How far the ground has sunk (log scale, 1 cm to 10 m). By default it counts the years before NISAR too, as an estimate (see below). |
 | Damage risk layer | The same ground coloured by risk class instead. |
 | Buildings | Coloured by the risk class of the ground under them at the chosen date. |
+| Blue pin | The address you looked up. The ground under it is read out at the top of the place panel. |
 | Built up land past damage limits | Area in each damage class at the chosen date, and when each limit is first passed. An estimate: it counts sinking from before NISAR (see below). |
 
 ### Why buildings change colour
@@ -168,6 +172,91 @@ this cannot tell you). Most tilt measured so far is gentle: it passes 1/500
 over the coming decades rather than by today, so drag the time bar to 2050 to
 see it. Mashhad, for example, goes from 19 km² of built up land past the
 limits today to 62 km² by 2050, Tehran from 31 to 69 km².
+
+## Your address
+
+Type an address in the search field (the search button, top right) and press
+Enter, or choose **Find the address**. Coordinates such as `20.94, -101.43`
+work too. The map flies there, puts a pin on it and reads out the ground under
+it at the top of the place panel: its damage class at the date on the time
+bar, the sinking rate, and when the cracking and structural limits are passed.
+On a wide screen the same reading also opens as a popup at the pin.
+
+* **A place on the map covers the address.** It opens at once, from the
+  stored data.
+* **No place covers it.** The ground around it is measured on request: the
+  NISAR radar passes over a 56 km box around it are downloaded from NASA and
+  run through the same pipeline as every place. That takes about 5 to 15
+  minutes. The list shows how far it has got, and the area opens by itself
+  when it is ready. From then on it is stored like a place: the next person
+  asking about the same neighbourhood gets it at once, and a link to it
+  (`#place=area-21.0n-101.4w`) works for anyone, the take action page
+  included.
+* **It cannot be measured yet.** The list says why: NISAR has no products
+  over the area yet, its tracks there are too noisy or have too few passes, or
+  the ground lies inside a place held back after review (Rotterdam, for
+  example, see below). Such an answer is kept for 30 days, then the area is
+  tried again. An error on the way (the network, a login) is not kept.
+
+Areas sit on a grid of points 0.2 degrees apart (about 22 km). An address is
+rounded to the nearest point and the area is the 56 km box around that point,
+so the address lies at least 17 km inside it. 56 km is the box the pipeline
+uses by default. Smaller boxes hold too little stable ground to measure
+against when they sit on a sinking basin: cut from the stored windows of
+Mexico City, a 40 km box over its centre read twice the noise of the 64 km
+place (14 against 6 mm per year), and over Tehran a 40 km box read 17 mm per
+year where 56 km read 14.
+
+**What leaves the device.** The address is looked up with OpenStreetMap
+Nominatim, from the browser. Only the grid point (for example 21.0° N,
+101.4° W) is sent to this site, never the address, and only the grid point is
+stored. Built areas are files in this repository, so the grid points people
+asked about are public.
+
+### How areas are built
+
+| Where | What answers `api/area` | What builds the area |
+| --- | --- | --- |
+| The live site | `functions/api/[[path]].js`, a Cloudflare Pages Function | `.github/workflows/build-area.yml` on GitHub Actions |
+| Your computer | `python -m pipeline.serve` | `python -m pipeline.area`, one area at a time |
+
+Both run `pipeline/area.py`. It rounds the spot to the grid, checks the
+places held back in `places.json`, runs the pipeline for the box and writes
+`web/data/areas/<id>/`: the two map files and a `meta.json` that holds what
+`index.json` holds for a place. The radar windows go to `data_cache/areas` and
+are not committed, so an area adds a few hundred KB to the repository.
+
+On the live site the function starts the workflow, reports the step it is on,
+and passes the files on from GitHub until Cloudflare Pages has published them
+with its next deploy. It runs at most four builds at once, and asks NASA's
+catalogue first, so an area with no radar passes at all does not start a
+machine. To switch it on:
+
+1. On GitHub, in the repository's Settings, Secrets and variables, Actions,
+   add the secret `EARTHDATA_TOKEN` (an Earthdata Login token, see Update or
+   add places).
+2. Make a fine grained GitHub token for this repository only, with
+   **Actions: read and write** and **Contents: read**.
+3. On Cloudflare, in the Pages project `sinking-ground`, Settings, Variables
+   and Secrets, add it as the secret `AREA_GITHUB_TOKEN` for production, and
+   deploy again.
+
+Without that token the map still finds addresses that stored places cover,
+and says that building new areas is not switched on yet. Every area built is
+one commit to `main` and so one Cloudflare Pages deploy; the free plan allows
+500 deploys a month.
+
+To try it on your computer (with `EARTHDATA_TOKEN` set):
+
+```bash
+.venv/bin/python -m pipeline.serve
+```
+
+Then open http://localhost:8000. Under a plain static server
+(`python3 -m http.server`) the map says that this copy cannot build new
+areas. `python -m pipeline.serve --offline` builds from the radar windows
+already in `data_cache/areas` without downloading, to rebuild areas after a
+change to the pipeline.
 
 ## What the data shows so far
 
@@ -407,6 +496,7 @@ Checks made while building it:
 | Folder | What | Size |
 | --- | --- | --- |
 | `web/data` | what the map loads: one small index and two files per place | 82 MB |
+| `web/data/areas` | areas built on request for an address, three files each (see Your address) | grows |
 | `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 2.3 GB |
 
 Both are in the repository. `data/nisar` is the downloaded radar data in a
@@ -517,12 +607,16 @@ threshold, and turns early results into firm ones.
 
 ```
 .github/workflows/   check.yml: runs the checks on pull requests
+                     build-area.yml: builds an area on request for the live site
+functions/api/       the Cloudflare Pages Function behind api/area
 scripts/
   check-site.mjs     checks the site before it is published
 data/nisar/          the radar windows, elevation, land cover and manifest
 pipeline/            Python: NISAR products to map data
   places.json        the places to process
   run.py             command line entry point
+  area.py            one area around an address, built on request
+  serve.py           the site on your computer, with areas built on request
   search.py          find products in NASA's catalogue
   fetch.py           remote partial reads of the HDF5 products, storage format
   process.py         interferograms to ground motion, detection, distortion
@@ -540,9 +634,11 @@ web/                 the static site
   js/app.js          map layers, panes, controls
   js/basemap.js      the map style: imagery or night lights, borders, names
   js/data.js         reading the per place grids
+  js/areas.js        address search and areas built on request
   js/timeline.js     the time bar
   js/config.js       colours, limits, formatting
-  data/              output of the pipeline (index.json and two files per place)
+  data/              output of the pipeline (index.json and two files per place,
+                     areas/ for the areas built on request)
   vendor/            MapLibre GL JS, PMTiles, html2canvas and the Figtree typeface
 ```
 
@@ -670,6 +766,8 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
   page into Portuguese (Manaus, São Paulo, Maputo) and Arabic.
 * Recheck the cities held back in `places.json` once their record passes a
   year.
+* Rebuild the areas built on request as their records grow (they stay as
+  first built), and limit how many new areas one visitor can ask for.
 * Rerun the pipeline as radar passes accumulate, add places, mosaic
   neighbouring radar frames for places that straddle two, and use the weather
   model layers shipped inside the products for a better atmosphere correction.
@@ -689,5 +787,6 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
   OpenStreetMap, merged by VIDA (source.coop).
 * Borders, roads and names: OpenFreeMap, OpenMapTiles, OpenStreetMap
   contributors.
+* Address search: OpenStreetMap Nominatim.
 * Map library: MapLibre GL JS. Tile archive reader: PMTiles. Typeface: Figtree
   (SIL Open Font License).

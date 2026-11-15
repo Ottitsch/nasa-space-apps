@@ -1,0 +1,88 @@
+name: build area
+
+# Builds the map for one area on request, when someone looks up an address
+# that no stored place covers. The site's function (functions/api/[[path]].js)
+# starts it and reads the name of the step it is on to show progress, so keep
+# the step names readable.
+#
+# It runs pipeline/area.py for the area and commits the map files to
+# web/data/areas/<id>/, which Cloudflare Pages publishes with its next deploy.
+# The radar windows it downloads are not committed.
+#
+# Needs the repository secret EARTHDATA_TOKEN (an Earthdata Login token, see
+# the README).
+
+on:
+  workflow_dispatch:
+    inputs:
+      lat:
+        description: Latitude of the area's grid point
+        required: true
+      lon:
+        description: Longitude of the area's grid point
+        required: true
+      id:
+        description: The area's id, as the site worked it out
+        required: true
+
+run-name: area ${{ inputs.id }}
+
+permissions:
+  contents: write
+
+# one build per area at a time; a second request for it waits and then finds it built
+concurrency:
+  group: area-${{ inputs.id }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      LAT: ${{ inputs.lat }}
+      LON: ${{ inputs.lon }}
+      AREA: ${{ inputs.id }}
+    steps:
+      # Only the pipeline and the areas: this skips the radar windows in
+      # data/nisar and the map files of every place.
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            pipeline
+            web/data/areas
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install the pipeline
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Download the radar passes
+        id: fetch
+        env:
+          EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+        run: python -m pipeline.area --lat "$LAT" --lon "$LON" --id "$AREA" --fetch-only
+
+      - name: Measure the sinking and the damage risk
+        if: steps.fetch.outputs.status == 'fetched'
+        run: python -m pipeline.area --lat "$LAT" --lon "$LON" --id "$AREA" --offline
+
+      - name: Publish the map
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "web/data/areas/$AREA"
+          if git diff --cached --quiet; then
+            echo "nothing new to publish"
+            exit 0
+          fi
+          git commit -m "build area $AREA"
+          # other areas may be publishing at the same moment
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1

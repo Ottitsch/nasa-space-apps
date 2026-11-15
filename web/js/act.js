@@ -6,6 +6,7 @@
 import * as maplibregl from '../vendor/maplibre-gl.mjs';
 import { EARLIER, EARLIER_DEFAULT, END_YEAR, LIMITS, RISK, YEAR } from './config.js';
 import { loadFrames, loadIndex, loadPlace, mercY } from './data.js';
+import { areaById, areaMeta, askArea } from './areas.js';
 import { build, draw, paginate, save } from './pdf.js';
 
 const $ = id => document.getElementById(id);
@@ -241,7 +242,7 @@ function timelineSVG() {
 function renderSheet() {
   const m = S.meta, A = S.A, sp = A.spot, L = S.ui;
   const radius = metresText(L, S.r), since = S.place.earlier;
-  $('sh-place').textContent = `${placeName(L)}, ${countryName(L)}`;
+  $('sh-place').textContent = [placeName(L), countryName(L)].filter(Boolean).join(', ');
   $('sh-meta').textContent = `${t('sheet.spot')}: ${S.lat.toFixed(5)}, ${S.lng.toFixed(5)} · ${t('sheet.made', { date: day(L, Date.now()) })}`;
   $('sh-url').textContent = shareUrl().replace(/^https?:\/\//, '');
 
@@ -664,7 +665,7 @@ async function downloadReport() {
   });
   const k = canvas.width;
   const blob = await build([canvas], {
-    title: `${t('sheet.kicker')}: ${placeName(S.ui)}, ${countryName(S.ui)}`,
+    title: `${t('sheet.kicker')}: ${[placeName(S.ui), countryName(S.ui)].filter(Boolean).join(', ')}`,
     links: link ? [{ page: 0, x: link.x * k, y: link.y * k, w: link.w * k, h: link.h * k, url: shareUrl() }] : [],
   });
   save(blob, `sinking-ground-${S.meta.id}-${S.lat.toFixed(4)}_${S.lng.toFixed(4)}.pdf`);
@@ -827,7 +828,14 @@ async function boot() {
   const fail = key => { const s = $('status'); s.textContent = t(key); s.classList.add('err'); };
   let index;
   try { index = await loadIndex(); } catch { return fail('error.load'); }
-  const meta = (S.meta = index.places.find(p => p.id === q.get('place')));
+  let meta = index.places.find(p => p.id === q.get('place'));
+  // an area built on request for an address: the site knows where its files are
+  const area = !meta && areaById(q.get('place'));
+  if (area) {
+    const answer = await askArea(area);
+    if (answer.status === 'ready') meta = areaMeta(answer);
+  }
+  S.meta = meta;
   if (!meta) return fail('error.noplace');
 
   const [city, cases, langs] = await Promise.all([

@@ -27,6 +27,7 @@ jobs:
           sparse-checkout: |
             web
             scripts
+            functions
 
       - run: node scripts/check-site.mjs
 

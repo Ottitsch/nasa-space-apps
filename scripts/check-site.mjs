@@ -6,21 +6,26 @@
 // but Node.
 
 import { spawnSync } from 'node:child_process';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync } from 'node:zlib';
 
-const web = fileURLToPath(new URL('../web/', import.meta.url));
+const root = fileURLToPath(new URL('../', import.meta.url));
+const web = `${root}web/`;
 const problems = [];
 
-// Every script has to parse. There is no build step that would catch it.
-const scripts = readdirSync(`${web}js`).filter(f => f.endsWith('.js')).sort();
+// Every script has to parse, the site's and the Pages Functions' next to it.
+// There is no build step that would catch it.
+const listJs = dir => (existsSync(`${root}${dir}`)
+  ? readdirSync(`${root}${dir}`, { recursive: true }).filter(f => f.endsWith('.js')).sort().map(f => `${dir}/${f}`)
+  : []);
+const scripts = [...listJs('web/js'), ...listJs('functions')];
 for (const f of scripts) {
   const r = spawnSync(process.execPath, ['--input-type=module', '--check'], {
-    input: readFileSync(`${web}js/${f}`),
+    input: readFileSync(`${root}${f}`),
     encoding: 'utf8',
   });
-  if (r.status !== 0) problems.push(`web/js/${f} does not parse\n${r.stderr.trim()}`);
+  if (r.status !== 0) problems.push(`${f} does not parse\n${r.stderr.trim()}`);
 }
 
 // Every place in the index needs both of its data files, complete.
@@ -42,9 +47,36 @@ for (const { id } of places) {
   }
 }
 
+// Areas built on request (pipeline/area.py): a meta.json each, and a ready
+// one needs both data files, complete and of the size its meta gives.
+const areasDir = `${web}data/areas`;
+const areas = existsSync(areasDir) ? readdirSync(areasDir).sort() : [];
+for (const id of areas) {
+  const where = `web/data/areas/${id}`;
+  let meta;
+  try {
+    meta = JSON.parse(readFileSync(`${areasDir}/${id}/meta.json`, 'utf8'));
+  } catch (e) {
+    problems.push(`${where}/meta.json: ${e.code === 'ENOENT' ? 'missing' : e.message}`);
+    continue;
+  }
+  if (meta.id !== id) problems.push(`${where}/meta.json: id is ${meta.id}`);
+  if (meta.status === 'failed') continue;
+  if (meta.status !== 'ready') { problems.push(`${where}/meta.json: status is ${meta.status}`); continue; }
+  const sizes = { 'core.bin.gz': meta.width * meta.height * 5, 'frames.bin.gz': meta.dates?.length * (meta.width / 4) * (meta.height / 4) * 2 };
+  for (const [name, bytes] of Object.entries(sizes)) {
+    try {
+      const n = gunzipSync(readFileSync(`${areasDir}/${id}/${name}`)).length;
+      if (n !== bytes) problems.push(`${where}/${name}: ${n} bytes, the meta asks for ${bytes}`);
+    } catch (e) {
+      problems.push(`${where}/${name}: ${e.code === 'ENOENT' ? 'missing' : e.message}`);
+    }
+  }
+}
+
 if (problems.length) {
   console.error(`site check failed, ${problems.length} problem(s):\n`);
   for (const p of problems) console.error(`  ${p.replace(/\n/g, '\n    ')}\n`);
   process.exit(1);
 }
-console.log(`site ok: ${scripts.length} scripts, ${places.length} places`);
+console.log(`site ok: ${scripts.length} scripts, ${places.length} places, ${areas.length} areas built on request`);
