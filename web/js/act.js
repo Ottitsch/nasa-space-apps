@@ -591,12 +591,31 @@ function renderLead() {
     : t('s3.lead.none');
 }
 
+// Groups people add themselves (step 3). Invite links of these apps only, as in
+// web/action/groups.py and functions/api/[[path]].js; keep the three in step.
+const APPS = {
+  whatsapp: ['WhatsApp', /^https:\/\/(chat\.whatsapp\.com\/[A-Za-z0-9]{10,40}|(www\.)?whatsapp\.com\/channel\/[A-Za-z0-9]{10,40})\/?$/, 'https://chat.whatsapp.com/'],
+  telegram: ['Telegram', /^https:\/\/t\.me\/(\+|joinchat\/)?[A-Za-z0-9_-]{5,64}\/?$/, 'https://t.me/'],
+  signal: ['Signal', /^https:\/\/signal\.group\/#[A-Za-z0-9_-]{20,200}$/, 'https://signal.group/#'],
+  element: ['Element', /^https:\/\/matrix\.to\/#\/[#!][A-Za-z0-9._=-]+:[A-Za-z0-9.-]+$/, 'https://matrix.to/#/'],
+  viber: ['Viber', /^https:\/\/invite\.viber\.com\/\?g2?=[A-Za-z0-9_-]{10,100}$/, 'https://invite.viber.com/'],
+  facebook: ['Facebook', /^https:\/\/(www\.|m\.)?facebook\.com\/groups\/[A-Za-z0-9._-]{3,100}\/?$/, 'https://www.facebook.com/groups/'],
+  discord: ['Discord', /^https:\/\/discord\.(gg|com\/invite)\/[A-Za-z0-9-]{2,40}$/, 'https://discord.gg/'],
+  bale: ['Bale', /^https:\/\/ble\.ir\/join\/[A-Za-z0-9_-]{5,64}$/, 'https://ble.ir/join/'],
+  rubika: ['Rubika', /^https:\/\/rubika\.ir\/joing?\/[A-Za-z0-9_-]{5,64}$/, 'https://rubika.ir/joing/'],
+  eitaa: ['Eitaa', /^https:\/\/eitaa\.com\/joinchat\/[A-Za-z0-9_-]{5,64}$/, 'https://eitaa.com/joinchat/'],
+};
+const REPO = 'https://github.com/Ottitsch/nasa-space-apps';
+
 function renderOthers() {
   const c = S.city, lang = S.ui.lang, place = placeName(S.ui);
-  const groups = (c?.groups || []).filter(g => web(g.url));
+  const seen = new Set();
+  const groups = [...(c?.groups || []), ...(S.added || [])].filter(g => web(g.url) && !seen.has(g.url) && seen.add(g.url));
   $('groups').innerHTML = groups.length
-    ? groups.map(g => `<a class="btn group-btn" href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.label || t('s3.group.join', { place }))}</a>`).join('')
+    ? groups.map(g => `<a class="btn group-btn" href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.label || t('s3.group.join', { place }))}`
+      + `${APPS[g.platform] ? ` <span class="app">${esc(APPS[g.platform][0])}</span>` : ''}</a>`).join('')
     : `<p>${esc(t('s3.group.none', { place }))}</p>`;
+  renderAddGroup(place);
   $('organising').textContent = pick(c?.organising?.note, lang);
   $('kit').innerHTML = [1, 2, 3, 4, 5].map(k => `<li><b>${esc(t(`s3.kit.${k}.t`))}</b><span>${esc(t('s3.kit.' + k))}</span></li>`).join('');
   const cs = S.cases, over = caseDicts[lang];
@@ -707,6 +726,58 @@ function renderShare() {
 function renderTools() {
   $('radius').innerHTML = RADII.map(r => `<button type="button" data-r="${r}" aria-pressed="${r === S.r}">${esc(metresText(S.ui, r))}</button>`).join('');
   $('year').innerHTML = HORIZONS.map(y => `<button type="button" data-y="${y}" aria-pressed="${y === S.year}">${esc(y === 'now' ? t('tools.year.now') : yearText(S.ui, y))}</button>`).join('');
+}
+
+function renderAddGroup(place) {
+  const sel = $('add-app');
+  if (!sel.options.length) {
+    sel.innerHTML = Object.entries(APPS).map(([k, a]) => `<option value="${k}">${esc(a[0])}</option>`).join('');
+    // in Iran the app most neighbours can open is Bale
+    if (S.city?.organising?.telegram_usable === false && (S.city.languages || []).includes('fa')) sel.value = 'bale';
+    sel.addEventListener('change', () => { $('add-url').placeholder = APPS[sel.value][2] + '…'; });
+    $('add-group').addEventListener('submit', e => { e.preventDefault(); addGroup(); });
+  }
+  $('add-url').placeholder = APPS[sel.value][2] + '…';
+  $('add-label').placeholder = t('s3.add.label');
+  $('add-lead').textContent = t('s3.add.lead', { place });
+}
+
+/** Send a group to the site's function, which lists it after checking the link. */
+async function addGroup() {
+  const app = $('add-app').value, url = $('add-url').value.trim(), label = $('add-label').value.trim().slice(0, 60);
+  const msg = $('add-msg');
+  const say = (text, err) => { msg.textContent = text; msg.classList.toggle('err', !!err); };
+  if (!APPS[app] || !APPS[app][1].test(url)) return say(t('s3.add.bad', { app: APPS[app]?.[0] || app, start: APPS[app]?.[2] || 'https://' }), true);
+  say(t('s3.add.sending'));
+  $('add-submit').disabled = true;
+  let r = null;
+  try {
+    const res = await fetch('api/group', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ place: S.meta.id, platform: app, url, label }),
+    });
+    r = await res.json();
+  } catch { r = null; }
+  $('add-submit').disabled = false;
+  if (r?.status === 'added') {
+    say(t('s3.add.done'));
+    $('add-url').value = ''; $('add-label').value = '';
+    // show it at once to whoever added it; everyone else sees it after the next deploy
+    S.added = [...(S.added || []), { platform: app, url, label }];
+    renderOthers();
+    say(t('s3.add.done'));
+  } else if (r?.status === 'exists') say(t('s3.add.exists'));
+  else if (r?.status === 'full') say(t('s3.add.full'), true);
+  else if (r?.status === 'bad') say(t('s3.add.bad', { app: APPS[app][0], start: APPS[app][2] }), true);
+  else if (!r || r.status === 'unavailable') {
+    // no function on this host, or not switched on: send it as a GitHub issue instead
+    const issue = `${REPO}/issues/new?` + new URLSearchParams({
+      title: `Group for ${S.meta.name} (${S.meta.id})`,
+      body: `Place: ${S.meta.name} (${S.meta.id})\nApp: ${APPS[app][0]}\nInvite link: ${url}\nStreet or neighbourhood: ${label}\n\nI run this group or was asked to share it.`,
+    });
+    msg.classList.remove('err');
+    msg.innerHTML = `${esc(t('s3.add.off'))} <a href="${esc(issue)}" target="_blank" rel="noopener">${esc(t('s3.add.issue'))}</a>`;
+  } else say(t('s3.add.error'), true);
 }
 
 function renderAll() {
@@ -848,10 +919,11 @@ async function boot() {
   S.meta = meta;
   if (!meta) return fail('error.noplace');
 
-  const [city, cases, langs] = await Promise.all([
-    json(`action/cities/${meta.id}.json`), json('action/cases.json'), json('action/i18n/index.json'),
+  const [city, cases, langs, added] = await Promise.all([
+    json(`action/cities/${meta.id}.json`), json('action/cases.json'), json('action/i18n/index.json'), json('action/groups.json'),
   ]);
   S.city = city; S.cases = cases;
+  S.added = (added && added[meta.id]) || [];
   S.langs = Array.isArray(langs) && langs.length ? langs : [{ code: 'en', name: 'English' }];
   const have = code => S.langs.some(l => l.code === code);
 

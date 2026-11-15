@@ -162,6 +162,23 @@ def check_cases(lang, source):
                 bad(path.name, f"ask {a['id']} is missing {f}")
 
 
+def check_groups(place_ids):
+    """groups.json: groups people added from the take action page."""
+    import groups as G
+    try:
+        data = json.loads((HERE / "groups.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        return bad("groups.json", f"missing or not valid JSON: {e}")
+    for place, items in data.items():
+        if place_ids and place not in place_ids and not G.AREA_ID.match(place):
+            bad("groups.json", f"{place!r} is not a place")
+        if len(items) > G.MAX_PER_PLACE:
+            bad("groups.json", f"{place}: more than {G.MAX_PER_PLACE} groups")
+        for g in items:
+            if not G.valid_link(g.get("platform", ""), g.get("url", "")):
+                bad("groups.json", f"{place}: not an invite link for {g.get('platform')!r}: {g.get('url')!r}")
+
+
 def main():
     places = HERE.parent.parent / "pipeline" / "places.json"
     place_ids = {p["id"] for p in json.loads(places.read_text(encoding="utf-8"))} if places.exists() else set()
@@ -177,6 +194,7 @@ def main():
         if lang != "en":
             check_translation(lang, en)
             check_cases(lang, cases)
+    check_groups(place_ids)
     for lang in sorted(wanted - set(listed)):
         bad("i18n/index.json", f"a city writes in '{lang}' but that language is not listed")
 

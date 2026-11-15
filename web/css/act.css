@@ -240,6 +240,15 @@ textarea { width: 100%; margin-top: 10px; padding: 14px 16px; line-height: 1.6; 
 .kit b { font-weight: 700; }
 .kit span { color: var(--muted); font-size: 14.5px; grid-column: 2; }
 .group-btn { display: flex; width: 100%; margin-top: 8px; }
+.group-btn .app { font-weight: 500; opacity: 0.7; margin-inline-start: 8px; }
+.add-group { display: grid; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255, 159, 10, 0.3); }
+.add-group h4 { margin: 0; font-size: 14px; }
+.add-row { display: flex; gap: 8px; }
+.add-row .grow { flex: 1; min-width: 0; }
+.add-group input { width: 100%; }
+.add-group .btn { justify-self: start; }
+.add-msg:empty { display: none; }
+.add-msg.err { color: var(--risk); }
 .case { padding: 14px 0; border-top: 1px solid var(--line); }
 .case:first-child { border-top: 0; padding-top: 0; }
 .case h4 { margin: 0 0 6px; font-size: 16px; }

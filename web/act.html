@@ -159,6 +159,17 @@
           <div class="card accent">
             <h3 data-t="s3.group.title">Join your neighbours</h3>
             <div id="groups"></div>
+            <form id="add-group" class="add-group" novalidate>
+              <h4 data-t="s3.add.title">Started a group? Add it here</h4>
+              <p class="fine" id="add-lead"></p>
+              <div class="add-row">
+                <label><span class="sr" data-t="s3.add.app">App</span><select id="add-app"></select></label>
+                <label class="grow"><span class="sr" data-t="s3.add.url">Invite link</span><input id="add-url" type="url" inputmode="url" autocomplete="off" spellcheck="false"></label>
+              </div>
+              <label><span class="sr" data-t="s3.add.label">Street or neighbourhood (optional)</span><input id="add-label" maxlength="60" autocomplete="off"></label>
+              <button class="btn" type="submit" id="add-submit" data-t="s3.add.submit">Add the group</button>
+              <p id="add-msg" class="fine add-msg" role="status" aria-live="polite"></p>
+            </form>
             <p class="fine" id="organising"></p>
             <p class="fine" data-t="s3.group.careful"></p>
           </div>

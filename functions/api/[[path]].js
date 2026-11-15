@@ -4,6 +4,9 @@
 //   GET  /api/area?lat=..&lon=..    what is known about the area around a spot
 //   POST /api/area?lat=..&lon=..    the same, and start building it if needed
 //   GET  /api/areas/<id>/<file>     an area's files, before Pages has published them
+//   POST /api/group                 add a neighbourhood group to a place (JSON body:
+//                                   place, platform, url, label), from step 3 of the
+//                                   take action page
 //
 // The answers are the ones pipeline/serve.py gives when the site runs locally
 // (its docstring lists them). The building itself is done by the GitHub
@@ -16,7 +19,8 @@
 //                      only, with Actions read and write and Contents read
 //   AREA_REPO          owner/name of the repository, if not the one below
 //   AREA_BRANCH        the branch Pages publishes, if not main
-// Without the token every answer is "unavailable" and the map says so.
+// Without the token every answer is "unavailable" and the map says so. The same
+// token starts .github/workflows/add-group.yml, which writes web/action/groups.json.
 
 const REPO = 'Ottitsch/nasa-space-apps';
 const WORKFLOW = 'build-area.yml';
@@ -37,6 +41,10 @@ export async function onRequest({ request, env }) {
     if (path === '/api/area') {
       if (request.method !== 'GET' && request.method !== 'POST') return reply({ status: 'error', reason: 'GET or POST' }, 405);
       return await area(url, request.method === 'POST', env);
+    }
+    if (path === '/api/group') {
+      if (request.method !== 'POST') return reply({ status: 'error', reason: 'POST' }, 405);
+      return await group(request, url, env);
     }
     const m = path.match(/^\/api\/areas\/([^/]+)\/([^/]+)$/);
     if (m && request.method === 'GET') return await file(url, m[1], m[2], env);
@@ -152,6 +160,50 @@ async function radarPasses(c) {
   } catch {
     return null;
   }
+}
+
+// ------------------------------------------------------------- groups
+
+// Invite links the take action page accepts, as in web/action/groups.py (which
+// the workflow runs) and web/js/act.js; keep the three in step.
+const APPS = {
+  whatsapp: /^https:\/\/(chat\.whatsapp\.com\/[A-Za-z0-9]{10,40}|(www\.)?whatsapp\.com\/channel\/[A-Za-z0-9]{10,40})\/?$/,
+  telegram: /^https:\/\/t\.me\/(\+|joinchat\/)?[A-Za-z0-9_-]{5,64}\/?$/,
+  signal: /^https:\/\/signal\.group\/#[A-Za-z0-9_-]{20,200}$/,
+  element: /^https:\/\/matrix\.to\/#\/[#!][A-Za-z0-9._=-]+:[A-Za-z0-9.-]+$/,
+  viber: /^https:\/\/invite\.viber\.com\/\?g2?=[A-Za-z0-9_-]{10,100}$/,
+  facebook: /^https:\/\/(www\.|m\.)?facebook\.com\/groups\/[A-Za-z0-9._-]{3,100}\/?$/,
+  discord: /^https:\/\/discord\.(gg|com\/invite)\/[A-Za-z0-9-]{2,40}$/,
+  bale: /^https:\/\/ble\.ir\/join\/[A-Za-z0-9_-]{5,64}$/,
+  rubika: /^https:\/\/rubika\.ir\/joing?\/[A-Za-z0-9_-]{5,64}$/,
+  eitaa: /^https:\/\/eitaa\.com\/joinchat\/[A-Za-z0-9_-]{5,64}$/,
+};
+const GROUPS_WORKFLOW = 'add-group.yml';
+const MAX_PER_PLACE = 12;
+
+/** Check a group someone sent and start the workflow that lists it. */
+async function group(request, url, env) {
+  let b;
+  try { b = await request.json(); } catch { return reply({ status: 'bad', reason: 'a JSON body is needed' }, 400); }
+  const place = String(b?.place || ''), platform = String(b?.platform || ''), link = String(b?.url || '').trim();
+  const label = String(b?.label || '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 60);
+  if (!APPS[platform]?.test(link)) return reply({ status: 'bad', reason: 'not an invite link for that app' }, 400);
+  const index = await published(url, 'data/index.json', env);
+  const known = index?.places?.some(p => p.id === place)
+    || (ID_RE.test(place) && !!(await published(url, `data/areas/${place}/meta.json`, env)));
+  if (!known) return reply({ status: 'bad', reason: 'unknown place' }, 400);
+  const here = ((await published(url, 'action/groups.json', env)) || {})[place] || [];
+  if (here.some(g => g.url === link)) return reply({ status: 'exists' });
+  if (here.length >= MAX_PER_PLACE) return reply({ status: 'full', reason: `${MAX_PER_PLACE} groups are listed here already` });
+  if (!env.AREA_GITHUB_TOKEN) {
+    return reply({ status: 'unavailable', reason: 'Adding groups is not switched on for this site yet.' });
+  }
+  const d = await github(env, `actions/workflows/${GROUPS_WORKFLOW}/dispatches`, {
+    method: 'POST',
+    body: JSON.stringify({ ref: branch(env), inputs: { place, platform, url: link, label } }),
+  });
+  if (!d.ok) throw new Error(`GitHub answered ${d.status} adding the group`);
+  return reply({ status: 'added' });
 }
 
 // ------------------------------------------------------------- files

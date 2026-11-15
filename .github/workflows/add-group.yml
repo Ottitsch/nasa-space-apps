@@ -1,0 +1,74 @@
+name: add group
+
+# Adds a neighbourhood group (an invite link) to a place, when someone sends one
+# from step 3 of the take action page. The site's function
+# (functions/api/[[path]].js) starts it after checking the link; here
+# web/action/groups.py checks it again and writes web/action/groups.json, which
+# Cloudflare Pages publishes with its next deploy.
+#
+# The inputs come from the public form, so they only reach the shell through
+# environment variables, never written into the commands.
+
+on:
+  workflow_dispatch:
+    inputs:
+      place:
+        description: Place id
+        required: true
+      platform:
+        description: App (whatsapp, telegram, ...)
+        required: true
+      url:
+        description: Invite link
+        required: true
+      label:
+        description: Street or neighbourhood to show with it
+        required: false
+        default: ""
+
+run-name: group ${{ inputs.place }}
+
+permissions:
+  contents: write
+
+# one at a time, so two groups added together do not overwrite each other
+concurrency:
+  group: groups
+  cancel-in-progress: false
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLACE: ${{ inputs.place }}
+      PLATFORM: ${{ inputs.platform }}
+      LINK: ${{ inputs.url }}
+      LABEL: ${{ inputs.label }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            /web/action/
+            /web/data/index.json
+            /web/data/areas/*/meta.json
+          sparse-checkout-cone-mode: false
+
+      - name: Check the link and add it
+        run: python3 web/action/groups.py add "$PLACE" "$PLATFORM" "$LINK" "$LABEL"
+
+      - name: Publish the group
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/action/groups.json
+          if git diff --cached --quiet; then
+            echo "already listed"
+            exit 0
+          fi
+          git commit -m "add group for $PLACE"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1
