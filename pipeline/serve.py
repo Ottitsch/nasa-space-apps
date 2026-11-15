@@ -9,6 +9,9 @@ API is functions/api/[[path]].js on Cloudflare Pages.
 
     GET  /api/area?lat=..&lon=..   what is known about the area around a spot
     POST /api/area?lat=..&lon=..   the same, and start building it if needed
+    POST /api/group                 add a neighbourhood group to a place (JSON body:
+                                    place, platform, url, label); written to
+                                    web/action/groups.json at once
 
 Answers are JSON with a "status":
 
@@ -137,7 +140,25 @@ class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
         if urlparse(self.path).path == "/api/area":
             return self.api(start=True)
+        if urlparse(self.path).path == "/api/group":
+            return self.group()
         self.send_error(405)
+
+    def group(self):
+        """A group sent from the take action page. On the live site the function
+        starts a workflow that runs the same web/action/groups.py."""
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("groups", WEB / "action" / "groups.py")
+        groups = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(groups)
+        try:
+            n = int(self.headers.get("Content-Length") or 0)
+            b = json.loads(self.rfile.read(min(n, 4096)) or b"{}")
+            status = groups.add(str(b.get("place", "")), str(b.get("platform", "")),
+                                str(b.get("url", "")), str(b.get("label", "")))
+        except (ValueError, AttributeError) as e:
+            return self.reply(400, dict(status="bad", reason=str(e)))
+        return self.reply(200, dict(status=status))
 
     def api(self, start):
         q = parse_qs(urlparse(self.path).query)

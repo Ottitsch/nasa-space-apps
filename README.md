@@ -242,7 +242,9 @@ machine. To switch it on:
    deploy again.
 
 Without that token the map still finds addresses that stored places cover,
-and says that building new areas is not switched on yet. Every area built is
+and says that building new areas is not switched on yet. The same token lets
+people add their neighbourhood groups from the take action page (see Groups
+below). Every area built is
 one commit to `main` and so one Cloudflare Pages deploy; the free plan allows
 500 deploys a month.
 
@@ -716,8 +718,25 @@ no code. `python3 web/action/check.py` checks every city file and translation.
 
 ### Groups
 
-The idea is one group per city where neighbours organise. When a group exists,
-add it to that city's file and the page shows a join button:
+The idea is that the people in a place start their own groups, on whatever app
+their neighbours use, and add them to the site themselves. Step 3 of the take
+action page has a short form for it, for every place on the map: pick the app,
+paste the group's invite link, optionally name the street or neighbourhood.
+The group then shows with a Join button for everyone looking at that place.
+
+How it gets there: the form posts to `api/group` (the site's Cloudflare
+function), which checks that the link really is an invite link of one of the
+listed apps (WhatsApp, Telegram, Signal, Element, Viber, Facebook, Discord,
+Bale, Rubika, Eitaa) and starts `.github/workflows/add-group.yml`. That runs
+`web/action/groups.py`, which checks the link again and adds it to
+`web/action/groups.json`; the commit publishes it with the next deploy, about
+a minute later. Nothing but such invite links can be posted this way, and at
+most twelve per place. To take a group down, delete it from `groups.json` and
+commit. It uses the same `AREA_GITHUB_TOKEN` as areas built on request (see
+above); until that is set, the form offers to send the link as a GitHub issue
+instead. Run locally, `python -m pipeline.serve` writes the group at once.
+
+A group can also be added by hand, to a city's file:
 
 ```json
 "groups": [{ "platform": "telegram", "url": "https://t.me/your_group", "label": "Sinking Ground Mexico City" }]
