@@ -13,6 +13,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DASH = re.compile("[" + chr(0x2014) + chr(0x2013) + "]")   # long dashes, which this project does not use
 HANDLES = {"inspection", "groundwater", "information"}
+# where neighbours organise; organise.html knows how to show each of these
+PLATFORMS = {"whatsapp", "telegram", "wechat", "bale", "rubika", "eitaa", "element", "signal", "viber", "facebook", "email"}
 problems = []
 
 
@@ -57,6 +59,13 @@ def check_city(path, place_ids):
     if not langs:
         bad(name, "languages is empty")
     texts(f"{name} summary", c.get("summary"), langs)
+    platforms = c.get("platforms") or []
+    if not platforms or any(x not in PLATFORMS for x in platforms):
+        bad(name, f"platforms should list one or more of {sorted(PLATFORMS)}")
+    texts(f"{name} group_name", c.get("group_name"), langs)
+    for g in c.get("groups") or []:
+        if g.get("platform") not in PLATFORMS:
+            bad(name, f"group platform {g.get('platform')!r} is not one of {sorted(PLATFORMS)}")
 
     bodies = c.get("bodies") or []
     if not 3 <= len(bodies) <= 6:
@@ -117,7 +126,8 @@ def check_city(path, place_ids):
             bad(f"{name} organising", "telegram_usable should be true or false")
         texts(f"{name} organising note", o.get("note"), langs)
     for g in c.get("groups") or []:
-        url(f"{name} group", g.get("url"), required=True)
+        if not re.match(r"^(https?://\S+|mailto:\S+)$", str(g.get("url") or "")):
+            bad(name, f"group link should start with https:// or mailto: {g.get('url')!r}")
     return langs
 
 
@@ -169,7 +179,14 @@ def main():
     listed = [l["code"] for l in json.loads((HERE / "i18n" / "index.json").read_text(encoding="utf-8"))]
     cases = json.loads((HERE / "cases.json").read_text(encoding="utf-8"))
 
-    cities = sorted((HERE / "cities").glob("*.json"))
+    cities = sorted(p for p in (HERE / "cities").glob("*.json") if p.name != "index.json")
+    try:
+        listed_cities = json.loads((HERE / "cities" / "index.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        listed_cities = []
+        bad("cities/index.json", f"missing or not valid JSON: {e}")
+    if sorted(listed_cities) != [p.stem for p in cities]:
+        bad("cities/index.json", "should list exactly the city files (organise.html reads it)")
     wanted = set()
     for path in cities:
         wanted |= set(check_city(path, place_ids) or [])

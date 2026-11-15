@@ -183,5 +183,7 @@
       "https://freedomhouse.org/country/mexico/freedom-net/2025"
     ]
   },
+  "platforms": ["whatsapp", "telegram"],
+  "group_name": {"en": "Sinking Ground Toluca", "es": "Hundimiento Toluca"},
   "groups": []
 }

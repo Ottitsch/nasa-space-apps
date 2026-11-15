@@ -185,5 +185,7 @@
       "https://leon.gob.mx/seguridad/"
     ]
   },
+  "platforms": ["whatsapp", "telegram"],
+  "group_name": {"en": "Sinking Ground León", "es": "Hundimientos León"},
   "groups": []
 }

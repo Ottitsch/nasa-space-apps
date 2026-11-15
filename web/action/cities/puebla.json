@@ -185,5 +185,7 @@
       "https://www.scjn.gob.mx/sites/default/files/boletin-mensual-resoluciones-pleno/2026-05/boletin-mensual-resoluciones-pleno-abril-2026.pdf"
     ]
   },
+  "platforms": ["whatsapp", "telegram"],
+  "group_name": {"en": "Sinking Ground Puebla", "es": "Hundimiento Puebla"},
   "groups": []
 }
