@@ -27,22 +27,13 @@ downloaded from NASA and run through the same pipeline.
 1. **Get the proof.** A one page report for their spot, as a PDF or a link.
 2. **Send it.** A ready written letter asking for an inspection or for
    answers about groundwater pumping, naming the office responsible.
-3. **Find the others.** The city's group, a form to add your own, and four
-   cities that stopped their sinking.
+3. **Find the others.** Join the city's WhatsApp group, or create your own
+   and add it. Telegram, Element, Signal and other apps are supported too, in
+   case a messaging platform is blocked in your country.
 
 ![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
 
 ## How to read the map
-
-* **Bubbles** on the globe are places with sinking detected, sized and
-  coloured by how far the fastest zone has sunk. **Rings** are places NISAR
-  measures where nothing sinks fast enough to detect yet.
-* **Time bar.** White ticks are NISAR radar passes, 12 days apart. Orange
-  ticks are a projection to 2050 that assumes the measured rate continues. A
-  scenario, not a forecast.
-* **Blue layer.** How far the ground has sunk (log scale, 1 cm to 10 m).
-* **Damage risk layer and buildings.** Coloured by the risk class of the
-  ground under them at the chosen date.
 
 Damage comes from uneven sinking, measured as **angular distortion**: the
 difference in sinking between neighbouring ground divided by the distance
