@@ -153,6 +153,9 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
               log=print):
     t_start = time.time()
     pid = place["id"]
+    if place.get("hold"):
+        # held back after review, with the reason in places.json
+        raise RuntimeError(f"held back: {place['hold']}")
     bbox = S.bbox_from_center(place["lat"], place["lon"], place.get("size_km", 56))
     if offline:
         entry = read_manifest(raw).get(pid)
@@ -197,6 +200,15 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
         warp = E.Warper(grid, mg)
         valid = warp(res["valid"])
         vel = np.where(valid, warp(res["velocity"]), np.nan)
+        # No city is known to sink faster than about 40 cm per year (Mexico
+        # City and Tehran peak near 30). A track whose built up ground reads
+        # faster than that is broken, not measuring (in November 2026 one
+        # track over Shantou and Jieyang read a metre a year).
+        vb = vel[valid & warp(cover == L.BUILT) & np.isfinite(vel)]
+        if vb.size > 200 and np.percentile(vb, 0.5) < -0.4:
+            log(f"    built up ground reads {-np.percentile(vb, 0.5) * 100:.0f} cm per year, "
+                "faster than any city is known to sink: skipping this track")
+            continue
         cum = np.stack([np.where(valid, warp(f), np.nan) for f in res["cum"]])
         valid &= np.isfinite(vel)
         layers.append(dict(velocity=vel, cum=cum, valid=valid, t=res["t"], sigma=res["sigma"],
