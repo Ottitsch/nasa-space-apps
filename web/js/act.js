@@ -744,7 +744,12 @@ function renderAddGroup(place) {
 
 /** Send a group to the site's function, which lists it after checking the link. */
 async function addGroup() {
-  const app = $('add-app').value, url = $('add-url').value.trim(), label = $('add-label').value.trim().slice(0, 60);
+  const app = $('add-app').value, label = $('add-label').value.trim().slice(0, 60);
+  let url = $('add-url').value.trim();
+  // Apps add tracking to a shared link (WhatsApp: ?mode=...). When the link is
+  // only wrong for such a tail, the link without it is the one to list.
+  const bare = url.split(/[?#]/)[0];
+  if (APPS[app] && !APPS[app][1].test(url) && APPS[app][1].test(bare)) url = bare;
   const msg = $('add-msg');
   const say = (text, err) => { msg.textContent = text; msg.classList.toggle('err', !!err); };
   if (!APPS[app] || !APPS[app][1].test(url)) return say(t('s3.add.bad', { app: APPS[app]?.[0] || app, start: APPS[app]?.[2] || 'https://' }), true);
