@@ -25,38 +25,19 @@ downloaded from NASA and run through the same pipeline.
 ## Take action
 
 1. **Get the proof.** A one page report for their spot, as a PDF or a link.
+
+   <img src="docs/report-mexico-city.png" width="25%" alt="The one page report for a spot in Mexico City">
+
 2. **Send it.** A ready written letter asking for an inspection or for
    answers about groundwater pumping, naming the office responsible.
+
+   <img src="docs/letter-mexico-city.png" width="25%" alt="The ready written letter for a spot in Mexico City">
+
 3. **Find the others.** Join the city's WhatsApp group, or create your own
    and add it. Telegram, Element, Signal and other apps are supported too, in
    case a messaging platform is blocked in your country.
 
-![The one page report for a spot in Mexico City](docs/report-mexico-city.png)
-
-## How to read the map
-
-Damage comes from uneven sinking, measured as **angular distortion**: the
-difference in sinking between neighbouring ground divided by the distance
-between them.
-
-| Class | Rule | Colour |
-| --- | --- | --- |
-| No sinking detected | below the detection threshold | grey |
-| Sinking evenly | sinking detected, distortion below 1/500 | blue |
-| Cracking possible | distortion past 1/500 | amber |
-| Cracking likely | distortion past 1/300 | red |
-| Structural damage likely | distortion past 1/150 | pink |
-
-The limits come from foundation engineering (Skempton and MacDonald 1956,
-Bjerrum 1963). They are screening levels for neighbourhoods, not a verdict on
-any single building.
-
-**Sinking from before NISAR.** NISAR has watched these places since late 2025,
-most of them only since June 2026, but the ground it sees sinking was sinking
-long before. So by default the map assumes the sinking measured now has gone
-on at the same rate since 2000. It is an estimate, not a measurement, and the
-app says so wherever it is used. The control **Sinking before NISAR** in the
-place panel changes it to since 2015 or not counted.
+   <img src="docs/groups-mexico-city.png" width="25%" alt="Joining or adding a neighbourhood group for Mexico City">
 
 ## What the data shows so far
 
