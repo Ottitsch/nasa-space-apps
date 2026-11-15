@@ -127,19 +127,33 @@ assumed since 2000:
 | Mashhad, Iran | 17.0 km² | 1.8 km² | 0.0 km² |
 | Quetta, Pakistan | 11.7 km² | 4.8 km² | 0.0 km² |
 | Toluca, Mexico | 1.3 km² | 1.5 km² | 0.5 km² |
-| Kabul, Afghanistan | 1.6 km² | 0.8 km² | 0.0 km² |
+| Kabul, Afghanistan | 1.6 km² | 0.7 km² | 0.0 km² |
 | Bandung, Indonesia | 2.3 km² | 0.0 km² | 0.0 km² |
-| Neyshabur, Iran | 2.2 km² | 0.0 km² | 0.0 km² |
+| Manaus, Brazil | 2.2 km² | 0.1 km² | 0.0 km² |
 | Puebla, Mexico | 2.2 km² | 0.0 km² | 0.0 km² |
+| Neyshabur, Iran | 2.2 km² | 0.0 km² | 0.0 km² |
+| Chennai, India | 1.2 km² | 0.9 km² | 0.0 km² |
+| Abu Dhabi, United Arab Emirates | 1.4 km² | 0.1 km² | 0.0 km² |
+| Maputo, Mozambique | 1.1 km² | 0.3 km² | 0.0 km² |
 | Delhi, India | 1.2 km² | 0.1 km² | 0.0 km² |
+| Guangzhou, China | 1.0 km² | 0.2 km² | 0.0 km² |
+| Lomé, Togo | 1.0 km² | 0.0 km² | 0.0 km² |
 | Caracas, Venezuela | 0.2 km² | 0.2 km² | 0.0 km² |
 | Kerman, Iran | 0.4 km² | 0.0 km² | 0.0 km² |
+| León, Mexico | 0.3 km² | 0.0 km² | 0.0 km² |
 | Zumpango and Tecámac, Mexico | 0.3 km² | 0.0 km² | 0.0 km² |
 | Abidjan, Côte d'Ivoire | 0.2 km² | 0.1 km² | 0.0 km² |
-| León, Mexico | 0.3 km² | 0.0 km² | 0.0 km² |
+| Taizhou, China | 0.2 km² | 0.1 km² | 0.0 km² |
 | Accra, Ghana | 0.3 km² | 0.0 km² | 0.0 km² |
+| Changsha, China | 0.3 km² | 0.0 km² | 0.0 km² |
+| Algiers, Algeria | 0.2 km² | 0.0 km² | 0.0 km² |
+| Ibadan, Nigeria | 0.2 km² | 0.0 km² | 0.0 km² |
 | Taipei, Taiwan | 0.2 km² | 0.0 km² | 0.0 km² |
 | Istanbul, Türkiye | 0.2 km² | 0.0 km² | 0.0 km² |
+| Fengxiang, China | 0.1 km² | 0.0 km² | 0.0 km² |
+| Gaziantep, Türkiye | 0.1 km² | 0.0 km² | 0.0 km² |
+| Medan, Indonesia | 0.1 km² | 0.0 km² | 0.0 km² |
+| Edmonton, Canada | 0.1 km² | 0.0 km² | 0.0 km² |
 | Rafsanjan Plain, Iran | 0.1 km² | 0.0 km² | 0.0 km² |
 
 Each area is counted once, in its worst class. With "not counted" every figure
@@ -155,67 +169,105 @@ limits today to 62 km² by 2050, Tehran from 31 to 69 km².
 
 ## What the data shows so far
 
-Built on 2026-11-14 from 113 places. At least 1 km² of built up land is
-detected sinking in 41 of them:
+Built on 2026-11-15 from 494 places. At least 1 km² of built up land is
+detected sinking in 75 of them:
 
 | Place | Fastest zone | Area sinking | Record | Smallest detectable rate |
 | --- | --- | --- | --- | --- |
 | Mexico City, Mexico | 26 cm per year | 402 km² | 11 months | 1.9 cm per year |
 | Tehran Plain, Iran | 26 cm per year | 122 km² | 4 months (early) | 3.5 cm per year |
+| Guangzhou, China | 23 cm per year | 5 km² | 4 months (early) | 4.2 cm per year |
+| Manaus, Brazil | 20 cm per year | 8 km² | 4 months (early) | 4.6 cm per year |
 | Quetta, Pakistan | 19 cm per year | 56 km² | 4 months (early) | 4.7 cm per year |
+| Abu Dhabi, United Arab Emirates | 18 cm per year | 21 km² | 4 months (early) | 4.4 cm per year |
 | Mashhad, Iran | 18 cm per year | 154 km² | 4 months (early) | 3.9 cm per year |
+| Maputo, Mozambique | 18 cm per year | 1 km² | 4 months (early) | 3.0 cm per year |
 | Toluca, Mexico | 17 cm per year | 8 km² | 11 months | 2.8 cm per year |
-| Kabul, Afghanistan | 15 cm per year | 5 km² | 4 months (early) | 3.4 cm per year |
+| Chennai, India | 16 cm per year | 17 km² | 4 months (early) | 4.1 cm per year |
+| Edmonton, Canada | 15 cm per year | 2 km² | 4 months (early) | 4.5 cm per year |
+| Dongguan, China | 15 cm per year | 2 km² | 4 months (early) | 5.0 cm per year |
 | Dhaka, Bangladesh | 15 cm per year | 2 km² | 4 months (early) | 6.4 cm per year |
+| Kabul, Afghanistan | 14 cm per year | 5 km² | 4 months (early) | 3.2 cm per year |
 | Neyshabur, Iran | 14 cm per year | 7 km² | 4 months (early) | 4.8 cm per year |
 | Chandigarh and Mohali, India | 13 cm per year | 7 km² | 11 months | 5.4 cm per year |
+| Taizhou, China | 13 cm per year | 2 km² | 4 months (early) | 3.7 cm per year |
 | Kerman, Iran | 12 cm per year | 155 km² | 4 months (early) | 3.0 cm per year |
 | Rafsanjan Plain, Iran | 12 cm per year | 112 km² | 4 months (early) | 3.0 cm per year |
 | Abidjan, Côte d'Ivoire | 12 cm per year | 4 km² | 4 months (early) | 9.8 cm per year |
-| Puebla, Mexico | 12 cm per year | 4 km² | 4 months (early) | 3.0 cm per year |
+| Algiers, Algeria | 12 cm per year | 17 km² | 4 months (early) | 3.5 cm per year |
+| Puebla, Mexico | 11 cm per year | 4 km² | 4 months (early) | 3.0 cm per year |
 | Istanbul, Türkiye | 11 cm per year | 7 km² | 4 months (early) | 7.1 cm per year |
 | Zumpango and Tecámac, Mexico | 11 cm per year | 9 km² | 11 months | 1.9 cm per year |
 | Bandung, Indonesia | 10 cm per year | 34 km² | 4 months (early) | 3.8 cm per year |
 | Delhi, India | 10 cm per year | 5 km² | 11 months | 2.2 cm per year |
+| Bursa, Türkiye | 10 cm per year | 1 km² | 4 months (early) | 4.2 cm per year |
+| Jeddah, Saudi Arabia | 10 cm per year | 5 km² | 3 months (early) | 5.8 cm per year |
 | Tunis, Tunisia | 10 cm per year | 2 km² | 4 months (early) | 3.0 cm per year |
 | Lahore, Pakistan | 10 cm per year | 1 km² | 4 months (early) | 5.0 cm per year |
+| Ibadan, Nigeria | 10 cm per year | 6 km² | 4 months (early) | 3.4 cm per year |
+| Medan, Indonesia | 9 cm per year | 9 km² | 4 months (early) | 3.3 cm per year |
 | Norfolk, United States | 9 cm per year | 1 km² | 4 months (early) | 7.0 cm per year |
 | Surabaya, Indonesia | 9 cm per year | 1 km² | 4 months (early) | 3.6 cm per year |
+| Tainan, Taiwan | 9 cm per year | 1 km² | 4 months (early) | 3.7 cm per year |
 | Jakarta, Indonesia | 9 cm per year | 12 km² | 4 months (early) | 3.5 cm per year |
+| Wuhan, China | 9 cm per year | 3 km² | 4 months (early) | 3.7 cm per year |
+| Lomé, Togo | 9 cm per year | 5 km² | 4 months (early) | 3.0 cm per year |
+| Makkah, Saudi Arabia | 8 cm per year | 7 km² | 4 months (early) | 5.4 cm per year |
+| Varanasi, India | 8 cm per year | 2 km² | 4 months (early) | 5.0 cm per year |
 | Shanghai, China | 8 cm per year | 3 km² | 4 months (early) | 6.9 cm per year |
 | Nairobi, Kenya | 8 cm per year | 2 km² | 4 months (early) | 3.3 cm per year |
 | Accra, Ghana | 8 cm per year | 3 km² | 4 months (early) | 3.4 cm per year |
+| Daegu, South Korea | 8 cm per year | 2 km² | 4 months (early) | 3.0 cm per year |
 | Taipei, Taiwan | 8 cm per year | 1 km² | 11 months | 1.1 cm per year |
 | Celaya, Mexico | 8 cm per year | 4 km² | 11 months | 2.4 cm per year |
-| León, Mexico | 7 cm per year | 9 km² | 4 months (early) | 3.0 cm per year |
+| Changzhi, China | 7 cm per year | 3 km² | 4 months (early) | 4.0 cm per year |
+| León, Mexico | 7 cm per year | 11 km² | 4 months (early) | 3.0 cm per year |
+| Pyongyang, North Korea | 7 cm per year | 4 km² | 4 months (early) | 3.1 cm per year |
+| Damascus, Syria | 7 cm per year | 3 km² | 4 months (early) | 3.6 cm per year |
+| Erbil, Iraq | 7 cm per year | 3 km² | 4 months (early) | 3.2 cm per year |
 | Isfahan, Iran | 7 cm per year | 20 km² | 4 months (early) | 3.3 cm per year |
+| Lucknow, India | 6 cm per year | 3 km² | 4 months (early) | 4.3 cm per year |
 | Beijing, China | 6 cm per year | 18 km² | 4 months (early) | 3.0 cm per year |
+| Shiraz, Iran | 6 cm per year | 2 km² | 4 months (early) | 3.8 cm per year |
 | Bangkok, Thailand | 6 cm per year | 6 km² | 4 months (early) | 3.4 cm per year |
-| São Paulo, Brazil | 6 cm per year | 7 km² | 4 months (early) | 3.4 cm per year |
+| Fengxiang, China | 6 cm per year | 6 km² | 4 months (early) | 4.2 cm per year |
+| Changsha, China | 6 cm per year | 6 km² | 4 months (early) | 3.4 cm per year |
+| Gaziantep, Türkiye | 6 cm per year | 2 km² | 4 months (early) | 3.7 cm per year |
+| Chengdu, China | 6 cm per year | 2 km² | 4 months (early) | 3.0 cm per year |
+| Seoul, South Korea | 6 cm per year | 2 km² | 4 months (early) | 3.0 cm per year |
+| São Paulo, Brazil | 6 cm per year | 8 km² | 4 months (early) | 3.5 cm per year |
 | Coachella Valley (Indio), United States | 6 cm per year | 5 km² | 11 months | 2.5 cm per year |
-| Ho Chi Minh City, Vietnam | 5 cm per year | 1 km² | 4 months (early) | 3.6 cm per year |
+| Vadodara, India | 5 cm per year | 1 km² | 11 months | 4.3 cm per year |
+| Zhengzhou, China | 5 cm per year | 1 km² | 4 months (early) | 4.5 cm per year |
+| Jinan, China | 5 cm per year | 1 km² | 4 months (early) | 3.1 cm per year |
 | Phoenix, United States | 5 cm per year | 4 km² | 4 months (early) | 3.0 cm per year |
 | Caracas, Venezuela | 5 cm per year | 3 km² | 11 months | 2.6 cm per year |
+| Zibo, China | 5 cm per year | 1 km² | 4 months (early) | 3.0 cm per year |
 | Perth, Australia | 4 cm per year | 1 km² | 4 months (early) | 3.4 cm per year |
 | Ahmedabad, India | 4 cm per year | 5 km² | 11 months | 2.3 cm per year |
 | Tokyo, Japan | 4 cm per year | 2 km² | 11 months | 1.1 cm per year |
-| Los Angeles, United States | 3 cm per year | 2 km² | 11 months | 1.6 cm per year |
+| Bamako, Mali | 3 cm per year | 1 km² | 4 months (early) | 3.6 cm per year |
+| Los Angeles, United States | 3 cm per year | 1 km² | 11 months | 1.6 cm per year |
 | Querétaro, Mexico | 2 cm per year | 3 km² | 11 months | 1.1 cm per year |
 
 "Early" means only about four months of radar passes. Those rates were
 measured over a single season, so the yearly figure may change as the record
 grows.
 
-No built up land sinking above the detection limit (yet) in the other 72
+No built up land sinking above the detection limit (yet) in the other 419
 places, among them Houston, New Orleans, New York and Venice, all known to
 sink more slowly than a few months of data can reveal. In some of them,
 Central Valley, Bakersfield, Antelope Valley, Willcox Basin, Las Vegas and
 Cairo among them, sinking is marked on the map under farmland edges, bare
-ground, mines or pits, but not under 1 km² of buildings. Five places in
-`places.json` are skipped for now: Larissa, Konya Basin, Kathmandu and Yangon
-because too little ground gave a stable radar signal, and Islamabad because
-its only radar track is too noisy (its detection bar would be near 25 cm per
-year).
+ground, mines or pits, but not under 1 km² of buildings.
+
+35 places in `places.json` have no map files: too little ground with a stable
+radar signal (Kathmandu, Yangon, Mogadishu), too few usable radar passes (the
+Russian cities, Moscow among them), or too noisy a track (Islamabad, Milan,
+Patna). Four more are held back after review, each with its reason in a
+`hold` field: Shantou, Zhongshan, Jiangmen and Jiangyin, which read 22 to 35
+cm per year on noisy tracks along rivers and fish ponds, far above anything
+reported there.
 
 ### Why most of the sinking found so far is in Iran and Mexico
 
@@ -230,8 +282,8 @@ is stable. Three things decide where sinking shows up:
 2. **NASA's records are long in only a few regions.** NISAR products start in
    late 2025 over parts of the United States, central Mexico, north west
    India, Japan, Taiwan, Venezuela, the Andes and a few other frames.
-   Everywhere else they start in June 2026. Of the 113 places, 34 have nine to
-   eleven months of passes and 79 have about four.
+   Everywhere else they start in June 2026. Of the 494 places, 44 have nine to
+   eleven months of passes and 450 have about four.
 3. **Few cities sink faster than a few centimetres per year.** The basins of
    Iran, Quetta and the old lake beds of central Mexico are among the fastest
    sinking cities measured anywhere, so they clear the four month bar easily
@@ -241,7 +293,10 @@ Since the bar was lowered in November 2026 sinking shows across the world:
 Jakarta, Bandung, Surabaya, Bangkok, Ho Chi Minh City, Dhaka, Beijing,
 Shanghai, Kabul, Lahore, Istanbul, Nairobi, Accra, Abidjan, São Paulo and
 others, besides Delhi, Ahmedabad and Chandigarh in India and Coachella Valley,
-Phoenix and Los Angeles in the United States. Every rerun of the pipeline
+Phoenix and Los Angeles in the United States. Among the cities over a
+million people added later the same month it shows in Chennai, Guangzhou,
+Wuhan, Changsha, Medan, Manaus, Abu Dhabi, Jeddah, Algiers, Ibadan, Lomé,
+Maputo, Daegu, Seoul, Damascus, Erbil, Shiraz and others. Every rerun of the pipeline
 lengthens the records. By about June 2027 every place will have a full year
 of passes and a bar near 2 cm per year.
 
@@ -278,7 +333,14 @@ loads. For each place in `pipeline/places.json` it does this:
    the ground position at every radar pass. Whatever is fast in time but
    smooth in space is treated as weather and removed.
 6. **Combine two viewing directions** (ascending and descending tracks) when
-   both cover the place. Motion is read as vertical.
+   both cover the place. Motion is read as vertical. A track is left out when
+   its map noise is above 4 cm per year (a detection bar of 12 cm per year;
+   such tracks are monsoon or flood seasons over river plains), when it is
+   more than twice as noisy as the other track (ground only it sees would
+   pass its noise off as sinking; Varanasi read 74 cm per year that way), or
+   when its built up ground reads faster than 40 cm per year of sinking. No
+   city is known to sink that fast, and in November 2026 one track over
+   Shantou and Jieyang read a metre a year.
 7. **Detect sinking.** A pixel counts as sinking when its rate is beyond
    three times the map noise and beyond a seasonal allowance of 1 cm divided
    by the record length, on gentle terrain, in patches of at least a quarter
@@ -328,12 +390,16 @@ Checks made while building it:
 
 | Folder | What | Size |
 | --- | --- | --- |
-| `web/data` | what the map loads: one small index and two files per place | 24 MB |
-| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 1.7 GB |
+| `web/data` | what the map loads: one small index and two files per place | 66 MB |
+| `data/nisar` | the radar windows the map data is built from, plus elevation and land cover on the same grids, and a manifest of the NASA products they came from | 2.1 GB |
 
 Both are in the repository. `data/nisar` is the downloaded radar data in a
 compact form (see `data/nisar/README.md`), so nothing has to be fetched again
-to rebuild or retune the map data.
+to rebuild or retune the map data. The one exception: for the cities over a
+million people added in November 2026 (below), radar windows are kept only
+where sinking is detected. The others are listed in `data/nisar/.gitignore`
+and keep their manifest entry, so `pipeline.run --place <id>` (with a token)
+fetches them again in about a minute each.
 
 ### Rebuild from the repository (no download, no login)
 
@@ -345,6 +411,21 @@ python3 -m venv .venv
 ```bash
 .venv/bin/python -m pipeline.run --all --offline
 ```
+
+Places whose radar windows are not in the repository (see above) fail in this
+mode and keep their current map files.
+
+### Cities over a million people
+
+In November 2026 every city of more than a million people in GeoNames
+(`cities15000`) was added, so that sinking and damage would be looked for
+everywhere it matters and not only where it was expected. Cities within 30 km
+of a bigger one were merged into one metro, and metros already inside a place
+were skipped: 573 cities became 415 new places, boxes of 40 to 64 km by
+population. Places that failed are kept in `places.json` but have no map
+files (see What the data shows so far). Places held back after review carry
+a `hold` field with the reason. Of the new places, 35 show sinking under at
+least 1 km² of built up land.
 
 ### Update or add places
 
@@ -467,10 +548,10 @@ report stays clickable.
 Ten places have their own file naming the offices responsible, how to reach
 them, the law that obliges a reply and its deadline, and the emergency number.
 They were the ten with the most built up land projected to pass the cracking
-limit when the guides were written. Puebla, Kabul and Neyshabur now rank above
-Istanbul, Abidjan and Shanghai and have no guide yet. Every other place gets
-the report, a general letter and general guidance on who is usually
-responsible.
+limit when the guides were written. Kabul, Puebla, Chennai, Neyshabur, Manaus,
+Maputo and Abu Dhabi now rank above Istanbul, Abidjan and Shanghai and have no
+guide yet. Every other place gets the report, a general letter and general
+guidance on who is usually responsible.
 
 | City | Page and letter language | Telegram reachable there |
 | --- | --- | --- |
@@ -546,9 +627,11 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
 * Translate the map itself.
 * Collect crack reports from residents on the map (this needs a server and
   moderation, so it is not built).
-* Write local guides for Puebla, Kabul and Neyshabur, which now rank among
-  the ten places with the most built up land projected past the cracking
-  limit.
+* Write local guides for Kabul, Puebla, Chennai and Neyshabur, which now rank
+  among the ten places with the most built up land projected past the
+  cracking limit.
+* Recheck the cities held back in `places.json` once their record passes a
+  year.
 * Rerun the pipeline as radar passes accumulate, add places, mosaic
   neighbouring radar frames for places that straddle two, and use the weather
   model layers shipped inside the products for a better atmosphere correction.
