@@ -1,0 +1,189 @@
+{
+  "id": "puebla",
+  "checked": "2026-11-15",
+  "languages": [
+    "es"
+  ],
+  "place_name": {
+    "en": "Puebla",
+    "es": "Puebla"
+  },
+  "country_name": {
+    "en": "Mexico",
+    "es": "México"
+  },
+  "summary": {
+    "en": "In the municipality of Puebla, the city's civil protection offices check buildings and ground at risk. Since 2014 the water service, wells included, has been run by the private concessionaire Agua de Puebla para Todos, overseen by the public body SOAPAP. Neighbouring municipalities such as San Andrés Cholula, San Pedro Cholula and Cuautlancingo have their own civil protection offices, with the state civil protection coordination above them all, and the national water commission CONAGUA decides who may pump from the Valle de Puebla aquifer and how much.",
+    "es": "En el municipio de Puebla, las oficinas municipales de protección civil revisan inmuebles y suelo en riesgo. Desde 2014 el servicio de agua, pozos incluidos, lo presta la empresa concesionaria Agua de Puebla para Todos, bajo la supervisión del organismo público SOAPAP. Los municipios vecinos, como San Andrés Cholula, San Pedro Cholula y Cuautlancingo, tienen sus propias oficinas de protección civil, y por encima de todos está la coordinación estatal de protección civil. La Comisión Nacional del Agua (CONAGUA) decide quién puede extraer agua del acuífero Valle de Puebla y cuánta."
+  },
+  "bodies": [
+    {
+      "id": "pc-puebla",
+      "name": "Dirección de Gestión de Riesgos en Materia de Protección Civil del Ayuntamiento de Puebla",
+      "name_en": "Puebla City Directorate of Civil Protection Risk Management",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in the municipality of Puebla, which includes the south of the city. This directorate of the city's urban development secretariat applies the municipal civil protection and risk rules, together with the civil protection directorate of the public security secretariat, which keeps the municipal Atlas of Risks. Ask it to inspect cracks in your building or street.",
+        "es": "Para domicilios en el municipio de Puebla, que incluye el sur de la ciudad. Esta dirección de la Secretaría de Gestión y Desarrollo Urbano aplica las normas municipales de protección civil y gestión de riesgos, junto con la Dirección Municipal de Protección Civil de la Secretaría de Seguridad Ciudadana, que se encarga del Atlas de Riesgos municipal. Se le puede pedir que revise grietas en un inmueble o en la calle."
+      },
+      "website": "https://pueblacapital.gob.mx/",
+      "contact_url": "https://experta.pueblacapital.gob.mx/web/fichaAsunto.do?opcion=0&asas_ide_asu=2490&ruta=%2Fweb%2FasuntosMasUsuales.do%3Fopcion",
+      "email": null,
+      "phone": "222 309 4600 ext. 6040",
+      "postal": "Boulevard Norte 2210, Colonia Las Hadas Mundial 86, C.P. 72070, Puebla, Puebla",
+      "source": "https://experta.pueblacapital.gob.mx/web/fichaAsunto.do?opcion=0&asas_ide_asu=2490&ruta=%2Fweb%2FasuntosMasUsuales.do%3Fopcion"
+    },
+    {
+      "id": "soapap",
+      "name": "Sistema Operador de los Servicios de Agua Potable y Alcantarillado del Municipio de Puebla (SOAPAP)",
+      "name_en": "Puebla Water and Sewerage Operator (SOAPAP), regulator of the water concession",
+      "level": "state",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For the municipality of Puebla and the parts of Cuautlancingo, San Andrés Cholula, San Pedro Cholula and Amozoc covered by the water concession. This public body handed its wells and network to the concessionaire in 2014 and now acts as the regulator that oversees it. Ask it which wells supply your neighbourhood, how much they pump and what the concessionaire reports to it. It also takes complaints about the service.",
+        "es": "Para el municipio de Puebla y las partes de Cuautlancingo, San Andrés Cholula, San Pedro Cholula y Amozoc que abarca la concesión del agua. Este organismo público entregó sus pozos y su red a la concesionaria en 2014 y ahora funge como regulador que la supervisa. Se le puede preguntar qué pozos abastecen a la colonia, cuánta agua extraen y qué le informa la concesionaria. También recibe quejas sobre el servicio."
+      },
+      "website": "https://www.soapap.gob.mx/",
+      "contact_url": "https://www.soapap.gob.mx/contacto",
+      "email": null,
+      "phone": "222 246 1703",
+      "postal": "Calle Río Grijalva 5312, Int. 1, Colonia Jardines de San Manuel, Puebla, Puebla",
+      "source": "https://ventanilla.puebla.gob.mx/web/fichaAsunto.do?opcion=0&asas_ide_asu=2721&ruta=%2Fweb%2FasuntosMasUsuales.do"
+    },
+    {
+      "id": "conagua",
+      "name": "Comisión Nacional del Agua (CONAGUA), Dirección Local Puebla",
+      "name_en": "National Water Commission (CONAGUA), Puebla Local Office",
+      "level": "national",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "CONAGUA is the federal authority that grants and supervises the permits to pump groundwater and measures water levels in the Valle de Puebla aquifer. Its 2024 study of the aquifer reports water levels falling and the aquifer losing storage. This is its office for the state of Puebla.",
+        "es": "La CONAGUA es la autoridad federal que otorga y vigila las concesiones para extraer agua subterránea y mide los niveles del agua en el acuífero Valle de Puebla. Su estudio de 2024 sobre el acuífero informa que los niveles bajan y que el acuífero pierde almacenamiento. Esta es su oficina para el estado de Puebla."
+      },
+      "website": "https://www.gob.mx/conagua",
+      "contact_url": "https://www.gob.mx/conagua",
+      "email": null,
+      "phone": "222 211 8300",
+      "postal": "Circuito Juan Pablo II No. 505, Colonia Residencial Boulevares, C.P. 72440, Puebla, Puebla",
+      "source": "https://files.conagua.gob.mx/datospersonales/documentos/3_ProcedimientoQuejas_DP_2024.pdf"
+    },
+    {
+      "id": "agua-de-puebla",
+      "name": "Agua de Puebla para Todos (Concesiones Integrales, S.A. de C.V.)",
+      "name_en": "Agua de Puebla para Todos, the private water concessionaire",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "The private company that has run the water service, wells included, in the municipality of Puebla and parts of its neighbours since 2014. Report leaks and sudden changes in your supply here and ask about the wells near you. For a formal information request, write to SOAPAP, the public body that oversees it.",
+        "es": "La empresa privada que presta desde 2014 el servicio de agua, pozos incluidos, en el municipio de Puebla y en partes de los municipios vecinos. Aquí se reportan fugas y cambios bruscos en el suministro y se puede preguntar por los pozos cercanos. Para una solicitud formal de información hay que dirigirse al SOAPAP, el organismo público que la supervisa."
+      },
+      "website": "https://www.aguapuebla.mx/",
+      "contact_url": "https://www.aguapuebla.mx/guia-de-atencion-al-usuario/",
+      "email": null,
+      "phone": "222 211 7070",
+      "postal": null,
+      "source": "https://www.aguapuebla.mx/guia-de-atencion-al-usuario/"
+    },
+    {
+      "id": "pc-estado",
+      "name": "Coordinación General de Protección Civil y Gestión del Riesgo de Desastres del Estado de Puebla",
+      "name_en": "Puebla State General Coordination of Civil Protection and Disaster Risk Management",
+      "level": "state",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For any municipality around the city, such as San Andrés Cholula, San Pedro Cholula, Cuautlancingo or Amozoc. It coordinates civil protection across the state and works with the civil protection office of each municipality, which is normally the one that visits. Write to it when the municipality does not answer, or to ask which municipal office is yours.",
+        "es": "Para cualquier municipio alrededor de la ciudad, como San Andrés Cholula, San Pedro Cholula, Cuautlancingo o Amozoc. Coordina la protección civil en todo el estado y trabaja con la protección civil de cada municipio, que normalmente es la que acude a revisar. Conviene escribirle cuando el municipio no responde o para saber qué oficina municipal corresponde."
+      },
+      "website": "https://proteccioncivil.puebla.gob.mx/",
+      "contact_url": "https://proteccioncivil.puebla.gob.mx/a-cerca-de/ubicacion-y-contacto",
+      "email": "proteccion.civil@puebla.gob.mx",
+      "phone": "222 246 2750",
+      "postal": "11 Norte 806, Colonia Centro, C.P. 72000, Puebla, Puebla",
+      "source": "https://proteccioncivil.puebla.gob.mx/"
+    },
+    {
+      "id": "transparencia-puebla",
+      "name": "Coordinación General de Transparencia y Municipio Abierto (Unidad de Transparencia del Ayuntamiento de Puebla)",
+      "name_en": "Puebla City Council Transparency Unit",
+      "level": "city",
+      "handles": [
+        "information"
+      ],
+      "role": {
+        "en": "The transparency unit of the Puebla city government. It takes formal information requests for any office of the city government, in person or through the Plataforma Nacional de Transparencia, and must answer within 20 working days.",
+        "es": "Es la Unidad de Transparencia del Gobierno de la Ciudad de Puebla. Recibe solicitudes formales de información para cualquier dependencia municipal, en persona o por la Plataforma Nacional de Transparencia, y debe responder en un plazo de 20 días hábiles."
+      },
+      "website": "https://gobiernodelaciudad.pueblacapital.gob.mx/24-27/",
+      "contact_url": "https://gobiernodelaciudad.pueblacapital.gob.mx/24-27/acceso-a-la-informacion/solicitudes-de-acceso-a-la-informacion",
+      "email": null,
+      "phone": "222 213 3843",
+      "postal": "Avenida Granate 3902, segundo piso, Colonia Villa Posadas, C.P. 72060, Puebla, Puebla",
+      "source": "https://pueblacapital.gob.mx/ayuntamiento/gabinete"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley de Transparencia y Acceso a la Información Pública del Estado de Puebla",
+    "name_en": "Article 8 of the Constitution (right of petition) and the Puebla State Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
+    "what": {
+      "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: under Puebla's transparency law of July 2025, the city council, SOAPAP and every other state or municipal body must answer within 20 working days, which can be extended by up to 10 more, and CONAGUA, which is federal, has the same limit under the General Law. The same Puebla law closed the state institute ITAIPUE and gave its role to Transparencia para Puebla y sus Municipios, part of the state Anticorruption and Good Government Secretariat, which now decides appeals.",
+      "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: según la ley de transparencia de Puebla de julio de 2025, el ayuntamiento, el SOAPAP y cualquier otra dependencia estatal o municipal deben responder en un máximo de 20 días hábiles, ampliables hasta por 10 más, y la CONAGUA, que es federal, tiene el mismo plazo según la Ley General. La misma ley poblana extinguió el ITAIPUE y pasó sus funciones a Transparencia para Puebla y sus Municipios, órgano de la Secretaría Anticorrupción y Buen Gobierno del estado, que ahora resuelve los recursos."
+    },
+    "how": {
+      "en": "Send or hand in the letter and keep the stamped copy or acknowledgement of receipt (acuse). To make the questions a formal information request, file them free of charge on the Plataforma Nacional de Transparencia, choosing the body you are writing to (for example the Ayuntamiento de Puebla or SOAPAP), or hand them in at the city's Coordinación General de Transparencia y Municipio Abierto, Avenida Granate 3902, second floor. If no reply comes in time, you can file an appeal (recurso de revisión) within 15 working days, on the same platform or with the transparency unit that received the request.",
+      "es": "Hay que enviar o entregar el escrito y conservar el acuse de recibo. Para que las preguntas cuenten como solicitud formal de información, se presentan sin costo en la Plataforma Nacional de Transparencia, eligiendo la dependencia a la que se escribe (por ejemplo, el Ayuntamiento de Puebla o el SOAPAP), o se entregan en la Coordinación General de Transparencia y Municipio Abierto del ayuntamiento, Avenida Granate 3902, segundo piso. Si no hay respuesta en el plazo, se puede presentar un recurso de revisión dentro de los 15 días hábiles siguientes, en la misma plataforma o ante la Unidad de Transparencia que recibió la solicitud."
+    },
+    "url": "https://www.plataformadetransparencia.org.mx/",
+    "deadline_days": 20,
+    "deadline_text": {
+      "en": "20 working days",
+      "es": "20 días hábiles"
+    },
+    "source": "https://ojp.puebla.gob.mx/legislacion-del-estado/item/7967-ley-de-transparencia-y-acceso-a-la-informacion-publica-del-estado-de-puebla"
+  },
+  "urgent": {
+    "phone": "911",
+    "what": {
+      "en": "Leave the building and call 911, the national emergency number. In the municipality of Puebla it answers medical, security and civil protection emergencies, and it works in the neighbouring municipalities too.",
+      "es": "Hay que salir del inmueble y llamar al 911, el número nacional de emergencias. En el municipio de Puebla atiende emergencias médicas, de seguridad y de protección civil, y funciona también en los municipios vecinos."
+    },
+    "source": "https://pueblacapital.gob.mx/"
+  },
+  "context": {
+    "en": "Little is published about sinking in the Puebla valley: the national statistics and geography institute INEGI wrote in 2019 that information on it is very scarce. Its satellite radar surveys found up to 3.5 cm a year in the city for 2014 to 2019 and up to 4 cm a year for 2019 to 2021, over about 96 km² of Puebla, Cuautlancingo, San Andrés Cholula and San Pedro Cholula, and a 2019 study of older satellite data, from 2003 to 2010, found spots in the city sinking up to 5.3 cm a year, which it linked to pumping for industry. CONAGUA's 2024 study still leaves some water in the Valle de Puebla aquifer for new permits, but reports water levels falling by about 0.6 m a year on average between 2002 and 2010 and the aquifer losing storage. The early reading on this map, about 11 cm a year at its fastest in the south of the city, covers only four months and is faster than any published figure, so it needs confirming.",
+    "es": "Se ha publicado poco sobre el hundimiento en el valle de Puebla: el INEGI escribió en 2019 que la información al respecto es muy escasa. Sus estudios con radar satelital encontraron hasta 3.5 cm por año en la ciudad entre 2014 y 2019 y hasta 4 cm por año entre 2019 y 2021, en unos 96 km² de Puebla, Cuautlancingo, San Andrés Cholula y San Pedro Cholula, y un estudio de 2019 con datos satelitales más antiguos, de 2003 a 2010, encontró puntos de la ciudad que bajaban hasta 5.3 cm por año, lo que atribuyó al bombeo para uso industrial. El estudio de la CONAGUA de 2024 todavía deja algo de agua disponible en el acuífero Valle de Puebla para nuevas concesiones, pero informa que los niveles bajaron en promedio unos 0.6 m por año entre 2002 y 2010 y que el acuífero pierde almacenamiento. La lectura preliminar de este mapa, de unos 11 cm por año en el punto más rápido, al sur de la ciudad, abarca solo cuatro meses y supera cualquier cifra publicada, por lo que falta confirmarla.",
+    "sources": [
+      "https://www.inegi.org.mx/contenido/productos/prod_serv/contenidos/espanol/bvinegi/productos/nueva_estruc/702825188290.pdf",
+      "https://www.inegi.org.mx/contenidos/productos/prod_serv/contenidos/espanol/bvinegi/productos/nueva_estruc/889463904441.pdf",
+      "https://www.mdpi.com/2072-4292/11/20/2341",
+      "https://sigagis.conagua.gob.mx/gas1/Edos_Acuiferos_18/puebla/DR_2104.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Mexico without restrictions, but few neighbours have it: in a 2026 survey of internet users, 91% had a WhatsApp account and 30% had Telegram, so street and neighbourhood groups nearly always run on WhatsApp. In a WhatsApp group every member can see the phone numbers of all the others, so keep the group to people you can place and do not post ID documents or property deeds there. In April 2026 the Supreme Court struck down Puebla's offence of online harassment (ciberasedio), which critics feared could punish criticism on social media; even so, keep posts to facts about the ground and the buildings and avoid personal attacks on officials or neighbours. Be wary of anyone in a chat who offers to arrange an inspection or a permit for money: ask the authority itself for the visit and ask any inspector for official identification.",
+      "es": "Telegram funciona en México sin restricciones, pero pocos vecinos lo tienen: en una encuesta de 2026 entre usuarios de internet, 91% tenía cuenta de WhatsApp y 30% de Telegram, así que los grupos de calle o de colonia casi siempre están en WhatsApp. En un grupo de WhatsApp todos los integrantes ven el número de teléfono de los demás, por lo que conviene limitarlo a personas conocidas y no publicar ahí identificaciones ni escrituras. En abril de 2026 la Suprema Corte invalidó el delito de ciberasedio del Código Penal de Puebla, que se temía pudiera castigar críticas en redes sociales; aun así, conviene limitarse a hechos sobre el suelo y los inmuebles y evitar ataques personales contra funcionarios o vecinos. Hay que desconfiar de quien ofrezca en un chat gestionar una inspección o un permiso a cambio de dinero: la visita se pide directamente a la autoridad y a cualquier inspector se le puede pedir su identificación oficial."
+    },
+    "sources": [
+      "https://irp.cdn-website.com/81280eda/files/uploaded/Estudio-Habitos-de-los-Usuarios-de-Internet-2026-Version-publica.pdf",
+      "https://freedomhouse.org/country/mexico/freedom-net/2025",
+      "https://www.scjn.gob.mx/sites/default/files/boletin-mensual-resoluciones-pleno/2026-05/boletin-mensual-resoluciones-pleno-abril-2026.pdf"
+    ]
+  },
+  "groups": []
+}

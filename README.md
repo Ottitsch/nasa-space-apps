@@ -575,12 +575,13 @@ report stays clickable.
 
 ### Cities with a full local guide
 
-Ten places have their own file naming the offices responsible, how to reach
-them, the law that obliges a reply and its deadline, and the emergency number.
-They were the ten with the most built up land projected to pass the cracking
-limit when the guides were written. Kabul, Puebla, Chennai, Neyshabur, Manaus,
-Maputo and Abu Dhabi now rank above Istanbul, Abidjan and Shanghai and have no
-guide yet. Every other place gets the report, a general letter and general
+Eighteen places have their own file naming the offices responsible, how to
+reach them, the law that obliges a reply and its deadline, and the emergency
+number. The first ten were the places with the most built up land projected
+to pass the cracking limit when the guides were written (14 November 2026).
+Eight more were added on 15 November for the places that rose to the top once
+the map grew to every large city. Maputo and Abu Dhabi rank as high and have
+no guide yet. Every other place gets the report, a general letter and general
 guidance on who is usually responsible.
 
 | City | Page and letter language | Telegram reachable there |
@@ -595,6 +596,14 @@ guidance on who is usually responsible.
 | Istanbul, Türkiye | Turkish | yes |
 | Abidjan, Côte d'Ivoire | French | yes (neighbours mostly use WhatsApp) |
 | Shanghai, China | Chinese | no, blocked |
+| Northern Valley of Mexico (Cuautitlán Izcalli, Ecatepec), Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| León, Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| Puebla, Mexico | Spanish | yes (neighbours mostly use WhatsApp) |
+| Chennai, India | English | yes, though it was blocked for a week in June 2026 |
+| Kabul, Afghanistan | Persian (Dari), English | yes, but see the cautions about organising |
+| Neyshabur, Iran | Persian | no, blocked |
+| Lomé, Togo | French | yes, though it was blocked during the 2025 protests |
+| Manaus, Brazil | English (no Portuguese translation yet) | yes (neighbours mostly use WhatsApp) |
 
 Each city is one file, `web/action/cities/<place id>.json`, described in
 `web/action/README.md`. Each contact carries the official page it comes from
@@ -620,8 +629,8 @@ add it to that city's file and the page shows a join button:
 
 Until then the page says there is no group yet and invites the reader to start
 one. `platform` is free text, so a WhatsApp or WeChat group works the same
-way. That matters: Telegram is blocked in four of the ten cities (see the
-table), and where it does work most neighbourhood groups run on WhatsApp.
+way. That matters: Telegram is blocked in five of the eighteen cities (see
+the table), and where it does work most neighbourhood groups run on WhatsApp.
 Each city file's `organising` note says what applies there and what to be
 careful about, and the page hides the Telegram share button where Telegram
 does not open.
@@ -657,9 +666,8 @@ document.addEventListener('sinkingground:time', e => { /* e.detail: time, projec
 * Translate the map itself.
 * Collect crack reports from residents on the map (this needs a server and
   moderation, so it is not built).
-* Write local guides for Kabul, Puebla, Chennai and Neyshabur, which now rank
-  among the ten places with the most built up land projected past the
-  cracking limit.
+* Write local guides for Maputo and Abu Dhabi, and translate the take action
+  page into Portuguese (Manaus, São Paulo, Maputo) and Arabic.
 * Recheck the cities held back in `places.json` once their record passes a
   year.
 * Rerun the pipeline as radar passes accumulate, add places, mosaic

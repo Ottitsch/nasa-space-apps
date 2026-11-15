@@ -1,0 +1,165 @@
+{
+  "id": "lome",
+  "checked": "2026-11-15",
+  "languages": ["fr"],
+  "place_name": { "en": "Lomé", "fr": "Lomé" },
+  "country_name": { "en": "Togo", "fr": "Togo" },
+  "summary": {
+    "en": "In Greater Lomé the mayor of your commune (one of the 13 communes of the Golfe and Agoè-Nyivé prefectures) is the first authority for a building that threatens to collapse, the Autonomous District of Greater Lomé deals with problems that cross commune limits, and the National Civil Protection Agency (ANPC) coordinates the prevention of disasters. Much of Lomé's drinking water is pumped from the aquifers under and north of the city by the State company TdE, and the Directorate of Water Resources of the water ministry is in charge of following groundwater levels and studying requests to pump. We found no public body that publishes measurements of ground subsidence for Lomé, so the 2016 access to information law is the way to ask what is known.",
+    "fr": "Dans le Grand Lomé, le maire de votre commune (l'une des 13 communes des préfectures du Golfe et d'Agoè-Nyivé) est la première autorité à saisir pour un bâtiment qui menace ruine ; le District Autonome du Grand Lomé traite les problèmes qui dépassent les limites d'une commune, et l'Agence Nationale de la Protection Civile (ANPC) coordonne la prévention des catastrophes. Une grande partie de l'eau potable de Lomé est pompée dans les nappes situées sous la ville et au nord de celle-ci par la TdE, société d'État, et la Direction des Ressources en Eau du ministère chargé de l'eau est chargée de suivre le niveau des nappes et d'étudier les demandes de prélèvement. Nous n'avons trouvé aucun organisme public qui publie des mesures de l'affaissement du sol à Lomé : la loi de 2016 sur l'accès à l'information est donc le moyen de demander ce qui est connu."
+  },
+  "bodies": [
+    {
+      "id": "mairies",
+      "name": "Mairies des 13 communes du Grand Lomé (Golfe 1 à 7, Agoè-Nyivé 1 à 6)",
+      "name_en": "Town halls of the 13 communes of Greater Lomé",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Under the 2007 law on decentralisation and local freedoms, the mayor is in charge of the municipal police, which covers the repair or demolition of buildings threatening ruin and the prevention of accidents and calamities, and the mayor can order owners to fence off buildings and excavations that endanger the public, so write first to the town hall of your commune. According to OpenStreetMap, the fastest sinking spot on our map lies in the north-east of Lomé, about 2 km north of Attiégou, near the Boulevard du Sio; we could not confirm on an official map which commune it belongs to (it is near Golfe 1, Bè-Est, and Golfe 2, Bè-Centre), so ask the nearest town hall. The District's website has a page for each commune, but not all give an address: the Golfe 2 town hall is at 413 rue de l'Assomption, Tokoin Enyonam (phone 22 21 22 85), while the Golfe 1 page is empty.",
+        "fr": "Selon la loi de 2007 relative à la décentralisation et aux libertés locales, le maire est chargé de la police municipale, qui comprend la réparation ou la démolition des édifices menaçant ruine et la prévention des accidents et des fléaux calamiteux ; il peut aussi prescrire aux propriétaires d'entourer d'une clôture les immeubles et les excavations qui présentent un danger pour la sécurité publique : écrivez donc d'abord à la mairie de votre commune. D'après OpenStreetMap, le point qui s'affaisse le plus vite sur notre carte se trouve au nord-est de Lomé, à environ 2 km au nord d'Attiégou, près du boulevard du Sio ; nous n'avons pas pu vérifier sur une carte officielle de quelle commune il relève (il est proche de Golfe 1, Bè-Est, et de Golfe 2, Bè-Centre) : renseignez-vous auprès de la mairie la plus proche. Le site du District consacre une page à chaque commune, mais toutes ne donnent pas d'adresse : la mairie du Golfe 2 se trouve au 413 rue de l'Assomption, Tokoin Enyonam (téléphone 22 21 22 85), alors que la page du Golfe 1 est vide."
+      },
+      "website": "https://www.dagl.tg/",
+      "contact_url": "https://www.dagl.tg/plan-du-site",
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "https://www.dagl.tg/communes/5-commune-du-golfe-2"
+    },
+    {
+      "id": "anpc",
+      "name": "Agence Nationale de la Protection Civile (ANPC)",
+      "name_en": "National Civil Protection Agency",
+      "level": "national",
+      "handles": ["inspection"],
+      "role": {
+        "en": "State agency created in 2017 to coordinate the prevention of disaster risks and the management of emergencies across the country and to supervise rescue operations. Write to it, or send it a WhatsApp message, when cracks or sinking ground threaten several homes, a road or a place open to the public.",
+        "fr": "Agence de l'État créée en 2017 pour coordonner la prévention des risques de catastrophes et la gestion des situations d'urgence sur tout le territoire, et pour superviser les opérations de secours. Vous pouvez lui écrire, ou lui envoyer un message WhatsApp, lorsque des fissures ou un affaissement du sol menacent plusieurs habitations, une route ou un lieu ouvert au public."
+      },
+      "website": "https://anpctogo.tg/",
+      "contact_url": "https://anpctogo.tg/contact/",
+      "email": "contact@anpctogo.tg",
+      "phone": "+228 22 51 02 02 / WhatsApp +228 91 11 24 24",
+      "postal": "Rue 43 AFG, Klikamé, Lomé",
+      "source": "https://anpctogo.tg/contact/"
+    },
+    {
+      "id": "dagl",
+      "name": "District Autonome du Grand Lomé (DAGL)",
+      "name_en": "Autonomous District of Greater Lomé",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The District groups the 13 communes of the Golfe and Agoè-Nyivé prefectures and represents the city as a whole. The 2019 law that created it gives it, among other things, sanitation, environmental protection, spatial planning and the fight against the harmful effects of urbanisation, and it took over the technical services of the former Lomé town hall, so send it a copy when the problem goes beyond one commune or affects roads and drains.",
+        "fr": "Le District regroupe les 13 communes des préfectures du Golfe et d'Agoè-Nyivé et représente la ville dans son ensemble. La loi de 2019 qui l'a créé lui confie notamment l'assainissement, la protection de l'environnement, la planification de l'aménagement du territoire et la lutte contre les effets néfastes de l'urbanisation, et il a repris la direction des services techniques de l'ancienne mairie de Lomé : adressez-lui une copie lorsque le problème dépasse les limites d'une commune ou touche les routes et les caniveaux."
+      },
+      "website": "https://www.dagl.tg/",
+      "contact_url": "https://www.dagl.tg/contact",
+      "email": "dagl@dagl.tg",
+      "phone": "+228 22 22 57 86 / 70 31 21 21",
+      "postal": "Avenue Nicolas Grunitzky, Quartier Administratif, BP 326, Lomé",
+      "source": "https://www.dagl.tg/contact"
+    },
+    {
+      "id": "dre",
+      "name": "Ministère chargé de l'Eau et de l'Assainissement, Direction des Ressources en Eau (DRE)",
+      "name_en": "Ministry in charge of Water and Sanitation, Directorate of Water Resources",
+      "level": "national",
+      "handles": ["groundwater", "information"],
+      "role": {
+        "en": "The ministry is in charge of managing the country's water resources. Its Directorate of Water Resources must follow the quantity and quality of groundwater, run the national network of wells that measure groundwater levels, keep a database on water resources and study every request to pump, so ask it how much is pumped near you and how the level of the aquifer has changed. The directorate's own office is in the Quartier Administratif, Avenue Mama Fousséni, facing the Police Motorised Brigade.",
+        "fr": "Le ministère est chargé de la gestion des ressources en eau du pays. Sa Direction des Ressources en Eau doit assurer le suivi quantitatif et qualitatif des eaux souterraines, gérer le réseau piézométrique national (les forages qui mesurent le niveau des nappes), tenir une banque de données sur les ressources en eau et étudier toutes les demandes d'exploitation : vous pouvez lui demander quels volumes sont pompés près de chez vous et comment le niveau de la nappe a évolué. Les bureaux de la Direction se trouvent au Quartier Administratif, avenue Mama Fousséni, face à la Brigade Motorisée de la Police."
+      },
+      "website": "https://www.eau.gouv.tg/",
+      "contact_url": "https://www.eau.gouv.tg/contact",
+      "email": "contact@eau.gouv.tg",
+      "phone": "+228 22 21 25 28",
+      "postal": "Avenue de la Libération, BP 119, Lomé",
+      "source": "https://www.eau.gouv.tg/contact"
+    },
+    {
+      "id": "tde",
+      "name": "Société Togolaise des Eaux (TdE)",
+      "name_en": "Togolese Water Company",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "State-owned company that runs the drinking water service in towns, Lomé included, from production to distribution; the State company SP-EAU owns the installations and the water ministry is the delegating authority. Report a leak, a burst main or a pumping site next to sinking ground on its free numbers (8994 or 91 13 33 33 in Lomé), on WhatsApp (92 23 33 33) or by letter; it says it handles complaints within five days.",
+        "fr": "Société d'État qui exploite le service de l'eau potable en ville, y compris à Lomé, de la production à la distribution ; la SP-EAU, société de patrimoine, possède les installations et le ministère chargé de l'eau est l'autorité délégante. Signalez une fuite, une casse de conduite ou un site de pompage voisin d'un terrain qui s'affaisse aux numéros verts (8994 ou 91 13 33 33 à Lomé), sur WhatsApp (92 23 33 33) ou par courrier ; la TdE indique traiter les réclamations dans les cinq jours."
+      },
+      "website": "https://www.tde.tg/",
+      "contact_url": "https://www.tde.tg/contact/",
+      "email": "contact@tde.tg",
+      "phone": "8994 / 91 13 33 33 / (+228) 22 21 34 81 / 22 21 34 95",
+      "postal": "53, avenue de la Libération, angle rue du Chemin de Fer, BP 1301, Lomé",
+      "source": "https://www.tde.tg/contact/"
+    },
+    {
+      "id": "dgmg",
+      "name": "Direction Générale des Mines et de la Géologie (DGMG)",
+      "name_en": "General Directorate of Mines and Geology",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The State's mines and geology service, linked to the ministry in charge of energy and mining resources. It carries out geological research and grants the permits to extract sand, gravel and other building materials, so ask it what is known about the ground under your area and whether any quarry or extraction site lies nearby.",
+        "fr": "Service de l'État chargé des mines et de la géologie, rattaché au ministère chargé de l'énergie et des ressources minières. Il exécute des travaux de recherche géologique et délivre les permis d'exploitation de sable, de gravier et d'autres matériaux de construction : vous pouvez lui demander ce que l'on sait du sous-sol de votre quartier et si une carrière ou un site d'extraction se trouve à proximité."
+      },
+      "website": "https://energie.gouv.tg/",
+      "contact_url": "https://service-public.gouv.tg/single-administration/8a0e6727-fe99-479e-afe3-16e88ec109dd",
+      "email": "secretariat.dgmg@minenergie.gouv.tg",
+      "phone": "+228 22 21 30 01",
+      "postal": "06 avenue Sarakawa, BP 356, Lomé",
+      "source": "https://service-public.gouv.tg/phone-book"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Loi n° 2016-006 du 30 mars 2016 portant liberté d'accès à l'information et à la documentation publiques",
+    "name_en": "Law No. 2016-006 of 30 March 2016 on freedom of access to public information and documentation",
+    "what": {
+      "en": "Any person can ask a public body (a ministry, a town hall, the District, a public company such as TdE, or any body with a public service mission) for information or documents it holds. The body must answer in writing within 30 days of the acknowledgement of receipt (15 days for researchers and professional journalists), and it can extend this deadline only once, for a large request. A refusal must be written and give reasons, and no answer within the deadline counts as a refusal.",
+      "fr": "Toute personne peut demander à un organisme public (ministère, mairie, District, entreprise publique comme la TdE, ou tout organisme chargé d'une mission de service public) une information ou un document qu'il détient. L'organisme doit répondre par écrit dans un délai de 30 jours au plus à compter de la délivrance de l'accusé de réception (15 jours pour les chercheurs et les journalistes professionnels), délai qu'il ne peut prolonger qu'une seule fois, pour une demande volumineuse. Un refus doit être écrit et motivé, et l'absence de réponse dans le délai vaut refus."
+    },
+    "how": {
+      "en": "Write your request in French, attach a photocopy of a valid identity document, and send or hand it to the head of the body concerned, for the attention of its person responsible for access to information; at the office you can also fill in a form. Ask for the acknowledgement of receipt, which the law says must be given, and keep it. There is no online portal. If there is no answer or the answer is a refusal, write again to the head of the body (recours gracieux) or to its superior (recours hiérarchique), then to the Médiateur de la République, who must give an opinion within 15 days; you can also go to court.",
+      "fr": "Rédigez votre demande en français, joignez la photocopie d'une pièce d'identité en cours de validité, et adressez-la ou déposez-la auprès du responsable de l'organisme concerné, à l'attention de sa personne responsable de l'accès à l'information ; sur place, vous pouvez aussi remplir un formulaire. Demandez l'accusé de réception, que la loi oblige à délivrer, et conservez-le. Il n'existe pas de portail en ligne. En l'absence de réponse ou en cas de refus, écrivez de nouveau au responsable de l'organisme (recours gracieux) ou à son supérieur (recours hiérarchique), puis saisissez le Médiateur de la République, qui doit rendre un avis dans un délai de 15 jours ; vous pouvez aussi saisir le juge."
+    },
+    "url": null,
+    "deadline_days": 30,
+    "deadline_text": { "en": "30 calendar days from the acknowledgement of receipt", "fr": "30 jours calendaires à compter de l'accusé de réception" },
+    "source": "https://faolex.fao.org/docs/pdf/tog234795.pdf"
+  },
+  "urgent": {
+    "phone": "118",
+    "what": {
+      "en": "If a building looks about to fall, get everyone out and call the fire brigade (sapeurs-pompiers) on 118; police emergency is 117. Then tell the town hall, because the mayor is in charge of having buildings that threaten ruin repaired or demolished, and report the danger to the ANPC (22 51 02 02, WhatsApp 91 11 24 24).",
+      "fr": "Si un bâtiment paraît sur le point de s'effondrer, faites sortir tout le monde et appelez les sapeurs-pompiers au 118 ; police secours : 117. Prévenez ensuite la mairie, car le maire est chargé de faire réparer ou démolir les édifices menaçant ruine, et signalez le danger à l'ANPC (22 51 02 02, WhatsApp 91 11 24 24)."
+    },
+    "source": "https://anpctogo.tg/contact/"
+  },
+  "context": {
+    "en": "We found no published measurement of ground subsidence in Lomé and no official programme that monitors it (checked on 15 November 2026); a 2023 review published by the French Development Agency notes that subsidence data for the Gulf of Guinea are completely lacking. What is documented is the decline of groundwater: University of Lomé researchers reported in 2021 that the shallow Continental Terminal aquifer, pumped intensively for more than 40 years to supply Lomé (over 32,715 m³ a day at the Cacavéli well field alone), shows a continuous drop of the water table. A 2026 study for a new well field describes this aquifer under the Agoè plateau as overexploited, and reports long-term declines of about 0.7 to 1.2 m a year in the deeper Paleocene aquifer across the Maritime Region, with overexploitation in Greater Lomé. The Directorate of Water Resources is charged with running the national network that measures groundwater levels, but its website does not yet publish any data.",
+    "fr": "Nous n'avons trouvé ni mesure publiée de l'affaissement du sol à Lomé, ni programme officiel de suivi (vérification du 15 novembre 2026) ; une revue publiée en 2023 par l'Agence française de développement note que les données sur l'affaissement font entièrement défaut dans le golfe de Guinée. Ce qui est documenté, c'est la baisse des nappes : des chercheurs de l'Université de Lomé ont indiqué en 2021 que la nappe du Continental Terminal, peu profonde et pompée intensivement depuis plus de 40 ans pour alimenter Lomé (plus de 32 715 m³ par jour pour le seul champ captant de Cacavéli), connaît une baisse continue de son niveau. Une étude de 2026 consacrée à un nouveau champ captant décrit cette nappe sous le plateau d'Agoè comme surexploitée, et fait état d'une baisse de long terme d'environ 0,7 à 1,2 m par an de la nappe plus profonde du Paléocène dans la Région Maritime, avec une surexploitation dans le Grand Lomé. La Direction des Ressources en Eau est chargée de gérer le réseau national de mesure du niveau des nappes, mais son site internet ne publie encore aucune donnée.",
+    "sources": [
+      "https://afd.fr/sites/default/files/2023-06-04-55-56/PR_284_VA_1_Web.pdf",
+      "https://ajol.info/index.php/jrsul/article/view/204760",
+      "https://eurogeologists.eu/acre-groundwater-resource-assessment-and-safe-yield-analysis-for-a-well-field-supplying-lome-togo/",
+      "https://www.eau.gouv.tg/ministere/fonctionnement"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram is reachable in Togo now: in open network measurements between 1 August and 14 November 2026, 3,183 of 3,190 Telegram tests run in the country succeeded. But during the protests of June 2025 the authorities blocked Telegram, Facebook and Signal, and Telegram and Facebook only came back on 25 September 2025, while WhatsApp was not among the blocked apps, so a WhatsApp group with a phone list as a backup is the safer choice. Neighbours usually organise through WhatsApp and Facebook (about 934,000 Facebook users in early 2025) and through the neighbourhood development committees (CDQ) and neighbourhood chiefs, who also take part in the public budget debates of the town halls. Be careful: in 2025 peaceful demonstrations were regularly banned, people were prosecuted for social media posts and charged with incitement to revolt or publishing false news, and officials threatened to arrest people for sharing or liking posts. Keep the group about the ground and the buildings, share only what you can show (measurements, dated photos, official replies), and hand in letters at the office rather than calling a gathering.",
+      "fr": "Telegram est accessible au Togo en ce moment : dans les mesures ouvertes du réseau réalisées entre le 1er août et le 14 novembre 2026, 3 183 tests de Telegram sur 3 190 effectués dans le pays ont réussi. Mais pendant les manifestations de juin 2025, les autorités ont bloqué Telegram, Facebook et Signal, et Telegram et Facebook ne sont revenus que le 25 septembre 2025, alors que WhatsApp ne figurait pas parmi les applications bloquées : un groupe WhatsApp, doublé d'une liste de numéros de téléphone en secours, est donc le choix le plus sûr. Les voisins s'organisent surtout par WhatsApp et par Facebook (environ 934 000 utilisateurs de Facebook début 2025), ainsi qu'au sein des comités de développement de quartier (CDQ) et avec les chefs de quartier, qui participent aussi aux débats publics des mairies sur le budget. Soyez prudents : en 2025, les manifestations pacifiques ont été régulièrement interdites, des personnes ont été poursuivies pour des publications sur les réseaux sociaux et inculpées d'incitation à la révolte ou de publication de fausses nouvelles, et des responsables ont menacé d'arrêter ceux qui partagent ou « aiment » certaines publications. Gardez le groupe centré sur le sol et les bâtiments, ne partagez que ce que vous pouvez montrer (mesures, photos datées, réponses officielles), et déposez vos lettres au bureau concerné plutôt que d'appeler à un rassemblement."
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=TG&test_name=telegram&since=2026-08-01&until=2026-11-15&axis_x=measurement_start_day&time_grain=month",
+      "https://explorer.ooni.org/findings/167838678600",
+      "https://datareportal.com/reports/digital-2025-togo",
+      "https://fr.allafrica.com/stories/202610010702.html",
+      "https://www.amnesty.org/fr/location/africa/west-and-central-africa/togo/report-togo/",
+      "https://freedomhouse.org/country/togo/freedom-world/2026"
+    ]
+  },
+  "groups": []
+}

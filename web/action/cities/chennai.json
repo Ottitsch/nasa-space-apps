@@ -1,0 +1,150 @@
+{
+  "id": "chennai",
+  "checked": "2026-11-15",
+  "languages": ["en"],
+  "place_name": { "en": "Chennai" },
+  "country_name": { "en": "India" },
+  "summary": {
+    "en": "The whole sinking corridor along the Old Mahabalipuram Road lies inside the Greater Chennai Corporation, which checks unsafe buildings and takes complaints through its zone offices and the 1913 helpline. Perungudi, Pallikaranai, Kottivakkam, Palavakkam and the southern part of Velachery come under Zone 14 (Perungudi), Thoraipakkam and Neelankarai under Zone 15 (Sholinganallur), and the rest of Velachery under Zone 13 (Adyar); the Know Your Zone page on the Corporation's website shows the zone for any street, and a 2025 government order to regroup the city into 20 zones may change these names. Wells and groundwater pumping in the city are regulated by Chennai Metrowater (CMWSSB) under a 1987 state law, groundwater levels are monitored by the state Water Resources Department and the Central Ground Water Board, and the Tamil Nadu State Disaster Management Authority coordinates the response when ground or buildings become unsafe."
+  },
+  "bodies": [
+    {
+      "id": "gcc-zone-14",
+      "name": "Greater Chennai Corporation, Zone 14 (Perungudi)",
+      "name_en": "Greater Chennai Corporation, Zone 14 (Perungudi)",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "For Perungudi, Pallikaranai, Kottivakkam, Palavakkam and southern Velachery, which the Corporation places in Zone 14 (wards 181 to 191). The zone office and its Executive Engineer handle works and town planning in the zone, so this is the office to ask for an inspection of a cracked building, wall or road. You can also register a complaint at any hour by calling 1913 or on the Corporation's online grievance portal; keep the complaint number. Northern Velachery is in Zone 13 (Adyar), whose office is at No. 115, Dr. Muthulakshmi Salai, Adyar, Chennai 600020 (aczone13@chennaicorporation.gov.in)."
+      },
+      "website": "https://chennaicorporation.gov.in/gcc/",
+      "contact_url": "https://gccservices.chennaicorporation.gov.in/pgr",
+      "email": "aczone14@chennaicorporation.gov.in",
+      "phone": "+91 44 22420520",
+      "postal": "Zonal Officer, Zone 14 (Perungudi), Greater Chennai Corporation, No. 6/64, Puzhuthivakkam Main Road, Chennai 600091",
+      "source": "https://chennaicorporation.gov.in/gcc/who-is-who/index_data.jsp"
+    },
+    {
+      "id": "gcc-zone-15",
+      "name": "Greater Chennai Corporation, Zone 15 (Sholinganallur)",
+      "name_en": "Greater Chennai Corporation, Zone 15 (Sholinganallur)",
+      "level": "city",
+      "handles": ["inspection"],
+      "role": {
+        "en": "For Thoraipakkam and Neelankarai, which the Corporation places in Zone 15 (wards 192 to 200). The zone office on the Old Mahabalipuram Road and its Executive Engineer handle works and town planning in the zone, so write here to ask for an inspection of a cracked building, wall or road. Complaints can also be registered at any hour by calling 1913 or on the online grievance portal; keep the complaint number."
+      },
+      "website": "https://chennaicorporation.gov.in/gcc/",
+      "contact_url": "https://gccservices.chennaicorporation.gov.in/pgr",
+      "email": "aczone15@chennaicorporation.gov.in",
+      "phone": "+91 44 24500923",
+      "postal": "Zonal Officer, Zone 15 (Sholinganallur), Greater Chennai Corporation, No. 120, Rajiv Gandhi Salai (Old Mahabalipuram Road), Sholinganallur, Chennai 600119",
+      "source": "https://chennaicorporation.gov.in/gcc/who-is-who/index_data.jsp"
+    },
+    {
+      "id": "cmwssb",
+      "name": "Chennai Metropolitan Water Supply and Sewerage Board (Chennai Metrowater)",
+      "name_en": "Chennai Metropolitan Water Supply and Sewerage Board (Chennai Metrowater)",
+      "level": "city",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "Chennai's water and sewerage board runs the piped water supply and is the competent authority for the city under the Chennai Metropolitan Area Groundwater (Regulation) Act 1987, which controls the sinking of wells and the drawing and transport of groundwater. Ask it how much groundwater is drawn in your area and by whom, how many licences it has issued there, and what records of groundwater levels it keeps. Its complaint cell on 044 4567 4567 is open round the clock, and 1916 is its toll free line."
+      },
+      "website": "https://cmwssb.tn.gov.in/",
+      "contact_url": "https://cmwssb.tn.gov.in/complaints",
+      "email": "cmwssb@tn.gov.in",
+      "phone": "+91 44 45674567",
+      "postal": "Chennai Metropolitan Water Supply and Sewerage Board, No. 1, Pumping Station Road, Chintadripet, Chennai 600002",
+      "source": "https://cmwssb.tn.gov.in/complaints"
+    },
+    {
+      "id": "sgswrdc",
+      "name": "State Ground and Surface Water Resources Data Centre, Water Resources Department, Government of Tamil Nadu",
+      "name_en": "State Ground and Surface Water Resources Data Centre, Water Resources Department, Government of Tamil Nadu",
+      "level": "state",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The groundwater wing of the state Water Resources Department, at Taramani. It monitors groundwater levels and quality in observation wells across Tamil Nadu, assesses how heavily each area is pumped, and its Chief Engineer issues the no objection certificates that industries and other large users need to draw groundwater. Ask it for the water level records of the observation wells nearest your area and whether it has studied ground sinking along the corridor. The official pages we found give conflicting phone numbers and emails, so none are shown here: post your letter, or send it as an RTI request."
+      },
+      "website": "https://wrd.tn.gov.in/",
+      "contact_url": "https://www.wrd.tn.gov.in/Contacts.htm",
+      "email": null,
+      "phone": null,
+      "postal": "Chief Engineer, State Ground and Surface Water Resources Data Centre, Water Resources Department, Taramani, Chennai 600113",
+      "source": "https://www.wrd.tn.gov.in/Contacts.htm"
+    },
+    {
+      "id": "cgwb-secr",
+      "name": "Central Ground Water Board, South Eastern Coastal Region, Chennai",
+      "name_en": "Central Ground Water Board, South Eastern Coastal Region, Chennai",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "For the whole corridor. The national agency that monitors groundwater across India, under the Ministry of Jal Shakti; its regional office in Besant Nagar covers Tamil Nadu. Ask it for the groundwater level records of its observation wells in south Chennai and whether it has assessed land subsidence along the Old Mahabalipuram Road. A formal request to this central office goes through the central government's RTI portal, rtionline.gov.in."
+      },
+      "website": "https://cgwb.gov.in/",
+      "contact_url": "https://cgwb.gov.in/en/contact-us",
+      "email": "rdsecr-cgwb@nic.in",
+      "phone": "+91 44 24914334",
+      "postal": "Regional Director, Central Ground Water Board, South Eastern Coastal Region, E-Wing, G-Block, Rajaji Bhavan, CGO Complex, Besant Nagar, Chennai 600090",
+      "source": "https://cgwb.gov.in/en/contact-us"
+    },
+    {
+      "id": "tnsdma",
+      "name": "Tamil Nadu State Disaster Management Authority (TNSDMA)",
+      "name_en": "Tamil Nadu State Disaster Management Authority (TNSDMA)",
+      "level": "state",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The state authority that plans and coordinates the response to disasters and runs the 24 hour State Emergency Operations Centre at Ezhilagam, Chepauk. Write here, with a copy to your zone office, when cracks spread across a whole street or several buildings, and ask that the sinking area be assessed and mapped as a hazard. Its helplines are 1070 for the state and 1077 for the district."
+      },
+      "website": "https://tnsdma.tn.gov.in/",
+      "contact_url": "https://tnsdma.tn.gov.in/pages/view/emergency-contacts",
+      "email": "tnsdma@tn.gov.in",
+      "phone": "1070",
+      "postal": "Tamil Nadu State Disaster Management Authority, 5th Floor, Ezhilagam Annexe Building, Chepauk, Chennai 600005",
+      "source": "https://tnsdma.tn.gov.in/pages/view/emergency-contacts"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Right to Information Act, 2005",
+    "name_en": "Right to Information Act, 2005",
+    "what": {
+      "en": "Every government office and public authority in India, including the Greater Chennai Corporation, Chennai Metrowater, the state Water Resources Department and the Central Ground Water Board, must answer a written request for information within 30 days of receiving it, and within 48 hours when the information concerns a person's life or liberty. If no reply comes in that time, or the reply is unsatisfactory, you can file a free first appeal within 30 days with the officer senior to the Public Information Officer, and after that go to the Information Commission."
+    },
+    "how": {
+      "en": "Address the request to the Public Information Officer of the office you are asking, and pay the 10 rupee application fee in cash, with a court fee stamp, by postal money order or by demand draft. At the Corporation, the Public Information Officer for works and town planning in each zone is the zone's Executive Engineer, and the list linked here gives the address of every officer. Send the request by post or hand it in, and keep the receipt or acknowledgement. Tamil Nadu government departments also take requests online at rtionline.tn.gov.in, and the Central Ground Water Board takes them at rtionline.gov.in."
+    },
+    "url": "https://chennaicorporation.gov.in/gcc/right-to-information-act/public-information-officers",
+    "deadline_days": 30,
+    "deadline_text": { "en": "30 calendar days" },
+    "source": "https://tnsic.gov.in/faq.php"
+  },
+  "urgent": {
+    "phone": "112",
+    "what": {
+      "en": "Get everyone out first, then call 112, the single emergency number that Tamil Nadu answers round the clock, and say that a building is about to collapse. You can also call the fire and rescue service on 101. Report cracks that are not an emergency to the Corporation on 1913, and do not go back inside until an engineer has checked the building."
+    },
+    "source": "https://www.mha.gov.in/nirbhayaerss-section"
+  },
+  "context": {
+    "en": "Published studies have not yet reported sinking this fast along the Old Mahabalipuram Road corridor. A satellite radar study published in Nature Sustainability in October 2025 put Chennai's fastest sinking at about 3.2 cm a year, mainly on the Adyar river floodplain and in central areas such as Kodambakkam, Valasaravakkam, Alandur and Tondiarpet, and linked it to compacting river sediments; a 2026 study in Scientific Reports, using radar data from 2016 to 2024, found at most about 1.5 cm a year, in western Chennai, and slight uplift at Palavakkam beach. The rates on this map come from only four months of NISAR radar (June to October 2026), over land around the Pallikaranai marsh, a wetland listed under the Ramsar Convention in 2022, so treat them as an early result that later passes and ground surveys need to confirm. We found no official programme that measures ground sinking in Chennai, and we could not open most Tamil Nadu government websites when we checked.",
+    "sources": [
+      "https://www.downtoearth.org.in/environment/land-beneath-indias-five-largest-cities-is-sinking-due-to-over-extraction-of-groundwater-study",
+      "https://www.nature.com/articles/s41893-025-01663-0",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC13186997/",
+      "https://rsis.ramsar.org/ris/2481"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in India today, but that is not guaranteed: measurements by the OONI project show it failing on almost every Indian network from 16 to 22 June 2026, and working normally since, including in November 2026. Resident welfare associations and street or apartment groups in Chennai nearly always use WhatsApp, so expect to need a WhatsApp group as well. In a WhatsApp group every member can see the phone numbers of all the others, so add only people you can place, and keep identity documents and property papers out of the chat. Share the measured figures together with their source, and do not forward unverified warnings that a particular building is about to collapse. A street protest in Chennai needs prior permission from the police, which is often refused, so written complaints, RTI requests and your ward councillor are the safer first steps."
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=IN&since=2026-06-08&until=2026-07-01&time_grain=day&axis_x=measurement_start_day&test_name=telegram",
+      "https://explorer.ooni.org/chart/mat?probe_cc=IN&since=2026-10-15&until=2026-11-15&time_grain=day&axis_x=measurement_start_day&test_name=telegram",
+      "https://www.dtnext.in/news/chennai/no-more-protests-in-valluvar-kottam-chennai-cop-announces-new-location-826824"
+    ]
+  },
+  "groups": []
+}

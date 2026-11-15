@@ -1,0 +1,138 @@
+{
+  "id": "kabul",
+  "checked": "2026-11-15",
+  "languages": ["fa", "en"],
+  "place_name": {
+    "en": "Kabul",
+    "fa": "کابل"
+  },
+  "country_name": {
+    "en": "Afghanistan",
+    "fa": "افغانستان"
+  },
+  "summary": {
+    "en": "In Kabul a cracking or dangerous building is first a matter for Kabul Municipality, which issues building permits and oversees construction through its 22 district offices (nahia); its public complaints line is 155. The Afghanistan National Disaster Management Authority (ANDMA) surveys places exposed to natural hazards and coordinates the response when disaster strikes. Groundwater is managed by the Ministry of Energy and Water, which in 2026 drilled research wells across the city to assess the aquifers, while the city's public piped water and its pumping wells are run by the state Urban Water Supply and Sewerage Corporation, whose website was suspended when we checked. Since August 2021 all these bodies work under the de facto authorities, and no law can be relied on to oblige them to answer by a deadline: the Access to Information Law of 2014 has not been applied reliably since then and its oversight commission was merged into ministries in 2022, so this guide names no legal right to an answer. Kabul Municipality's website still offers an information request form, which you can use, but no deadline for a reply applies.",
+    "fa": "در کابل رسیدگی به ساختمان ترک‌خورده یا خطرناک در گام نخست با شاروالی کابل است که جواز ساختمان صادر می‌کند و از راه ۲۲ ریاست ناحیه بر ساخت‌وساز نظارت دارد؛ شماره شکایات آن ۱۵۵ است. اداره ملی آمادگی مبارزه با حوادث ساحه‌های در معرض خطر حوادث طبیعی را سروی و ارزیابی می‌کند و هنگام وقوع حادثه کارها را هماهنگ می‌سازد. مدیریت آب‌های زیرزمینی با وزارت آب و انرژی است که در سال ۱۴۰۵ در نقاط مختلف شهر چاه‌های تحقیقاتی حفر کرد تا وضعیت آبخوان‌ها را ارزیابی کند، و شبکه آبرسانی شهری کابل و چاه‌های پمپ آن را شرکت دولتی آبرسانی و فاضلاب شهری اداره می‌کند که وب‌سایتش هنگام بررسی ما مسدود بود. از اسد ۱۴۰۰ همه این نهادها زیر نظر مقام‌های کنونی کار می‌کنند و قانونی نیست که بتوان با اطمینان گفت آن‌ها را به پاسخ در مهلت معین ملزم می‌کند: قانون دسترسی به اطلاعات (۱۳۹۳) از آن زمان به‌گونه قابل اتکا اجرا نشده و کمیسیون نظارت بر آن در سال ۱۴۰۱ در وزارت‌ها و ادارات مربوط ادغام شد، به همین دلیل این راهنما حق قانونی پاسخ را ذکر نمی‌کند. فورم تقاضای اطلاعات هنوز در وب‌سایت شاروالی کابل هست و می‌توانید از آن استفاده کنید، ولی مهلتی برای پاسخ ندارد."
+  },
+  "bodies": [
+    {
+      "id": "kabul-districts",
+      "name": "ریاست ناحیه شما، شاروالی کابل",
+      "name_en": "Your district office (nahia), Kabul Municipality",
+      "level": "district",
+      "handles": ["inspection"],
+      "role": {
+        "en": "Your district office is the part of Kabul Municipality closest to you: it gives technical guidance on house building in its area and is meant to link residents with the municipality, so report cracks or a building that looks unsafe there, hand in your letter, and call the municipality's complaints line 155. Find your district in the list of district directorates on the municipality's website.",
+        "fa": "ریاست ناحیه نزدیک‌ترین بخش شاروالی کابل به شماست: در ساحه خود درباره ساختن خانه‌ها رهنمایی فنی می‌دهد و قرار است پل ارتباط باشندگان با شاروالی باشد؛ پس ترک‌خوردگی یا ساختمانی را که ناایمن به نظر می‌رسد به آن گزارش دهید، نامه یا عریضه خود را به آن بسپارید و با شماره شکایات ۱۵۵ شاروالی تماس بگیرید. ناحیه خود را در فهرست ریاست‌های نواحی در وب‌سایت شاروالی کابل بیابید."
+      },
+      "website": "https://km.gov.af/",
+      "contact_url": "https://km.gov.af/category/riasat-nawahi/",
+      "email": null,
+      "phone": "155",
+      "postal": null,
+      "source": "https://km.gov.af/41/"
+    },
+    {
+      "id": "kabul-municipality",
+      "name": "شاروالی کابل",
+      "name_en": "Kabul Municipality",
+      "level": "city",
+      "handles": ["inspection", "information"],
+      "role": {
+        "en": "The city government, which issues building permits and keeps a database of construction violations; write to it when your district office does not act. To ask for records such as building permits near you, fill in its information request form and hand it to the Directorate of Publications in Zarnegar Park, or email a scanned copy to kmunicipality.af@gmail.com as the form page says.",
+        "fa": "اداره شهر که جواز ساختمان صادر می‌کند و دیتابیس تخلفات ساختمانی را نگه می‌دارد؛ اگر ریاست ناحیه اقدامی نکرد به آن نامه بنویسید. برای دریافت اسنادی مانند جواز ساختمان‌های نزدیک محل زندگی خود، فورم تقاضای اطلاعات را خانه‌پری کنید و به ریاست نشرات در پارک زرنگار بدهید، یا چنان که در صفحه فورم آمده است کاپی اسکن‌شده آن را به kmunicipality.af@gmail.com بفرستید."
+      },
+      "website": "https://km.gov.af/",
+      "contact_url": "https://km.gov.af/350/%D9%81%D9%88%D8%B1%D9%85-%D8%AA%D9%82%D8%A7%D8%B6%D8%A7%DB%8C-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA",
+      "email": "info@km.gov.af",
+      "phone": "020 210 1358",
+      "postal": "شاروالی کابل، ده افغانان، کابل، افغانستان",
+      "source": "https://km.gov.af/41/"
+    },
+    {
+      "id": "andma",
+      "name": "اداره ملی آمادگی مبارزه با حوادث",
+      "name_en": "Afghanistan National Disaster Management Authority (ANDMA)",
+      "level": "national",
+      "handles": ["inspection"],
+      "role": {
+        "en": "The national authority for disasters, whose prevention and risk reduction directorate surveys places exposed to hazards such as earthquakes, floods and landslides, and which has a directorate for Kabul province; write to it to report spreading cracks in the ground or sinking and to ask that your area be assessed.",
+        "fa": "نهاد ملی رسیدگی به حوادث که ریاست وقایه و کاهش خطر آن ساحه‌های در معرض خطرهایی مانند زلزله، سیلاب و لغزش زمین را سروی و ارزیابی می‌کند و برای ولایت کابل نیز ریاست جداگانه دارد؛ برای گزارش ترک‌های رو به گسترش در زمین یا نشست زمین و درخواست ارزیابی محل خود به این اداره نامه بنویسید."
+      },
+      "website": "https://andma.gov.af/",
+      "contact_url": "https://andma.gov.af/dr/%D8%AA%D9%85%D8%A7%D8%B3-%D8%A8%D8%A7-%D9%85%D8%A7-0",
+      "email": "info@andma.gov.af",
+      "phone": "020 252 7375",
+      "postal": "برج شهرآرا، سرک شفاخانه ملالی، کابل، افغانستان",
+      "source": "https://andma.gov.af/dr/%D8%AA%D9%85%D8%A7%D8%B3-%D8%A8%D8%A7-%D9%85%D8%A7-0"
+    },
+    {
+      "id": "mew",
+      "name": "وزارت آب و انرژی",
+      "name_en": "Ministry of Energy and Water (MEW)",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The ministry that manages the country's water resources; in October 2026 it finished drilling 10 research wells in Kabul and nearby districts to measure the depth, level, quality and quantity of groundwater, with 7 more under way, so write to it to ask what these wells show for your area and what is being done about pumping.",
+        "fa": "وزارتی که منابع آبی کشور را مدیریت می‌کند؛ در میزان ۱۴۰۵ حفر ۱۰ حلقه چاه تحقیقاتی را در شهر کابل و ولسوالی‌های نزدیک آن برای سنجش عمق، سطح، کیفیت و کمیت آب‌های زیرزمینی تکمیل کرد و حفر ۷ حلقه دیگر جریان دارد؛ برای پرسیدن اینکه این چاه‌ها درباره محل شما چه نشان می‌دهند و برای برداشت آب چه اقدامی می‌شود به این وزارت نامه بنویسید."
+      },
+      "website": "https://mew.gov.af/",
+      "contact_url": "https://mew.gov.af/dr/%D8%AA%D9%85%D8%A7%D8%B3-%D8%A8%D8%A7%D9%85%D8%A7",
+      "email": "info@mew.gov.af",
+      "phone": "020 252 6001",
+      "postal": "سرک دارالامان، سناتوریم وزارت آب و انرژی، کابل، افغانستان",
+      "source": "https://mew.gov.af/dr/%D8%AA%D9%85%D8%A7%D8%B3-%D8%A8%D8%A7%D9%85%D8%A7"
+    },
+    {
+      "id": "auwssc",
+      "name": "شرکت دولتی آبرسانی و فاضلاب شهری",
+      "name_en": "Afghanistan Urban Water Supply and Sewerage Corporation (AUWSSC)",
+      "level": "national",
+      "handles": ["groundwater"],
+      "role": {
+        "en": "The state company that runs Kabul's public piped water and its pumping wells, which reach only about a fifth of the city's people; write to it about falling water or dry wells in your area. We found no working official website or contact page: its site auwssc.gov.af showed only a hosting suspension notice on 15 November 2026, so ask your district office where to deliver the letter.",
+        "fa": "شرکت دولتی که شبکه آبرسانی شهری کابل و چاه‌های پمپ آن را اداره می‌کند و تنها حدود یک پنجم باشندگان شهر از آن آب می‌گیرند؛ درباره کم شدن آب یا خشک شدن چاه‌ها در محل خود به آن نامه بنویسید. وب‌سایت یا صفحه تماس رسمی فعالی برای آن نیافتیم: وب‌سایت auwssc.gov.af در ۲۴ عقرب ۱۴۰۵ تنها پیام مسدود شدن حساب میزبانی را نشان می‌داد، پس از ریاست ناحیه خود بپرسید نامه را به کجا بدهید."
+      },
+      "website": null,
+      "contact_url": null,
+      "email": null,
+      "phone": null,
+      "postal": null,
+      "source": "http://auwssc.gov.af/"
+    }
+  ],
+  "right_to_answer": null,
+  "urgent": {
+    "phone": "101",
+    "what": {
+      "en": "101 is the fire service of the Ministry of Interior (General Directorate of Incident Response and Fire), whose crews respond to fires and other incidents. Get everyone out first, call from outside and give the district (nahia), the area, the street and a nearby landmark. The same Ministry notice also lists the landlines 020 210 1333, 020 230 0304 and 020 230 4365. Other lists give different numbers, so save these in your phone now. If a building is unsafe but not in immediate danger, call the municipality's complaints line 155.",
+      "fa": "۱۰۱ شماره پولیس اطفائیه وزارت امور داخله (ریاست عمومی رسیدگی به حوادث و اطفائیه) است که نیروهایش به آتش‌سوزی و دیگر حوادث رسیدگی می‌کنند. نخست همه را از ساختمان بیرون ببرید، از بیرون تماس بگیرید و ناحیه، منطقه، سرک و یک نشانی معروف نزدیک را بگویید. همان ابلاغیه وزارت شماره‌های ۰۲۰۲۱۰۱۱۳۳۳، ۰۲۰۲۳۰۰۳۰۴ و ۰۲۰۲۳۰۴۳۶۵ را نیز داده است. فهرست‌های دیگر شماره‌های متفاوتی می‌دهند، پس همین حالا این شماره‌ها را در تلفن خود ذخیره کنید. اگر ساختمان ناایمن است ولی خطر فوری ندارد، با شماره شکایات ۱۵۵ شاروالی تماس بگیرید."
+    },
+    "source": "https://moi.gov.af/dr/%D8%A7%D8%A8%D9%84%D8%A7%D8%BA%DB%8C%D9%87-%D8%B1%DB%8C%D8%A7%D8%B3%D8%AA-%D8%B9%D9%85%D9%88%D9%85%DB%8C-%D8%B1%D8%B3%DB%8C%D8%AF%D9%87-%DA%AF%DB%8C-%D8%A8%D9%87-%D8%AD%D9%88%D8%A7%D8%AF%D8%AB-%D9%88-%D8%A7%D8%B7%D9%81%D8%A7%D8%A6%DB%8C%D9%87"
+  },
+  "context": {
+    "en": "Two satellite radar studies have measured ground sinking in Kabul and link it to falling groundwater. Using Sentinel-1 data from 2014 to 2019, a study in Remote Sensing (2020) found four sinking zones over separate aquifer basins, up to 5.3 cm a year in the Upper Kabul basin, and pointed to highly compressible clay soils; a countrywide study in Water Resources Research (2025) found about 31 cm of sinking over six years near the city centre between 2015 and 2022, with the largest falls of the water table in wells at the edges of the basin. A 2025 Mercy Corps analysis puts the fall of Kabul's aquifer levels at 25 to 30 metres in a decade, and the Ministry of Energy and Water drilled research wells across the city in 2026 to assess the aquifers, but we found no official programme that monitors the sinking itself. The early result on this map, about 14 cm a year at its fastest point in Beni Hesar from only four months of radar, is well above these published rates and still needs confirming.",
+    "fa": "دو پژوهش تداخل‌سنجی راداری ماهواره‌ای نشست زمین را در کابل اندازه گرفته و آن را با پایین رفتن سطح آب زیرزمینی مرتبط دانسته‌اند. پژوهشی در نشریه Remote Sensing (۲۰۲۰) با داده‌های ماهواره Sentinel-1 در سال‌های ۲۰۱۴ تا ۲۰۱۹ چهار محدوده نشست را بر روی حوزه‌های آبخوان جداگانه یافت که بیشینه آن ۵٫۳ سانتی‌متر در سال در حوزه آبخوان کابل بالایی (Upper Kabul) بود و خاک‌های رسی بسیار تراکم‌پذیر را عامل آن دانست؛ پژوهشی سراسری در نشریه Water Resources Research (۲۰۲۵) برای سال‌های ۲۰۱۵ تا ۲۰۲۲ حدود ۳۱ سانتی‌متر نشست در شش سال را در نزدیکی مرکز شهر نشان داد و بیشترین افت سطح آب را در چاه‌های حاشیه حوزه کابل ثبت کرد. بر پایه تحلیل مؤسسه Mercy Corps (۲۰۲۵) سطح آبخوان‌های کابل در یک دهه ۲۵ تا ۳۰ متر پایین رفته است و وزارت آب و انرژی در سال ۱۴۰۵ در نقاط مختلف شهر چاه‌های تحقیقاتی حفر کرد تا آبخوان‌ها را ارزیابی کند، ولی برنامه رسمی‌ای برای پایش خود نشست زمین نیافتیم. نتیجه اولیه همین نقشه، حدود ۱۴ سانتی‌متر در سال در سریع‌ترین نقطه در بینی‌حصار و تنها از چهار ماه داده راداری، بسیار بیشتر از نرخ‌های منتشرشده است و هنوز باید تأیید شود.",
+    "sources": [
+      "https://doi.org/10.3390/rs12152461",
+      "https://doi.org/10.1029/2023WR036626",
+      "https://netherlands.mercycorps.org/sites/default/files/2025-05/crisis-analysis-team-kabul-water-april-2025.pdf",
+      "https://mew.gov.af/dr/node/7902"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Afghanistan: tests by the measurement project OONI from August to mid November 2026 found Telegram and WhatsApp reachable without a VPN in almost every case. WhatsApp, with Facebook, has long been one of the main ways Afghans keep in touch; remember that every member of a WhatsApp group can see the others' phone numbers. Be careful. The Police Law published in August 2026 bans all demonstrations, and since 2021 people who protested, women in particular, have been detained, so do not organise a gathering and do not collect signatures in public. The low risk way is to share the report privately with neighbours you trust, in person or one to one, keep any group small, and write only about cracks, the ground and your buildings, nothing political. The authorities require women to have a mahram with them outside the home, and inspectors have told shops and clinics not to serve women without one, so if going to an office yourself is difficult or risky, ask a trusted relative to deliver the letter or send it by email. In September 2025 the internet and phone networks were cut nationwide for about two days, so keep a paper list of your neighbours' numbers too.",
+      "fa": "تلگرام در افغانستان باز می‌شود: آزمون‌های پروژه سنجش اینترنت OONI از اسد تا عقرب ۱۴۰۵ نشان داد که تلگرام و واتس‌اپ تقریباً در همه موارد بدون فیلترشکن در دسترس بوده‌اند. واتس‌اپ در کنار فیسبوک از دیرباز از راه‌های اصلی ارتباط افغان‌ها با یکدیگر است؛ به یاد داشته باشید که هر عضو گروه واتس‌اپ شماره تلفن دیگر اعضا را می‌بیند. احتیاط کنید. قانون شرطه که در اسد ۱۴۰۵ منتشر شد هر گونه مظاهره را ممنوع کرده است و از سال ۱۴۰۰ کسانی که اعتراض کرده‌اند، به‌ویژه زنان، بازداشت شده‌اند؛ پس گردهمایی برگزار نکنید و در ملأ عام امضا جمع نکنید. راه کم‌خطر این است که گزارش را به‌طور خصوصی، رو در رو یا یک به یک، با همسایه‌هایی که به آن‌ها اعتماد دارید در میان بگذارید، گروه را کوچک نگه دارید و فقط درباره ترک‌ها، زمین و ساختمان‌هایتان بنویسید و هیچ مطلب سیاسی ننویسید. مقام‌ها از زنان می‌خواهند بیرون از خانه با محرم باشند و مأموران امر به معروف به دکان‌ها و کلینیک‌ها گفته‌اند به زنان بدون محرم خدمات ندهند؛ پس اگر رفتن به اداره برایتان دشوار یا پرخطر است، از یکی از بستگان مورد اعتماد بخواهید نامه را برساند یا آن را با ایمیل بفرستید. در میزان ۱۴۰۴ اینترنت و شبکه‌های تلفن در سراسر کشور حدود دو روز قطع شد، پس فهرست شماره همسایه‌ها را روی کاغذ هم نگه دارید."
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=AF&since=2026-08-01&until=2026-11-15&time_grain=month&axis_x=measurement_start_day&test_name=telegram",
+      "https://kabulnow.com/2026/08/taliban-ban-all-demonstrations-across-afghanistan-under-new-police-law/",
+      "https://unama.unmissions.org/sites/default/files/2026-07/ENGLISH%20-%20Update%20on%20human%20rights%20in%20Afghanistan%20-%20April-June%202026.pdf",
+      "https://www.dawn.com/news/1945870",
+      "https://english.aawsat.com/node/1964721"
+    ]
+  },
+  "groups": []
+}

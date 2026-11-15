@@ -1,0 +1,170 @@
+{
+  "id": "manaus",
+  "checked": "2026-11-15",
+  "languages": [
+    "en"
+  ],
+  "place_name": {
+    "en": "Manaus"
+  },
+  "country_name": {
+    "en": "Brazil"
+  },
+  "summary": {
+    "en": "In Manaus, the city's civil defence (Defesa Civil, part of the municipal security secretariat Semseg) inspects cracked buildings and ground at risk, and anyone can ask it for a visit on 199. The Amazonas state environmental institute IPAAM grants the permits to pump groundwater from wells, and the Geological Survey of Brazil (SGB) maps risk areas with the city and keeps records of the aquifer. The private company Águas de Manaus supplies the city's water under a city concession, mostly from the Rio Negro and partly from its own wells, and the city agency Ageman regulates it."
+  },
+  "bodies": [
+    {
+      "id": "defesa-civil",
+      "name": "Secretaria Executiva de Proteção e Defesa Civil (Sepdec), Secretaria Municipal de Segurança Pública e Defesa Social (Semseg), Prefeitura de Manaus",
+      "name_en": "Manaus Civil Defence (Executive Secretariat for Civil Protection and Defence, Sepdec, in the municipal security secretariat Semseg)",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For any address in Manaus. The civil defence inspects houses and ground at risk, and its own list of reasons to call includes cracks in buildings, deformed beams, slabs and walls, and sinking foundations. Ask for the visit on 199, which answers 24 hours a day, and write to it to ask for the findings in writing."
+      },
+      "website": "https://www.manaus.am.gov.br/semseg/defesa-civil/sobre/",
+      "contact_url": "https://www.manaus.am.gov.br/semseg/defesa-civil/equipe/",
+      "email": "sepdec@pmm.am.gov.br",
+      "phone": "199",
+      "postal": "Avenida Padre Agostinho Caballero Martin, 770, Compensa, CEP 69035-090, Manaus-AM",
+      "source": "https://www.manaus.am.gov.br/wp-content/uploads/2025/03/PLANO-DE-CONTINGENCIA-OFICIAL-2024-UNIFICADO.pdf"
+    },
+    {
+      "id": "ipaam",
+      "name": "Instituto de Proteção Ambiental do Amazonas (IPAAM), Gerência de Recursos Hídricos (GERH)",
+      "name_en": "Amazonas Environmental Protection Institute (IPAAM), Water Resources Department",
+      "level": "state",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For all of Manaus. This state institute grants the permits (outorga) to pump groundwater from wells and licenses and monitors water use, so it is the body to ask how many wells are licensed in your area, how much water they may take and what it knows about falling water levels."
+      },
+      "website": "https://www.ipaam.am.gov.br/",
+      "contact_url": "https://www.ipaam.am.gov.br/gerencia-de-recursos-hidricos/",
+      "email": "gerh@ipaam.am.gov.br",
+      "phone": "(92) 2123-6734",
+      "postal": "Av. Mario Ypiranga, 3280, Parque Dez, CEP 69050-030, Manaus/AM",
+      "source": "https://www.ipaam.am.gov.br/gerencia-de-recursos-hidricos/"
+    },
+    {
+      "id": "sgb",
+      "name": "Serviço Geológico do Brasil (SGB-CPRM), Superintendência Regional de Manaus",
+      "name_en": "Geological Survey of Brazil (SGB), Manaus regional office",
+      "level": "national",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For all of Manaus. The federal geological survey mapped the city's high risk areas with the civil defence in 2024 and 2025, keeps the national database of wells (SIAGAS) and has groundwater monitoring wells in the city, so ask it for its data on the aquifer and on ground movement in your area."
+      },
+      "website": "https://www.sgb.gov.br/",
+      "contact_url": "https://www.sgb.gov.br/superintendencia-de-manaus-sureg-ma",
+      "email": null,
+      "phone": "(92) 2126-0301",
+      "postal": "Avenida André Araújo, 2010, Petrópolis, Manaus-AM, CEP 69067-375",
+      "source": "https://www.sgb.gov.br/superintendencia-de-manaus-sureg-ma"
+    },
+    {
+      "id": "aguas-de-manaus",
+      "name": "Águas de Manaus (concessionária dos serviços de água e esgoto)",
+      "name_en": "Águas de Manaus (water and sewerage concession company)",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses on the public water network. This private company runs the city's water supply under a concession from the city, with four treatment plants on the river and about 50 groundwater production centres, so ask it which of its wells are near you and how much they pump. If it does not answer, take the matter to the regulator Ageman."
+      },
+      "website": "https://www.aguasdemanaus.com.br/",
+      "contact_url": "https://www.aguasdemanaus.com.br/contato/",
+      "email": "faleconosco@aguasdemanaus.com.br",
+      "phone": "0800 092 0195",
+      "postal": "Avenida Eduardo Ribeiro, 420, esquina com a Rua José Clemente, Centro, Manaus/AM, CEP 69010-070",
+      "source": "https://www.aguasdemanaus.com.br/contato/"
+    },
+    {
+      "id": "ageman",
+      "name": "Agência Reguladora dos Serviços Públicos Delegados do Município de Manaus (Ageman)",
+      "name_en": "Manaus Regulatory Agency for Delegated Public Services (Ageman)",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses on the public water network. This city agency regulates and inspects the water concession. Its ombudsman takes complaints about Águas de Manaus once you have written to the company first, and as a public body it must answer requests for information about the concession, such as the wells the company runs."
+      },
+      "website": "https://www.manaus.am.gov.br/ageman/",
+      "contact_url": "https://www.manaus.am.gov.br/ageman/wp-content/uploads/sites/27/2023/12/Carta-de-Servicos-2023-valendo.pdf",
+      "email": "ouvidoria.ageman@pmm.am.gov.br",
+      "phone": "0800 092 3511",
+      "postal": "Rua Amazonas, 53, Nossa Senhora das Graças, Manaus-AM, CEP 69057-240",
+      "source": "https://www.manaus.am.gov.br/ageman/wp-content/uploads/sites/27/2023/12/Carta-de-Servicos-2023-valendo.pdf"
+    },
+    {
+      "id": "sic-manaus",
+      "name": "Serviço de Informação ao Cidadão (SIC), Controladoria-Geral do Município de Manaus (CGM)",
+      "name_en": "Citizen Information Service (SIC) of the Manaus Comptroller General's Office",
+      "level": "city",
+      "handles": [
+        "information"
+      ],
+      "role": {
+        "en": "Takes formal requests for information to any body of the city government, such as the civil defence or Ageman, under the access to information law. Requests are filed online after registering, and this office answers questions about how to file them."
+      },
+      "website": "https://www.manaus.am.gov.br/cgm/sic/",
+      "contact_url": "https://www.manaus.am.gov.br/cgm/sic/",
+      "email": "transparencia@manaus.am.gov.br",
+      "phone": "(92) 3672-1527",
+      "postal": "Av. Brasil, 2971, Compensa, Manaus-AM, CEP 69036-110",
+      "source": "https://www.manaus.am.gov.br/cgm/sic/"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Lei de Acesso à Informação (Lei nº 12.527/2011) e Decreto Municipal nº 4.157/2018",
+    "name_en": "Access to Information Law (Law 12,527 of 2011) and Manaus Municipal Decree 4,157 of 2018",
+    "what": {
+      "en": "Every public body in Brazil, at city, state and federal level, must answer a request for public information within 20 days, counted as calendar days. It can extend this once by 10 more days if it explains why. You do not have to say why you want the information."
+    },
+    "how": {
+      "en": "For city bodies such as the civil defence or Ageman, open the city's information service (SIC) page, follow its link to the online platform, register free of charge and choose the body. Requests to IPAAM and to the Geological Survey go through Informa.BR (informabr.cgu.gov.br), the federal platform that took over information requests from Fala.BR in June 2026. Keep the protocol number. If the reply is refused or incomplete, you can appeal within 10 days."
+    },
+    "url": "https://www.manaus.am.gov.br/cgm/sic/",
+    "deadline_days": 20,
+    "deadline_text": {
+      "en": "20 calendar days"
+    },
+    "source": "https://www.manaus.am.gov.br/cgm/sic/"
+  },
+  "urgent": {
+    "phone": "199",
+    "what": {
+      "en": "Leave the building and call 199, the Manaus civil defence line, which answers 24 hours a day and lists cracks in buildings, deformed beams, slabs and walls, and sinking foundations among the reasons to call. If part of the building has already fallen or someone is hurt or trapped, call the fire brigade on 193."
+    },
+    "source": "https://www.manaus.am.gov.br/semseg/disque-199/"
+  },
+  "context": {
+    "en": "Little has been published on ground sinking in Manaus. A radar study published in 2012 found a small area east of the airport that sank by a few centimetres between 2006 and 2008, and a GPS station in the city moves up and down by 5 to 7.5 cm each year as the weight of the river water changes. The Geological Survey of Brazil reported in 2012 that heavy pumping had lowered the water table by more than 80 m in Jorge Teixeira, in the east zone, and its 2024 to 2025 risk map, made with the civil defence, lists 438 high and very high risk areas for floods, landslides and erosion but none for sinking. The early result on this map, 8.3 km² of built up land sinking and about 20 cm a year at its fastest point in the north zone around Cidade Nova, Cidade de Deus and Novo Aleixo, covers only June to October 2026, the dry season when the river and the water table fall, so it needs a longer record to confirm.",
+    "sources": [
+      "https://rfpt.sfpt.fr/index.php/RFPT/article/view/69",
+      "https://digitalcommons.memphis.edu/facpubs/1473/",
+      "https://rigeo.sgb.gov.br/bitstream/doc/22245/1/aquifero_alter_chao_am.pdf",
+      "https://rigeo.sgb.gov.br/bitstream/doc/25628/14/relatorio_manaus_am_2025.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Brazil: in open network measurements between 1 August and 14 November 2026, more than 99% of the Telegram tests run in the country succeeded. Few neighbours use it, though: in early 2025 WhatsApp was on 99% of Brazilian smartphones and Telegram on 57%, and fewer than four in ten of those opened it daily, so street and building groups nearly always run on WhatsApp. In a WhatsApp group every member can see the phone numbers of all the others, so add only people you can place and keep identity documents and property deeds out of the chat. Defamation lawsuits over online posts are a real risk in Brazil, so share measurements, dated photos and official replies, and report a well you believe is unlicensed to IPAAM in writing rather than naming people in the group. Ask for an inspection directly on 199, a free line, and be wary of anyone in a chat who offers to arrange one for money."
+    },
+    "sources": [
+      "https://explorer.ooni.org/chart/mat?probe_cc=BR&test_name=telegram&since=2026-08-01&until=2026-11-14&axis_x=measurement_start_day&time_grain=month",
+      "https://www.mobiletime.com.br/noticias/27/02/2025/telegram/",
+      "https://freedomhouse.org/country/brazil/freedom-net/2026"
+    ]
+  },
+  "groups": []
+}

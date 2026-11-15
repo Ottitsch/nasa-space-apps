@@ -1,0 +1,189 @@
+{
+  "id": "leon",
+  "checked": "2026-11-15",
+  "languages": [
+    "es"
+  ],
+  "place_name": {
+    "en": "León",
+    "es": "León"
+  },
+  "country_name": {
+    "en": "Mexico",
+    "es": "México"
+  },
+  "summary": {
+    "en": "In the municipality of León, the municipal civil protection department checks buildings and ground at risk, and the urban development department issues building permits and can inspect constructions. The municipal utility SAPAL runs the city's wells and water service, and the state water commission CEAG works with it on the state's aquifers. The national water commission CONAGUA decides who may pump from the Valle de León aquifer, where there is no volume left for new permits. Neighbouring municipalities such as San Francisco del Rincón and Silao have their own offices.",
+    "es": "En el municipio de León, la Dirección General de Protección Civil revisa inmuebles y suelo en riesgo, y la Dirección General de Desarrollo Urbano otorga los permisos de construcción y puede inspeccionar las obras. El organismo municipal SAPAL opera los pozos y el servicio de agua de la ciudad, y la Comisión Estatal del Agua de Guanajuato (CEAG) trabaja con él sobre los acuíferos del estado. La Comisión Nacional del Agua (CONAGUA) decide quién puede extraer agua del acuífero Valle de León, donde ya no hay volumen disponible para nuevas concesiones. Los municipios vecinos, como San Francisco del Rincón y Silao, tienen sus propias oficinas."
+  },
+  "bodies": [
+    {
+      "id": "pc-leon",
+      "name": "Dirección General de Protección Civil de León",
+      "name_en": "León Civil Protection Department",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in the municipality of León. It can order inspection visits to buildings, including after a complaint from a resident, keeps the León Atlas of Risks up to date and gives risk analyses and technical opinions, among them structural ones. It also visits neighbourhood committees to find risk points.",
+        "es": "Para domicilios en el municipio de León. Puede ordenar visitas de inspección a inmuebles, también a partir de una denuncia ciudadana, mantiene actualizado el Atlas de Riesgos de León y elabora análisis de riesgo y opiniones técnicas, entre ellas estructurales. También atiende a comités de colonos con visitas para detectar puntos de riesgo."
+      },
+      "website": "https://leon.gob.mx/seguridad/seccion.php?s=48",
+      "contact_url": "https://leon.gob.mx/seguridad/directorio.php",
+      "email": null,
+      "phone": "477 763 5916",
+      "postal": "Calle 16 de Septiembre No. 738, Colonia El Duraznal, C.P. 37260, León, Guanajuato",
+      "source": "https://leon.gob.mx/seguridad/directorio.php"
+    },
+    {
+      "id": "du-leon",
+      "name": "Dirección General de Desarrollo Urbano de León",
+      "name_en": "León Urban Development Department",
+      "level": "city",
+      "handles": [
+        "inspection"
+      ],
+      "role": {
+        "en": "For addresses in the municipality of León. It issues the permits for building, land use and new housing developments, and it can order inspection visits to constructions and impose safety measures. Write to it to report a construction that looks unsafe, or to ask whether the permits in your area took the ground faults into account.",
+        "es": "Para domicilios en el municipio de León. Otorga los permisos de construcción, de uso de suelo y de fraccionamientos, y puede ordenar visitas de verificación e inspección a las obras y dictar medidas de seguridad. Se le puede escribir para reportar una construcción que parece insegura o para preguntar si los permisos de la zona tomaron en cuenta las fallas del terreno."
+      },
+      "website": "https://du.leon.gob.mx/",
+      "contact_url": "https://www.leon.gob.mx/entidad.php?id=10",
+      "email": null,
+      "phone": "477 146 7200, ext. 6000",
+      "postal": "Blvd. Juan José Torres Landa 1701 Ote., Predio El Tlacuache, León, Guanajuato",
+      "source": "https://www.leon.gob.mx/entidad.php?id=10"
+    },
+    {
+      "id": "sapal",
+      "name": "Sistema de Agua Potable y Alcantarillado de León (SAPAL)",
+      "name_en": "León Water and Sewerage System (SAPAL)",
+      "level": "city",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For addresses in the municipality of León. This municipal utility runs the city's wells and water network, so it is the body to ask which wells supply your neighbourhood, how much they pump and how the water level is changing. Its customer line is 073, and it answers formal information requests through its own transparency unit.",
+        "es": "Para domicilios en el municipio de León. Este organismo municipal opera los pozos y la red de agua de la ciudad, por lo que se le puede preguntar qué pozos abastecen a la colonia, cuánta agua extraen y cómo cambia el nivel del agua. Su línea de atención es el 073, y responde las solicitudes formales de información a través de su propia unidad de transparencia."
+      },
+      "website": "https://www.sapal.gob.mx/",
+      "contact_url": "https://www.leon.gob.mx/entidad.php?id=19",
+      "email": null,
+      "phone": "477 788 7800",
+      "postal": "Blvd. Juan José Torres Landa 2620, Colonia El Paisaje, C.P. 37480, León, Guanajuato",
+      "source": "https://www.leon.gob.mx/entidad.php?id=19"
+    },
+    {
+      "id": "conagua",
+      "name": "Comisión Nacional del Agua (CONAGUA), Dirección Local Guanajuato",
+      "name_en": "National Water Commission (CONAGUA), Guanajuato Local Office",
+      "level": "national",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "CONAGUA is the federal authority that grants and supervises the permits to pump groundwater, and its own 2024 balance for the Valle de León aquifer shows more water taken out than flows back in. Its office for the state of Guanajuato is in Celaya.",
+        "es": "La CONAGUA es la autoridad federal que otorga y vigila las concesiones para extraer agua subterránea, y su propio balance de 2024 del acuífero Valle de León muestra que se extrae más agua de la que se recarga. Su oficina para el estado de Guanajuato está en Celaya."
+      },
+      "website": "https://www.gob.mx/conagua",
+      "contact_url": "https://www.gob.mx/conagua",
+      "email": null,
+      "phone": "461 159 9500",
+      "postal": "Hacienda de Santiago No. 314, Colonia Primera Fracción de la Hacienda de Crespo, C.P. 38116, Celaya, Guanajuato",
+      "source": "https://files.conagua.gob.mx/datospersonales/documentos/3_ProcedimientoQuejas_DP_2024.pdf"
+    },
+    {
+      "id": "ceag",
+      "name": "Comisión Estatal del Agua de Guanajuato (CEAG)",
+      "name_en": "Guanajuato State Water Commission (CEAG)",
+      "level": "state",
+      "handles": [
+        "groundwater"
+      ],
+      "role": {
+        "en": "For any municipality in the valley, including San Francisco del Rincón and Silao. This state commission works with the municipal water utilities and studies the state's aquifers; it carried out the census of wells in the Valle de León aquifer that CONAGUA uses in its balance. Ask it what it knows about the wells and water levels near you.",
+        "es": "Para cualquier municipio del valle, incluidos San Francisco del Rincón y Silao. Esta comisión estatal trabaja con los organismos municipales de agua y estudia los acuíferos del estado; levantó el censo de pozos del acuífero Valle de León que la CONAGUA usa en su balance. Se le puede preguntar qué sabe de los pozos y de los niveles del agua cerca de la colonia."
+      },
+      "website": "https://agua.guanajuato.gob.mx/",
+      "contact_url": "https://transparencia.guanajuato.gob.mx/transparencia/informacion_publica_pordependencia.php?dependencia=5",
+      "email": null,
+      "phone": "473 735 1800",
+      "postal": "Autopista Guanajuato-Silao Km. 1, Guanajuato, Guanajuato",
+      "source": "https://transparencia.guanajuato.gob.mx/transparencia/informacion_publica_pordependencia.php?dependencia=5"
+    },
+    {
+      "id": "ut-leon",
+      "name": "Unidad de Transparencia del Municipio de León",
+      "name_en": "León Municipal Transparency Unit",
+      "level": "city",
+      "handles": [
+        "information"
+      ],
+      "role": {
+        "en": "Official office for formal information requests to the municipality of León and its departments, such as civil protection and urban development. It takes requests through the Plataforma Nacional de Transparencia, its online form, by email or in person. Requests about SAPAL go to SAPAL's own transparency unit.",
+        "es": "Oficina oficial para presentar solicitudes formales de información al municipio de León y a sus dependencias, como Protección Civil y Desarrollo Urbano. Recibe solicitudes por la Plataforma Nacional de Transparencia, por su formulario en línea, por correo electrónico o en persona. Las solicitudes sobre el SAPAL se presentan ante la unidad de transparencia del propio SAPAL."
+      },
+      "website": "https://leon.gob.mx/transparencia/",
+      "contact_url": "https://leon.gob.mx/transparencia/micrositio.php?m=1",
+      "email": "ut@leon.gob.mx",
+      "phone": "477 788 0000, ext. 1841 to 1845",
+      "postal": "Plaza Principal S/N, Zona Centro, C.P. 37000, León, Guanajuato",
+      "source": "https://leon.gob.mx/transparencia/contacto.php"
+    }
+  ],
+  "right_to_answer": {
+    "name": "Artículo 8 de la Constitución Política de los Estados Unidos Mexicanos (derecho de petición) y Ley de Transparencia y Acceso a la Información Pública para el Estado de Guanajuato",
+    "name_en": "Article 8 of the Constitution (right of petition) and the Guanajuato State Law on Transparency and Access to Public Information",
+    "asks": [
+      "inspection",
+      "groundwater"
+    ],
+    "what": {
+      "en": "Article 8 of the Constitution obliges every authority to answer a written, respectful petition in writing and within a short time, although it sets no number of days. A request for public information does have a limit: Guanajuato's transparency law, in force since 9 April 2026, gives the municipality, SAPAL, CEAG and every other state or municipal body at most 5 working days, which can be extended by up to 3 more. CONAGUA is federal, so the General Law applies to it instead: at most 20 working days, extendable by up to 10.",
+      "es": "El artículo 8 de la Constitución obliga a toda autoridad a responder por escrito y en breve término a una petición escrita y respetuosa, aunque no fija un número de días. La solicitud de información pública sí tiene plazo: la ley de transparencia de Guanajuato, vigente desde el 9 de abril de 2026, da al municipio, al SAPAL, a la CEAG y a cualquier otra dependencia estatal o municipal como máximo 5 días hábiles, ampliables hasta por 3 más. La CONAGUA es federal, por lo que a ella se le aplica la Ley General: como máximo 20 días hábiles, ampliables hasta por 10."
+    },
+    "how": {
+      "en": "Send or hand in the letter and keep the stamped copy or acknowledgement of receipt (acuse). To make the questions a formal information request, file them free of charge on the Plataforma Nacional de Transparencia, choosing the body you are writing to, or send them to that body's Unidad de Transparencia by email, by post or in person; for the municipality of León the address is ut@leon.gob.mx, and SAPAL has its own unit. If no reply comes in time, you can file an appeal (recurso de revisión) within 15 working days with the same transparency unit. The state institute IACIP no longer exists, so ignore older guides that send appeals there.",
+      "es": "Hay que enviar o entregar el escrito y conservar el acuse de recibo. Para que las preguntas cuenten como solicitud formal de información, se presentan sin costo en la Plataforma Nacional de Transparencia, eligiendo la dependencia a la que se escribe, o ante la Unidad de Transparencia de esa dependencia por correo electrónico, por correo postal o en persona; para el municipio de León el correo es ut@leon.gob.mx, y el SAPAL tiene su propia unidad. Si no hay respuesta en el plazo, se puede presentar un recurso de revisión dentro de los 15 días hábiles siguientes ante la misma unidad de transparencia. El IACIP ya no existe, así que no hay que seguir las guías antiguas que mandan los recursos ahí."
+    },
+    "url": "https://www.plataformadetransparencia.org.mx/",
+    "deadline_days": 5,
+    "deadline_text": {
+      "en": "5 working days",
+      "es": "5 días hábiles"
+    },
+    "source": "https://www.poderjudicial-gto.gob.mx/pdfs/Ley%20de%20Transparencia%20y%20Acceso%20a%20la%20Informacion%20Publica%20para%20el%20Estado%20de%20Guanajuato.pdf"
+  },
+  "urgent": {
+    "phone": "911",
+    "what": {
+      "en": "Leave the building and call 911. In León the calls are answered by the municipal C4 centre, which sends civil protection, police and the other emergency services. If a water pipe has burst, also call SAPAL on 073.",
+      "es": "Hay que salir del inmueble y llamar al 911. En León las llamadas las atiende el C4 municipal, que envía a protección civil, policía y los demás servicios de emergencia. Si se rompió una tubería de agua, hay que llamar además al SAPAL al 073."
+    },
+    "source": "https://leon.gob.mx/seguridad/micrositio.php?m=45"
+  },
+  "context": {
+    "en": "CONAGUA classes the Valle de León aquifer as overexploited: its 2024 update counts permits for about 186 million m³ a year against a recharge of about 124.5 million, leaves no volume for new permits, and found the water table falling 1.5 to 2 m a year in the farming zone and about 0.6 m a year under the city between 2006 and 2013. Satellite radar studies have measured the ground going down: up to about 5 cm a year south of the city centre for 2007 to 2011, with the edges of the sinking area following old geological faults, and up to 9.3 cm a year in the centre south of the city for 2017 to 2019, according to the national statistics institute INEGI, with the zone reaching San Francisco del Rincón. The state's Atlas of Risks for León, published in 2023, also lists isolated sinking zones in the east of the municipality, near Fraccionamiento San Manuel, La Luz, Lomas de la Loza and Los Gallinos. It describes a geological fault along Avenida Torres Landa, at least 16 km long, that has cracked houses, industrial buildings and municipal infrastructure, mainly in Las Huertas, Cumbres del Sol and Ciudad Satélite, some close to collapse, and says it must be monitored continuously.",
+    "es": "La CONAGUA clasifica el acuífero Valle de León como sobreexplotado: su actualización de 2024 contabiliza concesiones por unos 186 millones de m³ al año frente a una recarga de unos 124.5 millones, no deja volumen para nuevas concesiones y encontró que el nivel del agua bajó de 1.5 a 2 m por año en la zona agrícola y unos 0.6 m por año bajo la ciudad entre 2006 y 2013. Estudios con radar satelital han medido el hundimiento: hasta unos 5 cm por año al sur del centro de la ciudad entre 2007 y 2011, con los bordes de la zona que se hunde siguiendo fallas geológicas antiguas, y hasta 9.3 cm por año en el centro sur de la ciudad entre 2017 y 2019, según el INEGI, con una zona que llega hasta San Francisco del Rincón. El Atlas de Riesgos del Municipio de León, publicado por el estado en 2023, señala además zonas aisladas de hundimiento en el oriente del municipio, cerca del Fraccionamiento San Manuel, La Luz, Lomas de la Loza y Los Gallinos. También describe una falla geológica a lo largo de la Av. Torres Landa, de al menos 16 km, que ha agrietado casas, naves industriales e infraestructura municipal, sobre todo en Las Huertas, Cumbres del Sol y Ciudad Satélite, algunas a punto de colapsar, y pide monitorearla de forma continua.",
+    "sources": [
+      "https://sigagis.conagua.gob.mx/gas1/Edos_Acuiferos_18/guanajuato/DR_1113.pdf",
+      "https://doi.org/10.1016/j.rse.2013.08.038",
+      "https://www.inegi.org.mx/contenidos/productos/prod_serv/contenidos/espanol/bvinegi/productos/nueva_estruc/702825199395.pdf",
+      "https://rmgir.proyectomesoamerica.org/AtlasMunPDF/2023/11020_LEON_2023.pdf"
+    ]
+  },
+  "organising": {
+    "telegram_usable": true,
+    "note": {
+      "en": "Telegram works in Mexico without restrictions, but few neighbours have it: in a 2026 survey of internet users, 91% had a WhatsApp account and 30% had Telegram, so street and neighbourhood groups nearly always run on WhatsApp. In a WhatsApp group every member can see the phone numbers of all the others, and León's municipal security office warns residents about telephone extortion, so keep the group to people you can place and do not post ID documents, property deeds or when a house will be empty. Be wary of anyone in a chat who offers to arrange an inspection or a permit for money: ask the authority itself for the visit and ask any inspector for official identification.",
+      "es": "Telegram funciona en México sin restricciones, pero pocos vecinos lo tienen: en una encuesta de 2026 entre usuarios de internet, 91% tenía cuenta de WhatsApp y 30% de Telegram, así que los grupos de calle o de colonia casi siempre están en WhatsApp. En un grupo de WhatsApp todos los integrantes ven el número de teléfono de los demás, y la Secretaría de Seguridad de León advierte sobre la extorsión telefónica, por lo que conviene limitarlo a personas conocidas y no publicar ahí identificaciones, escrituras ni cuándo una casa va a quedar sola. Hay que desconfiar de quien ofrezca en un chat gestionar una inspección o un permiso a cambio de dinero: la visita se pide directamente a la autoridad y a cualquier inspector se le puede pedir su identificación oficial."
+    },
+    "sources": [
+      "https://irp.cdn-website.com/81280eda/files/uploaded/Estudio-Habitos-de-los-Usuarios-de-Internet-2026-Version-publica.pdf",
+      "https://freedomhouse.org/country/mexico/freedom-net/2025",
+      "https://leon.gob.mx/seguridad/"
+    ]
+  },
+  "groups": []
+}
