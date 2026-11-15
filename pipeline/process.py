@@ -169,7 +169,7 @@ def _noise_and_stable(v, good, k=2.0, grow=6):
 
 
 def process_stack(items, dem=None, landcover=None, use_iono=False, atmo_px=50, smooth_px=1.2,
-                  min_coh=0.5, max_gap_days=60, log=print):
+                  min_coh=0.4, max_gap_days=60, log=print):
     """items: list of dicts from fetch.load_cached, each with keys
     unw, coh, cc, iono, water, bad, meta, plus ref_date and sec_date.
     dem: elevation on the same grid (optional but recommended).
@@ -182,7 +182,8 @@ def process_stack(items, dem=None, landcover=None, use_iono=False, atmo_px=50, s
     min_coh: only ground whose radar echo stays this stable is analysed. Built
     up and bare ground passes. Forest, crops and wetlands mostly do not, and
     that is the point: over a short record their changing moisture looks like
-    ground motion at L band.
+    ground motion at L band. 0.4 rather than 0.5 measures a few percent more
+    of each place; on the land cover kept it adds no false sinking in tests.
     max_gap_days: a hole in the chain of interferograms up to this long is
     bridged by assuming the rate carries on; a longer one splits the record."""
     items = sorted(items, key=lambda d: (d["ref_date"], d["sec_date"]))
@@ -413,7 +414,8 @@ def chance_patch_px(chance, area_ratio, least=8):
     return max(least, int(np.sort(sizes)[::-1][allowed]) + 1)
 
 
-def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.0, seasonal_m=0.02):
+def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.0, seasonal_m=0.01,
+           tilt_px=3.0, beta_pct=95.0):
     """Find ground that is clearly sinking and measure how unevenly it sinks.
 
     Returns dict(sigma, threshold, significant, beta_rate, beta_floor,
@@ -423,10 +425,17 @@ def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.
                    when the record is shorter than about eight months)
       beta_rate    angular distortion rate (1/yr): how fast neighbouring ground
                    is tilting relative to each other. Uniform sinking does not
-                   crack buildings; uneven sinking does. Zero unless it stands
-                   clear of the noise: steeper than 99 percent of the ground
-                   that is not sinking (beta_floor), in a patch larger than
-                   that ground would show even once by chance (beta_min_px).
+                   crack buildings; uneven sinking does. Measured on the rate
+                   map smoothed over tilt_px pixels (3 pixels: about 240 m),
+                   which halves the noise floor compared with one pixel, so
+                   the gentle tilt that passes a limit over decades shows
+                   instead of being lost under the noise. Zero unless it stands
+                   clear of the noise: steeper than beta_pct (95) percent of
+                   the ground that is not sinking (beta_floor), in a patch
+                   larger than that ground would show even once by chance
+                   (beta_min_px). The patch test is measured on that same
+                   quiet ground, so a lower floor is paid for with a larger
+                   patch: chance still gives less than one false patch.
                    The map multiplies this rate by decades, so a few noisy
                    pixels must not get through.
 
@@ -435,9 +444,13 @@ def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.
 
     The threshold is the largest of: three times the map noise; 5 mm per year;
     and seasonal_m divided by the record length. The last term is there because
-    wet and dry seasons move the radar phase by a centimetre or two without the
-    ground going anywhere. Over a few months that reads as a trend; over a full
-    year it mostly cancels. Short records therefore have to clear a higher bar.
+    wet and dry seasons move the radar phase without the ground going anywhere.
+    Over a few months that reads as a trend; over a full year it mostly cancels.
+    Short records therefore have to clear a higher bar. On farmland the effect
+    is several centimetres, which is why only built up and bare ground is
+    analysed; there a centimetre is allowed. Tested on cities that are not
+    known to sink (London, Paris, New York, Toronto, Sydney, Singapore,
+    Amsterdam, Madrid), it detects nothing, while Jakarta and Bangkok show.
     """
     med, sigma, stable = _noise_and_stable(velocity, valid)
     thr = max(3 * sigma, 0.005, seasonal_m / max(span_years, 0.1))
@@ -449,13 +462,13 @@ def detect(velocity, valid, slope=None, span_years=1.0, steady=None, pixel_m=80.
     min_px = 40 if span_years >= 0.7 else 100    # 0.25 km2, or 0.64 km2 for short records
     sig = _keep_patches(sig, min_px)
 
-    gy, gx = np.gradient(smooth(velocity, 1.0, valid), pixel_m)
+    gy, gx = np.gradient(smooth(velocity, tilt_px, valid), pixel_m)
     beta = np.hypot(gx, gy)
     quiet = valid & ~ndi.binary_dilation(sig, iterations=8) & np.isfinite(beta)
     near = ndi.binary_dilation(sig, iterations=5) & valid & np.isfinite(beta)
     beta_floor, beta_min_px = 0.0, 8
     if quiet.sum() > 500:      # enough quiet ground to tell what noise looks like
-        beta_floor = float(np.nanpercentile(beta[quiet], 99))
+        beta_floor = float(np.nanpercentile(beta[quiet], beta_pct))
         beta_min_px = chance_patch_px(quiet & (beta > beta_floor), near.sum() / quiet.sum())
     uneven = _keep_patches(near & (beta > beta_floor), beta_min_px)
     beta_rate = np.where(uneven, beta, 0).astype(np.float32)

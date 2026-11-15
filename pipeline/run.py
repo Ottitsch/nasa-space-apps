@@ -89,6 +89,21 @@ def choose_stacks(bbox, stacks, max_tracks=2):
             if r[0][3] != first_dir and r[1] >= 0.9 and r[3] >= 0.75 * ranked[0][3]:
                 chosen.append(r)
                 break
+    if max_tracks > 1 and len(chosen) == 1 and ranked[0][1] < 0.9:
+        # One track covers only part of the place (Tehran's covers two thirds).
+        # Add the one that fills most of the rest, often the next frame along
+        # the same track; the two are merged where they overlap.
+        first = [stacks[ranked[0][0]][0].polygon]
+        base = S.union_coverage(bbox, first)
+        best, gain = None, 0.15
+        for r in S.rank_stacks(bbox, stacks, min_coverage=0.3):
+            if r[0] == ranked[0][0] or r[3] < 0.75 * ranked[0][3]:
+                continue
+            g = S.union_coverage(bbox, first + [stacks[r[0]][0].polygon]) - base
+            if g > gain:
+                best, gain = r, g
+        if best:
+            chosen.append(best)
     return chosen
 
 
@@ -138,6 +153,9 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
               log=print):
     t_start = time.time()
     pid = place["id"]
+    if place.get("hold"):
+        # held back after review, with the reason in places.json
+        raise RuntimeError(f"held back: {place['hold']}")
     bbox = S.bbox_from_center(place["lat"], place["lon"], place.get("size_km", 56))
     if offline:
         entry = read_manifest(raw).get(pid)
@@ -173,14 +191,24 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
         if res["valid"].mean() < 0.03 or not np.isfinite(res["sigma"]):
             log("    almost no ground with a stable radar signal, skipping this track")
             continue
-        if res["sigma"] > 0.06:
-            # three times this noise is a detection bar of 18 cm per year or
-            # more: nothing short of a mine pit would show
+        if res["sigma"] > 0.04:
+            # three times this noise is a detection bar of 12 cm per year or
+            # more. Such tracks are monsoon or flood seasons over farmland and
+            # river plains; what they call sinking is mostly not ground.
             log(f"    too noisy ({res['sigma'] * 1000:.0f} mm/yr), skipping this track")
             continue
         warp = E.Warper(grid, mg)
         valid = warp(res["valid"])
         vel = np.where(valid, warp(res["velocity"]), np.nan)
+        # No city is known to sink faster than about 40 cm per year (Mexico
+        # City and Tehran peak near 30). A track whose built up ground reads
+        # faster than that is broken, not measuring (in November 2026 one
+        # track over Shantou and Jieyang read a metre a year).
+        vb = vel[valid & warp(cover == L.BUILT) & np.isfinite(vel)]
+        if vb.size > 200 and np.percentile(vb, 0.5) < -0.4:
+            log(f"    built up ground reads {-np.percentile(vb, 0.5) * 100:.0f} cm per year, "
+                "faster than any city is known to sink: skipping this track")
+            continue
         cum = np.stack([np.where(valid, warp(f), np.nan) for f in res["cum"]])
         valid &= np.isfinite(vel)
         layers.append(dict(velocity=vel, cum=cum, valid=valid, t=res["t"], sigma=res["sigma"],
@@ -196,6 +224,15 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
     if not layers:
         raise RuntimeError("no usable track")
 
+    # Ground seen by only one of two tracks takes that track's values, but is
+    # judged against the noise of the merged map. A track more than twice as
+    # noisy as the other would slip its noise through as sinking (Varanasi,
+    # in the monsoon), so it is dropped.
+    if len(layers) == 2:
+        best = min(range(2), key=lambda k: layers[k]["sigma"])
+        if layers[1 - best]["sigma"] > 2 * layers[best]["sigma"]:
+            log(f"    dropping {tracks[1 - best]['id']}: more than twice as noisy as {tracks[best]['id']}")
+            layers, tracks = [layers[best]], [tracks[best]]
     prim = layers[0]
     dates, t = prim["dates"], prim["t"]
     if len(layers) == 1:
@@ -225,12 +262,16 @@ def run_place(place, cache, out, raw, workers=5, max_tracks=2, fetch_only=False,
     built = prim["built"]
     sizes = E.write_place(Path(out) / pid, vel, det["beta_rate"], valid, sig, built, cum, t)
 
-    # headline numbers
+    # headline numbers. The fastest zone is taken from built up ground when at
+    # least 1 km2 of it sinks (the map counts a place as sinking from there),
+    # so a gravel pit, mine or landfill at the edge of a city does not set its
+    # headline rate.
     area = float(sig.sum()) * 0.0064
-    peak = float(np.percentile(vel[sig], 0.5)) if sig.any() else None
+    base = sig & built if (sig & built).sum() * 0.0064 >= 1 else sig
+    peak = float(np.percentile(vel[base], 0.5)) if base.any() else None
     series = None
-    if sig.any():
-        hot = sig & (vel <= np.percentile(vel[sig], 10))
+    if base.any():
+        hot = base & (vel <= np.percentile(vel[base], 10))
         series = [round(float(np.nanmean(f[hot])) * 1000, 1) for f in cum]
     entry = dict(
         id=pid, name=place["name"], country=place.get("country", ""),

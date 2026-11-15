@@ -29,9 +29,11 @@ export async function loadIndex() {
     p.span = p.t_years[p.t_years.length - 1];
     p.months = Math.max(1, Math.round(p.span * 12));
     p.early = p.span < 0.7;                         // under about eight months of passes
-    // a place counts as sinking when at least 1 km2 is detected; smaller
-    // patches still show on the map but do not make the headline
-    p.detected = p.sinking_area_km2 >= 1 && Array.isArray(p.hot_series_mm);
+    // a place counts as sinking when at least 1 km2 of built up land is
+    // detected sinking. Smaller patches, and sinking only under bare ground
+    // (pits, mines, fill, farm edges), still show on the map but do not make
+    // the headline.
+    p.detected = (p.builtup_sinking_km2 ?? 0) >= 1 && Array.isArray(p.hot_series_mm);
     // mean rate of the fastest sinking zone, mm per year (negative)
     p.hotRate = p.detected ? p.hot_series_mm[p.hot_series_mm.length - 1] / p.span : 0;
   }
@@ -49,6 +51,18 @@ export function hotSunk(p, ms) {
   const w = (y - t[k]) / (t[k + 1] - t[k]);
   return -((1 - w) * s[k] + w * s[k + 1]);
 }
+
+/** Years before the first radar pass that are counted when sinking is assumed
+ *  to go back to the start of `since` (null: none). Only places with sinking
+ *  detected count earlier sinking, as on the map. */
+export function earlierYears(p, since) {
+  if (since == null || !p.detected) return 0;
+  return Math.max(0, (p.t0 - Date.UTC(since, 0, 1)) / YEAR);
+}
+
+/** Sinking (mm) of the fastest zone before the first radar pass, assumed at
+ *  the rate NISAR measures now. An estimate, not a measurement. */
+export const hotBefore = (p, since) => -p.hotRate * earlierYears(p, since);
 
 export class PlaceData {
   constructor(meta, core) {
@@ -130,10 +144,10 @@ export class PlaceData {
   years(ms) { return (ms - this.meta.t0) / YEAR; }
 
   /**
-   * Count uneven sinking from the start of `year` instead of from the first
-   * radar pass, assuming the distortion rate measured now was already going
+   * Count sinking and uneven sinking from the start of `year` instead of from
+   * the first radar pass, assuming the rates measured now were already going
    * on by then. null (or a year after the first pass) counts from the first
-   * pass only. Sinking itself (sunkAt) is always counted from the first pass.
+   * pass only. sunkAt stays measured only; beforeAt adds the earlier part.
    */
   setEarlier(year) {
     this.earlier = year != null && Date.UTC(year, 0, 1) < this.meta.t0 ? year : null;
@@ -197,7 +211,17 @@ export class PlaceData {
     return { a: this.resid(k), b: this.resid(k + 1), w: (yy - t[k]) / (t[k + 1] - t[k]) };
   }
 
-  /** Sinking in mm (positive = down) at one pixel. */
+  /** Years counted before the first radar pass (0 unless setEarlier set a year). */
+  earlierYears() { return (this.meta.t0 - this.strainT0) / YEAR; }
+
+  /** Sinking in mm at one pixel before the first radar pass, assumed at the
+   *  rate measured now. 0 unless setEarlier set a year. */
+  beforeAt(i) {
+    if (i < 0 || !(this.flags[i] & 1)) return 0;
+    return -this.rate[i] * this.earlierYears();
+  }
+
+  /** Sinking in mm (positive = down) at one pixel, measured from the first radar pass. */
   sunkAt(i, y) {
     if (i < 0 || !(this.flags[i] & 1) || y <= 0) return 0;
     const { a, b, w } = this.blend(y);
