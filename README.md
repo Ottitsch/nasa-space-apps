@@ -25,7 +25,7 @@ measures the sinking there too.
 
 ## Take action
 
-1. **Get the proof.** A one page report for their spot, as a PDF or a link.
+1. **Get the proof.** A one page report for the spot, as a PDF or a link.
 
    <img src="docs/report-mexico-city.png" width="25%" alt="The one page report for a spot in Mexico City">
 
